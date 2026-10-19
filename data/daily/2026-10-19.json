@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-19",
+ "headline": "丹麦工程师把求职做成 AI 工作流",
+ "summary_md": "**MadsLorentzen/ai-job-search** 是一位丹麦地球物理学家被裁员后自己搭的求职框架。它跑在你的电脑上，依赖 Claude Code，把求职拆成 `/setup`（填个人档案）、`/scrape`（抓招聘网站职位）、`/apply <url>`（评估匹配度、改简历、写求职信）、`/interview`（面试准备）几个命令。README 里作者说，他用这套流程投了 69 份定制申请，拿到 20 个一面，2026 年 6 月入职做 AI 工程师。\n\n它最近火，是因为痛点太真：写一封定制求职信要花一整个周日，而作者把整个过程变成了可 fork、可复用的模板。项目是 MIT 许可，核心工作流和语言、国家无关，只是职位搜索技能目前只适配丹麦招聘网站（Jobindex、Jobnet 等），其他市场要自己替换。\n\n产品机会在“把工作流做成产品”：现在它是一堆 Markdown 和 Skill 文件，用户需要装 Python、Bun、LaTeX，门槛不低。如果包成一键式网页或桌面应用——上传简历、自动匹配本地职位、生成定制简历和求职信、模拟面试——就能把愿意折腾的极客用户，扩展到普通白领和应届生。",
+ "pick": {
+  "full_name": "MadsLorentzen/ai-job-search",
+  "url": "https://github.com/MadsLorentzen/ai-job-search",
+  "description": "The job search that runs on your machine. AI job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, prep interviews. Fork it and own it.",
+  "license": "MIT",
+  "stars": 53972,
+  "daily_rate": 2232,
+  "category": "AI应用",
+  "one_liner": "在自己电脑上运行的 AI 求职助手，帮你筛职位、改简历、写求职信、练面试",
+  "reason": "痛点真实、star 增长极猛、MIT 许可干净、包装空间大；核心是工作流而非代码，产品化想象空间和复制风险都高。",
+  "content": 8.33,
+  "startup": 8.4,
+  "final": 8.35,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-19-madslorentzen-ai-job-search",
+ "top": [
+  {
+   "full_name": "MadsLorentzen/ai-job-search",
+   "url": "https://github.com/MadsLorentzen/ai-job-search",
+   "one_liner": "在自己电脑上运行的 AI 求职助手，帮你筛职位、改简历、写求职信、练面试",
+   "reason": "痛点真实、star 增长极猛、MIT 许可干净、包装空间大；核心是工作流而非代码，产品化想象空间和复制风险都高。",
+   "content": 8.33,
+   "startup": 8.4,
+   "final": 8.35,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "cathrynlavery/diagram-design",
+   "url": "https://github.com/cathrynlavery/diagram-design",
+   "one_liner": "让 AI 助手一句话画出专业风格的架构图和流程图",
+   "reason": "话题性和演示效果都很强，痛点真实，MIT 友好；但壁垒在产品化而非技术，已有官方商业化雏形，适合做内容不适合重做产品。",
+   "content": 8.33,
+   "startup": 7.4,
+   "final": 8.12,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "alchaincyf/huashu-motion",
+   "url": "https://github.com/alchaincyf/huashu-motion",
+   "one_liner": "一句话让你的 AI 编程助手自动做出一支带配乐的产品宣传片",
+   "reason": "选题极佳：AI 直出宣传片话题性强、演示惊艳、痛点真实。但开源形态已相当完整，包装空间有限，商业化需靠托管渲染与模板订阅。",
+   "content": 8.67,
+   "startup": 7.65,
+   "final": 8.02,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "wheresryan22/anatomy",
+   "url": "https://github.com/wheresryan22/anatomy",
+   "one_liner": "让AI把技术概念画成能动手拆解的等距机械插画",
+   "reason": "视觉惊喜与话题性极强，MIT许可友好，demo易做；痛点偏窄，付费意愿待验证，适合先做内容再做工具",
+   "content": 8.0,
+   "startup": 6.5,
+   "final": 7.73,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Niko1221/Strata",
+   "url": "https://github.com/Niko1221/Strata",
+   "one_liner": "在自己电脑上一键运行千亿参数大模型，数据不出本机",
+   "reason": "话题性和易懂度极强，MIT 许可证干净，痛点真实；但产品化窗口窄，付费意愿集中在企业支持，演示难以脱离硬件。",
+   "content": 8.67,
+   "startup": 7.15,
+   "final": 7.67,
+   "category_penalty": 0
+  }
+ ]
+}
