@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>一句片场 · OneTake Studio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#1b1917',
+          paper: '#faf7f1',
+          film: '#d4553a',
+          sand: '#efe7d8'
+        },
+        fontFamily: {
+          sans: ['system-ui', '-apple-system', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #faf7f1; -webkit-font-smoothing: antialiased; }
+  .chip { border: 1px solid #e7e2d8; }
+  .chip-active {
+    border-color: #d4553a !important;
+    background: #fff !important;
+    box-shadow: 0 2px 12px rgba(212, 85, 58, .14);
+  }
+  #subtitle { transition: opacity .18s linear; }
+  textarea, input { font-family: inherit; }
+</style>
+</head>
+<body class="bg-paper text-ink font-sans">
+
+<header class="mx-auto max-w-6xl px-5 pt-10 sm:pt-16">
+  <div class="flex flex-wrap items-center gap-3">
+    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-lg">🎬</div>
+    <div class="text-xl font-semibold tracking-tight">一句片场</div>
+    <span class="text-xs tracking-wide text-stone-400">OneTake Studio</span>
+    <span class="ml-auto rounded-full border border-stone-300 px-3 py-1 text-[11px] text-stone-500">概念演示 · 演示数据</span>
+  </div>
+
+  <h1 class="mt-8 text-[2rem] font-bold leading-[1.15] tracking-tight sm:text-5xl">
+    说一句话，<span class="text-film">AI 写代码</span><br class="hidden sm:block" />把短片拍出来
+  </h1>
+  <p class="mt-4 max-w-2xl text-[15px] leading-relaxed text-stone-600 sm:text-lg">
+    不用视频模型，不用素材库。51 种导演风格，每一帧都由代码渲染 —— 你只需要说出故事。
+  </p>
+</header>
+
+<main class="mx-auto mt-8 max-w-6xl px-5 pb-4">
+  <div class="grid items-start gap-6 lg:grid-cols-12">
+
+    <!-- 播放器 -->
+    <section class="lg:col-span-7">
+      <div class="overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-black/20">
+        <div class="relative aspect-video bg-stone-900">
+          <canvas id="stage" class="absolute inset-0 block h-full w-full"></canvas>
+
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent px-4 pb-4 pt-16">
+            <p id="subtitle" class="mx-auto max-w-[34em] text-center text-[13px] font-medium leading-snug text-white/95 sm:text-base"></p>
+          </div>
+
+          <div class="pointer-events-none absolute left-3 top-3 flex flex-wrap items-center gap-2">
+            <span id="styleTag" class="rounded-md bg-black/45 px-2 py-1 text-[11px] text-white/85 backdrop-blur">水彩 · Watercolor</span>
+            <span class="rounded-md bg-film/90 px-2 py-1 text-[11px] font-medium text-white">演示数据</span>
+          </div>
+
+          <div id="renderOverlay"
+               style="display:none"
+               class="absolute inset-0 flex-col items-center justify-center bg-[#0d0b09] px-8 text-center">
+            <div class="text-3xl">🎞️</div>
+            <p id="renderStep" class="mt-4 text-sm text-white/85">读取风格提示词…</p>
+            <div class="mt-4 h-1 w-56 overflow-hidden rounded-full bg-white/15">
+              <div id="renderBar" class="h-full w-0 rounded-full bg-film transition-all duration-300"></div>
+            </div>
+            <p class="mt-4 text-[11px] leading-relaxed text-white/40">演示数据 · 真实产品在云端渲染，约 30 秒出片</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 bg-[#161310] px-4 py-3">
+          <button id="playBtn" type="button" aria-label="播放或暂停"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20">
+            <span id="playIcon" class="text-[11px]">⏸</span>
+          </button>
+          <div id="bar" class="relative h-1.5 flex-1 cursor-pointer rounded-full bg-white/15">
+            <div id="progress" class="absolute inset-y-0 left-0 rounded-full bg-film" style="width:0%"></div>
+          </div>
+          <span id="time" class="shrink-0 font-mono text-[11px] tabular-nums text-white/60">0:00 / 0:15</span>
+        </div>
+      </div>
+
+      <p class="mt-3 text-xs leading-relaxed text-stone-500">
+        演示数据 · 画面由浏览器 canvas 实时绘制，不是一个视频文件。真实产品会把它渲染成 1080p 成片。
+      </p>
+    </section>
+
+    <!-- 设置面板 -->
+    <section class="space-y-4 lg:col-span-5">
+
+      <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+        <div class="flex items-baseline justify-between gap-3">
+          <h2 class="text-sm font-semibold">1 · 选一个导演风格</h2>
+          <span class="text-[11px] text-stone-400">共 51 种，此处展示 6 种</span>
+        </div>
+        <div id="styleGrid" class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3"></div>
+        <p id="styleDesc" class="mt-3 text-[12px] leading-relaxed text-stone-500"></p>
+        <div class="mt-3 rounded-xl bg-stone-50 p-3">
+          <div class="text-[10px] font-semibold uppercase tracking-wider text-stone-400">风格提示词（开源项目原样提供）</div>
+          <code id="promptText" class="mt-1 block font-mono text-[10.5px] leading-relaxed text-stone-600"></code>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+        <h2 class="text-sm font-semibold">2 · 说一句你的故事</h2>
+        <textarea id="story" rows="3"
+          class="mt-3 w-full resize-none rounded-xl border border-stone-200 bg-stone-50 p-3 text-sm leading-relaxed text-ink outline-none transition focus:border-film focus:bg-white">我家在云南保山有一片小咖啡园。雨季的早晨，雾气从山谷里慢慢升起来。</textarea>
+        <div id="sampleBtns" class="mt-2 flex flex-wrap gap-2"></div>
+      </div>
+
+      <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+        <h2 class="text-sm font-semibold">3 · 片长与旁白</h2>
+        <div class="mt-3">
+          <div class="text-[11px] text-stone-400">片长</div>
+          <div id="durBtns" class="mt-1.5 flex flex-wrap gap-2"></div>
+        </div>
+        <div class="mt-3">
+          <div class="text-[11px] text-stone-400">旁白</div>
+          <div id="voiceBtns" class="mt-1.5 flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <button id="genBtn" type="button"
+        class="w-full rounded-xl bg-ink py-3.5 text-sm font-semibold text-white shadow-lg shadow-ink/20 transition hover:bg-[#2b2724] active:scale-[.99]">
+        🎬 生成短片（演示）
+      </button>
+      <p class="text-center text-[11px] text-stone-400">演示环境中不会提交任何数据，所有画面都在你的浏览器里生成</p>
+    </section>
+  </div>
+</main>
+
+<!-- 场景 -->
+<section class="mx-auto max-w-6xl px-5 py-14">
+  <h2 class="text-xl font-semibold tracking-tight sm:text-2xl">三种人会这样用它</h2>
+  <p class="mt-2 text-sm text-stone-500">点卡片右下角的「试试看」，会把故事和风格填进去并立刻拍一条。</p>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-3">
+
+    <article class="flex flex-col rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <div class="text-2xl">☕</div>
+      <h3 class="mt-3 text-base font-semibold">小商家 · 咖啡庄园主</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-stone-600">
+        找团队拍一支品牌短片，报价三万起、周期三周。现在写一句「我家在保山有一片小咖啡园」，选水彩风格，半小时后就能发出第一支片子。
+      </p>
+      <p class="mt-3 rounded-lg bg-sand/70 px-3 py-2 text-[12px] leading-relaxed text-stone-600">
+        以前：预算 30,000 元 / 周期 3 周<br />现在：一句话 + 一杯咖啡的时间
+      </p>
+      <button type="button" data-scene data-style="watercolor"
+        data-story="我家在云南保山有一片小咖啡园。雨季的早晨，雾气从山谷里慢慢升起来。"
+        class="mt-4 self-start rounded-lg border border-stone-300 px-3 py-1.5 text-xs font-medium text-ink transition hover:border-film hover:text-film">
+        试试看 · 水彩 →
+      </button>
+    </article>
+
+    <article class="flex flex-col rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <div class="text-2xl">📱</div>
+      <h3 class="mt-3 text-base font-semibold">自媒体 · 日更作者</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-stone-600">
+        一条视频的剪辑时间比写脚本还长。换风格只要点一下：昨天是浮世绘，今天是像素 8-bit，明天换成水墨，观众不会看腻。
+      </p>
+      <p class="mt-3 rounded-lg bg-sand/70 px-3 py-2 text-[12px] leading-relaxed text-stone-600">
+        以前：一天一条，剪到凌晨两点<br />现在：六种风格轮着来，脚本就是全部
+      </p>
+      <button type="button" data-scene data-style="ukiyoe"
+        data-story="东京下了一整天的雨。便利店的灯落在积水里，变成一条一条的线。"
+        class="mt-4 self-start rounded-lg border border-stone-300 px-3 py-1.5 text-xs font-medium text-ink transition hover:border-film hover:text-film">
+        试试看 · 浮世绘 →
+      </button>
+    </article>
+
+    <article class="flex flex-col rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <div class="text-2xl">📡</div>
+      <h3 class="mt-3 text-base font-semibold">独立导演 · 概念片</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-stone-600">
+        想拍一座只存在于公开激光扫描数据里的旧采石场。没有摄制组、没有航拍许可，只有点云和一条扫描线。
+      </p>
+      <p class="mt-3 rounded-lg bg-sand/70 px-3 py-2 text-[12px] leading-relaxed text-stone-600">
+        以前：勘景 / 租设备 / 申请空域<br />现在：一份公开数据 + 一个风格
+      </p>
+      <button type="button" data-scene data-style="lidar"
+        data-story="镇子后山那座废弃采石场，四十年没人去了。我用公开的激光扫描数据，把它重新走了一遍。"
+        class="mt-4 self-start rounded-lg border border-stone-300 px-3 py-1.5 text-xs font-medium text-ink transition hover:border-film hover:text-film">
+        试试看 · LiDAR →
+      </button>
+    </article>
+
+  </div>
+</section>
+
+<!-- 定价与候补 -->
+<section class="mx-auto max-w-6xl px-5 pb-16">
+  <h2 class="text-xl font-semibold tracking-tight sm:text-2xl">怎么收费</h2>
+  <p class="mt-2 text-sm text-stone-500">按片付费，不订阅也能用。以下为演示用的示例定价。</p>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl border border-stone-200 bg-white p-6">
+      <div class="text-xs font-medium text-stone-400">免费试拍</div>
+      <div class="mt-2 text-3xl font-bold">¥0</div>
+      <ul class="mt-4 space-y-2 text-[13px] leading-relaxed text-stone-600">
+        <li>· 每月 3 支 15 秒短片</li>
+        <li>· 全部 51 种风格可用</li>
+        <li>· 720p，带小水印</li>
+      </ul>
+    </div>
+
+    <div class="relative rounded-2xl border-2 border-ink bg-white p-6 shadow-lg">
+      <span class="absolute -top-3 left-6 rounded-full bg-ink px-3 py-0.5 text-[10px] font-semibold text-white">最常用</span>
+      <div class="text-xs font-medium text-stone-400">按片付费</div>
+      <div class="mt-2 text-3xl font-bold">¥99<span class="text-sm font-normal text-stone-400"> / 支</span></div>
+      <ul class="mt-4 space-y-2 text-[13px] leading-relaxed text-stone-600">
+        <li>· 30–60 秒，1080p 无水印</li>
+        <li>· 云端渲染，约 30 秒出片</li>
+        <li>· 可指定旁白音色与配乐</li>
+      </ul>
+    </div>
+
+    <div class="rounded-2xl border border-stone-200 bg-white p-6">
+      <div class="text-xs font-medium text-stone-400">工作室</div>
+      <div class="mt-2 text-3xl font-bold">¥299<span class="text-sm font-normal text-stone-400"> / 月</span></div>
+      <ul class="mt-4 space-y-2 text-[13px] leading-relaxed text-stone-600">
+        <li>· 每月 10 支短片</li>
+        <li>· 可改造风格并自命名</li>
+        <li>· 4K 导出与商业授权</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-6 overflow-hidden rounded-2xl bg-ink p-6 text-white sm:p-8">
+    <h3 class="text-lg font-semibold tracking-tight">候补名单</h3>
+    <p class="mt-2 max-w-xl text-[13px] leading-relaxed text-white/65">
+      产品还在构想阶段。留个邮箱，等真正上线时告诉你 —— 当然，在这个演示环境里，什么都不会被提交。
+    </p>
+    <form id="waitForm" class="mt-4 flex flex-col gap-3 sm:flex-row">
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="off"
+        class="flex-1 rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white placeholder-white/35 outline-none transition focus:border-film focus:bg-white/15" />
+      <button type="submit"
+        class="rounded-xl bg-film px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#c04a31] active:scale-[.99]">
+        加入候补
+      </button>
+    </form>
+    <p id="waitMsg" class="mt-2 h-4 text-[12px] text-white/60"></p>
+  </div>
+</section>
+
+<footer class="border-t border-stone-200 bg-white/60">
+  <div class="mx-auto max-w-6xl px-5 py-8">
+    <p class="text-center text-xs leading-relaxed text-stone-500">
+      概念演示，基于开源项目 <a class="underline decoration-stone-300 underline-offset-2 transition hover:text-ink" href="https://github.com/lemomo-ai/lemo-opuscar" target="_blank" rel="noopener">lemomo-ai/lemo-opuscar</a>（MIT），非官方产品，数据均为演示数据
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============ 基础工具 ============ */
+
+  function rand(s) {
+    var x = Math.sin(s * 127.1 + 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  /* ============ 风格数据 ============ */
+
+  var STYLES = [
+    {
+      id: 'watercolor', name: '水彩', en: 'Watercolor', emoji: '🎨',
+      desc: '湿画法叠色，边缘自然晕开。适合品牌故事、家乡、土地与温度。',
+      prompt: 'soft wet-on-wet watercolor washes, fibrous paper texture, cool blue-violet hills fading into warm mist, muted film grain, slow drifting camera'
+    },
+    {
+      id: 'ukiyoe', name: '浮世绘', en: 'Ukiyo-e', emoji: '🌊',
+      desc: '木刻版画的平涂色块与硬边线条，构图讲究留白。适合城市、雨、夜行。',
+      prompt: 'ukiyo-e woodblock print, flat color fields, hard ink outlines, hokusai-style wave curls, indigo and vermilion palette, paper grain'
+    },
+    {
+      id: 'pixel', name: '像素 8-bit', en: 'Pixel 8-bit', emoji: '🕹️',
+      desc: '低分辨率色块的怀旧感，自带游戏叙事节奏。适合童年、科技、玩味。',
+      prompt: '8-bit pixel art, strict grid quantization, dithered gradient sky, limited 12-color palette, stepped mountains, chunky pixel sun'
+    },
+    {
+      id: 'lidar', name: 'LiDAR 扫描', en: 'LiDAR Survey', emoji: '📡',
+      desc: '点云与扫描线构成的空间，冷色发光。适合数据、地理、废土与勘测。',
+      prompt: 'lidar point cloud survey, additive cyan points on near-black, horizon scan sweep, wireframe ground grid, cold technical glow'
+    },
+    {
+      id: 'ink', name: '水墨', en: 'Ink Wash', emoji: '🖌️',
+      desc: '宣纸留白，淡墨层层推远。适合山水、禅意、内省与东方叙事。',
+      prompt: 'chinese ink wash painting, rice paper negative space, layered pale ink mountains, single vermilion seal, atmospheric depth'
+    },
+    {
+      id: 'noir', name: '黑色电影', en: 'Film Noir', emoji: '🎞️',
+      desc: '高反差剪影与百叶窗光斑，雨夜与孤独。适合悬疑、独白、都市情绪。',
+      prompt: 'film noir, hard chiaroscuro lighting, venetian blind shadows, rain streaks, silhouette figure, smoky high-contrast monochrome'
+    }
+  ];
+
+  function getStyle(id) {
+    for (var i = 0; i < STYLES.length; i++) {
+      if (STYLES[i].id === id) return STYLES[i];
+    }
+    return STYLES[0];
+  }
+
+  /* ============ 预生成静态数据 ============ */
+
+  var PAPER_DOTS = [];
+  (function () {
+    for (var i = 0; i < 240; i++) {
+      PAPER_DOTS.push({
+        x: rand(i * 3.1),
+        y: rand(i * 7.7),
+        r: 0.5 + rand(i * 11.3) * 1.6,
+        a: 0.05 + rand(i * 5.5) * 0.08
+      });
+    }
+  })();
+
+  var LIDAR_CLOUD = [];
+  (function () {
+    function terrain(X, Z) {
+      return 1.05 * Math.exp(-Math.pow((X - 1.3) / 1.7, 2))
+           + 0.72 * Math.exp(-Math.pow((X + 2.0) / 1.3, 2))
+           + 0.22 * Math.sin(X * 1.4 + Z * 0.18)
+           + 0.10 * Math.sin(X * 3.3 - Z * 0.4);
+    }
+    for (var i = 0; i < 950; i++) {
+      var Z = 5 + Math.pow(rand(i * 1.13), 0.72) * 30;
+      var X = (rand(i * 2.71) * 2 - 1) * 3.4;
+      var Y = terrain(X, Z);
+      if (Y < 0) Y = 0;
+      LIDAR_CLOUD.push({
+        x: X, y: Y, z: Z,
+        a: 0.30 + rand(i * 3.7) * 0.70,
+        jy: (rand(i * 5.3) - 0.5) * 0.9
+      });
+    }
+  })();
+
+  /* ============ 绘制：共用 ============ */
+
+  function hill(ctx, w, h, baseY, amp, seed, color, blur) {
+    ctx.save();
+    try { ctx.filter = 'blur(' + blur + 'px)'; } catch (e) { /* 忽略 */ }
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(-40, h + 50);
+    for (var x = -40; x <= w + 40; x += 12) {
+      var y = baseY
+        + Math.sin(x * 0.006 + seed) * amp
+        + Math.sin(x * 0.017 + seed * 2.1) * amp * 0.45
+        + Math.sin(x * 0.041 + seed * 3.3) * amp * 0.18;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(w + 40, h + 50);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  /* ============ 绘制：水彩 ============ */
+
+  function drawWatercolor(ctx, t, w, h) {
+    var sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, '#f4ecdd');
+    sky.addColorStop(0.5, '#f8f2e7');
+    sky.addColorStop(1, '#e7dfcd');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    var sx = w * 0.70, sy = h * 0.28;
+    ctx.save();
+    try { ctx.filter = 'blur(14px)'; } catch (e) { /* 忽略 */ }
+    var g = ctx.createRadialGradient(sx, sy, 0, sx, sy, h * 0.28);
+    g.addColorStop(0, 'rgba(238,146,96,0.92)');
+    g.addColorStop(0.35, 'rgba(238,158,112,0.42)');
+    g.addColorStop(1, 'rgba(240,170,130,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(sx, sy, h * 0.28, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    try { ctx.filter = 'blur(10px)'; } catch (e) { /* 忽略 */ }
+    ctx.globalAlpha = 0.45;
+    ctx.fillStyle = '#ffffff';
+    for (var c = 0; c < 4; c++) {
+      var cx = ((rand(c * 4.4) * w) + t * 7) % (w + 260) - 130;
+      var cy = h * 0.11 + c * h * 0.06;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, w * 0.15, h * 0.035, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    var drift = Math.sin(t * 0.15) * w * 0.014;
+    ctx.save();
+    ctx.translate(drift, 0);
+    hill(ctx, w, h, h * 0.60, h * 0.055, 1.7, 'rgba(148,166,190,0.40)', 8);
+    hill(ctx, w, h, h * 0.68, h * 0.070, 4.2, 'rgba(104,126,162,0.42)', 6);
+    hill(ctx, w, h, h * 0.77, h * 0.050, 8.9, 'rgba(66,88,120,0.48)', 4);
+    ctx.restore();
+
+    ctx.save();
+    var wg = ctx.createLinearGradient(0, h * 0.80, 0, h);
+    wg.addColorStop(0, 'rgba(232,228,214,0.92)');
+    wg.addColorStop(1, 'rgba(190,193,180,0.75)');
+    ctx.fillStyle = wg;
+    ctx.fillRect(0, h * 0.80, w, h * 0.20);
+    ctx.strokeStyle = 'rgba(110,125,150,0.22)';
+    ctx.lineWidth = 1.3;
+    for (var i2 = 0; i2 < 8; i2++) {
+      var y2 = h * 0.835 + i2 * h * 0.019;
+      var off = Math.sin(t * 0.7 + i2 * 0.9) * 12;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.06 + off, y2);
+      ctx.lineTo(w * 0.94 + off, y2);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(58,58,68,0.45)';
+    ctx.lineWidth = 1.4;
+    for (var b = 0; b < 4; b++) {
+      var bx = ((t * 22 + b * 90) % (w + 200)) - 100;
+      var by = h * 0.18 + b * h * 0.055 + Math.sin(t * 0.9 + b) * 5;
+      var sz = 5 + b * 1.2;
+      ctx.beginPath();
+      ctx.moveTo(bx - sz, by);
+      ctx.quadraticCurveTo(bx - sz * 0.4, by - sz * 0.75, bx, by);
+      ctx.quadraticCurveTo(bx + sz * 0.4, by - sz * 0.75, bx + sz, by);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.fillStyle = '#8a7a60';
+    for (var p = 0; p < PAPER_DOTS.length; p++) {
+      var d = PAPER_DOTS[p];
+      ctx.globalAlpha = d.a;
+      ctx.beginPath();
+      ctx.arc(d.x * w, d.y * h, d.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  /* ============ 绘制：浮世绘 ============ */
+
+  function drawUkiyoe(ctx, t, w, h) {
+    ctx.fillStyle = '#efe1c2';
+    ctx.fillRect(0, 0, w, h);
+
+    var g = ctx.createLinearGradient(0, 0, 0, h * 0.74);
+    g.addColorStop(0, '#e6cca2');
+    g.addColorStop(1, '#f2e6cb');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h * 0.74);
+
+    ctx.fillStyle = '#c8402f';
+    ctx.beginPath();
+    ctx.arc(w * 0.22, h * 0.24, h * 0.095, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.save();
+    ctx.fillStyle = '#2e4f6b';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.44, h * 0.72);
+    ctx.lineTo(w * 0.62, h * 0.32);
+    ctx.lineTo(w * 0.66, h * 0.32);
+    ctx.lineTo(w * 0.90, h * 0.72);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = '#f7f2e6';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.62, h * 0.32);
+    ctx.lineTo(w * 0.66, h * 0.32);
+    ctx.lineTo(w * 0.700, h * 0.415);
+    ctx.lineTo(w * 0.676, h * 0.400);
+    ctx.lineTo(w * 0.658, h * 0.430);
+    ctx.lineTo(w * 0.638, h * 0.398);
+    ctx.lineTo(w * 0.610, h * 0.418);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    ctx.fillStyle = '#1d4a6d';
+    ctx.beginPath();
+    ctx.moveTo(-10, h * 0.64);
+    for (var x = -10; x <= w + 10; x += 6) {
+      var y = h * 0.64
+        + Math.sin(x * 0.011 - t * 1.1) * h * 0.035
+        + Math.sin(x * 0.031 + t * 1.9) * h * 0.012;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(w + 10, h + 10);
+    ctx.lineTo(-10, h + 10);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(16,54,84,0.85)';
+    ctx.lineWidth = Math.max(1.5, h * 0.008);
+    for (var k = 0; k < 3; k++) {
+      ctx.beginPath();
+      for (var x2 = -10; x2 <= w + 10; x2 += 6) {
+        var y2 = h * (0.72 + k * 0.07)
+          + Math.sin(x2 * 0.009 - t * (0.9 + k * 0.2)) * h * 0.040
+          + Math.sin(x2 * 0.027 + t * 1.6 + k) * h * 0.013;
+        if (x2 === -10) { ctx.moveTo(x2, y2); } else { ctx.lineTo(x2, y2); }
+      }
+      ctx.globalAlpha = 0.55 - k * 0.15;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.fillStyle = '#c8402f';
+    ctx.fillRect(w - w * 0.055, h - h * 0.13, w * 0.028, h * 0.085);
+    ctx.fillStyle = '#f7f2e6';
+    ctx.fillRect(w - w * 0.049, h - h * 0.118, w * 0.016, h * 0.058);
+
+    ctx.save();
+    ctx.globalAlpha = 0.10;
+    ctx.fillStyle = '#3a2a1a';
+    for (var q = 0; q < 160; q++) {
+      ctx.fillRect(rand(q * 2.2) * w, rand(q * 6.6) * h, 1, 1);
+    }
+    ctx.restore();
+  }
+
+  /* ============ 绘制：像素 8-bit ============ */
+
+  function drawPixel(ctx, t, w, h) {
+    var cols = 96, rows = 54;
+    var cw = w / cols, ch = h / rows;
+
+    function R(gx, gy, gw, gh, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(Math.floor(gx * cw), Math.floor(gy * ch), Math.ceil(gw * cw) + 1, Math.ceil(gh * ch) + 1);
+    }
+
+    var bands = ['#241640', '#33205c', '#4a2a78', '#6f3a8c', '#a04f8d', '#cf6f83', '#e79a86', '#f3c39a'];
+    for (var i = 0; i < bands.length; i++) {
+      R(0, i * 2.6, cols, 2.6, bands[i]);
+    }
+
+    var sunY = 20 - Math.sin(t * 0.3) * 1.2;
+    R(66, sunY, 10, 10, '#ffe9a8');
+    R(68, sunY + 2, 6, 6, '#fffbe0');
+
+    function mountain(startCol, endCol, peakCol, peakH, baseRow, color) {
+      for (var c = startCol; c < endCol; c++) {
+        var dist = Math.abs(c - peakCol) / Math.max(1, (endCol - startCol) / 2);
+        var hgt = Math.max(0, peakH * (1 - dist));
+        var top = Math.round(baseRow - hgt);
+        if (top < baseRow) R(c, top, 1, baseRow - top, color);
+      }
+    }
+
+    mountain(-6, 44, 16, 11, 27, '#3a2350');
+    mountain(14, 82, 46, 15, 28, '#2a1840');
+    mountain(58, 104, 82, 10, 27, '#3a2350');
+
+    for (var r = 27; r < rows; r++) {
+      var shift = Math.floor(Math.sin((r + t * 3) * 0.55) * 3);
+      for (var c2 = -4; c2 < cols + 4; c2 += 4) {
+        var useLight = ((c2 + shift + r) % 8 === 0);
+        R(c2 + shift, r, 4, 1, useLight ? '#5c7fb0' : '#27466e');
+      }
+    }
+
+    R(24 + Math.round(Math.sin(t * 0.8) * 2), 33, 6, 1, '#1a2c47');
+    R(27, 31, 1, 3, '#1a2c47');
+
+    ctx.save();
+    ctx.globalAlpha = 0.06;
+    for (var s = 0; s < rows; s += 2) {
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, s * ch, w, ch * 0.8);
+    }
+    ctx.restore();
+  }
+
+  /* ============ 绘制：LiDAR ============ */
+
+  function drawLidar(ctx, t, w, h) {
+    ctx.fillStyle = '#050a10';
+    ctx.fillRect(0, 0, w, h);
+
+    var F = Math.min(w, h) * 0.92;
+    var cx = w / 2;
+    var horizon = h * 0.54;
+    var camY = 1.55;
+
+    var bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#04121a');
+    bg.addColorStop(0.5, '#061a24');
+    bg.addColorStop(1, '#02070c');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(60,190,210,0.14)';
+    ctx.lineWidth = 1;
+    for (var zi = 0; zi < 8; zi++) {
+      var Z = 5 + zi * 4.2;
+      var y = horizon - ((0 - camY) / Z) * F;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
+    }
+    for (var xi = -3; xi <= 3; xi++) {
+      ctx.beginPath();
+      for (var zz = 5; zz < 38; zz += 1.5) {
+        var px = cx + (xi / zz) * F;
+        var py = horizon - ((0 - camY) / zz) * F;
+        if (zz === 5) { ctx.moveTo(px, py); } else { ctx.lineTo(px, py); }
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    var sweep = -5 + ((t * 1.6) % 10);
+
+    ctx.save();
+    for (var i = 0; i < LIDAR_CLOUD.length; i++) {
+      var p = LIDAR_CLOUD[i];
+      var sxp = cx + (p.x / p.z) * F;
+      var syp = horizon - (((p.y + p.jy) - camY) / p.z) * F;
+      if (sxp < -20 || sxp > w + 20 || syp < -20 || syp > h + 20) continue;
+
+      var dist = Math.abs(p.x - sweep);
+      var glow = Math.max(0, 1 - dist / 1.15);
+      var alpha = p.a * (0.26 + 0.74 * glow);
+      var size = 1 + glow * 1.8;
+
+      if (glow > 0.55) {
+        ctx.fillStyle = 'rgba(180,255,246,' + alpha.toFixed(3) + ')';
+      } else {
+        ctx.fillStyle = 'rgba(70,200,220,' + alpha.toFixed(3) + ')';
+      }
+      ctx.fillRect(sxp, syp, size, size);
+    }
+    ctx.restore();
+
+    var scanY = ((t * 0.5) % 1) * h;
+    var sg = ctx.createLinearGradient(0, scanY - 34, 0, scanY + 34);
+    sg.addColorStop(0, 'rgba(80,220,220,0)');
+    sg.addColorStop(0.5, 'rgba(80,220,220,0.10)');
+    sg.addColorStop(1, 'rgba(80,220,220,0)');
+    ctx.fillStyle = sg;
+    ctx.fillRect(0, scanY - 34, w, 68);
+
+    ctx.save();
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = '#7fe9e0';
+    ctx.font = '10px monospace';
+    ctx.fillText('SCAN · Z 5–35m', 12, h - 14);
+    ctx.restore();
+  }
+
+  /* ============ 绘制：水墨 ============ */
+
+  function drawInk(ctx, t, w, h) {
+    ctx.fillStyle = '#f7f3e9';
+    ctx.fillRect(0, 0, w, h);
+
+    var wash = ctx.createLinearGradient(0, 0, 0, h);
+    wash.addColorStop(0, 'rgba(240,236,226,0.9)');
+    wash.addColorStop(1, 'rgba(248,245,236,0.5)');
+    ctx.fillStyle = wash;
+    ctx.fillRect(0, 0, w, h);
+
+    var drift = Math.sin(t * 0.12) * w * 0.01;
+    ctx.save();
+    ctx.translate(drift, 0);
+    hill(ctx, w, h, h * 0.40, h * 0.085, 2.3, 'rgba(96,102,110,0.15)', 12);
+    hill(ctx, w, h, h * 0.53, h * 0.080, 6.1, 'rgba(74,80,90,0.24)', 9);
+    hill(ctx, w, h, h * 0.68, h * 0.062, 9.7, 'rgba(44,48,56,0.40)', 5);
+    hill(ctx, w, h, h * 0.82, h * 0.040, 13.3, 'rgba(26,28,34,0.55)', 3);
+    ctx.restore();
+
+    ctx.save();
+    try { ctx.filter = 'blur(6px)'; } catch (e) { /* 忽略 */ }
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = '#ffffff';
+    for (var c = 0; c < 3; c++) {
+      var cx = ((rand(c * 7.1) * w) + t * 5) % (w + 300) - 150;
+      var cy = h * (0.30 + c * 0.11);
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, w * 0.20, h * 0.026, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(30,32,38,0.55)';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.10, h * 0.90);
+    ctx.quadraticCurveTo(w * 0.28, h * 0.86, w * 0.40, h * 0.925);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(30,32,38,0.40)';
+    ctx.lineWidth = 1.2;
+    for (var b = 0; b < 2; b++) {
+      var bx = ((t * 16 + b * 120) % (w + 240)) - 120;
+      var by = h * 0.20 + b * h * 0.07 + Math.sin(t * 0.8 + b) * 4;
+      ctx.beginPath();
+      ctx.moveTo(bx - 6, by);
+      ctx.quadraticCurveTo(bx - 2.5, by - 5, bx, by);
+      ctx.quadraticCurveTo(bx + 2.5, by - 5, bx + 6, by);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.fillStyle = '#b8372b';
+    ctx.fillRect(w - w * 0.062, h - h * 0.155, w * 0.030, h * 0.10);
+    ctx.fillStyle = '#f7f3e9';
+    ctx.fillRect(w - w * 0.055, h - h * 0.142, w * 0.016, h * 0.072);
+  }
+
+  /* ============ 绘制：黑色电影 ============ */
+
+  function drawNoir(ctx, t, w, h) {
+    ctx.fillStyle = '#0b0b0d';
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.save();
+    var lg = ctx.createLinearGradient(w * 0.22, 0, w * 0.58, h);
+    lg.addColorStop(0, 'rgba(255,240,205,0.26)');
+    lg.addColorStop(1, 'rgba(255,240,205,0)');
+    ctx.fillStyle = lg;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.28, -10);
+    ctx.lineTo(w * 0.46, -10);
+    ctx.lineTo(w * 0.88, h * 1.05);
+    ctx.lineTo(w * 0.02, h * 1.05);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.fillStyle = '#0b0b0d';
+    ctx.globalAlpha = 0.62;
+    for (var i = 0; i < 9; i++) {
+      var y = h * 0.05 + i * h * 0.09 + Math.sin(t * 0.35 + i * 0.4) * 2.5;
+      ctx.fillRect(w * 0.01, y, w * 0.98, h * 0.036);
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(220,228,240,0.20)';
+    ctx.lineWidth = 1;
+    for (var r = 0; r < 70; r++) {
+      var rx = (rand(r * 3.3) * w + t * 260) % (w + 120) - 60;
+      var ry = (rand(r * 7.7) * h + t * 620) % (h + 120) - 60;
+      ctx.beginPath();
+      ctx.moveTo(rx, ry);
+      ctx.lineTo(rx - 5, ry + 16);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.fillStyle = '#05050a';
+    var fx = w * 0.72, fy = h * 0.99;
+    ctx.beginPath();
+    ctx.arc(fx, fy - h * 0.30, h * 0.048, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(fx - w * 0.055, fy);
+    ctx.quadraticCurveTo(fx - w * 0.048, fy - h * 0.24, fx, fy - h * 0.24);
+    ctx.quadraticCurveTo(fx + w * 0.048, fy - h * 0.24, fx + w * 0.055, fy);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = 0.35 + Math.sin(t * 7) * 0.04;
+    ctx.fillStyle = '#ffeab0';
+    ctx.fillRect(w * 0.145, h * 0.60, w * 0.012, h * 0.030);
+    ctx.restore();
+  }
+
+  /* ============ 画布与状态 ============ */
+
+  var canvas = document.getElementById('stage');
+  var ctx = canvas.getContext('2d');
+  var W = 640, H = 360;
+
+  var state = {
+    style: 'watercolor',
+    time: 0,
+    duration: 15,
+    playing: true,
+    voice: '温暖女声'
+  };
+
+  var DRAWERS = {
+    watercolor: drawWatercolor,
+    ukiyoe: drawUkiyoe,
+    pixel: drawPixel,
+    lidar: drawLidar,
+    ink: drawInk,
+    noir: drawNoir
+  };
+
+  function resizeCanvas() {
+    var rect = canvas.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cw = Math.max(1, Math.round(rect.width * dpr));
+    var chh = Math.max(1, Math.round(rect.height * dpr));
+    if (canvas.width !== cw || canvas.height !== chh) {
+      canvas.width = cw;
+      canvas.height = chh;
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    W = Math.max(1, rect.width);
+    H = Math.max(1, rect.height);
+  }
+
+  function drawFrame() {
+    ctx.setTransform(Math.min(window.devicePixelRatio || 1, 2), 0, 0, Math.min(window.devicePixelRatio || 1, 2), 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    var fn = DRAWERS[state.style] || drawWatercolor;
+    ctx.save();
+    fn(ctx, state.time, W, H);
+    ctx.restore();
+
+    ctx.save();
+    var vig = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.30, W / 2, H / 2, Math.max(W, H) * 0.78);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.30)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+
+  /* ============ 字幕 ============ */
+
+  var storyEl = document.getElementById('story');
+  var subtitleEl = document.getElementById('subtitle');
+  var cachedStory = null;
+  var cachedLines = [];
+
+  function splitStory(text) {
+    var s = (text || '').replace(/\s+/g, ' ').trim();
+    if (!s) return ['（还没有故事，先写一句吧）'];
+    var sentences = [];
+    var buf = '';
+    var marks = '。！？!?；;';
+    for (var i = 0; i < s.length; i++) {
+      buf += s.charAt(i);
+      if (marks.indexOf(s.charAt(i)) >= 0) {
+        if (buf.trim()) sentences.push(buf.trim());
+        buf = '';
+      }
+    }
+    if (buf.trim()) sentences.push(buf.trim());
+
+    var out = [];
+    for (var j = 0; j < sentences.length; j++) {
+      var p = sentences[j];
+      if (p.length <= 18) {
+        out.push(p);
+      } else {
+        for (var k = 0; k < p.length; k += 18) out.push(p.slice(k, k + 18));
+      }
+    }
+    if (!out.length) out = ['（还没有故事，先写一句吧）'];
+    return out.slice(0, 10);
+  }
+
+  function getLines() {
+    var s = storyEl.value;
+    if (cachedStory === s) return cachedLines;
+    cachedStory = s;
+    cachedLines = splitStory(s);
+    return cachedLines;
+  }
+
+  /* ============ UI 更新 ============ */
+
+  var progressEl = document.getElementById('progress');
+  var timeEl = document.getElementById('time');
+  var playIcon = document.getElementById('playIcon');
+
+  function fmt(sec) {
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function updateUI() {
+    var pct = state.duration > 0 ? clamp(state.time / state.duration, 0, 1) * 100 : 0;
+    progressEl.style.width = pct.toFixed(2) + '%';
+    timeEl.textContent = fmt(state.time) + ' / ' + fmt(state.duration);
+
+    if (state.voice === '无旁白') {
+      subtitleEl.style.opacity = '0';
+    } else {
+      var lines = getLines();
+      var idx = Math.floor((state.time / state.duration) * lines.length);
+      idx = clamp(idx, 0, lines.length - 1);
+      subtitleEl.textContent = lines[idx] || '';
+      subtitleEl.style.opacity = '1';
+    }
+  }
+
+  function updatePlayIcon() {
+    playIcon.textContent = state.playing ? '⏸' : '▶';
+  }
+
+  /* ============ 主循环 ============ */
+
+  var lastTs = 0;
+  function loop(ts) {
+    if (!lastTs) lastTs = ts;
+    var dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    if (dt > 0.1) dt = 0.1;
+
+    if (state.playing) {
+      state.time += dt;
+      if (state.time >= state.duration) {
+        state.time = state.duration;
+        state.playing = false;
+        updatePlayIcon();
+      }
+    }
+
+    resizeCanvas();
+    drawFrame();
+    updateUI();
+    window.requestAnimationFrame(loop);
+  }
+
+  /* ============ 风格选择 ============ */
+
+  var styleGrid = document.getElementById('styleGrid');
+  var styleDesc = document.getElementById('styleDesc');
+  var promptText = document.getElementById('promptText');
+  var styleTag = document.getElementById('styleTag');
+
+  styleGrid.innerHTML = STYLES.map(function (s) {
+    return '<button type="button" class="chip flex items-center gap-1.5 rounded-xl bg-stone-50 px-2.5 py-2 text-left text-[12px] font-medium text-stone-700 transition hover:border-stone-300" data-style="' + s.id + '">' +
+      '<span>' + s.emoji + '</span><span>' + s.name + '</span></button>';
+  }).join('');
+
+  function setStyle(id) {
+    state.style = id;
+    var s = getStyle(id);
+    var btns = styleGrid.querySelectorAll('button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('chip-active', btns[i].getAttribute('data-style') === id);
+    }
+    styleDesc.textContent = s.desc;
+    promptText.textContent = s.prompt;
+    styleTag.textContent = s.name + ' · ' + s.en;
+  }
+
+  styleGrid.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button[data-style]') : null;
+    if (!btn) return;
+    setStyle(btn.getAttribute('data-style'));
+  });
+
+  /* ============ 示例故事 ============ */
+
+  var SAMPLES = [
+    { label: '咖啡园 · 雨季', text: '我家在云南保山有一片小咖啡园。雨季的早晨，雾气从山谷里慢慢升起来。' },
+    { label: '雨夜便利店', text: '东京下了一整天的雨。便利店的灯落在积水里，变成一条一条的线。' },
+    { label: '旧采石场', text: '镇子后山那座废弃采石场，四十年没人去了。我用公开的激光扫描数据，把它重新走了一遍。' }
+  ];
+
+  var sampleBtns = document.getElementById('sampleBtns');
+  sampleBtns.innerHTML = SAMPLES.map(function (s, i) {
+    return '<button type="button" data-sample="' + i + '" class="chip rounded-full bg-white px-2.5 py-1 text-[11px] text-stone-600 transition hover:border-stone-400 hover:text-ink">' + s.label + '</button>';
+  }).join('');
+
+  sampleBtns.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button[data-sample]') : null;
+    if (!btn) return;
+    var i = parseInt(btn.getAttribute('data-sample'), 10);
+    if (SAMPLES[i]) {
+      storyEl.value = SAMPLES[i].text;
+      cachedStory = null;
+      state.time = 0;
+      state.playing = true;
+      updatePlayIcon();
+    }
+  });
+
+  storyEl.addEventListener('input', function () {
+    cachedStory = null;
+    state.time = 0;
+  });
+
+  /* ============ 片长 ============ */
+
+  var durs = [
+    { v: 15, l: '15 秒 试拍' },
+    { v: 30, l: '30 秒 品牌片' },
+    { v: 60, l: '60 秒 完整片' }
+  ];
+  var durBtns = document.getElementById('durBtns');
+  durBtns.innerHTML = durs.map(function (d) {
+    return '<button type="button" class="chip rounded-lg bg-stone-50 px-2.5 py-1.5 text-[11px] text-stone-600 transition" data-dur="' + d.v + '">' + d.l + '</button>';
+  }).join('');
+
+  function setDur(v) {
+    state.duration = v;
+    state.time = clamp(state.time, 0, v);
+    var btns = durBtns.querySelectorAll('button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('chip-active', parseInt(btns[i].getAttribute('data-dur'), 10) === v);
+    }
+  }
+
+  durBtns.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button[data-dur]') : null;
+    if (!btn) return;
+    setDur(parseInt(btn.getAttribute('data-dur'), 10));
+  });
+
+  /* ============ 旁白 ============ */
+
+  var voices = ['温暖女声', '沉稳男声', '无旁白'];
+  var voiceBtns = document.getElementById('voiceBtns');
+  voiceBtns.innerHTML = voices.map(function (v) {
+    return '<button type="button" class="chip rounded-lg bg-stone-50 px-2.5 py-1.5 text-[11px] text-stone-600 transition" data-voice="' + v + '">' + v + '</button>';
+  }).join('');
+
+  function setVoice(v) {
+    state.voice = v;
+    var btns = voiceBtns.querySelectorAll('button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('chip-active', btns[i].getAttribute('data-voice') === v);
+    }
+  }
+
+  voiceBtns.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button[data-voice]') : null;
+    if (!btn) return;
+    setVoice(btn.getAttribute('data-voice'));
+  });
+
+  /* ============ 播放控制 ============ */
+
+  var playBtn = document.getElementById('playBtn');
+  var barEl = document.getElementById('bar');
+
+  playBtn.addEventListener('click', function () {
+    if (state.time >= state.duration) state.time = 0;
+    state.playing = !state.playing;
+    updatePlayIcon();
+  });
+
+  barEl.addEventListener('click', function (e) {
+    var r = barEl.getBoundingClientRect();
+    if (r.width <= 0) return;
+    var p = clamp((e.clientX - r.left) / r.width, 0, 1);
+    state.time = p * state.duration;
+    updateUI();
+  });
+
+  /* ============ 生成按钮 ============ */
+
+  var overlayEl = document.getElementById('renderOverlay');
+  var renderStep = document.getElementById('renderStep');
+  var renderBar = document.getElementById('renderBar');
+  var genBtn = document.getElementById('genBtn');
+  var renderTimer = null;
+
+  function startRender() {
+    if (renderTimer) { window.clearTimeout(renderTimer); renderTimer = null; }
+    state.playing = false;
+    updatePlayIcon();
+    overlayEl.style.display = 'flex';
+    renderBar.style.width = '0%';
+
+    var steps = [
+      '读取风格提示词…',
+      '编排分镜与镜头表…',
+      '逐帧渲染画面…',
+      '合成配乐与旁白…',
+      '打包成片…'
+    ];
+    var i = 0;
+
+    function step() {
+      if (i < steps.length) {
+        renderStep.textContent = steps[i];
+        renderBar.style.width = Math.round(((i + 1) / steps.length) * 100) + '%';
+        i++;
+        renderTimer = window.setTimeout(step, 560);
+      } else {
+        overlayEl.style.display = 'none';
+        state.time = 0;
+        state.playing = true;
+        updatePlayIcon();
+        renderTimer = null;
+      }
+    }
+    step();
+  }
+
+  genBtn.addEventListener('click', startRender);
+
+  /* ============ 场景卡片 ============ */
+
+  var sceneBtns = document.querySelectorAll('button[data-scene]');
+  for (var si = 0; si < sceneBtns.length; si++) {
+    sceneBtns[si].addEventListener('click', function () {
+      var st = this.getAttribute('data-style');
+      var story = this.getAttribute('data-story');
+      if (st) setStyle(st);
+      if (story) {
+        storyEl.value = story;
+        cachedStory = null;
+      }
+      startRender();
+      document.getElementById('stage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
+  /* ============ 候补名单 ============ */
+
+  var waitForm = document.getElementById('waitForm');
+  var waitMsg = document.getElementById('waitMsg');
+  var emailEl = document.getElementById('email');
+
+  waitForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = (emailEl.value || '').trim();
+    if (!v) {
+      waitMsg.textContent = '先填一个邮箱吧（演示环境，不会提交）。';
+      return;
+    }
+    if (v.indexOf('@') < 1) {
+      waitMsg.textContent = '这个邮箱看起来不太对，再检查一下？';
+      return;
+    }
+    waitMsg.textContent = '✅ 已记录在本地页面上 —— 演示数据，没有发送到任何服务器。';
+    emailEl.value = '';
+  });
+
+  /* ============ 初始化 ============ */
+
+  setStyle('watercolor');
+  setDur(15);
+  setVoice('温暖女声');
+  updatePlayIcon();
+  resizeCanvas();
+  drawFrame();
+  updateUI();
+  window.addEventListener('resize', function () {
+    resizeCanvas();
+    drawFrame();
+  });
+  window.requestAnimationFrame(loop);
+
+})();
+</script>
+</body>
+</html>

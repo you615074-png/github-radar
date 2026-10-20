@@ -5,6 +5,12 @@
    "full_name": "MadsLorentzen/ai-job-search",
    "category": "AI应用",
    "final": 8.35
+  },
+  {
+   "date": "2026-10-20",
+   "full_name": "lemomo-ai/lemo-opuscar",
+   "category": "多媒体创作",
+   "final": 7.94
   }
  ],
  "top": {
@@ -12,7 +18,12 @@
   "cathrynlavery/diagram-design": "2026-10-19",
   "alchaincyf/huashu-motion": "2026-10-19",
   "wheresryan22/anatomy": "2026-10-19",
-  "Niko1221/Strata": "2026-10-19"
+  "Niko1221/Strata": "2026-10-19",
+  "lemomo-ai/lemo-opuscar": "2026-10-20",
+  "storytold/wordcraft": "2026-10-20",
+  "KnifeLemon/Filee": "2026-10-20",
+  "Ansub/tv-detox": "2026-10-20",
+  "storytold/artcraft": "2026-10-20"
  },
  "scores": {
   "storytold/artcraft": {
@@ -1075,6 +1086,272 @@
      "商业模式几乎只能靠灰色预装/破解服务，难以合规变现"
     ],
     "reason": "话题性和惊喜度强，需求真实但高度垂直；法律与合规风险、牌照限制使其难以做成正规产品，适合做内容而非创业。"
+   }
+  },
+  "Leonxlnx/earshot": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "给AI编程助手装上耳朵，能听懂、评价并生成音效",
+    "target_user": "做游戏/产品视频的独立开发者和小型内容团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 5,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "网页版AI音效工作室：上传视频自动卡点配音效并给出改进评分",
+    "demo_idea": "上传一段无声视频，网页实时生成并贴合音效，旁边显示听感评分与修正建议",
+    "red_flags": [
+     "上线仅4天即1500星，增长异常的刷星/营销嫌疑",
+     "核心价值依赖Agent生态，脱离Claude Code等场景单用价值弱",
+     "首次加载模型20-40秒，体验门槛不低"
+    ],
+    "reason": "创意新颖、演示效果强、MIT友好，但用户群窄、付费意愿待验证，需警惕短期爆红的可持续性"
+   }
+  },
+  "lemomo-ai/lemo-opuscar": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "用一句话让 AI 写代码，帮你拍出一支完整短片",
+    "target_user": "想低成本做品牌短片的小商家、自媒体创作者、独立导演",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "网页版选风格、写故事，云端渲染成片，按片付费",
+    "demo_idea": "选水彩风格输入一句故事，30 秒内播放代码渲染的成片片段",
+    "red_flags": [
+     "风格提示词强绑定 Claude Opus 5.5，换模型效果可能大幅下降",
+     "单支片耗时 30-60 分钟且消耗大量 token，结果成本很重",
+     "作者单人 IP 依赖，风格库属内容资产非技术壁垒"
+    ],
+    "reason": "纯代码生成的短片效果惊艳，自带传播爆点；但生成慢、成本高、绑定单一模型，商业化需靠云端渲染和成品服务切开门槛。"
+   }
+  },
+  "K-Dense-AI/scientific-agent-skills": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "给AI agent装上177个科研技能，让它像科学家一样做实验分析",
+    "target_user": "生物医药、化学、材料领域的科研人员和实验室",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "面向科研团队的桌面AI科研工作台，预装技能库和一键连接数据库，按席位订阅",
+    "demo_idea": "网页上传一份基因表达数据，agent自动调用技能完成差异分析并生成带图表报告",
+    "red_flags": [
+     "本质是提示词与文档组成的能力集合，属于资源库，本身并非产品",
+     "官方已有K-Dense BYOK商业桌面产品，个人包装空间受限",
+     "科研场景对结果正确性要求高，演示效果难以保证"
+    ],
+    "reason": "话题热、星标飙升、MIT协议友好，但项目本身是资源库且官方已有产品，创业差异化空间有限，更适合做内容拆解而非独立创业。"
+   }
+  },
+  "Ansub/tv-detox": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "让卡顿的老 Android 电视变快，去掉广告和臃肿预装应用",
+    "target_user": "家里有老旧 Android TV / Chromecast、讨厌电视广告且愿意动手折腾的科技爱好者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "做成一个手机 App 或一键脚本，自动识别电视型号、清理广告与预装并把电视恢复干净主页",
+    "demo_idea": "网页左右对比：清理前满屏广告推荐、卡顿加载；清理后只剩应用和时钟，并展示内存前后数字",
+    "red_flags": [
+     "本质是提示词 + shell 脚本，工程门槛低，易被复制",
+     "依赖 ADB 调试和机型适配，兼容性风险高，误关系统组件可能变砖",
+     "用户付费意愿弱，多被视为一次性免费折腾",
+     "品牌分散（Sony/TCL/海信等）导致支持成本高"
+    ],
+    "reason": "话题性强、演示直观、MIT 友好，痛点真实；但商业化薄弱、适配复杂，更适合做内容爆款而非独立产品。"
+   }
+  },
+  "Comfy-Org/ComfyUI": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "用拖拽节点搭建AI画图和视频生成流程的本地工具",
+    "target_user": "AI绘画/视频创作者、小型工作室、需要私有化部署的企业",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 5,
+     "wow": 5,
+     "pain": 8,
+     "packaging_room": 3,
+     "monetization": 6,
+     "license_safety": 4,
+     "demoability": 7
+    },
+    "product_idea": "面向特定行业（如电商图、短视频素材）的预设工作流SaaS，隐藏节点复杂度，按次或订阅收费",
+    "demo_idea": "网页里用模拟节点图连线，右侧实时'生成'一张图，展示同一工作流换参数批量出图",
+    "red_flags": [
+     "已是成熟商业产品，官方有桌面版和付费云服务，个人做差异化空间小",
+     "GPL-3.0许可证，商业闭源集成有法律风险",
+     "项目本身已是超14万星的大厂级项目，包装门槛低但竞争壁垒几乎为零"
+    ],
+    "reason": "话题性和痛点都极强，但项目已高度产品化且官方云服务在售，第三方包装空间和许可证是硬伤，适合做内容不适合做产品化创业。"
+   }
+  },
+  "humblemuzzu/dumbtv": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "用电脑给智能电视去广告、关追踪、换干净桌面的开源工具箱",
+    "target_user": "拥有 Fire TV / Android TV、讨厌开机广告和追踪的极客与家庭用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 8,
+     "monetization": 5,
+     "license_safety": 3,
+     "demoability": 6
+    },
+    "product_idea": "一键连接电视、自动去广告换桌面的图形化桌面工具，按机型适配",
+    "demo_idea": "左右对比：同一台电视原厂满是广告的行首页 vs 运行后纯净桌面",
+    "red_flags": [
+     "LICENSE 为 NOASSERTION 自定义条款，商用需谨慎核查",
+     "依赖 ADB 与逐机型适配，维护成本高、易随系统更新失效",
+     "面向极客，普通用户门槛仍在，付费意愿不明"
+    ],
+    "reason": "痛点真实、话题性强、包装空间大；但许可证不明、机型适配重、变现路径弱，适合内容爆款，产品化需谨慎"
+   }
+  },
+  "KnifeLemon/Filee": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "按住快捷键拖拽文件，就能离线转换成244种格式的桌面工具",
+    "target_user": "经常处理文档、图片、视频格式转换的普通办公室职员、学生和小型团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "面向非技术用户推出订阅版，包含在线格式转换、云端批处理和团队模板库。",
+    "demo_idea": "网页模拟拖拽文件到光标环形菜单，立即展示转换进度和前后大小对比。",
+    "red_flags": [
+     "开源版已完成度极高，同时提供官网、多平台安装包和交互式demo，产品化空间小",
+     "免费且离线内置转换引擎，用户付费意愿弱",
+     "依赖大量第三方转换引擎，产品化需处理引擎授权与分发"
+    ],
+    "reason": "话题性和体验感强，需求真实，但项目本身已是完整免费产品，商业包装空间和付费动力有限，适合做内容而非创业。"
+   }
+  },
+  "Gathin23/cleanyourtv": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "用电脑连Wi-Fi给电视去广告、换成像Apple TV的干净桌面",
+    "target_user": "买安卓电视后被广告和预装App烦到的中产家庭用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 8,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 6
+    },
+    "product_idea": "做一个Mac/Win桌面App：自动发现同网电视、一键去广告并换干净桌面，支持撤销",
+    "demo_idea": "网页模拟电视遥控：切换原版满屏广告桌面与干净Apple TV风格桌面，展示一键去广告清单",
+    "red_flags": [
+     "许可证为NOASSERTION，来源不明，商用有法律风险",
+     "核心是给Claude Code的提示词+机型列表，属于提示词/资源合集性质",
+     "依赖ADB调试，普通用户门槛高且各品牌兼容性参差",
+     "去广告可能违反电视厂商服务条款，存在平台规则风险",
+     "两天涨粉5000+属病毒式传播，热度可能快速回落"
+    ],
+    "reason": "痛点真实、话题传播强、Launcher包装空间大，但许可证不明、本质是提示词合集、付费意愿弱，适合做内容不宜直接商用。"
+   }
+  },
+  "Kruk2/jasna": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "用显卡自动修复视频中被马赛克遮挡的画面",
+    "target_user": "有视频修复需求的成人内容消费者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 6
+    },
+    "product_idea": "做成一键网页/桌面端视频去马赛克工具，按处理时长订阅收费，附预设与批量队列。",
+    "demo_idea": "网页上放一段打码短视频，点按钮后播放前后对比，30秒展示局部修复效果。",
+    "red_flags": [
+     "AGPL-3.0 且核心模型需付费许可证码，商用受限",
+     "本质是去马赛克，涉及成人内容/伦理与合规风险",
+     "已有官方 GUI 与付费体系，包装空间有限",
+     "强依赖 NVIDIA 显卡与本地算力，难以纯云端低成本演示"
+    ],
+    "reason": "效果惊艳、话题性强，但用途敏感、许可证受限且已有商业化雏形，做产品合规风险高，更适合做内容评测。"
+   }
+  },
+  "aicodeking/leanrea": {
+   "date": "2026-10-20",
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "一个 8KB 的提示词文件，教 AI 用命令行快速逆向分析任意软件",
+    "target_user": "做安全审计、竞品分析、漏洞排查的安全工程师与逆向工程师",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 3,
+     "wow": 6,
+     "pain": 5,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 4
+    },
+    "product_idea": "做成可视化逆向分析助手：上传二进制或 App，自动生成证据链报告，替代手工命令",
+    "demo_idea": "网页选一个示例 App，30 秒内自动列出 IPC 通道和原生导出函数的关系图",
+    "red_flags": [
+     "本质是一个 SKILL.md 提示词文件，非软件产品，包装空间有限",
+     "逆向工程属灰区，可能被用于绕过软件保护，商业化有合规风险",
+     "基准只跑 3 次、单模型单机，38% 提速数字可信度存疑",
+     "两天近千星、日增 497，增长异常，疑似刷星或蹭 REA 热度",
+     "依赖 Claude Code 的 skills 生态，脱离该平台价值大减"
+    ],
+    "reason": "选题有话题性但受众窄、难演示、难收费；本质是提示词技巧而非产品，且逆向场景有合规风险，不建议重点投入。"
    }
   }
  }
