@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-21",
+ "headline": "让 AI 少写代码的 Ponytail",
+ "summary_md": "Ponytail（DietrichGebert/ponytail）是一个给 AI 编程助手用的「懒惰资深工程师」规则集。它让你在 Claude Code 里装一个规则文件，AI 在写代码前会先看两件事：仓库里有没有现成组件，浏览器或标准库有没有原生能力。README 里举的例子很直白：你让它做日期选择器，没有 Ponytail 时它手搓一个日历、塞进 335 行；有 Ponytail 时它把现成的 Input 组件和浏览器原生 date picker 组合在一起，10 行搞定。\n\n它现在火，是因为开发者对 AI 写代码的「啰嗦」越来越不耐烦：功能能跑，但代码量、token 成本和 review 时间都上去了。Ponytail 在 README 里给了一组自测数据（同一 agent 开关技能，39 个任务跑 5 次）：代码量 -53%、耗时 -41%、成本 -26%、token -45%，同时风险逻辑带测试的比例从 68% 升到 98%。这些数字来自作者自己的 benchmark，可信度要自己掂量。\n\n产品化的机会在于把它从「一个提示词文件」变成团队工程纪律工具：成本看板（每个任务花多少 token、复用了多少现有代码）、review 和 audit 命令、把「能不写就不写」的标准固化到团队流程里。这些在 5.x 版本里已经有雏形（band 和 board 都只把数据留在本地）。",
+ "pick": {
+  "full_name": "DietrichGebert/ponytail",
+  "url": "https://github.com/DietrichGebert/ponytail",
+  "description": "Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.",
+  "license": "MIT",
+  "stars": 169644,
+  "daily_rate": 1208,
+  "category": "开发者工具",
+  "one_liner": "让AI编程助手像最懒的资深程序员那样少写代码",
+  "reason": "话题性和演示效果强，MIT友好；但核心是提示词包装，壁垒偏低，商业化需靠团队看板与订阅。 订阅制团队成本看板。 增长异常需验证。",
+  "content": 8.33,
+  "startup": 7.1,
+  "final": 7.86,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-21-dietrichgebert-ponytail",
+ "top": [
+  {
+   "full_name": "DietrichGebert/ponytail",
+   "url": "https://github.com/DietrichGebert/ponytail",
+   "one_liner": "让AI编程助手像最懒的资深程序员那样少写代码",
+   "reason": "话题性和演示效果强，MIT友好；但核心是提示词包装，壁垒偏低，商业化需靠团队看板与订阅。 订阅制团队成本看板。 增长异常需验证。",
+   "content": 8.33,
+   "startup": 7.1,
+   "final": 7.86,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "yetone/magpie",
+   "url": "https://github.com/yetone/magpie",
+   "one_liner": "一个菜单栏工具，让 Claude Code、Codex 等各类编程智能体自由切换任意大模型，额度用完自动换号。",
+   "reason": "项目切中了多订阅、多智能体用户真实且高频的切换与额度耗尽痛点，增长快、话题性强；但产品已经相当成熟，需要另找差异化角度做内容。",
+   "content": 7.33,
+   "startup": 7.4,
+   "final": 7.48,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "headroomlabs-ai/headroom",
+   "url": "https://github.com/headroomlabs-ai/headroom",
+   "one_liner": "给AI编程助手省token的压缩中间层，答案不变花费大降",
+   "reason": "赛道热、痛点真实、可演示性强，但项目自身已接近成品并自带商业化，做内容好于做产品。",
+   "content": 7.67,
+   "startup": 6.95,
+   "final": 7.45,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "cloudflare/security-audit-skill",
+   "url": "https://github.com/cloudflare/security-audit-skill",
+   "one_liner": "让 AI 编程助手自动给你的代码做完整安全审计",
+   "reason": "话题性强、痛点明确、MIT 许可安全；但属大厂官方技能包，包装空间与商业化受限，更适合做内容选题而非创业。",
+   "content": 7.67,
+   "startup": 6.9,
+   "final": 7.35,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Graphify-Labs/graphify",
+   "url": "https://github.com/Graphify-Labs/graphify",
+   "one_liner": "把你的整个代码库变成一张能对话查询的知识地图，不用再逐文件搜索",
+   "reason": "图谱可视化观感强、演示友好，切中 AI 编程上下文痛点；但官方已有云商业版，包装空间和独立商业化受限，做内容优于做产品。",
+   "content": 7.0,
+   "startup": 6.65,
+   "final": 7.21,
+   "category_penalty": 0
+  }
+ ]
+}

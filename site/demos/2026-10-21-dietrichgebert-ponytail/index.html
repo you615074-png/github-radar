@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>马尾 Ponytail — 让 AI 助手像最懒的资深工程师那样写代码</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #faf8f5;
+    color: #1c1917;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono, pre.code, code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  section[id] { scroll-margin-top: 5rem; }
+
+  pre.code {
+    margin: 0;
+    padding: 1rem;
+    background: #14120f;
+    color: #ddd8d2;
+    font-size: 12px;
+    line-height: 1.75;
+    overflow: auto;
+    max-height: 320px;
+    -webkit-overflow-scrolling: touch;
+  }
+  pre.code code { display: block; white-space: pre; }
+  .c-com { color: #6f7a6c; font-style: italic; }
+  .c-str { color: #d8a76a; }
+  .c-kw  { color: #eda06a; }
+
+  .chip {
+    padding: .42rem .85rem;
+    font-size: .8125rem;
+    border-radius: 9999px;
+    border: 1px solid #e7e5e4;
+    background: #fff;
+    color: #57534e;
+    transition: background .15s, color .15s, border-color .15s;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chip:hover { background: #fafaf9; border-color: #d6d3d1; color: #1c1917; }
+  .chip-active { background: #1c1917; border-color: #1c1917; color: #fff; }
+  .chip-active:hover { background: #1c1917; color: #fff; }
+
+  .fade-in { animation: fadeIn .32s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+  #toast.show { display: block; animation: fadeIn .25s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ── 顶栏 ───────────────────────────────────────── -->
+<header class="sticky top-0 z-40 border-b border-stone-200/70 bg-[#faf8f5]/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <a href="#top" class="flex items-center gap-2.5">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill="#e2590b"/>
+        <path d="M20.6 6.6c3.2 1.4 5.1 4.3 5.1 7.7 0 5.4-4.7 8.5-9.5 8.5-2.4 0-4.5-.7-5.9-2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M11 20.3C9.4 18.9 8.5 17 8.5 14.9c0-3.5 2.5-6.3 5.9-7.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>
+      </svg>
+      <span class="text-[15px] font-semibold tracking-tight">马尾 <span class="font-normal text-stone-400">Ponytail</span></span>
+      <span class="hidden rounded-full border border-amber-200 bg-amber-100 px-2 py-0.5 text-[11px] text-amber-800 sm:inline">概念演示</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm text-stone-600 md:flex">
+      <a href="#demo" class="hover:text-stone-900">试一试</a>
+      <a href="#ladder" class="hover:text-stone-900">它怎么想</a>
+      <a href="#cases" class="hover:text-stone-900">场景</a>
+      <a href="#pricing" class="hover:text-stone-900">定价</a>
+      <a href="#pricing" class="rounded-xl bg-stone-900 px-4 py-2 text-white transition hover:bg-stone-700">加入候补名单</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ── Hero ─────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-5 pb-10 pt-14 text-center sm:pt-20">
+    <p class="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3.5 py-1.5 text-xs text-stone-600">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#e2590b]"></span>
+      为 Claude Code / Cursor 打造的「懒资深工程师」插件
+    </p>
+
+    <h1 class="mx-auto mt-6 max-w-3xl text-4xl font-bold leading-[1.15] tracking-tight sm:text-6xl">
+      最好的代码，<br class="sm:hidden">是你<span class="text-[#e2590b]">从没写过</span>的代码。
+    </h1>
+
+    <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-stone-600 sm:text-lg">
+      马尾把那位「长发、椭圆眼镜、在公司待得比版本控制还久」的资深工程师放进你的 AI 编程助手：
+      先说需求，再问五个问题，最后只写必要的那几行。
+    </p>
+
+    <p class="mt-4 text-sm text-stone-400">「他什么都不说。他写一行。它能跑。」</p>
+
+    <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a href="#demo" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#e2590b] px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-[#c94e08] sm:w-auto">
+        先看一次左右对比
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#ladder" class="inline-flex w-full items-center justify-center rounded-xl border border-stone-300 bg-white px-6 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-50 sm:w-auto">
+        它到底怎么想的
+      </a>
+    </div>
+
+    <div class="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+      <div class="rounded-2xl border border-stone-200 bg-white px-4 py-4">
+        <div class="text-2xl font-semibold tracking-tight text-[#e2590b]">-53%</div>
+        <div class="mt-1 text-xs text-stone-500">代码行数</div>
+      </div>
+      <div class="rounded-2xl border border-stone-200 bg-white px-4 py-4">
+        <div class="text-2xl font-semibold tracking-tight text-[#e2590b]">-41%</div>
+        <div class="mt-1 text-xs text-stone-500">Agent 用时</div>
+      </div>
+      <div class="rounded-2xl border border-stone-200 bg-white px-4 py-4">
+        <div class="text-2xl font-semibold tracking-tight text-[#e2590b]">-26%</div>
+        <div class="mt-1 text-xs text-stone-500">成本</div>
+      </div>
+      <div class="rounded-2xl border border-stone-200 bg-white px-4 py-4">
+        <div class="text-2xl font-semibold tracking-tight text-[#e2590b]">-45%</div>
+        <div class="mt-1 text-xs text-stone-500">Tokens</div>
+      </div>
+    </div>
+    <p class="mt-3 text-[11px] text-stone-400">
+      Claude Code 实测 · 39 个任务 · 5 次重复 · 98% 的风险逻辑带测试（无插件时 68%）· 演示数据
+    </p>
+  </section>
+
+  <!-- ── 核心交互 ──────────────────────────────────── -->
+  <section id="demo" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20">
+    <div class="rounded-3xl border border-stone-200 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,.04),0_30px_70px_-40px_rgba(28,25,23,.35)] sm:p-8">
+
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-xl font-semibold tracking-tight sm:text-2xl">把你的需求丢进去</h2>
+        <span class="rounded-full border border-stone-200 bg-stone-100 px-2.5 py-1 text-[11px] text-stone-500">演示数据</span>
+      </div>
+      <p class="mt-2 text-sm text-stone-500">同一句需求，左边的 AI 从零开造，右边的 AI 先翻仓库。下面所有数字均为演示。</p>
+
+      <form id="demoForm" class="mt-5 flex flex-col gap-3 sm:flex-row">
+        <input id="prompt" type="text" autocomplete="off" spellcheck="false"
+               value="给用户列表加一个按注册时间筛选的日期选择器"
+               placeholder="例如：给用户列表加一个日期筛选"
+               class="w-full flex-1 rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-stone-800 placeholder:text-stone-400 focus:border-[#e2590b]/60 focus:outline-none focus:ring-2 focus:ring-[#e2590b]/20">
+        <button type="submit"
+                class="inline-flex shrink-0 items-center justify-center rounded-xl bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-stone-700">
+          让资深工程师看一眼
+        </button>
+      </form>
+
+      <div id="chips" class="mt-3 flex flex-wrap gap-2"></div>
+
+      <div id="result" class="mt-7"></div>
+    </div>
+  </section>
+
+  <!-- ── 五个问题 ──────────────────────────────────── -->
+  <section id="ladder" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20">
+    <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">它先问五个问题，然后才动手</h2>
+      <p class="text-sm text-stone-500">顺序很重要：先砍，再复用，最后才写。</p>
+    </div>
+    <ol class="grid gap-3 sm:grid-cols-5">
+      <li class="rounded-2xl border border-stone-200 bg-white p-4">
+        <div class="mono text-xs text-stone-400">01</div>
+        <div class="mt-2 text-sm font-medium">这需求能不做吗？</div>
+        <p class="mt-1 text-xs leading-relaxed text-stone-500">说不清的需求，先问清楚。</p>
+      </li>
+      <li class="rounded-2xl border border-stone-200 bg-white p-4">
+        <div class="mono text-xs text-stone-400">02</div>
+        <div class="mt-2 text-sm font-medium">仓库里已经有了吗？</div>
+        <p class="mt-1 text-xs leading-relaxed text-stone-500">先把现有组件和工具翻一遍。</p>
+      </li>
+      <li class="rounded-2xl border border-stone-200 bg-white p-4">
+        <div class="mono text-xs text-stone-400">03</div>
+        <div class="mt-2 text-sm font-medium">标准库、浏览器自带吗？</div>
+        <p class="mt-1 text-xs leading-relaxed text-stone-500">原生能干的，就别装包。</p>
+      </li>
+      <li class="rounded-2xl border border-stone-200 bg-white p-4">
+        <div class="mono text-xs text-stone-400">04</div>
+        <div class="mt-2 text-sm font-medium">一行能搞定吗？</div>
+        <p class="mt-1 text-xs leading-relaxed text-stone-500">能，就别写第二行。</p>
+      </li>
+      <li class="rounded-2xl border border-stone-900 bg-stone-900 p-4">
+        <div class="mono text-xs text-white/40">05</div>
+        <div class="mt-2 text-sm font-medium text-white">好吧，写。</div>
+        <p class="mt-1 text-xs leading-relaxed text-white/55">只写必要的，不提前抽象。</p>
+      </li>
+    </ol>
+    <p class="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900">
+      规则从来不是「最少 token」，而是：只写任务需要的东西，并且绝不砍掉校验、错误处理、安全和可访问性。代码之所以小，是因为它必要，不是因为被高尔夫了。
+    </p>
+  </section>
+
+  <!-- ── 场景 ──────────────────────────────────────── -->
+  <section id="cases" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">三个典型用法</h2>
+    <p class="mt-2 text-sm text-stone-500">同一个助手，装上马尾之后的三副面孔。</p>
+
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      <article class="flex flex-col rounded-3xl border border-stone-200 bg-white p-6">
+        <div class="text-2xl" aria-hidden="true">🧩</div>
+        <h3 class="mt-3 text-base font-semibold">写新功能之前，先翻仓库</h3>
+        <p class="mt-2 flex-1 text-sm leading-relaxed text-stone-600">
+          你说明需求，它先找现成的东西：已有组件、已有工具函数、浏览器自带的、标准库里的。
+          找不到才动手，动手也只写必要的那几行。
+        </p>
+        <div class="mono mt-5 rounded-xl bg-stone-50 px-3 py-2.5 text-xs text-stone-600">日期选择器 · 335 行 → 10 行</div>
+      </article>
+
+      <article class="flex flex-col rounded-3xl border border-stone-200 bg-white p-6">
+        <div class="text-2xl" aria-hidden="true">🔍</div>
+        <h3 class="mt-3 text-base font-semibold">/ponytail-review：像会被半夜叫醒的人那样审</h3>
+        <p class="mt-2 flex-1 text-sm leading-relaxed text-stone-600">
+          不只找能删的代码。它读你改动碰到的代码，不只看 diff：bug、安全、真实负载、缺的测试、哪里太慢、哪里该删。
+          每条都说清：做了什么、会出什么问题、怎么改、不改会怎样。
+        </p>
+        <div class="mono mt-5 rounded-xl bg-stone-50 px-3 py-2.5 text-xs text-stone-600">一次 review · 平均 7 条发现</div>
+      </article>
+
+      <article class="flex flex-col rounded-3xl border border-stone-200 bg-white p-6">
+        <div class="text-2xl" aria-hidden="true">🗺️</div>
+        <h3 class="mt-3 text-base font-semibold">/ponytail-audit：给整个仓库画地图</h3>
+        <p class="mt-2 flex-1 text-sm leading-relaxed text-stone-600">
+          先摸清入口、数据怎么流动、这个项目预期多大负载，再按「先修哪个」排序。
+          旧版审计只列能删的，新版告诉你先动哪里。
+        </p>
+        <div class="mono mt-5 rounded-xl bg-stone-50 px-3 py-2.5 text-xs text-stone-600">整仓审计 · 约 12 分钟出报告</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── 定价 ──────────────────────────────────────── -->
+  <section id="pricing" class="mx-auto max-w-6xl px-5 pb-20">
+    <div class="text-center">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">便宜得像它写的代码</h2>
+      <p class="mt-2 text-sm text-stone-500">演示定价，非真实报价。点按钮不会提交任何数据。</p>
+    </div>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <div class="flex flex-col rounded-3xl border border-stone-200 bg-white p-6">
+        <div class="text-sm text-stone-500">独行侠</div>
+        <div class="mt-2 flex items-baseline gap-1">
+          <span class="text-3xl font-semibold tracking-tight">¥0</span>
+          <span class="text-xs text-stone-400">永久免费 · 本地运行</span>
+        </div>
+        <ul class="mt-5 flex-1 space-y-2.5 text-sm text-stone-600">
+          <li class="flex gap-2"><span class="text-stone-300">·</span>本地「懒资深工程师」准则，单仓库</li>
+          <li class="flex gap-2"><span class="text-stone-300">·</span>手动左右对比与裁剪建议</li>
+          <li class="flex gap-2"><span class="text-stone-300">·</span>命令行 <span class="mono">/ponytail-review</span></li>
+        </ul>
+        <button type="button" data-waitlist="独行侠"
+                class="mt-6 w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-800 transition hover:bg-stone-50">
+          加入候补名单
+        </button>
+      </div>
+
+      <div class="relative flex flex-col rounded-3xl border border-stone-900 bg-stone-900 p-6 text-white">
+        <span class="absolute -top-3 right-6 rounded-full bg-[#e2590b] px-2.5 py-1 text-[11px] font-medium">最受欢迎</span>
+        <div class="text-sm text-white/60">团队</div>
+        <div class="mt-2 flex items-baseline gap-1">
+          <span class="text-3xl font-semibold tracking-tight">¥39</span>
+          <span class="text-xs text-white/40">/ 人 / 月</span>
+        </div>
+        <ul class="mt-5 flex-1 space-y-2.5 text-sm text-white/75">
+          <li class="flex gap-2"><span class="text-white/25">·</span>上面全部，加上成本看板（成本 / token / Agent 用时）</li>
+          <li class="flex gap-2"><span class="text-white/25">·</span>团队共享规则库与「已有什么」索引</li>
+          <li class="flex gap-2"><span class="text-white/25">·</span>每月 <span class="mono">/ponytail-audit</span> 整仓报告</li>
+          <li class="flex gap-2"><span class="text-white/25">·</span>复用率与测试覆盖率趋势</li>
+        </ul>
+        <button type="button" data-waitlist="团队"
+                class="mt-6 w-full rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-stone-900 transition hover:bg-stone-100">
+          加入候补名单
+        </button>
+      </div>
+
+      <div class="flex flex-col rounded-3xl border border-stone-200 bg-white p-6">
+        <div class="text-sm text-stone-500">企业</div>
+        <div class="mt-2 flex items-baseline gap-1">
+          <span class="text-3xl font-semibold tracking-tight">面议</span>
+          <span class="text-xs text-stone-400">私有部署</span>
+        </div>
+        <ul class="mt-5 flex-1 space-y-2.5 text-sm text-stone-600">
+          <li class="flex gap-2"><span class="text-stone-300">·</span>私有部署与 SSO</li>
+          <li class="flex gap-2"><span class="text-stone-300">·</span>审计记录留存与导出</li>
+          <li class="flex gap-2"><span class="text-stone-300">·</span>定制规则与团队培训</li>
+        </ul>
+        <button type="button" data-waitlist="企业"
+                class="mt-6 w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-800 transition hover:bg-stone-50">
+          联系我们
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ── 页脚 ───────────────────────────────────────── -->
+<footer class="border-t border-stone-200/80 bg-white/60">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-5 py-10 text-center">
+    <div class="flex items-center gap-2 text-sm text-stone-400">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill="#e2590b"/>
+        <path d="M20.6 6.6c3.2 1.4 5.1 4.3 5.1 7.7 0 5.4-4.7 8.5-9.5 8.5-2.4 0-4.5-.7-5.9-2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M11 20.3C9.4 18.9 8.5 17 8.5 14.9c0-3.5 2.5-6.3 5.9-7.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>
+      </svg>
+      马尾 Ponytail
+    </div>
+    <p class="max-w-3xl text-xs leading-relaxed text-stone-500 sm:text-sm">
+      概念演示，基于开源项目 <a href="https://github.com/DietrichGebert/ponytail" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-stone-800">DietrichGebert/ponytail</a>（MIT），非官方产品，数据均为演示数据
+    </p>
+  </div>
+</footer>
+
+<!-- toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 z-50 hidden -translate-x-1/2">
+  <div class="rounded-full bg-stone-900 px-5 py-3 text-sm text-white shadow-lg shadow-stone-900/20">
+    <span id="toastText"></span>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── 演示数据 ─────────────────────────────────── */
+
+  var CASES = [
+    {
+      id: 'date',
+      label: '日期选择器',
+      keys: ['日期', '日历', '时间', '筛选', '生日', 'date', 'picker', 'calendar'],
+      prompt: '给用户列表加一个按注册时间筛选的日期选择器',
+      reuse: '复用仓库已有的 Input 组件 + 浏览器原生日期选择器',
+      before: {
+        lines: 335, time: 8.4, cost: 0.38, tokens: 15200,
+        code: [
+          '// Calendar.tsx —— 自建一整个日历，335 行',
+          '',
+          "import { useState, useEffect, useRef } from 'react';",
+          '',
+          "const MONTHS = ['一月', '二月', '三月', /* ... */];",
+          "const WEEKDAYS = ['一', '二', '三', '四', '五', '六', '日'];",
+          '',
+          'function isLeapYear(y) {',
+          '  return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;',
+          '}',
+          '',
+          'function daysInMonth(y, m) {',
+          '  return [31, isLeapYear(y) ? 29 : 28, 31, 30, /* ... */][m];',
+          '}',
+          '',
+          'export function DatePicker({ value, onChange }) {',
+          '  const [cursor, setCursor] = useState(new Date());',
+          '  const [open, setOpen] = useState(false);',
+          '  const wrap = useRef(null);',
+          '',
+          '  useEffect(() => {',
+          '    // 点击外部关闭、Esc 关闭、滚动定位……',
+          '  }, []);',
+          '',
+          '  // ……剩下 300 行：星期排版、禁用日期、',
+          '  // 键盘导航、焦点管理、样式、边界情况',
+          '  return null;',
+          '}'
+        ].join('\n')
+      },
+      after: {
+        lines: 10, time: 2.6, cost: 0.09, tokens: 3100,
+        code: [
+          '// 仓库里一直有 Input，浏览器一直自带日期选择器。',
+          '// 把它们接起来，就结束了。',
+          '',
+          "import { Input } from '@/ui';",
+          '',
+          'export function DateFilter({ value, onChange }) {',
+          '  return (',
+          '    <Input',
+          '      type="date"',
+          '      value={value}',
+          '      onChange={(e) => onChange(e.target.value)}',
+          '    />',
+          '  );',
+          '}'
+        ].join('\n')
+      }
+    },
+    {
+      id: 'form',
+      label: '表单校验',
+      keys: ['表单', '校验', '验证', '邮箱', '密码', '注册', '登录', 'form', 'valid'],
+      prompt: '做一个注册表单，邮箱和密码要校验',
+      reuse: '用浏览器原生校验 + 已有的 validateEmail',
+      before: {
+        lines: 174, time: 6.1, cost: 0.29, tokens: 11400,
+        code: [
+          '// SignupForm.tsx —— 174 行，自己发明一套校验框架',
+          '',
+          "const EMAIL_RE = /^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$/i;",
+          '',
+          'const RULES = {',
+          '  email: [',
+          "    (v) => (v ? null : '请输入邮箱'),",
+          "    (v) => (EMAIL_RE.test(v) ? null : '邮箱格式不正确'),",
+          '  ],',
+          '  password: [',
+          "    (v) => (v.length >= 8 ? null : '至少 8 位'),",
+          "    (v) => (/\\d/.test(v) ? null : '需要数字'),",
+          '    // ……还有 12 条',
+          '  ],',
+          '};',
+          '',
+          'export function SignupForm() {',
+          '  const [errors, setErrors] = useState({});',
+          '  const [touched, setTouched] = useState({});',
+          '  // ……状态机、防抖、aria、错误汇总，共 174 行',
+          '  return null;',
+          '}'
+        ].join('\n')
+      },
+      after: {
+        lines: 12, time: 1.9, cost: 0.07, tokens: 2400,
+        code: [
+          '// type、required、minLength 浏览器自己会校验。',
+          '// 邮箱格式这件事，auth/validate 里早写好了。',
+          '',
+          "import { Input, Button } from '@/ui';",
+          "import { validateEmail } from '@/lib/auth';",
+          '',
+          'export function SignupForm() {',
+          '  return (',
+          '    <form action={signup}>',
+          '      <Input name="email" type="email" required validate={validateEmail} />',
+          '      <Input name="password" type="password" required minLength={8} />',
+          '      <Button type="submit">注册</Button>',
+          '    </form>',
+          '  );',
+          '}'
+        ].join('\n')
+      }
+    },
+    {
+      id: 'csv',
+      label: 'CSV 导出',
+      keys: ['csv', '导出', 'excel', '表格', '下载', '报表', 'export'],
+      prompt: '把用户列表导出成 CSV 下载',
+      reuse: 'lib/csv 里早就有 toCsv 和 download',
+      before: {
+        lines: 142, time: 5.3, cost: 0.24, tokens: 9800,
+        code: [
+          '// exportCsv.ts —— 142 行，手写序列化 + 分片 + 进度',
+          '',
+          'function escapeCell(v) {',
+          "  const s = String(v == null ? '' : v);",
+          '  if (/[",\\n]/.test(s)) return \'"\' + s.replace(/"/g, \'""\') + \'"\';',
+          '  return s;',
+          '}',
+          '',
+          'export async function exportUsers(rows) {',
+          "  const chunks = ['\\uFEFF'];",
+          "  chunks.push(rows[0].map(escapeCell).join(','));",
+          '  for (let i = 1; i < rows.length; i += 500) {',
+          '    // 分片、让出主线程、进度回调、取消……',
+          '  }',
+          "  const blob = new Blob(chunks, { type: 'text/csv' });",
+          '  // ……还有 90 行',
+          '}'
+        ].join('\n')
+      },
+      after: {
+        lines: 9, time: 1.6, cost: 0.06, tokens: 1900,
+        code: [
+          '// lib/csv.ts 里早就有了 toCsv 和 download。',
+          '// 别再写第二遍。',
+          '',
+          "import { toCsv, download } from '@/lib/csv';",
+          '',
+          'export function exportUsers(rows) {',
+          "  download('users.csv', toCsv(rows));",
+          '}'
+        ].join('\n')
+      }
+    },
+    {
+      id: 'pager',
+      label: '分页',
+      keys: ['分页', '翻页', '页码', '列表', '表格', 'page', 'pager'],
+      prompt: '给表格加分页，每页 20 条',
+      reuse: '数据本来就在内存里，slice 一下 + 现成的 Button',
+      before: {
+        lines: 96, time: 4.2, cost: 0.19, tokens: 7600,
+        code: [
+          '// Pagination.tsx —— 96 行，页码省略号算法 + 无障碍',
+          '',
+          'function pageList(current, total) {',
+          '  const pages = [];',
+          '  const win = 2;',
+          '  for (let p = 1; p <= total; p++) {',
+          '    if (p === 1 || p === total || Math.abs(p - current) <= win) {',
+          '      pages.push(p);',
+          "    } else if (pages[pages.length - 1] !== '...') {",
+          "      pages.push('...');",
+          '    }',
+          '  }',
+          '  return pages;',
+          '}',
+          '',
+          'export function Pagination({ page, pageCount, onPage }) {',
+          '  // ……键盘、aria-current、focus-visible、响应式',
+          '  return null;',
+          '}'
+        ].join('\n')
+      },
+      after: {
+        lines: 14, time: 1.4, cost: 0.05, tokens: 1600,
+        code: [
+          '// 数据本来就在内存里，slice 一下就有了。',
+          '// 按钮用仓库里现成的。',
+          '',
+          "import { Button } from '@/ui';",
+          '',
+          'export function Pager({ page, onPage, hasNext }) {',
+          '  return (',
+          '    <div className="flex items-center gap-2">',
+          '      <Button onClick={() => onPage(page - 1)} disabled={page === 0}>上一页</Button>',
+          '      <Button onClick={() => onPage(page + 1)} disabled={!hasNext}>下一页</Button>',
+          '    </div>',
+          '  );',
+          '}'
+        ].join('\n')
+      }
+    },
+    {
+      id: 'auth',
+      label: '权限中间件',
+      keys: ['权限', '鉴权', '登录态', '中间件', 'jwt', 'token', 'auth', '会话'],
+      prompt: '给 API 加一个权限校验中间件',
+      reuse: '项目已装 jose，lib/auth 里已有 requireAuth',
+      before: {
+        lines: 118, time: 5.8, cost: 0.26, tokens: 10100,
+        code: [
+          '// authMiddleware.ts —— 118 行，自己解析 JWT',
+          '',
+          "import { createHmac } from 'crypto';",
+          '',
+          'function parseJwt(token) {',
+          "  const parts = token.split('.');",
+          '  const h = parts[0], p = parts[1], sig = parts[2];',
+          "  const expected = createHmac('sha256', SECRET)",
+          "    .update(h + '.' + p)",
+          "    .digest('base64url');",
+          "  if (expected !== sig) throw new Error('bad signature');",
+          "  return JSON.parse(Buffer.from(p, 'base64url').toString());",
+          '}',
+          '',
+          '// ……过期、刷新、时钟漂移、cookie、CSRF，共 118 行'
+        ].join('\n')
+      },
+      after: {
+        lines: 12, time: 2.1, cost: 0.08, tokens: 2700,
+        code: [
+          '// package.json 里已经有 jose，lib/auth 里已经有 requireAuth。',
+          '// 签名、过期、刷新，它都处理过了。',
+          '',
+          "import { requireAuth } from '@/lib/auth';",
+          '',
+          'export async function handler(req, res) {',
+          '  const user = await requireAuth(req);',
+          '  if (!user) return res.status(401).end();',
+          '  return res.json({ user });',
+          '}'
+        ].join('\n')
+      }
+    }
+  ];
+
+  var FALLBACK = {
+    id: 'generic',
+    label: '通用估算',
+    prompt: '给这个页面加一个功能',
+    reuse: '先翻仓库再动手：已有组件、已有工具、平台自带',
+    before: {
+      lines: 164, time: 6.0, cost: 0.28, tokens: 10600,
+      code: [
+        '// 没有马尾：从零开始造',
+        '// 需求：<你的需求>',
+        '',
+        '// 1. 新建组件文件、新建工具函数、新建样式',
+        '// 2. 处理加载中、错误、空状态',
+        '// 3. 补齐边界情况与默认值',
+        '// 4. 把项目里早就有的东西再写一遍',
+        '// 5. 加一层「以防万一」的抽象',
+        '',
+        '// ……164 行'
+      ].join('\n')
+    },
+    after: {
+      lines: 21, time: 2.2, cost: 0.08, tokens: 3100,
+      code: [
+        '// 有马尾：先问五个问题，再动手',
+        '',
+        '// 1. 这需求能砍掉一半吗？        -> 能，砍掉一半',
+        '// 2. 仓库里已经有能用的东西吗？  -> 有三个',
+        '// 3. 标准库 / 浏览器自带的够吗？  -> 够',
+        '// 4. 一行能搞定吗？             -> 差一点',
+        '// 5. 那就写必要的 21 行，不加抽象',
+        '',
+        '// 21 行里，0 行是「以防万一」'
+      ].join('\n')
+    }
+  };
+
+  /* ── 工具函数 ─────────────────────────────────── */
+
+  var ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (m) { return ESC_MAP[m]; });
+  }
+
+  function highlight(src) {
+    var store = [];
+    var out = String(src)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    function save(html) {
+      store.push(html);
+      return '\u00AB' + (store.length - 1) + '\u00BB';
+    }
+
+    out = out.replace(/\/\/[^\n]*/g, function (m) {
+      return save('<span class="c-com">' + m + '</span>');
+    });
+    out = out.replace(/'[^'\n]*'|"[^"\n]*"/g, function (m) {
+      return save('<span class="c-str">' + m + '</span>');
+    });
+    out = out.replace(/\b(import|from|export|const|let|var|function|return|if|else|for|await|async|new|default)\b/g,
+      '<span class="c-kw">$1</span>');
+    out = out.replace(/\u00AB(\d+)\u00BB/g, function (_, i) { return store[Number(i)]; });
+    return out;
+  }
+
+  function matchCase(q) {
+    var s = String(q == null ? '' : q).toLowerCase();
+    if (!s.replace(/\s/g, '')) return FALLBACK;
+    var best = null;
+    var bestScore = 0;
+    for (var i = 0; i < CASES.length; i++) {
+      var c = CASES[i];
+      var score = 0;
+      for (var j = 0; j < c.keys.length; j++) {
+        if (s.indexOf(String(c.keys[j]).toLowerCase()) !== -1) score += 1;
+      }
+      if (score > bestScore) { bestScore = score; best = c; }
+    }
+    return best || FALLBACK;
+  }
+
+  function fmtK(n) { return (n / 1000).toFixed(1) + 'k'; }
+
+  /* ── 渲染 ─────────────────────────────────────── */
+
+  function metricRow(m) {
+    return '' +
+      '<div class="grid grid-cols-3 divide-x divide-stone-100 border-t border-stone-100 bg-white text-xs">' +
+        '<div class="px-3 py-2.5"><div class="text-stone-400">Agent 用时</div><div class="mt-0.5 font-medium text-stone-700">' + m.time.toFixed(1) + ' 分钟</div></div>' +
+        '<div class="px-3 py-2.5"><div class="text-stone-400">成本</div><div class="mt-0.5 font-medium text-stone-700">$' + m.cost.toFixed(2) + '</div></div>' +
+        '<div class="px-3 py-2.5"><div class="text-stone-400">Tokens</div><div class="mt-0.5 font-medium text-stone-700">' + fmtK(m.tokens) + '</div></div>' +
+      '</div>';
+  }
+
+  function card(kind, m, note) {
+    var isBefore = kind === 'before';
+    var headClass = isBefore ? 'bg-stone-50 border-stone-100' : 'bg-emerald-50/70 border-emerald-100';
+    var wrapClass = isBefore ? 'border-stone-200' : 'border-emerald-300 ring-1 ring-emerald-100';
+    var dotClass = isBefore ? 'bg-stone-300' : 'bg-emerald-500';
+    var titleClass = isBefore ? 'text-stone-600' : 'text-emerald-800';
+    var linesClass = isBefore ? 'text-stone-500' : 'text-emerald-700 font-semibold';
+
+    return '' +
+      '<div class="overflow-hidden rounded-2xl border bg-white ' + wrapClass + '">' +
+        '<div class="flex items-center justify-between border-b px-4 py-3 ' + headClass + '">' +
+          '<div class="flex items-center gap-2">' +
+            '<span class="h-1.5 w-1.5 rounded-full ' + dotClass + '"></span>' +
+            '<span class="text-sm font-medium ' + titleClass + '">' + (isBefore ? '没有马尾' : '有马尾') + '</span>' +
+          '</div>' +
+          '<span class="mono text-sm ' + linesClass + '">' + m.lines + ' 行</span>' +
+        '</div>' +
+        '<pre class="code"><code>' + highlight(m.code) + '</code></pre>' +
+        metricRow(m) +
+        (note ? '<div class="border-t border-emerald-100 bg-emerald-50/50 px-4 py-2.5 text-[11px] leading-relaxed text-emerald-700">✓ ' + escapeHtml(note) + '</div>' : '') +
+      '</div>';
+  }
+
+  function summary(b, a) {
+    var dLines = b.lines - a.lines;
+    var pct = Math.round((dLines / b.lines) * 100);
+    var dTime = (b.time - a.time).toFixed(1);
+    var dCost = (b.cost - a.cost).toFixed(2);
+    var dTok = fmtK(b.tokens - a.tokens);
+
+    return '' +
+      '<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2.5 rounded-2xl bg-stone-900 px-5 py-4 text-white">' +
+        '<span class="text-[11px] uppercase tracking-[0.18em] text-white/35">这一次</span>' +
+        '<span class="flex items-baseline gap-1.5"><b class="text-2xl font-semibold tracking-tight">' + dLines + '</b><span class="text-sm text-white/60">行代码没写</span></span>' +
+        '<span class="text-sm text-white/55">少 <b class="font-medium text-white">' + pct + '%</b></span>' +
+        '<span class="text-sm text-white/55">省 <b class="font-medium text-white">' + dTime + '</b> 分钟</span>' +
+        '<span class="text-sm text-white/55">省 <b class="font-medium text-white">$' + dCost + '</b></span>' +
+        '<span class="text-sm text-white/55">省 <b class="font-medium text-white">' + dTok + '</b> tokens</span>' +
+        '<span class="ml-auto rounded-full bg-white/10 px-2.5 py-1 text-[11px] text-white/60">风险逻辑带测试 68% → 98%</span>' +
+      '</div>';
+  }
+
+  /* ── 主流程 ───────────────────────────────────── */
+
+  var form = document.getElementById('demoForm');
+  var input = document.getElementById('prompt');
+  var result = document.getElementById('result');
+  var chips = document.getElementById('chips');
+  var toast = document.getElementById('toast');
+  var toastText = document.getElementById('toastText');
+  var timer = null;
+  var toastTimer = null;
+
+  function syncChips() {
+    var v = input.value.trim();
+    var buttons = chips.querySelectorAll('button[data-id]');
+    for (var i = 0; i < buttons.length; i++) {
+      var btn = buttons[i];
+      var id = btn.getAttribute('data-id');
+      var c = null;
+      for (var k = 0; k < CASES.length; k++) {
+        if (CASES[k].id === id) { c = CASES[k]; break; }
+      }
+      if (c && c.prompt === v) {
+        btn.classList.add('chip-active');
+      } else {
+        btn.classList.remove('chip-active');
+      }
+    }
+  }
+
+  function render(value) {
+    var c = matchCase(value);
+    var b = c.before;
+    var a = c.after;
+    var qText = String(value == null ? '' : value).trim() || c.prompt;
+
+    result.innerHTML = '' +
+      '<div class="fade-in">' +
+        '<div class="mb-4 flex items-start gap-2">' +
+          '<span class="mt-0.5 shrink-0 rounded-full border border-stone-200 bg-stone-100 px-2 py-0.5 text-[11px] text-stone-500">需求</span>' +
+          '<p class="text-sm leading-relaxed text-stone-700 sm:text-[15px]">' + escapeHtml(qText) + '</p>' +
+        '</div>' +
+        '<div class="grid gap-4 sm:gap-5 md:grid-cols-2">' +
+          card('before', b) +
+          card('after', a, c.reuse) +
+        '</div>' +
+        summary(b, a) +
+      '</div>';
+
+    syncChips();
+  }
+
+  function showToast(text) {
+    toastText.textContent = text;
+    toast.classList.remove('hidden');
+    toast.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove('show');
+      toast.classList.add('hidden');
+    }, 2600);
+  }
+
+  /* 快捷选项 */
+  chips.innerHTML = CASES.map(function (c) {
+    return '<button type="button" class="chip" data-id="' + c.id + '">' + escapeHtml(c.label) + '</button>';
+  }).join('');
+
+  chips.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest ? e.target.closest('button[data-id]') : null;
+    if (!btn) return;
+    var id = btn.getAttribute('data-id');
+    var c = null;
+    for (var i = 0; i < CASES.length; i++) {
+      if (CASES[i].id === id) { c = CASES[i]; break; }
+    }
+    if (!c) return;
+    input.value = c.prompt;
+    render(input.value);
+  });
+
+  input.addEventListener('input', function () {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(function () { render(input.value); }, 180);
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    render(input.value);
+    showToast('资深工程师看完了：下面是对比（演示数据）');
+  });
+
+  /* 候补名单按钮 —— 只在页面上提示，不提交任何数据 */
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest ? e.target.closest('[data-waitlist]') : null;
+    if (!btn) return;
+    e.preventDefault();
+    var plan = btn.getAttribute('data-waitlist');
+    showToast('已把「' + plan + '」记在演示名单里 —— 这是演示，没有提交任何数据');
+  });
+
+  /* 首屏渲染 */
+  render(input.value);
+})();
+</script>
+</body>
+</html>

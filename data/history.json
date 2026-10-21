@@ -11,6 +11,12 @@
    "full_name": "lemomo-ai/lemo-opuscar",
    "category": "多媒体创作",
    "final": 7.94
+  },
+  {
+   "date": "2026-10-21",
+   "full_name": "DietrichGebert/ponytail",
+   "category": "开发者工具",
+   "final": 7.86
   }
  ],
  "top": {
@@ -23,7 +29,12 @@
   "storytold/wordcraft": "2026-10-20",
   "KnifeLemon/Filee": "2026-10-20",
   "Ansub/tv-detox": "2026-10-20",
-  "storytold/artcraft": "2026-10-20"
+  "storytold/artcraft": "2026-10-20",
+  "DietrichGebert/ponytail": "2026-10-21",
+  "yetone/magpie": "2026-10-21",
+  "headroomlabs-ai/headroom": "2026-10-21",
+  "cloudflare/security-audit-skill": "2026-10-21",
+  "Graphify-Labs/graphify": "2026-10-21"
  },
  "scores": {
   "storytold/artcraft": {
@@ -1352,6 +1363,324 @@
      "依赖 Claude Code 的 skills 生态，脱离该平台价值大减"
     ],
     "reason": "选题有话题性但受众窄、难演示、难收费；本质是提示词技巧而非产品，且逆向场景有合规风险，不建议重点投入。"
+   }
+  },
+  "Graphify-Labs/graphify": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "把你的整个代码库变成一张能对话查询的知识地图，不用再逐文件搜索",
+    "target_user": "用 Claude Code/Cursor 的中小团队开发工程师与技术负责人",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "上传仓库一键生成可交互代码知识图谱，支持自然语言查询与架构讲解的网页服务",
+    "demo_idea": "左侧拖入样例代码库，右侧实时渲染彩色依赖图谱，点击节点弹出'谁调用它/它在哪定义'",
+    "red_flags": [
+     "已有 Graphify Cloud 商业版和 YC 背景，开源版本质是获客漏斗，独立做产品差异化空间小",
+     "130k stars 与 200 天建仓的速度异常，数据可信度存疑"
+    ],
+    "reason": "图谱可视化观感强、演示友好，切中 AI 编程上下文痛点；但官方已有云商业版，包装空间和独立商业化受限，做内容优于做产品。"
+   }
+  },
+  "cloudflare/security-audit-skill": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "安全",
+    "one_liner": "让 AI 编程助手自动给你的代码做完整安全审计",
+    "target_user": "中小团队的开发负责人、独立开发者、安全顾问",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "网页版一键代码安全审计：上传仓库，AI 多阶段扫描并输出可验证漏洞报告",
+    "demo_idea": "上传含漏洞的示例仓库，展示侦察→狩猎→复核流水线，最终生成 confirmed 漏洞报告对比",
+    "red_flags": [
+     "Cloudflare 官方出品，知名度高，个人难做差异化",
+     "本质是 skill 提示词+校验脚本集合，非独立产品",
+     "依赖支持并行子代理的 coding agent，门槛不低",
+     "安全审计场景真实性需真实漏洞验证，演示成本高"
+    ],
+    "reason": "话题性强、痛点明确、MIT 许可安全；但属大厂官方技能包，包装空间与商业化受限，更适合做内容选题而非创业。"
+   }
+  },
+  "DietrichGebert/ponytail": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让AI编程助手像最懒的资深程序员那样少写代码",
+    "target_user": "用Claude Code/Cursor的开发者与团队技术负责人",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "AI编程助手的精简化插件：内置懒资深工程师准则，自动砍掉冗余代码并附成本看板",
+    "demo_idea": "同一需求左右对比：无插件生成335行日历组件，插件利用现有Input组件写成10行",
+    "red_flags": [
+     "本质是一个提示词/规则文件，护城河低，易被复制",
+     "依赖Claude Code等平台功能，平台可能内建同类能力",
+     "17万星与日均1200增速略反常，需警惕热度真实性"
+    ],
+    "reason": "话题性和演示效果强，MIT友好；但核心是提示词包装，壁垒偏低，商业化需靠团队看板与订阅。 订阅制团队成本看板。 增长异常需验证。"
+   }
+  },
+  "shiyu-coder/Kronos": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "一个专门预测K线走势的金融AI模型，输入历史行情就能生成未来走势。",
+    "target_user": "量化交易散户、加密交易者、量化投研团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "把Kronos做成网页版K线预测工具，上传或选择行情，一键生成未来走势预测图与置信区间。",
+    "demo_idea": "网页选BTC或A股，展示历史K线，点预测后未来24小时走势曲线动态绘制出来，和真实结果对比。",
+    "red_flags": [
+     "本质是模型权重和学术论文复现，核心价值在模型而非产品",
+     "金融预测效果难以验证，容易滑向荐股、炒币等合规灰区"
+    ],
+    "reason": "话题性强、MIT许可安全、预测效果视觉直观，适合做内容与轻量工具，但金融预测合规和真实效果是最大风险。"
+   }
+  },
+  "HeyPuter/everything": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "把 Office、Photoshop、Slack 等全家桶重写成开源免费网页版",
+    "target_user": "预算敏感的中小团队、学校和个人用户（目前只能付费给 Mega 套件）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 8,
+     "pain": 5,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "把 Puter 全家桶包成免安装的在线办公套件，用一个账号打通文档、表格、聊天、日历。",
+    "demo_idea": "网页里并列展示 Photoshop 替代品打开 PSD、Excel 替代品打开表格，30 秒完成一轮真实操作。",
+    "red_flags": [
+     "由 Puter 团队自建的 monorepo，本身就是成熟商业产品，个人难以在其上做出差异化",
+     "一次声称重写世界全部软件，范围膨胀、各应用质量参差",
+     "多数子应用还需登录 Puter 账号并依赖其后端，并非纯前端",
+     "属大厂级基础设施野心，可包装空间小"
+    ],
+    "reason": "话题性和演示效果都不错，MIT 友好，但本质是 Puter 官方套件，个人能做产品包装与商业化的空间都很小，适合做内容、不适合做产品。"
+   }
+  },
+  "simbasjungles/free-my-tv": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "给 Google TV / 电视换一个无广告、更快的开源桌面",
+    "target_user": "被智能电视广告和卡顿烦到的科技爱好者、电视发烧友",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "一键刷入的电视去广告桌面：网页输 IP 和城市，自动构建安装，提供还原按钮",
+    "demo_idea": "网页左右对比原厂电视桌面广告轰炸 vs 清爽 60fps 桌面，现场滑动切换",
+    "red_flags": [
+     "安装流程依赖开发者模式、adb、Claude Code，普通用户门槛高",
+     "LG 开发商模式仅约 40 天，需反复续期，体验不稳定",
+     "需自备 TMDB key，依赖第三方 API",
+     "需改动电视系统桌面，存在兼容与保修风险",
+     "商业化路径不明，用户多为不愿付费的极客",
+     "首日爆红 1794 star，热度可能是短期脉冲"
+    ],
+    "reason": "痛点和话题性真实，换桌面需求明确、MIT 安全，但安装门槛高、付费意愿低、依赖开发者模式，更适合做内容而非快速商业化产品。"
+   }
+  },
+  "deepseek-ai/DeepInfer": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "DeepSeek官方开源的大模型推理引擎，让企业自己部署DeepSeek模型",
+    "target_user": "有GPU集群、需要私有化部署大模型的企业AI平台团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 3,
+     "wow": 5,
+     "pain": 5,
+     "packaging_room": 2,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 2
+    },
+    "product_idea": "做DeepSeek私有化部署的一站式托管平台，封装集群配置与调优",
+    "demo_idea": "网页模拟多卡推理吞吐对比图，滑杆调批量看延迟曲线变化",
+    "red_flags": [
+     "DeepSeek官方大厂基础设施项目，个人难做差异化",
+     "需SM100/Ascend 950硬件，普通开发者无法上手",
+     "README自述功能不完整（缺KV cache、PD分离、负载均衡）",
+     "本质是推理引擎，非可包装的终端产品"
+    ],
+    "reason": "话题热、许可证友好，但属大厂底层基础设施，硬件门槛极高，缺可演示性和包装空间，适合做技术科普内容而非创业。"
+   }
+  },
+  "pengchujin/aerial-tv": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "给国产电视换一个没有广告的干净桌面，长得像 Apple TV",
+    "target_user": "被国产电视开机广告和推荐流困扰、愿意折腾的年轻家庭用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "做电视桌面的「一键装机盒子」：扫码配对+远程代为完成 ADB 接管，卖会员和主题壁纸",
+    "demo_idea": "网页左右对比：左边小米广告桌面，右边 Aerial 航拍屏保+米白应用网格，可遥控器方向键切换",
+    "red_flags": [
+     "装机和保活依赖 ADB 与无障碍服务绕过厂商限制，灰色地带，随时可能被固件封杀",
+     "电视端产品很难向个人收费，商业模式薄弱",
+     "需真机才能完整演示，网页只能模拟界面"
+    ],
+    "reason": "痛点真实、话题性强、MIT 干净，但装机门槛和厂商对抗是硬伤，个人付费意愿低，更适合做内容而非独立产品。"
+   }
+  },
+  "VictorTaelin/uniichat": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "一个永不重置、能记住你多年的AI聊天助手",
+    "target_user": "重度使用AI编程助手、需要长期上下文的开发者与AI极客",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "托管版长期记忆AI工作台，订阅制，支持导入Claude/ChatGPT历史，多端同步",
+    "demo_idea": "网页模拟记忆树：拖动时间轴看旧消息折叠成一句话，点击展开还原原文",
+    "red_flags": [
+     "作者自述整个仓库由AI生成、审查，明确说明会有bug",
+     "已有官方托管网站，自托管版不收费，个人做产品会有差异化的压力",
+     "核心价值依赖用户自备API key与长期数据积累，短期演示效果弱"
+    ],
+    "reason": "记忆树+缩放的设计有新意，话题度高，但产品主体已存在且自承粗糙，商业化路径被官方托管占据，更适合做内容而非创业。"
+   }
+  },
+  "ELY-Open-Source/ElyOffice": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "一套像 Office 一样好用、完全离线、不用账号的桌面办公软件",
+    "target_user": "对隐私敏感的中小企业、开发者、需要离线办公的专业人士",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 7,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "打包成开箱即用的离线办公套件，主打隐私、不用账号、文件留在本地",
+    "demo_idea": "网页模拟打开本地 DOCX/XLSX，一键编辑保存，全程无网络请求，并展示断网仍可用的截图",
+    "red_flags": [
+     "刚创建 1 天就 583 star，star 增长异常，需警惕刷量",
+     "核心引擎依赖 LibreOfficeKit/MuPDF 编译，构建需约 1 小时，安装门槛极高",
+     "Linux/Windows 打包脚本未实测，跨平台可用性存疑",
+     "办公套件赛道被 Microsoft/Google/WPS 占据，差异化空间有限"
+    ],
+    "reason": "离线隐私办公的定位有吸引力，MIT 许可证友好，但构建极重、跨平台未验证、star 增长可疑，包装成产品可行但商业化路径偏窄。"
+   }
+  },
+  "msitarzewski/agency-agents": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "一套可直接装进 AI 编程工具里的分工角色包，让 AI 分别扮演工程师、运营、设计师",
+    "target_user": "重度使用 Claude Code、Cursor 的独立开发者与小团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 5,
+     "pain": 5,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "做成 agent 市场的浏览器与一键安装客户端，按团队和岗位挑选并同步更新",
+    "demo_idea": "网页左侧选岗位角色，右侧实时演示同一句话交给不同角色后得到的输出差异",
+    "red_flags": [
+     "本质是提示词和 markdown 配置文件集合，缺乏技术壁垒",
+     "官方已提供商业化的桌面 App 并配备官网，第三方包装空间很小",
+     "star 数量与 372 天创建时间存疑，热度可能虚高",
+     "内容极易被复制，竞品同类套壳产品很多"
+    ],
+    "reason": "话题热度高，但核心只是提示词包，作者已自建 App 闭环，留给外部产品的差异化和付费空间都很薄，适合做内容，不适合做产品。"
+   }
+  },
+  "headroomlabs-ai/headroom": {
+   "date": "2026-10-21",
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "给AI编程助手省token的压缩中间层，答案不变花费大降",
+    "target_user": "重度使用Claude Code/Cursor的开发者与AI应用团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 4,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "面向团队的token花费仪表盘：接入一行代理，展示压缩前后费用与调用量节省",
+    "demo_idea": "网页贴入一段冗长日志JSON，实时展示1万token缩到1千并仍能定位错误",
+    "red_flags": [
+     "包装空间有限：项目已有CLI、proxy、dashboard、Teams商业化与完整文档，偏成熟产品而非毛坯",
+     "压缩效果依赖自有模型与代理层，团队自研替代门槛低",
+     "已有付费Teams版，个人做差异化产品空间小"
+    ],
+    "reason": "赛道热、痛点真实、可演示性强，但项目自身已接近成品并自带商业化，做内容好于做产品。"
    }
   }
  }
