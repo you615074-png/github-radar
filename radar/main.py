@@ -38,6 +38,9 @@ def run(args) -> None:
     peak_note = ("⚠️ 本次运行处于 DeepSeek 峰时（全价）" if llm.is_peak()
                  else "✅ 本次运行处于 DeepSeek 谷时（半价）")
     print(f"[开始] {ts}，{peak_note}，后端 {config.LLM_BACKEND}")
+    if args.skip_if_done and (config.DATA / "daily" / f"{ts}.json").exists():
+        print(f"[跳过] {ts} 的日报已经生成过了")
+        return
 
     history = filters.load_history()
     forget_today(history, ts)
@@ -122,6 +125,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="不发邮件，邮件内容保存到 out/")
     ap.add_argument("--limit", type=int, default=0, help="最多打分多少个（测试用）")
     ap.add_argument("--no-demo", action="store_true", help="跳过 demo 生成")
+    ap.add_argument("--skip-if-done", action="store_true", help="当天已生成过日报就直接退出")
     args = ap.parse_args()
     try:
         run(args)

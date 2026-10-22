@@ -113,4 +113,9 @@ def parse_json(text: str) -> dict:
     start, end = text.find("{"), text.rfind("}")
     if start < 0 or end < 0:
         raise ValueError(f"模型没有返回 JSON：{text[:200]}")
-    return json.loads(text[start:end + 1])
+    raw = text[start:end + 1]
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        # 常见毛病：结尾多一个逗号、字符串里直接换行
+        return json.loads(re.sub(r",\s*([}\]])", r"\1", raw), strict=False)

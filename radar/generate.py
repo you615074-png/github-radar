@@ -25,12 +25,22 @@ def write_content(pick: dict, others: list[dict]) -> dict:
     lines = [f"- {o['full_name']}：{o['eval'].get('one_liner', '')}" for o in others]
     user = Template(prompt("content.user.md")).safe_substitute(
         **_fields(pick), others="\n".join(lines) or "（无）")
-    text = llm.chat([{"role": "system", "content": prompt("content.system.md")},
-                     {"role": "user", "content": user}],
-                    config.MODEL_WRITE, json_mode=True, max_tokens=4000)
-    data = llm.parse_json(text)
+    messages = [{"role": "system", "content": prompt("content.system.md")},
+                {"role": "user", "content": user}]
+    for attempt in range(1, 4):
+        try:
+            data = llm.parse_json(llm.chat(messages, config.MODEL_WRITE, json_mode=True, max_tokens=8000))
+            break
+        except ValueError as err:
+            print(f"[文案] 第 {attempt} 次返回的 JSON 无效：{err}")
+    else:  # 三次都失败：用打分结果拼一个简版，保证日报照常发出
+        e = pick["eval"]
+        data = {"headline": e.get("one_liner", "")[:20],
+                "summary_md": f"{e.get('one_liner', '')}\n\n{e.get('reason', '')}",
+                "post": "（今天的文案生成失败，没有草稿）",
+                "notes_md": f"（今天的创业笔记生成失败）\n\n**产品设想：**{e.get('product_idea', '')}"}
     for k in ("headline", "summary_md", "post", "notes_md"):
-        data.setdefault(k, "")
+        data[k] = data.get(k) or ""
     return data
 
 

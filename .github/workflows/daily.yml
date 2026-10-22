@@ -2,9 +2,11 @@ name: daily-radar
 
 on:
   schedule:
-    # 北京时间 06:17（UTC 22:17）。DeepSeek 峰时是北京时间工作日 09-12 点和 14-18 点，
-    # 这个时间点在谷时（半价），即使 GitHub 定时任务延迟一两个小时也来得及。
-    - cron: "17 22 * * *"
+    # GitHub 定时任务实测会延迟 2-3 小时，所以设两个触发点：北京时间 02:17 和 04:17（UTC 18:17、20:17）。
+    # 第一个成功后，第二个会自动跳过；第一个失败或没触发，第二个补上。
+    # 两个时间点即使延迟 3 小时也在 8 点前，且都在 DeepSeek 谷时（峰时是工作日北京时间 09-12、14-18 点）。
+    - cron: "17 18 * * *"
+    - cron: "17 20 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -51,8 +53,10 @@ jobs:
           SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           DRY_RUN: ${{ inputs.dry_run }}
           LIMIT: ${{ inputs.limit }}
+          EVENT: ${{ github.event_name }}
         run: |
           args=""
+          if [ "$EVENT" = "schedule" ]; then args="$args --skip-if-done"; fi
           if [ "$DRY_RUN" = "true" ]; then args="$args --dry-run"; fi
           if [[ "$LIMIT" =~ ^[0-9]+$ ]]; then args="$args --limit $LIMIT"; fi
           python -m radar.main $args
