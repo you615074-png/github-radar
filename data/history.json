@@ -17,6 +17,12 @@
    "full_name": "DietrichGebert/ponytail",
    "category": "开发者工具",
    "final": 7.86
+  },
+  {
+   "date": "2026-10-22",
+   "full_name": "pengchujin/aerial-tv",
+   "category": "效率工具",
+   "final": 7.16
   }
  ],
  "top": {
@@ -34,7 +40,12 @@
   "yetone/magpie": "2026-10-21",
   "headroomlabs-ai/headroom": "2026-10-21",
   "cloudflare/security-audit-skill": "2026-10-21",
-  "Graphify-Labs/graphify": "2026-10-21"
+  "Graphify-Labs/graphify": "2026-10-21",
+  "pengchujin/aerial-tv": "2026-10-22",
+  "simbasjungles/free-my-tv": "2026-10-22",
+  "Gathin23/cleanyourtv": "2026-10-22",
+  "tangency-labs/solidcraft": "2026-10-22",
+  "ikow/php2shell-poc": "2026-10-22"
  },
  "scores": {
   "storytold/artcraft": {
@@ -1681,6 +1692,271 @@
      "已有付费Teams版，个人做差异化产品空间小"
     ],
     "reason": "赛道热、痛点真实、可演示性强，但项目自身已接近成品并自带商业化，做内容好于做产品。"
+   }
+  },
+  "NVIDIA/flare-local-inference": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "英伟达官方推出的本地AI推理服务器，让个人工作站跑大模型更快更省内存",
+    "target_user": "拥有DGX Spark或高端NVIDIA工作站的AI开发者与研究者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 4,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 10,
+     "demoability": 3
+    },
+    "product_idea": "面向DGX Spark用户的图形化本地推理管理器，一键加载模型、调参并监控显存与生成速度",
+    "demo_idea": "网页模拟DGX Spark上同一模型在Flare与普通Python推理下的显存占用和首字延迟对比条",
+    "red_flags": [
+     "大厂（NVIDIA）官方研究原型，个人很难在其上做差异化产品",
+     "仅支持SM120/SM121特定GPU，受众极窄",
+     "本身定位为研究原型，明确不替代vLLM等生产引擎"
+    ],
+    "reason": "技术话题性强但属英伟达官方基础设施，硬件门槛高、受众窄、商业化空间小，作为内容有料但产品化价值有限"
+   }
+  },
+  "supabase/supabase": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "开源的 Firebase 替代品，自带数据库、登录和接口",
+    "target_user": "独立开发者与中小创业团队的技术负责人",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 5,
+     "pain": 4,
+     "packaging_room": 2,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "已高度成熟的商业平台，做不了轻量包装，只能做垂直模板或教程内容",
+    "demo_idea": "网页里点几下建表，立刻生成 REST 接口和实时订阅更新，三十秒见效",
+    "red_flags": [
+     "知名商业公司的官方平台，个人难以在其上做差异化产品",
+     "自托管部署复杂，商业价值已被官方云服务占据"
+    ],
+    "reason": "传播话题性强、许可证友好，但本质是大厂商业平台，包装空间和付费空间都被官方占据，更适合做内容而非创业。"
+   }
+  },
+  "eagle-hq/EAGLE-4": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "让大模型回答速度提升约3倍的加速插件",
+    "target_user": "部署自建大模型服务的中小AI团队与推理服务商",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 3
+    },
+    "product_idea": "做托管式投机解码加速服务，自动调参并支持多引擎一键接入",
+    "demo_idea": "网页并排对比同一提示词开启/关闭加速的每秒生成字数与耗时",
+    "red_flags": [
+     "官方研究代码，定位是给SGLang/vLLM打补丁的推理组件",
+     "许可证NOASSERTION，使用与商用风险不明",
+     "需要B300级多卡与大模型权重，个人难复现和二次开发",
+     "本身是大厂/团队主推的基础设施，差异化产品空间小"
+    ],
+    "reason": "话题热、加速数字亮眼，但属官方推理基础设施且许可不明，安装与硬件门槛极高，产品化与商业化空间有限，更适合做科普内容而非创业。"
+   }
+  },
+  "dominikmartn/harp": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "一个侧边栏同时管理多个 Claude Code / Codex 编程助手，谁在等你一眼看清",
+    "target_user": "同时跑多个 AI 编程代理的独立开发者、小团队技术负责人",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "多 AI 编程代理的统一控制台：侧边栏显示各代理状态、分组、限额，手机可接管",
+    "demo_idea": "网页模拟 5 个代理会话，侧边栏实时切换工作中/等你/完成状态并弹提醒",
+    "red_flags": [
+     "AGPL-3.0 许可证，商业化和二次分发受限",
+     "Warp 非官方 fork，依赖上游代码，维护与法律风险高",
+     "仅 macOS，且绑定 Claude/Codex 订阅",
+     "创建仅 1 天，星标增长异常，稳定性未知"
+    ],
+    "reason": "切中多代理并行管理的真实痛点，演示直观、话题性强；但 AGPL 封死商业路径，且为 fork 项目难做差异化。"
+   }
+  },
+  "vllm-project/vllm": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "让大模型推理又快又省显存的开源服务引擎",
+    "target_user": "部署私有 LLM 的企业 AI 平台团队与推理服务提供商",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 4,
+     "wow": 5,
+     "pain": 7,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 3
+    },
+    "red_flags": [
+     "大厂与学界共同主导的成熟基础设施（2000+ 贡献者），个人难以在其上做差异化产品",
+     "需 GPU 环境才能跑，纯前端 demo 无法体现核心吞吐/显存优势",
+     "定位是底层引擎，普通用户无感知，缺乏可包装的产品缺口"
+    ],
+    "product_idea": "基于 vLLM 做托管式一键部署平台：选模型即得 OpenAI 兼容 API，按 Token 计费。",
+    "demo_idea": "网页对比 vLLM 与朴素 HF 推理在并发下的吞吐与显存曲线（预录数据模拟）。",
+    "reason": "话题热度与痛点都强，Apache 许可安全，但它是大厂级底层基础设施，本身已很成熟，包装与变现空间小，更适合做技术科普内容而非产品化。"
+   }
+  },
+  "ctresb/leis": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "其他",
+    "one_liner": "把巴西全部法律条文整理成 Markdown 放在 GitHub 上，可免费查阅",
+    "target_user": "巴西的律师、法学生、法律科技公司、政府与合规团队",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 7,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 2,
+     "demoability": 3
+    },
+    "product_idea": "把法律全文做成可搜索、带版本时间线的 API 与问答产品，面向律所和合规团队",
+    "demo_idea": "网页搜索一条法律，展示条文、修订历史和生效时间线，点击即定位原文",
+    "red_flags": [
+     "本质是数据集/语料库，并非可产品化的软件项目",
+     "许可证为 NOASSERTION，权利归属不明，商用风险高",
+     "内容只是政府公开法条文本，二次分发面临原创性与合规争议"
+    ],
+    "reason": "话题性和易懂度不错，但本质是公共数据整理，没有技术壁垒；许可证不明，商业化路径模糊，适合做内容选题，不适合做成产品"
+   }
+  },
+  "Droid-Deck/DroidDeck": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "让安卓手机变成一台能玩PC游戏的Steam掌机",
+    "target_user": "有安卓旗舰手机的游戏玩家、掌机爱好者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 9,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 4,
+     "demoability": 5
+    },
+    "product_idea": "把一键安装、设备兼容检测、游戏库美化做成付费整合包或订阅服务",
+    "demo_idea": "手机横屏运行Steam大屏界面并启动一款3A游戏，与原生手游对比帧率和画质",
+    "red_flags": [
+     "GPL-3.0，衍生分发和闭源商业化受限",
+     "强依赖特定Adreno机型和Valve的ARM64 Proton，生态稳定性和法务风险高",
+     "本质是整合层，上游Steam/Proton/Android任何变动都可能使其失效",
+     "安装涉及侧载、开发者选项，体验门槛和兼容问题在开源版已由作者承担，付费空间薄"
+    ],
+    "reason": "话题性和惊喜感极强，演示效果直观，但GPL与上游依赖严重限制商业化，更适合做内容而非产品。"
+   }
+  },
+  "ikow/php2shell-poc": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "安全",
+    "one_liner": "一个影响78%网站的PHP远程控制漏洞利用与检测工具包",
+    "target_user": "企业安全团队、SOC/应急响应服务商、WAF厂商",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 9,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "把检测规则做成SaaS告警服务或一键WAF防护插件，面向中小站点运维。",
+    "demo_idea": "网页模拟攻击请求与规则拦截前后对比，实时显示拦截日志。",
+    "red_flags": [
+     "实为漏洞利用POC，完整利用链需付费订阅，有灰产/攻击工具属性",
+     "1天1102星增长异常，疑似刷星或炒作",
+     "核心漏洞未经验证可信度存疑",
+     "爆款靠数据真实性支撑，做内容有背书风险"
+    ],
+    "reason": "话题性和冲击力极强，但本质是攻防研究POC，产品化空间小且合规敏感，适合做内容选题而非创业项目。"
+   }
+  },
+  "openai/php2shell-checker": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "安全",
+    "one_liner": "检查网站或服务器上的 PHP 版本有没有被 php2shell 漏洞影响",
+    "target_user": "运维工程师、网站站长、安全自查的中小企业",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 7,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做成一个输入网址就能一键体检 PHP 漏洞的网页，并附上修复建议和一键升级脚本",
+    "demo_idea": "在网页上输入域名，实时展示解析出的 PHP 版本，用红绿标签显示是否存在风险",
+    "red_flags": [
+     "OpenAI 官方仓库，属于大厂基础设施工具，个人很难在其上做出差异化",
+     "只是一个轻量 CLI 检测脚本，功能单一，容易复制",
+     "不会跟进重定向，也不会解析响应体，漏报 UNKNOWN 情况多",
+     "商业化空间窄，安全自查多为免费工具"
+    ],
+    "reason": "话题有热度，需求真实，也很容易演示；但工具太轻、由官方出品，且检出方式粗糙，适合做内容，不适合独立包装成产品"
+   }
+  },
+  "nano-muse/nanoMuse": {
+   "date": "2026-10-22",
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "一个住在你所有设备里的私人AI管家，能替你操作手机和电脑",
+    "target_user": "关注隐私、愿意自己部署的技术爱好者和重度AI用户",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 8,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 5,
+     "demoability": 8
+    },
+    "product_idea": "托管版私人Agent云：免部署、跨设备记忆同步、按额度订阅，企业版私有化部署",
+    "demo_idea": "网页模拟手机，一句话让它打开App订机票并弹出确认，全程可视",
+    "red_flags": [
+     "GPL-3.0对商业闭源包装有限制，需注意合规",
+     "项目自称免费非营利，且已有官方demo和自建relay，差异化空间被压缩",
+     "跨设备GUI操控权限大，隐私与安全争议会带来舆论风险",
+     "团队学术背景+论文，易被质疑为论文工程化，长期维护存疑"
+    ],
+    "reason": "对标Meta Muse的开源跨设备GUI Agent，话题性与惊喜感强；但自带demo和relay，包装空间和收费路径受限，GPL需合规处理。"
    }
   }
  }

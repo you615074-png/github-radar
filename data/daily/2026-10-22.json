@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-22",
+ "headline": "国产电视开机广告太烦？这个开源桌面直接换掉",
+ "summary_md": "今天聊一个叫 Aerial 的开源项目（仓库 pengchujin/aerial-tv），它给小米、TCL 这类国产电视换上一个没有广告、没有推荐流的干净桌面，界面照着 Apple TV 的 tvOS 设计。最近火起来，主要是开机广告和系统里塞满的推荐位实在让人烦，而它刚好提供了「不用 root」也能把默认桌面换掉的方案。从 README 看，安装方式是电脑和电视连同一个 Wi-Fi，通过 ADB 装 APK 并授权，还有一键脚本。装好之后开机自动接管，待机被系统杀掉也能复活。功能上有航拍屏保、必应壁纸、信号源磁贴、手机扫码换壁纸等。如果做成产品，机会不在卖软件，而在「帮人装好」这件事本身：对不折腾的用户来说，ADB 这一步仍然太高，做一个扫码配对、远程代装的盒子或上门服务，再搭会员主题包，可能比直接卖桌面更现实。",
+ "pick": {
+  "full_name": "pengchujin/aerial-tv",
+  "url": "https://github.com/pengchujin/aerial-tv",
+  "description": "给国产电视的一块干净桌面：参照 tvOS 设计的开源 Android TV 桌面，没有广告，开机自动接管。A tvOS-style launcher for Xiaomi, TCL and other China-market TVs.",
+  "license": "MIT",
+  "stars": 2356,
+  "daily_rate": 2356.0,
+  "category": "效率工具",
+  "one_liner": "给国产电视换一个没有广告的干净桌面，长得像 Apple TV",
+  "reason": "痛点真实、话题性强、MIT 干净，但装机门槛和厂商对抗是硬伤，个人付费意愿低，更适合做内容而非独立产品。",
+  "content": 7.67,
+  "startup": 6.65,
+  "final": 7.16,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-22-pengchujin-aerial-tv",
+ "top": [
+  {
+   "full_name": "pengchujin/aerial-tv",
+   "url": "https://github.com/pengchujin/aerial-tv",
+   "one_liner": "给国产电视换一个没有广告的干净桌面，长得像 Apple TV",
+   "reason": "痛点真实、话题性强、MIT 干净，但装机门槛和厂商对抗是硬伤，个人付费意愿低，更适合做内容而非独立产品。",
+   "content": 7.67,
+   "startup": 6.65,
+   "final": 7.16,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "simbasjungles/free-my-tv",
+   "url": "https://github.com/simbasjungles/free-my-tv",
+   "one_liner": "给 Google TV / 电视换一个无广告、更快的开源桌面",
+   "reason": "痛点和话题性真实，换桌面需求明确、MIT 安全，但安装门槛高、付费意愿低、依赖开发者模式，更适合做内容而非快速商业化产品。",
+   "content": 7.0,
+   "startup": 6.85,
+   "final": 7.09,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Gathin23/cleanyourtv",
+   "url": "https://github.com/Gathin23/cleanyourtv",
+   "one_liner": "用电脑连Wi-Fi给电视去广告、换成像Apple TV的干净桌面",
+   "reason": "痛点真实、话题传播强、Launcher包装空间大，但许可证不明、本质是提示词合集、付费意愿弱，适合做内容不宜直接商用。",
+   "content": 8.0,
+   "startup": 5.5,
+   "final": 7.0,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "tangency-labs/solidcraft",
+   "url": "https://github.com/tangency-labs/solidcraft",
+   "one_liner": "纯Rust写的开源参数化3D建模软件，改个尺寸模型自动重建",
+   "reason": "Rust纯自研几何内核加分，11天涨近6000星话题性强；但已是成熟成品，商业化和包装空间受限，适合做内容不适合直接套壳。",
+   "content": 7.0,
+   "startup": 5.85,
+   "final": 6.85,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "ikow/php2shell-poc",
+   "url": "https://github.com/ikow/php2shell-poc",
+   "one_liner": "一个影响78%网站的PHP远程控制漏洞利用与检测工具包",
+   "reason": "话题性和冲击力极强，但本质是攻防研究POC，产品化空间小且合规敏感，适合做内容选题而非创业项目。",
+   "content": 8.0,
+   "startup": 5.9,
+   "final": 6.81,
+   "category_penalty": 0
+  }
+ ]
+}

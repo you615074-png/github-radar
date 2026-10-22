@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aerial 盒子 · 给国产电视一块干净桌面</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .glass{
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(14px) saturate(150%);
+    -webkit-backdrop-filter:blur(14px) saturate(150%);
+    border:1px solid rgba(255,255,255,.18);
+  }
+  .aerial-live{animation:drift 30s ease-in-out infinite;transform-origin:60% 40%}
+  @keyframes drift{
+    0%,100%{transform:scale(1.02) translate3d(0,0,0)}
+    50%{transform:scale(1.1) translate3d(-1.6%,-1.2%,0)}
+  }
+  .ad-glow{animation:adGlow 3.4s ease-in-out infinite}
+  @keyframes adGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.15)}}
+  .pop{animation:pop .34s ease-out}
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.14)}100%{transform:scale(1)}}
+  .fade-up{animation:fadeUp .4s ease-out both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  .no-scrollbar::-webkit-scrollbar{display:none}
+  .no-scrollbar{scrollbar-width:none}
+</style>
+</head>
+<body class="bg-[#f7f6f3] text-neutral-900">
+
+<!-- ================= 顶栏 ================= -->
+<header class="sticky top-0 z-40 bg-[#f7f6f3]/85 backdrop-blur border-b border-black/5">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-[10px] bg-neutral-900 text-white grid place-items-center">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M3 15.5c3.2-6 7-9 9-9s5.8 3 9 9"/>
+          <path d="M6.5 19c2.2-3.8 4-5.6 5.5-5.6s3.3 1.8 5.5 5.6"/>
+        </svg>
+      </span>
+      <span class="font-semibold tracking-tight">Aerial 盒子</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm text-neutral-500">
+      <a href="#demo" class="hover:text-neutral-900 transition">对比试玩</a>
+      <a href="#scenes" class="hover:text-neutral-900 transition">使用场景</a>
+      <a href="#pricing" class="hover:text-neutral-900 transition">价格</a>
+    </nav>
+    <a href="#pricing" class="text-sm font-medium px-4 py-2 rounded-full bg-neutral-900 text-white hover:bg-neutral-700 transition">加入候补</a>
+  </div>
+</header>
+
+<!-- ================= 首屏 ================= -->
+<section id="top" class="relative max-w-6xl mx-auto px-5 pt-12 pb-8 md:pt-20 md:pb-10">
+  <div class="pointer-events-none absolute -top-24 right-0 w-[420px] h-[420px] rounded-full blur-3xl opacity-40"
+       style="background:radial-gradient(circle,#b6e6da,transparent 70%)"></div>
+  <div class="relative">
+    <p class="inline-flex items-center gap-2 text-xs text-neutral-500 border border-black/10 bg-white rounded-full px-3 py-1.5 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      开源项目 · MIT · 概念演示
+    </p>
+    <h1 class="text-[34px] leading-[1.15] md:text-6xl md:leading-[1.08] font-semibold tracking-tight max-w-3xl">
+      给国产电视<br class="md:hidden">换一块
+      <span class="relative whitespace-nowrap">
+        <span class="relative z-10">干净桌面</span>
+        <span class="absolute inset-x-0 bottom-1 h-3 md:h-4 bg-emerald-200/70 -z-0 rounded-sm"></span>
+      </span>
+    </h1>
+    <p class="mt-5 text-base md:text-lg text-neutral-600 max-w-2xl leading-relaxed">
+      没有推荐流，没有满屏广告位，只有你的 App 和一张航拍壁纸。<br class="hidden md:block">
+      扫码配对，我们把小米、TCL 的桌面换成参照 tvOS 设计的 Aerial —— 长得像 Apple TV。
+    </p>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <a href="#demo" class="px-5 py-3 rounded-full bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-700 transition">
+        亲自按一下遥控器 →
+      </a>
+      <a href="#pricing" class="px-5 py-3 rounded-full bg-white border border-black/10 text-sm font-medium text-neutral-700 hover:border-black/25 transition">
+        看怎么装
+      </a>
+      <span class="text-xs text-neutral-400 ml-1">页面内全部为演示数据，不需要真机</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 核心交互 ================= -->
+<section id="demo" class="max-w-6xl mx-auto px-5 pb-6 scroll-mt-20">
+  <div class="rounded-[28px] bg-white border border-black/5 shadow-[0_40px_90px_-50px_rgba(0,0,0,.45)] p-4 sm:p-6 md:p-8">
+
+    <div class="flex flex-wrap items-end justify-between gap-3 mb-5 md:mb-6">
+      <div>
+        <p class="text-[11px] font-medium tracking-[0.18em] text-neutral-400 mb-2">实时对比 · 演示数据</p>
+        <h2 class="text-xl md:text-2xl font-semibold tracking-tight">同一块电视屏，两种桌面</h2>
+      </div>
+      <div id="dodgePill" class="px-3.5 py-2 rounded-full bg-emerald-50 text-emerald-700 text-xs md:text-sm font-medium border border-emerald-100">
+        本次已躲过 <span id="dodgeNum">0</span> 条推荐
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+
+      <!-- 左：电视自带桌面 -->
+      <div>
+        <div class="relative aspect-video rounded-2xl overflow-hidden ring-1 ring-black/10 select-none"
+             style="background:linear-gradient(155deg,#2a1b52 0%,#472164 48%,#1c1338 100%)">
+          <div class="absolute inset-0 flex flex-col p-2 md:p-3 gap-1.5 md:gap-2">
+
+            <!-- 状态栏 -->
+            <div class="flex items-center justify-between text-white/60 text-[7px] md:text-[10px] shrink-0">
+              <div class="flex items-center gap-1.5">
+                <span>18:42</span><span>·</span><span>晴 26°</span><span>·</span><span>HDMI 1</span>
+              </div>
+              <div class="flex gap-1">
+                <span class="px-1.5 py-[1px] rounded bg-white/10">搜索</span>
+                <span class="px-1.5 py-[1px] rounded bg-white/10">我的</span>
+              </div>
+            </div>
+
+            <!-- 广告大图 -->
+            <div class="ad-glow relative flex-1 min-h-0 rounded-lg md:rounded-xl px-2 md:px-3 flex items-center justify-between overflow-hidden"
+                 style="background:linear-gradient(100deg,#ff7a18 0%,#ff3d7f 55%,#b721ff 100%)">
+              <div class="relative z-10">
+                <p class="text-white font-semibold text-[10px] md:text-base leading-tight">0 元领 3 个月会员</p>
+                <p class="text-white/85 text-[6px] md:text-[11px] mt-0.5">限时特惠 · 首月仅需 9.9 元</p>
+                <span class="inline-block mt-1 md:mt-1.5 px-1.5 py-[1px] md:py-0.5 rounded-full bg-white text-[6px] md:text-[10px] font-medium text-pink-600">立即领取</span>
+              </div>
+              <div class="relative z-10 flex gap-1 md:gap-1.5">
+                <div class="w-7 h-9 md:w-14 md:h-16 rounded-md bg-white/25"></div>
+                <div class="w-7 h-9 md:w-14 md:h-16 rounded-md bg-white/15"></div>
+              </div>
+              <span class="absolute top-1 right-1 text-[5px] md:text-[9px] px-1 py-[1px] rounded bg-black/30 text-white/80">广告</span>
+            </div>
+
+            <!-- 推荐流 -->
+            <div class="shrink-0">
+              <p class="text-white/50 text-[6px] md:text-[10px] mb-1">为你推荐</p>
+              <div class="grid grid-cols-5 gap-1 md:gap-1.5">
+                <div class="relative aspect-[4/3] rounded-md" style="background:linear-gradient(150deg,#ff9a3c,#ff4d6d)">
+                  <span class="absolute bottom-0.5 left-0.5 text-[4px] md:text-[7px] text-white/90">热播</span>
+                </div>
+                <div class="relative aspect-[4/3] rounded-md" style="background:linear-gradient(150deg,#4dabf7,#3b5bdb)">
+                  <span class="absolute top-0.5 right-0.5 px-[2px] rounded text-[4px] md:text-[7px] bg-black/40 text-white/80">广告</span>
+                </div>
+                <div class="relative aspect-[4/3] rounded-md" style="background:linear-gradient(150deg,#63e6be,#0ca678)"></div>
+                <div class="relative aspect-[4/3] rounded-md" style="background:linear-gradient(150deg,#f783ac,#a61e4d)">
+                  <span class="absolute top-0.5 right-0.5 px-[2px] rounded text-[4px] md:text-[7px] bg-black/40 text-white/80">广告</span>
+                </div>
+                <div class="relative aspect-[4/3] rounded-md" style="background:linear-gradient(150deg,#ffd43b,#f76707)"></div>
+              </div>
+            </div>
+
+            <!-- 底部分区 -->
+            <div class="flex items-center gap-2 md:gap-3 text-[6px] md:text-[9px] text-white/45 shrink-0">
+              <span class="text-white/80">应用</span><span>影视</span><span>少儿</span><span>教育</span><span>购物</span><span>游戏</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 flex items-start gap-2">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>
+          <div>
+            <p class="text-sm font-medium">电视自带的桌面</p>
+            <p class="text-xs text-neutral-500 mt-0.5 leading-relaxed">首页 12 个推荐位、6 个广告、会员弹窗。遥控器怎么按都躲不开。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右：Aerial 桌面 -->
+      <div>
+        <div id="stage" tabindex="0"
+             class="relative aspect-video rounded-2xl overflow-hidden ring-1 ring-black/10 select-none outline-none cursor-pointer"
+             style="background:#07222e">
+
+          <!-- 航拍壁纸 -->
+          <div class="absolute inset-0 aerial-live">
+            <div class="absolute inset-0" style="background:
+              radial-gradient(120% 90% at 16% 4%, #1e7f96 0%, rgba(30,127,150,0) 58%),
+              radial-gradient(90% 80% at 88% 20%, #2fa39b 0%, rgba(47,163,155,0) 52%),
+              linear-gradient(158deg,#061a26 0%,#0a2b39 42%,#0d4150 72%,#0b5560 100%)"></div>
+            <div class="absolute -left-12 top-1/3 w-[85%] h-[20%] rounded-full blur-md"
+                 style="background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,0));transform:rotate(-8deg)"></div>
+            <div class="absolute right-0 bottom-2 w-[55%] h-[16%] rounded-full blur-xl"
+                 style="background:radial-gradient(circle,rgba(180,255,240,.35),transparent 72%)"></div>
+          </div>
+
+          <!-- 顶部信息 -->
+          <div class="absolute inset-x-0 top-0 p-2.5 md:p-4 flex items-start justify-between text-white/90">
+            <div class="text-[8px] md:text-xs tracking-wide" style="text-shadow:0 1px 6px rgba(0,0,0,.6)">🏔 Maui, Hawaii</div>
+            <div class="text-[10px] md:text-sm font-medium tabular-nums" style="text-shadow:0 1px 6px rgba(0,0,0,.6)">18:42</div>
+          </div>
+
+          <!-- 玻璃底板 + 应用网格 -->
+          <div class="absolute inset-x-0 bottom-0 p-2 md:p-3.5">
+            <div class="glass rounded-2xl p-1.5 md:p-3">
+              <div id="nameLabel"
+                   class="text-center text-white text-[9px] md:text-xs font-medium mb-1 md:mb-2 min-h-[14px] md:min-h-[18px]"
+                   style="text-shadow:0 1px 6px rgba(0,0,0,.7)">云视听极光</div>
+              <div id="gridTiles" class="grid grid-cols-5 gap-1.5 md:gap-2.5"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 flex items-start gap-2">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+          <div>
+            <p class="text-sm font-medium">Aerial 桌面 <span class="text-xs font-normal text-neutral-400">（演示数据）</span></p>
+            <p class="text-xs text-neutral-500 mt-0.5 leading-relaxed">0 推荐位。第一排不显示名字，网格里只显示选中 App 的名字。返回键 → 航拍屏保。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 遥控器 -->
+    <div class="mt-5 md:mt-6 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 rounded-2xl bg-neutral-50 border border-black/5 p-3 sm:p-4">
+      <div id="dpad" class="grid grid-cols-3 grid-rows-3 gap-1.5 w-[132px] shrink-0">
+        <div></div>
+        <button type="button" data-dir="up" aria-label="上" class="h-10 rounded-xl bg-white border border-black/10 shadow-sm grid place-items-center text-neutral-600 active:scale-95 transition">↑</button>
+        <div></div>
+        <button type="button" data-dir="left" aria-label="左" class="h-10 rounded-xl bg-white border border-black/10 shadow-sm grid place-items-center text-neutral-600 active:scale-95 transition">←</button>
+        <button type="button" data-dir="ok" aria-label="确定" class="h-10 rounded-xl bg-neutral-900 text-white text-[11px] font-medium active:scale-95 transition">OK</button>
+        <button type="button" data-dir="right" aria-label="右" class="h-10 rounded-xl bg-white border border-black/10 shadow-sm grid place-items-center text-neutral-600 active:scale-95 transition">→</button>
+        <div></div>
+        <button type="button" data-dir="down" aria-label="下" class="h-10 rounded-xl bg-white border border-black/10 shadow-sm grid place-items-center text-neutral-600 active:scale-95 transition">↓</button>
+        <div></div>
+      </div>
+      <div class="flex-1 text-center sm:text-left">
+        <p class="text-sm font-medium">试着按一下遥控器</p>
+        <p class="text-xs text-neutral-500 mt-1 leading-relaxed">
+          点一下右边的电视，就能用键盘 <span class="px-1 rounded bg-white border border-black/10 text-[11px]">↑ ↓ ← →</span>
+          <span class="px-1 rounded bg-white border border-black/10 text-[11px]">Enter</span> 操作；手机上直接点上面的方向键。
+        </p>
+      </div>
+      <button type="button" id="backBtn"
+              class="px-4 py-2.5 rounded-xl bg-white border border-black/10 text-sm text-neutral-700 hover:border-black/25 active:scale-95 transition shrink-0">↩︎ 返回键</button>
+    </div>
+
+    <!-- 适配方案 -->
+    <div class="mt-6 md:mt-8 pt-6 border-t border-black/5">
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span class="text-[11px] font-medium tracking-[0.16em] text-neutral-400 mr-1">你的电视是</span>
+        <div id="brandChips" class="flex flex-wrap gap-2"></div>
+      </div>
+      <div id="adaptPanel" class="grid md:grid-cols-3 gap-5 rounded-2xl bg-neutral-50 border border-black/5 p-4 md:p-5"></div>
+      <p class="text-[11px] text-neutral-400 mt-3 leading-relaxed">
+        * 开机广告由电视固件播放，任何桌面都去不掉；Aerial 换掉的是桌面上的推荐位、会员弹窗和杂乱入口。以上均为演示数据。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 一键接管模拟 ================= -->
+<section class="max-w-6xl mx-auto px-5 pb-14">
+  <div class="rounded-[24px] bg-white border border-black/5 p-5 md:p-7 shadow-[0_20px_60px_-45px_rgba(0,0,0,.5)]">
+    <div class="grid md:grid-cols-2 gap-6 items-start">
+      <div>
+        <p class="text-[11px] font-medium tracking-[0.18em] text-neutral-400 mb-2">装机盒子 · 演示</p>
+        <h3 class="text-lg md:text-xl font-semibold tracking-tight">把电视 IP 填进来，剩下的交给我们</h3>
+        <p class="text-sm text-neutral-600 mt-2 leading-relaxed">
+          盒子在同一网络里通过 ADB 连接电视，自动装 APK、授予守护权限、注册复活监听。不用 root，不动任何系统应用，
+          原来的桌面还在 App 列表里，随时能还原。
+        </p>
+        <div class="mt-4 flex flex-col sm:flex-row gap-2">
+          <div class="relative flex-1">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-neutral-400">IP</span>
+            <input id="ipInput" value="192.168.1.20" inputmode="decimal"
+                   class="w-full pl-11 pr-3 py-3 rounded-xl bg-neutral-50 border border-black/10 text-sm outline-none focus:border-neutral-900 transition"
+                   aria-label="电视 IP 地址">
+          </div>
+          <button type="button" id="runBtn"
+                  class="px-5 py-3 rounded-xl bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-700 transition">开始一键接管</button>
+        </div>
+        <p class="text-[11px] text-neutral-400 mt-2">演示模拟，不会真的连接任何设备。</p>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[11px] font-medium tracking-[0.16em] text-neutral-400">远程执行日志</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-500">演示数据</span>
+        </div>
+        <div id="log" class="no-scrollbar rounded-xl bg-neutral-900 p-3 h-[196px] overflow-y-auto text-[11px] leading-relaxed font-mono text-neutral-400">
+          <div class="text-white/40">等待开始…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 使用场景 ================= -->
+<section id="scenes" class="max-w-6xl mx-auto px-5 pb-16 scroll-mt-20">
+  <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">三个最常被提到的场景</h2>
+  <p class="text-sm text-neutral-500 mt-2">来自开源项目里用户最关心的三件事。</p>
+  <div class="grid md:grid-cols-3 gap-4 mt-7">
+    <div class="rounded-2xl bg-white border border-black/5 p-5 md:p-6">
+      <div class="w-11 h-11 rounded-xl bg-amber-50 grid place-items-center text-xl mb-4">🧓</div>
+      <h3 class="font-semibold">老人和小孩自己开电视</h3>
+      <p class="text-sm text-neutral-600 mt-2 leading-relaxed">
+        没有推荐流，就不会误点进会员购买页。首页只有你的 5 个 App，遥控器上下左右就能找到动画片。
+      </p>
+      <p class="text-[11px] text-neutral-400 mt-3">长按 OK 可以移动、隐藏 App</p>
+    </div>
+    <div class="rounded-2xl bg-white border border-black/5 p-5 md:p-6">
+      <div class="w-11 h-11 rounded-xl bg-teal-50 grid place-items-center text-xl mb-4">🌄</div>
+      <h3 class="font-semibold">没人看的时候，它是一幅航拍</h3>
+      <p class="text-sm text-neutral-600 mt-2 leading-relaxed">
+        114 段 Apple TV 航拍屏保，镜头移动时显示地名；也可以换成必应每日壁纸、内置的 Mac 风格壁纸或自己的照片。时钟每分钟换个位置，防止烧屏。
+      </p>
+      <p class="text-[11px] text-neutral-400 mt-3">航拍影片需要联网播放</p>
+    </div>
+    <div class="rounded-2xl bg-white border border-black/5 p-5 md:p-6">
+      <div class="w-11 h-11 rounded-xl bg-indigo-50 grid place-items-center text-xl mb-4">📱</div>
+      <h3 class="font-semibold">用手机换壁纸，不用在电视上打字</h3>
+      <p class="text-sm text-neutral-600 mt-2 leading-relaxed">
+        扫一下电视壁纸面板上的二维码，在手机里选壁纸、上传照片、换屏保。面板只在打开时开放，地址带随机令牌。
+      </p>
+      <p class="text-[11px] text-neutral-400 mt-3">支持小米、TCL、海尔等 Android TV</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 价格 / 候补 ================= -->
+<section id="pricing" class="max-w-6xl mx-auto px-5 pb-16 scroll-mt-20">
+  <div class="rounded-[28px] bg-neutral-900 text-white p-6 md:p-10 overflow-hidden relative">
+    <div class="pointer-events-none absolute -top-24 -right-16 w-[380px] h-[380px] rounded-full blur-3xl opacity-25"
+         style="background:radial-gradient(circle,#3ecfb2,transparent 70%)"></div>
+    <div class="relative">
+      <p class="text-[11px] font-medium tracking-[0.18em] text-white/40 mb-3">候补中 · 价格均为演示</p>
+      <h2 class="text-2xl md:text-3xl font-semibold tracking-tight">开源是免费的，省心是要付费的</h2>
+      <p class="text-sm text-white/60 mt-2 max-w-2xl leading-relaxed">
+        Aerial 本身是 MIT 开源、免费下载。盒子卖的是「不用折腾」：扫码配对、远程代装、出问题有人管，外加每月更新的航拍屏保和壁纸包。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-4 mt-8">
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex flex-col">
+          <p class="text-sm font-medium text-white/80">自己动手</p>
+          <p class="text-3xl font-semibold mt-2">¥0</p>
+          <p class="text-xs text-white/50 mt-1">开源 APK · MIT</p>
+          <ul class="text-sm text-white/70 mt-4 space-y-1.5 flex-1">
+            <li>· 官方安装文档</li>
+            <li>· 一行命令或交给 Agent</li>
+            <li>· 随时能还原</li>
+          </ul>
+          <button type="button" data-plan="自己动手" class="mt-5 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-sm transition">查看安装方式</button>
+        </div>
+
+        <div class="rounded-2xl bg-white text-neutral-900 p-5 flex flex-col ring-2 ring-emerald-400/60">
+          <div class="flex items-center justify-between">
+            <p class="text-sm font-medium">装机盒子</p>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">主力</span>
+          </div>
+          <p class="text-3xl font-semibold mt-2">¥299 <span class="text-sm font-normal text-neutral-500">一次性</span></p>
+          <p class="text-xs text-neutral-500 mt-1">含 1 年质保与远程协助</p>
+          <ul class="text-sm text-neutral-700 mt-4 space-y-1.5 flex-1">
+            <li>· 扫码配对，远程代装接管</li>
+            <li>· 待机被杀自动复活</li>
+            <li>· 升级、还原都由我们代劳</li>
+          </ul>
+          <button type="button" data-plan="装机盒子" class="mt-5 w-full py-2.5 rounded-xl bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-700 transition">加入候补名单</button>
+        </div>
+
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex flex-col">
+          <p class="text-sm font-medium text-white/80">主题会员</p>
+          <p class="text-3xl font-semibold mt-2">¥9.9 <span class="text-sm font-normal text-white/50">/ 月</span></p>
+          <p class="text-xs text-white/50 mt-1">可随时取消</p>
+          <ul class="text-sm text-white/70 mt-4 space-y-1.5 flex-1">
+            <li>· 每月航拍屏保包</li>
+            <li>· 精选壁纸与照片墙</li>
+            <li>· 家庭多电视同步</li>
+          </ul>
+          <button type="button" data-plan="主题会员" class="mt-5 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-sm transition">加入候补名单</button>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-col sm:flex-row gap-2 max-w-xl">
+        <input id="email" value="you@example.com" type="email" aria-label="邮箱"
+               class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-sm text-white placeholder-white/40 outline-none focus:border-white/40 transition">
+        <button type="button" id="waitBtn"
+                class="px-5 py-3 rounded-xl bg-emerald-400 text-neutral-900 text-sm font-semibold hover:bg-emerald-300 transition">加入候补名单</button>
+      </div>
+      <p id="waitMsg" class="hidden text-xs text-emerald-300 mt-3">✅ 已记录（演示，未提交任何数据）</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 页脚 ================= -->
+<footer class="border-t border-black/5 py-8">
+  <div class="max-w-6xl mx-auto px-5 text-center text-xs text-neutral-500 leading-relaxed">
+    <p>
+      概念演示，基于开源项目
+      <a href="https://github.com/pengchujin/aerial-tv" class="underline decoration-neutral-300 hover:text-neutral-900 transition">pengchujin/aerial-tv</a>
+      （MIT），非官方产品，数据均为演示数据
+    </p>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast"
+     class="fixed left-1/2 -translate-x-1/2 bottom-6 z-50 px-4 py-2.5 rounded-full bg-neutral-900 text-white text-sm shadow-2xl transition-all duration-300 opacity-0 translate-y-2 pointer-events-none max-w-[90vw] text-center"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------- 通用提示 ---------------- */
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  function toast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.remove('opacity-0', 'translate-y-2');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.add('opacity-0', 'translate-y-2');
+    }, 2400);
+  }
+
+  /* ---------------- Aerial 应用网格 ---------------- */
+  var apps = [
+    { name: '云视听极光', icon: '🎬', bg: 'linear-gradient(140deg,#ff8787,#c92a2a)' },
+    { name: '芒果 TV',   icon: '🥭', bg: 'linear-gradient(140deg,#ffc078,#f76707)' },
+    { name: '哔哩哔哩',  icon: '📺', bg: 'linear-gradient(140deg,#74c0fc,#1c7ed6)' },
+    { name: 'QQ 音乐',   icon: '🎵', bg: 'linear-gradient(140deg,#8ce99a,#2f9e44)' },
+    { name: '相册',      icon: '🖼️', bg: 'linear-gradient(140deg,#d0bfff,#6741d9)' },
+    { name: '云游戏',    icon: '🎮', bg: 'linear-gradient(140deg,#66d9e8,#0b7285)' },
+    { name: '天气',      icon: '⛅', bg: 'linear-gradient(140deg,#ffd43b,#f08c00)' },
+    { name: '文件管理',  icon: '📁', bg: 'linear-gradient(140deg,#ced4da,#495057)' },
+    { name: '设置',      icon: '⚙️', bg: 'linear-gradient(140deg,#adb5bd,#212529)' },
+    { name: '应用中心',  icon: '🧩', bg: 'linear-gradient(140deg,#ffa94d,#d9480f)' }
+  ];
+
+  var gridTiles = document.getElementById('gridTiles');
+  var nameLabel = document.getElementById('nameLabel');
+  var dodgeNum = document.getElementById('dodgeNum');
+  var dodgePill = document.getElementById('dodgePill');
+  var stage = document.getElementById('stage');
+  var focus = 0;
+  var dodged = 0;
+  var COLS = 5;
+
+  apps.forEach(function (app, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tile relative aspect-square rounded-[12px] md:rounded-[16px] grid place-items-center ' +
+                   'text-[13px] md:text-xl transition-all duration-200 ease-out outline-none';
+    b.style.background = app.bg;
+    b.textContent = app.icon;
+    b.setAttribute('aria-label', app.name);
+    b.addEventListener('click', function () {
+      setFocus(i);
+      pressOK();
+    });
+    gridTiles.appendChild(b);
+  });
+
+  function setFocus(i) {
+    if (!apps.length) return;
+    focus = ((i % apps.length) + apps.length) % apps.length;
+    var tiles = gridTiles.children;
+    for (var k = 0; k < tiles.length; k++) {
+      var el = tiles[k];
+      var on = (k === focus);
+      el.classList.toggle('scale-110', on);
+      el.classList.toggle('-translate-y-1', on);
+      el.classList.toggle('z-10', on);
+      el.style.boxShadow = on
+        ? '0 0 0 2px rgba(255,255,255,.95), 0 14px 30px -10px rgba(0,0,0,.9)'
+        : 'none';
+      el.style.opacity = on ? '1' : '0.9';
+    }
+    if (nameLabel) nameLabel.textContent = apps[focus].name;
+  }
+
+  function bump(n) {
+    dodged += n;
+    if (dodgeNum) dodgeNum.textContent = String(dodged);
+    if (dodgePill) {
+      dodgePill.classList.remove('pop');
+      void dodgePill.offsetWidth;
+      dodgePill.classList.add('pop');
+    }
+  }
+
+  function move(dir) {
+    if (!apps.length) return;
+    var next = focus;
+    var col = focus % COLS;
+    if (dir === 'left')  { if (col > 0) next = focus - 1; }
+    if (dir === 'right') { if (col < COLS - 1 && focus < apps.length - 1) next = focus + 1; }
+    if (dir === 'up')    { if (focus - COLS >= 0) next = focus - COLS; }
+    if (dir === 'down')  { if (focus + COLS <= apps.length - 1) next = focus + COLS; }
+    setFocus(next);
+    bump(1);
+  }
+
+  function pressOK() {
+    toast('演示：正在打开「' + apps[focus].name + '」');
+    bump(2);
+  }
+
+  function pressBack() {
+    if (focus >= COLS) {
+      setFocus(focus - COLS);
+      toast('返回第一行');
+    } else {
+      toast('演示：开始播放航拍屏保 🌅');
+    }
+    bump(1);
+  }
+
+  /* ---------------- 遥控器按钮 ---------------- */
+  var dpad = document.getElementById('dpad');
+  if (dpad) {
+    dpad.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('button[data-dir]') : null;
+      if (!btn) return;
+      var d = btn.getAttribute('data-dir');
+      if (d === 'ok') { pressOK(); } else { move(d); }
+    });
+  }
+
+  var backBtn = document.getElementById('backBtn');
+  if (backBtn) {
+    backBtn.addEventListener('click', function () {
+      pressBack();
+    });
+  }
+
+  /* ---------------- 键盘遥控 ---------------- */
+  var remoteActive = false;
+  if (stage) {
+    stage.addEventListener('pointerdown', function () {
+      remoteActive = true;
+      try { stage.focus({ preventScroll: true }); } catch (err) { stage.focus(); }
+    });
+  }
+  document.addEventListener('pointerdown', function (e) {
+    if (stage && !stage.contains(e.target)) remoteActive = false;
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!remoteActive) return;
+    var keyMap = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
+    if (keyMap[e.key]) {
+      e.preventDefault();
+      move(keyMap[e.key]);
+      return;
+    }
+    if (e.key === 'Enter' || e.key === ' ') {
+      var ae = document.activeElement;
+      if (ae && ae.tagName === 'BUTTON' && stage && stage.contains(ae)) return;
+      e.preventDefault();
+      pressOK();
+      return;
+    }
+    if (e.key === 'Backspace' || e.key === 'Escape') {
+      e.preventDefault();
+      pressBack();
+    }
+  });
+
+  /* ---------------- 品牌适配方案 ---------------- */
+  var brandList = [
+    { id: 'mi', label: '小米 / Redmi' },
+    { id: 'tcl', label: 'TCL / 雷鸟' },
+    { id: 'haier', label: '海尔 / 模卡' },
+    { id: 'oppo', label: 'OPPO' },
+    { id: 'other', label: '其他 Android TV' }
+  ];
+
+  var brands = {
+    mi: {
+      adb: '设置 → 关于 → 连按「产品型号」进入开发者模式；再到 设置 → 账号与安全，打开 ADB 调试和「安装未知来源的应用」。',
+      steps: [
+        '扫码配对，盒子在同一网络里连上电视',
+        '自动安装 APK 并授予守护权限',
+        '注册通知监听，待机被杀后自动复活',
+        'KEEP_ADB：唤醒后自动重新打开 ADB'
+      ],
+      time: '约 3 分钟',
+      warn: '小米待机唤醒会关闭 ADB，盒子会自动帮你重新打开，方便以后升级。开机广告由固件播放，去不掉。'
+    },
+    tcl: {
+      adb: '设置 → 关于 → 本机信息，快速按遥控器「上下左右」，在底部「更多」里打开 ADB。',
+      steps: [
+        '扫码配对，盒子远程连接电视',
+        'TCL 不允许直接安装，自动改走「多屏互动」推送',
+        '用 appops 放行自启动管理',
+        '设为系统屏保（TCL 用的是 Android 标准屏保）'
+      ],
+      time: '约 4 分钟',
+      warn: '安装时电视会弹出「多屏互动：正在发起应用推送」，用遥控器按「右」再确认，选「同意」即可。'
+    },
+    haier: {
+      adb: '按机身信号源键，再用遥控器按「左左上右」进入海尔工厂菜单，把 ADB 调试开关设为开（只改这一项）。',
+      steps: [
+        '扫码配对，盒子远程连接电视',
+        '安装 APK 并授予守护权限',
+        '注册通知监听，开机自动启动',
+        '设为系统屏保'
+      ],
+      time: '约 5 分钟',
+      warn: '工厂菜单里只动 ADB 一项，其他选项不要改（社区用户反馈）。'
+    },
+    oppo: {
+      adb: '设置 → 系统 → 关于本机 → 设备型号，按「上上右右」再按确认。',
+      steps: [
+        '扫码配对，盒子远程连接电视',
+        '安装 APK 并授予守护权限',
+        '注册通知监听，开机自动启动',
+        '设为默认桌面'
+      ],
+      time: '约 4 分钟',
+      warn: '不同固件版本入口略有差异，盒子会先做一次兼容性探测。'
+    },
+    other: {
+      adb: '设置 → 设备偏好设置 → 关于 → 连按「内部版本号」7 次，再在开发者选项里打开 USB 调试。',
+      steps: [
+        '扫码配对，盒子远程连接电视',
+        '安装 APK 并授予守护权限',
+        '申请 HOME 角色，设为默认桌面',
+        '设为系统屏保'
+      ],
+      time: '约 3 分钟',
+      warn: '原生 Android TV / Google TV 到「设为默认桌面」这一步就够了，不需要守护。'
+    }
+  };
+
+  var currentBrand = 'mi';
+  var chipWrap = document.getElementById('brandChips');
+  var adaptPanel = document.getElementById('adaptPanel');
+
+  function renderChips() {
+    if (!chipWrap) return;
+    chipWrap.innerHTML = '';
+    brandList.forEach(function (b) {
+      var el = document.createElement('button');
+      el.type = 'button';
+      el.textContent = b.label;
+      el.className = 'px-3 py-1.5 rounded-full text-xs md:text-sm border transition ' +
+        (b.id === currentBrand
+          ? 'bg-neutral-900 text-white border-neutral-900'
+          : 'bg-white text-neutral-600 border-black/10 hover:border-black/30');
+      el.addEventListener('click', function () {
+        currentBrand = b.id;
+        renderChips();
+        renderAdapt();
+      });
+      chipWrap.appendChild(el);
+    });
+  }
+
+  function renderAdapt() {
+    if (!adaptPanel) return;
+    var b = brands[currentBrand] || brands.mi;
+    var stepsHtml = b.steps.map(function (s, i) {
+      return '<li class="flex gap-2"><span class="text-neutral-400 tabular-nums shrink-0">' + (i + 1) + '.</span><span>' + s + '</span></li>';
+    }).join('');
+    adaptPanel.innerHTML =
+      '<div>' +
+        '<p class="text-[11px] tracking-wide text-neutral-400 mb-1.5">第一步 · 打开 ADB</p>' +
+        '<p class="text-sm text-neutral-700 leading-relaxed">' + b.adb + '</p>' +
+      '</div>' +
+      '<div>' +
+        '<p class="text-[11px] tracking-wide text-neutral-400 mb-1.5">盒子会替你做</p>' +
+        '<ol class="text-sm text-neutral-700 space-y-1 leading-relaxed">' + stepsHtml + '</ol>' +
+      '</div>' +
+      '<div>' +
+        '<p class="text-[11px] tracking-wide text-neutral-400 mb-1.5">预计耗时</p>' +
+        '<p class="text-lg font-semibold">' + b.time + '</p>' +
+        '<p class="text-xs text-neutral-500 mt-2 leading-relaxed">' + b.warn + '</p>' +
+      '</div>';
+  }
+
+  /* ---------------- 一键接管模拟 ---------------- */
+  var ipInput = document.getElementById('ipInput');
+  var runBtn = document.getElementById('runBtn');
+  var logEl = document.getElementById('log');
+  var timers = [];
+
+  if (runBtn && logEl) {
+    runBtn.addEventListener('click', function () {
+      for (var i = 0; i < timers.length; i++) clearTimeout(timers[i]);
+      timers = [];
+      logEl.innerHTML = '';
+
+      var ip = (ipInput && ipInput.value ? ipInput.value : '').trim() || '192.168.1.20';
+
+      var lines = [
+        { t: '$ aerial-box pair --ip ' + ip, c: 'text-white/80' },
+        { t: '→ 请在电视上选择「始终允许 USB 调试」…', c: 'text-neutral-400' },
+        { t: '✔ 已连接：Xiaomi TV ES65 · Android 9', c: 'text-emerald-400' },
+        { t: '$ adb install -r aerial-standard.apk', c: 'text-white/80' },
+        { t: '✔ 安装完成 · 23.4 MB', c: 'text-emerald-400' },
+        { t: '$ adb shell pm grant app.orchard.tv WRITE_SECURE_SETTINGS', c: 'text-white/80' },
+        { t: '✔ 桌面守护已授权', c: 'text-emerald-400' },
+        { t: '$ adb shell cmd notification allow_listener …', c: 'text-white/80' },
+        { t: '✔ 已注册复活监听（不读取任何通知）', c: 'text-emerald-400' },
+        { t: '✅ 完成：重启后会直接进入 Aerial（演示数据）', c: 'text-emerald-300 font-medium' }
+      ];
+
+      runBtn.disabled = true;
+      runBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+      lines.forEach(function (line, idx) {
+        timers.push(setTimeout(function () {
+          var div = document.createElement('div');
+          div.className = 'fade-up ' + line.c;
+          div.textContent = line.t;
+          logEl.appendChild(div);
+          logEl.scrollTop = logEl.scrollHeight;
+          if (idx === lines.length - 1) {
+            runBtn.disabled = false;
+            runBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            toast('演示完成：Aerial 已接管桌面（模拟）');
+          }
+        }, 430 * idx + 120));
+      });
+    });
+  }
+
+  /* ---------------- 候补名单 ---------------- */
+  var waitBtn = document.getElementById('waitBtn');
+  var waitMsg = document.getElementById('waitMsg');
+  if (waitBtn) {
+    waitBtn.addEventListener('click', function () {
+      if (waitMsg) waitMsg.classList.remove('hidden');
+      toast('已加入候补名单（演示，未提交任何数据）');
+    });
+  }
+
+  var planBtns = document.querySelectorAll('button[data-plan]');
+  for (var p = 0; p < planBtns.length; p++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        toast('「' + btn.getAttribute('data-plan') + '」已加入候补名单（演示，未提交任何数据）');
+      });
+    })(planBtns[p]);
+  }
+
+  /* ---------------- 初始化 ---------------- */
+  setFocus(0);
+  renderChips();
+  renderAdapt();
+})();
+</script>
+</body>
+</html>
