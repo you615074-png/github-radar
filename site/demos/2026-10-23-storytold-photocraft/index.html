@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>刻光 PhotoCraft · 买断制、真实 PSD 的图像编辑器</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --ink:#1b1e23;
+    --panel:#22252b;
+    --line:rgba(255,255,255,.07);
+    --brand:#1e4f74;
+    --accent:#e0633f;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    background:#f7f6f3;
+    color:#1c1917;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Songti SC","Noto Serif SC",Georgia,"Times New Roman",serif;}
+  .hidden{display:none !important;}
+  .noselect{user-select:none;-webkit-user-select:none;}
+
+  /* ---- 图层行 ---- */
+  .layer-row{
+    display:flex;align-items:center;gap:8px;
+    padding:5px 7px;border-radius:6px;cursor:pointer;
+    color:#c8ccd2;font-size:12px;line-height:1.3;
+    transition:background .15s ease,box-shadow .15s ease;
+  }
+  .layer-row:hover{background:rgba(255,255,255,.05);}
+  .layer-row.active{background:rgba(255,255,255,.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);}
+  .layer-row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .eye{
+    display:grid;place-items:center;width:18px;height:18px;flex:0 0 auto;
+    border:0;padding:0;background:transparent;color:#7f8792;cursor:pointer;border-radius:4px;
+  }
+  .eye.on{color:#dfe3e8;}
+  .thumb{
+    width:22px;height:22px;flex:0 0 auto;border-radius:4px;
+    display:grid;place-items:center;font-size:11px;
+    background:#2f343c;color:#b6bec8;overflow:hidden;
+  }
+  .tag{font-size:9px;color:#7c838d;flex:0 0 auto;letter-spacing:.05em;}
+
+  /* ---- 滑块 ---- */
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;
+    background:rgba(255,255,255,.16);outline:none;cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 3px rgba(224,99,63,.22);cursor:pointer;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:13px;height:13px;border:none;border-radius:50%;background:var(--accent);cursor:pointer;
+  }
+  .fade-in{animation:fade .35s ease both;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .bar-fill{transition:width .9s cubic-bezier(.4,0,.2,1);}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-30 backdrop-blur-md bg-[#f7f6f3]/85 border-b border-black/[.06]">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2.5">
+      <svg viewBox="0 0 32 32" class="w-8 h-8 block">
+        <rect width="32" height="32" rx="9" fill="#1e4f74"/>
+        <path d="M5 22.5c5-.8 7.2-5 9.2-10 1.6 5 3.8 9.2 8.8 10" stroke="#f2efe6" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="23.5" cy="10.5" r="2.6" fill="#e0633f"/>
+      </svg>
+      <div class="leading-tight">
+        <div class="font-semibold tracking-tight text-[15px]">刻光 PhotoCraft</div>
+        <div class="text-[10px] text-stone-500">纯 Rust 引擎 · 离线优先</div>
+      </div>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm text-stone-600">
+      <a href="#demo" class="hover:text-stone-900 transition">试一试</a>
+      <a href="#scenes" class="hover:text-stone-900 transition">场景</a>
+      <a href="#pricing" class="hover:text-stone-900 transition">价格</a>
+    </nav>
+    <a href="#pricing" class="text-sm px-4 py-2 rounded-full bg-[#1e4f74] text-white hover:bg-[#17405f] transition shadow-sm">加入候补名单</a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="max-w-6xl mx-auto px-5 pt-14 pb-6 text-center">
+  <div class="inline-flex items-center gap-2 text-[11px] px-3 py-1.5 rounded-full bg-white border border-stone-200 text-stone-600 shadow-sm">
+    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+    纯 Rust · 完全离线 · 真实 PSD 读写
+  </div>
+  <h1 class="serif mt-6 text-[2.15rem] leading-[1.2] sm:text-5xl font-semibold tracking-tight text-stone-900">
+    像 Photoshop 一样顺手，<br class="hidden sm:block">但不用订阅。
+  </h1>
+  <p class="mt-5 text-[15px] leading-relaxed text-stone-600 max-w-xl mx-auto">
+    刻光把开源 PhotoCraft 打包成了桌面应用：图层、蒙版、调整图层、图层样式、文字与矢量，
+    加上<strong class="text-stone-800 font-medium">真实的 PSD 打开与保存</strong>。装在本机，离线运行，一次买断。
+  </p>
+  <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+    <a href="#demo" class="px-6 py-3 rounded-xl bg-[#e0633f] text-white text-sm font-medium hover:bg-[#cf5530] transition shadow-lg shadow-orange-900/10">30 秒试一遍 ↓</a>
+    <a href="#pricing" class="px-6 py-3 rounded-xl bg-white border border-stone-200 text-sm text-stone-700 hover:border-stone-300 transition">看价格</a>
+  </div>
+</section>
+
+<!-- ================= DEMO ================= -->
+<section id="demo" class="max-w-6xl mx-auto px-5 pt-10 pb-4">
+  <div class="flex items-end justify-between mb-3 px-1">
+    <div>
+      <h2 class="text-lg font-semibold text-stone-900">现在就能试</h2>
+      <p class="text-xs text-stone-500 mt-1">点开「曲线」拖一下滑块，或者直接改文字层——下面的每一次改动都是实时渲染的。</p>
+    </div>
+    <span class="text-[10px] px-2 py-1 rounded-md bg-amber-100 text-amber-800 border border-amber-200 whitespace-nowrap">演示数据</span>
+  </div>
+
+  <!-- 应用窗口 -->
+  <div class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/10 bg-[#22252b]">
+
+    <!-- 标题栏 -->
+    <div class="flex items-center gap-3 px-4 h-11 bg-[#1b1e23] border-b border-white/5">
+      <div class="flex gap-1.5">
+        <span class="w-3 h-3 rounded-full bg-[#ff5f57]"></span>
+        <span class="w-3 h-3 rounded-full bg-[#febc2e]"></span>
+        <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+      </div>
+      <div class="flex-1 text-center text-[11.5px] text-stone-400 truncate">kanagawa.psd — 刻光 PhotoCraft</div>
+      <div class="text-[9px] px-1.5 py-0.5 rounded bg-amber-400/15 text-amber-300 border border-amber-400/25 whitespace-nowrap">DEMO</div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row">
+
+      <!-- 工具栏 -->
+      <div class="hidden lg:flex flex-col items-center gap-1 py-2 w-11 border-r border-white/5 text-[15px] text-stone-400">
+        <div class="w-8 h-8 grid place-items-center rounded-md bg-white/10 text-stone-100" title="移动">✥</div>
+        <div class="w-8 h-8 grid place-items-center rounded-md hover:bg-white/5 cursor-default" title="选区">⬚</div>
+        <div class="w-8 h-8 grid place-items-center rounded-md hover:bg-white/5 cursor-default" title="套索">➰</div>
+        <div class="w-8 h-8 grid place-items-center rounded-md hover:bg-white/5 cursor-default" title="画笔">🖌</div>
+        <div class="w-8 h-8 grid place-items-center rounded-md hover:bg-white/5 cursor-default" title="文字">T</div>
+        <div class="w-8 h-8 grid place-items-center rounded-md hover:bg-white/5 cursor-default" title="形状">◇</div>
+        <div class="mt-auto w-8 h-8 grid place-items-center rounded-md hover:bg-white/5 cursor-default" title="缩放">🔍</div>
+      </div>
+
+      <!-- 画布 -->
+      <div class="flex-1 min-w-0 p-3 sm:p-6 bg-[#191c21]">
+        <div class="relative w-full max-w-[620px] mx-auto rounded-lg overflow-hidden ring-1 ring-white/10 shadow-2xl" style="aspect-ratio:4/3;">
+          <!-- 公版名画（内联 SVG 重绘） -->
+          <svg id="art" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"
+               class="absolute inset-0 w-full h-full block" style="transition:filter .18s ease;">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ece6d7"/>
+                <stop offset="55%" stop-color="#d9dfd9"/>
+                <stop offset="100%" stop-color="#c5d5e0"/>
+              </linearGradient>
+              <linearGradient id="waveGrad" x1="0" y1="0" x2="0.45" y2="1">
+                <stop offset="0" stop-color="#2f7299"/>
+                <stop offset="60%" stop-color="#1b4a6b"/>
+                <stop offset="100%" stop-color="#112b41"/>
+              </linearGradient>
+              <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1d4a66"/>
+                <stop offset="100%" stop-color="#0c2133"/>
+              </linearGradient>
+              <filter id="grain">
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+                <feColorMatrix type="saturate" values="0"/>
+              </filter>
+            </defs>
+
+            <!-- 天空 -->
+            <rect width="800" height="600" fill="url(#sky)"/>
+            <circle cx="596" cy="132" r="54" fill="#ecdcb8" opacity="0.75"/>
+
+            <!-- 富士山 -->
+            <path d="M 298 422 L 430 268 L 562 422 Z" fill="#5d768a" opacity="0.82"/>
+            <path d="M 398 302 L 430 268 L 462 302 L 447 307 L 430 291 L 413 307 Z" fill="#f4f0e4"/>
+
+            <!-- 海 -->
+            <rect y="420" width="800" height="180" fill="url(#seaGrad)"/>
+
+            <!-- 大浪 -->
+            <path d="M -10 610 L -10 320
+                     C 90 312 175 250 240 168
+                     C 305 86 395 32 470 60
+                     C 545 88 582 176 536 248
+                     C 496 310 412 330 350 296
+                     C 372 360 372 436 330 486
+                     C 285 538 175 566 90 566
+                     L -10 610 Z"
+                  fill="url(#waveGrad)"/>
+
+            <!-- 浪脊泡沫 -->
+            <path d="M -10 320 C 90 312 175 250 240 168 C 305 86 395 32 470 60
+                     C 545 88 582 176 536 248 C 496 310 412 330 350 296"
+                  fill="none" stroke="#f5f1e3" stroke-width="15" stroke-linecap="round"/>
+            <path d="M 512 232 C 478 278 422 300 372 290"
+                  fill="none" stroke="#cfe6f2" stroke-width="6" stroke-linecap="round" opacity="0.45"/>
+
+            <!-- 泡沫碎点 -->
+            <g fill="#f5f1e3">
+              <circle cx="210" cy="205" r="7"/><circle cx="255" cy="160" r="6"/>
+              <circle cx="300" cy="112" r="7"/><circle cx="350" cy="72" r="6"/>
+              <circle cx="410" cy="48" r="7"/><circle cx="465" cy="54" r="6"/>
+              <circle cx="520" cy="90" r="7"/><circle cx="556" cy="142" r="6"/>
+              <circle cx="566" cy="198" r="7"/><circle cx="548" cy="242" r="6"/>
+              <circle cx="502" cy="270" r="7"/><circle cx="442" cy="296" r="5"/>
+              <circle cx="390" cy="302" r="5"/>
+            </g>
+
+            <!-- 小船 -->
+            <g fill="#0d2130" opacity="0.92">
+              <ellipse cx="186" cy="500" rx="76" ry="13" transform="rotate(-7 186 500)"/>
+              <ellipse cx="336" cy="532" rx="64" ry="11" transform="rotate(-5 336 532)"/>
+              <ellipse cx="80" cy="452" rx="50" ry="9" transform="rotate(-9 80 452)"/>
+            </g>
+            <g fill="#e9e2d0" opacity="0.75">
+              <circle cx="150" cy="492" r="3.4"/><circle cx="178" cy="496" r="3.4"/>
+              <circle cx="206" cy="494" r="3.4"/><circle cx="232" cy="498" r="3.4"/>
+              <circle cx="312" cy="526" r="3"/><circle cx="340" cy="528" r="3"/>
+              <circle cx="368" cy="526" r="3"/>
+            </g>
+
+            <!-- 近处浪带 -->
+            <path d="M -10 610 L -10 524
+                     Q 60 486 130 524 Q 200 486 270 524 Q 340 486 410 524
+                     Q 480 486 550 524 Q 620 486 690 524 Q 760 486 830 524
+                     L 830 610 Z"
+                  fill="#15415e" opacity="0.88"/>
+
+            <!-- 颗粒 -->
+            <rect width="800" height="600" filter="url(#grain)" opacity="0.08" style="mix-blend-mode:overlay;"/>
+          </svg>
+
+          <!-- 文字层 -->
+          <div id="textLayer" class="absolute noselect" style="left:8%;bottom:11%;pointer-events:none;transition:opacity .18s ease;">
+            <div id="textEl" class="serif"
+                 style="font-size:clamp(17px,4.6vw,34px);letter-spacing:.1em;color:#ffffff;line-height:1.15;">浪 · 神奈川沖浪裏</div>
+            <div id="textSub"
+                 style="margin-top:6px;font-size:clamp(8px,1.55vw,11.5px);letter-spacing:.32em;color:#e6dcc4;opacity:.9;">KATSUSHIKA HOKUSAI · c.1831</div>
+          </div>
+        </div>
+
+        <div class="mt-3 flex items-center justify-between text-[11px] text-stone-500 px-1">
+          <span>4:3 · sRGB IEC61966-2.1 · 3000 × 2250 px</span>
+          <span class="hidden sm:inline">缩放 100%</span>
+        </div>
+      </div>
+
+      <!-- 右侧面板 -->
+      <div class="w-full lg:w-[304px] shrink-0 bg-[#22252b] border-t lg:border-t-0 lg:border-l border-white/5">
+
+        <div class="px-3.5 py-2.5 flex items-center justify-between border-b border-white/5">
+          <span class="text-[11px] uppercase tracking-[.18em] text-stone-500">图层</span>
+          <span class="text-[11px] text-stone-600">6</span>
+        </div>
+        <div id="layerList" class="p-1.5 space-y-0.5"></div>
+
+        <div class="px-3.5 py-2.5 flex items-center justify-between border-y border-white/5 mt-1">
+          <span class="text-[11px] uppercase tracking-[.18em] text-stone-500">属性</span>
+          <span id="propTitle" class="text-[11px] text-stone-400">文字</span>
+        </div>
+
+        <div class="p-3.5 space-y-4 text-stone-300">
+
+          <!-- 文字属性 -->
+          <div id="p-text" class="space-y-3">
+            <label class="block text-[11px] text-stone-400">文字内容</label>
+            <input id="i-text" type="text" value="浪 · 神奈川沖浪裏" maxlength="24"
+                   class="w-full px-3 py-2 rounded-md bg-black/30 border border-white/10 text-[13px] text-stone-100 outline-none focus:border-[#e0633f]/60 transition">
+            <button id="btn-shadow"
+                    class="w-full flex items-center justify-between px-3 py-2 rounded-md bg-black/30 border border-white/10 text-[12px] hover:border-white/25 transition">
+              <span>图层样式 · 投影</span>
+              <span id="shadowState" class="text-[11px] text-emerald-400">开</span>
+            </button>
+            <p class="text-[10.5px] leading-relaxed text-stone-500">文字层不会被下方的调整图层影响——和 Photoshop 的栈顺序一致。</p>
+          </div>
+
+          <!-- 曲线 -->
+          <div id="p-curves" class="space-y-3 hidden">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-stone-400">曲线 · S 型对比</span>
+              <span id="v-curves" class="font-mono text-stone-200">45</span>
+            </div>
+            <input id="s-curves" type="range" min="0" max="100" value="45">
+            <svg id="curveGraph" viewBox="0 0 100 100" class="w-full h-[86px] rounded-md bg-black/30 ring-1 ring-white/10">
+              <g stroke="rgba(255,255,255,.09)" stroke-width="0.7">
+                <line x1="0" y1="25" x2="100" y2="25"/>
+                <line x1="0" y1="50" x2="100" y2="50"/>
+                <line x1="0" y1="75" x2="100" y2="75"/>
+                <line x1="25" y1="0" x2="25" y2="100"/>
+                <line x1="50" y1="0" x2="50" y2="100"/>
+                <line x1="75" y1="0" x2="75" y2="100"/>
+              </g>
+              <line x1="0" y1="100" x2="100" y2="0" stroke="rgba(255,255,255,.16)" stroke-width="0.9" stroke-dasharray="3 3"/>
+              <path id="curvePath" fill="none" stroke="#8fd3ff" stroke-width="2.4" stroke-linecap="round" d=""/>
+            </svg>
+            <p class="text-[10.5px] text-stone-500">共 16 个调整图层可选，这里展示其中 3 个。</p>
+          </div>
+
+          <!-- 自然饱和度 -->
+          <div id="p-vib" class="space-y-3 hidden">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-stone-400">自然饱和度</span>
+              <span id="v-vib" class="font-mono text-stone-200">30</span>
+            </div>
+            <input id="s-vib" type="range" min="0" max="100" value="30">
+            <div class="h-2 rounded-full" style="background:linear-gradient(90deg,#8a8f97,#c8a24a,#2f7299,#e0633f);"></div>
+          </div>
+
+          <!-- 黑白 -->
+          <div id="p-bw" class="space-y-3 hidden">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-stone-400">黑白 · 强度</span>
+              <span id="v-bw" class="font-mono text-stone-200">70</span>
+            </div>
+            <input id="s-bw" type="range" min="0" max="100" value="70">
+            <p class="text-[10.5px] text-stone-500">该图层默认关闭，点图层左侧的眼睛即可开启。</p>
+          </div>
+
+          <!-- 照片滤镜 -->
+          <div id="p-warm" class="space-y-3 hidden">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-stone-400">照片滤镜 · 暖色</span>
+              <span id="v-warm" class="font-mono text-stone-200">25</span>
+            </div>
+            <input id="s-warm" type="range" min="0" max="100" value="25">
+          </div>
+
+          <!-- 背景 -->
+          <div id="p-bg" class="space-y-2 hidden">
+            <p class="text-[12px] text-stone-300">背景 · 神奈川冲浪里</p>
+            <p class="text-[10.5px] leading-relaxed text-stone-500">葛饰北斋《神奈川冲浪里》，约 1831 年，公有领域作品。此处的画面为内联 SVG 重绘，仅用于演示。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 状态栏 -->
+    <div class="flex items-center justify-between gap-3 px-4 h-12 bg-[#1b1e23] border-t border-white/5">
+      <div class="flex items-center gap-3 text-[11px] text-stone-500">
+        <span>6 个图层</span>
+        <span class="hidden sm:inline">sRGB</span>
+        <span class="hidden sm:inline">PSD 兼容</span>
+      </div>
+      <button id="exportBtn"
+              class="px-3.5 py-1.5 rounded-md bg-[#e0633f] hover:bg-[#cf5530] text-white text-[11.5px] font-medium transition shadow-lg shadow-orange-900/20">
+        导出 PSD
+      </button>
+    </div>
+  </div>
+
+  <!-- 导出结果 -->
+  <div id="exportMsg" class="hidden mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm text-emerald-900"></div>
+
+  <p class="mt-3 text-[11px] text-stone-500 text-center">以上所有交互都在你的浏览器里完成，不会向任何服务器发送数据。</p>
+</section>
+
+<!-- ================= 数据条 ================= -->
+<section class="max-w-6xl mx-auto px-5 py-10">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-stone-200 rounded-2xl overflow-hidden ring-1 ring-stone-200">
+    <div class="bg-white px-5 py-6">
+      <div class="text-2xl font-semibold text-stone-900 tracking-tight">307<span class="text-stone-400 text-base">/309</span></div>
+      <div class="mt-1 text-[12px] text-stone-500 leading-snug">PSD 测试文件往返重存后渲染保持一致</div>
+    </div>
+    <div class="bg-white px-5 py-6">
+      <div class="text-2xl font-semibold text-stone-900 tracking-tight">16</div>
+      <div class="mt-1 text-[12px] text-stone-500 leading-snug">可堆叠的调整图层（曲线、色阶、通道混合…）</div>
+    </div>
+    <div class="bg-white px-5 py-6">
+      <div class="text-2xl font-semibold text-stone-900 tracking-tight">0</div>
+      <div class="mt-1 text-[12px] text-stone-500 leading-snug">订阅、账号、联网请求，一个都没有</div>
+    </div>
+    <div class="bg-white px-5 py-6">
+      <div class="text-2xl font-semibold text-stone-900 tracking-tight">1×</div>
+      <div class="mt-1 text-[12px] text-stone-500 leading-snug">买断一次，永久使用这个版本</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 场景 ================= -->
+<section id="scenes" class="max-w-6xl mx-auto px-5 pb-16">
+  <h2 class="serif text-2xl font-semibold text-stone-900 text-center">谁最适合把它装进电脑</h2>
+  <p class="mt-2 text-center text-sm text-stone-500">换掉订阅，不一定要换掉工作流。</p>
+
+  <div class="mt-8 grid md:grid-cols-3 gap-5">
+    <div class="bg-white rounded-2xl p-6 ring-1 ring-stone-200 hover:ring-stone-300 transition">
+      <div class="text-2xl">📷</div>
+      <h3 class="mt-3 font-semibold text-stone-900">摄影师的客户 PSD</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-stone-600">
+        客户发来一个带蒙版和调整图层的 PSD 模板。直接打开、换照片、拉一下曲线、另存回 PSD，图层名称和堆栈顺序原样保留。
+        不用为了改一张图再续一年订阅。
+      </p>
+      <div class="mt-4 flex flex-wrap gap-1.5">
+        <span class="text-[10px] px-2 py-1 rounded bg-stone-100 text-stone-600">打开 / 保存 PSD</span>
+        <span class="text-[10px] px-2 py-1 rounded bg-stone-100 text-stone-600">图层蒙版</span>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 ring-1 ring-stone-200 hover:ring-stone-300 transition">
+      <div class="text-2xl">🎨</div>
+      <h3 class="mt-3 font-semibold text-stone-900">设计师的图层样式</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-stone-600">
+        投影、外发光、描边、渐变叠加、图案叠加，都在实时文字层上生效。改完标题字，样式还能复制粘贴到别的图层，
+        存回去依旧是 Photoshop 认识的结构。
+      </p>
+      <div class="mt-4 flex flex-wrap gap-1.5">
+        <span class="text-[10px] px-2 py-1 rounded bg-stone-100 text-stone-600">10 种图层样式</span>
+        <span class="text-[10px] px-2 py-1 rounded bg-stone-100 text-stone-600">实时文字</span>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 ring-1 ring-stone-200 hover:ring-stone-300 transition">
+      <div class="text-2xl">🔌</div>
+      <h3 class="mt-3 font-semibold text-stone-900">离线与批量自动化</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-stone-600">
+        内网机器、出差笔记本、无网络的工位：双击就跑，不需要登录，不留遥测。
+        每个操作都是命令，还能从 CLI 或脚本批量跑同一套调整。
+      </p>
+      <div class="mt-4 flex flex-wrap gap-1.5">
+        <span class="text-[10px] px-2 py-1 rounded bg-stone-100 text-stone-600">免安装</span>
+        <span class="text-[10px] px-2 py-1 rounded bg-stone-100 text-stone-600">CLI 批处理</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 价格 ================= -->
+<section id="pricing" class="max-w-6xl mx-auto px-5 pb-20">
+  <h2 class="serif text-2xl font-semibold text-stone-900 text-center">一次买断，没有续费</h2>
+  <p class="mt-2 text-center text-sm text-stone-500">Adobe 摄影计划约 ¥888 / 年，年年付。刻光付一次。</p>
+
+  <div class="mt-8 grid md:grid-cols-3 gap-5 items-stretch">
+
+    <div class="bg-white rounded-2xl p-6 ring-1 ring-stone-200 flex flex-col">
+      <div class="text-sm font-medium text-stone-500">开源版</div>
+      <div class="mt-3 flex items-end gap-1">
+        <span class="text-3xl font-semibold text-stone-900">免费</span>
+        <span class="text-sm text-stone-400 mb-1">/ Apache-2.0</span>
+      </div>
+      <p class="mt-3 text-[13px] text-stone-600 leading-relaxed">自己从源码编译，参与社区。不提供官方安装包与支持。</p>
+      <ul class="mt-4 space-y-2 text-[13px] text-stone-600 flex-1">
+        <li class="flex gap-2"><span class="text-stone-400">·</span>全部核心功能</li>
+        <li class="flex gap-2"><span class="text-stone-400">·</span>源码可读可改</li>
+        <li class="flex gap-2"><span class="text-stone-400">·</span>社区 Discord 支持</li>
+      </ul>
+      <a href="https://github.com/storytold/photocraft" class="mt-6 block text-center px-4 py-2.5 rounded-xl bg-stone-100 text-stone-700 text-sm hover:bg-stone-200 transition">去 GitHub</a>
+    </div>
+
+    <div class="bg-[#1e4f74] rounded-2xl p-6 ring-1 ring-[#1e4f74] flex flex-col relative overflow-hidden shadow-xl shadow-slate-900/10">
+      <div class="absolute top-4 right-4 text-[10px] px-2 py-1 rounded-full bg-white/15 text-white">最常见</div>
+      <div class="text-sm font-medium text-white/70">个人版 · 买断</div>
+      <div class="mt-3 flex items-end gap-1">
+        <span class="text-3xl font-semibold text-white">¥499</span>
+        <span class="text-sm text-white/50 mb-1">/ 一次</span>
+      </div>
+      <p class="mt-3 text-[13px] text-white/70 leading-relaxed">免安装桌面版，2 台设备，含 1 年版本更新。</p>
+      <ul class="mt-4 space-y-2 text-[13px] text-white/85 flex-1">
+        <li class="flex gap-2"><span class="text-white/40">✓</span>完整 PSD 读写</li>
+        <li class="flex gap-2"><span class="text-white/40">✓</span>MAC / Windows 免安装包</li>
+        <li class="flex gap-2"><span class="text-white/40">✓</span>离线激活，无需联网</li>
+        <li class="flex gap-2"><span class="text-white/40">✓</span>1 年后仍可永久使用当前版本</li>
+      </ul>
+      <a href="#waitlist" class="mt-6 block text-center px-4 py-2.5 rounded-xl bg-[#e0633f] text-white text-sm font-medium hover:bg-[#cf5530] transition">加入候补名单</a>
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 ring-1 ring-stone-200 flex flex-col">
+      <div class="text-sm font-medium text-stone-500">工作室版 · 买断</div>
+      <div class="mt-3 flex items-end gap-1">
+        <span class="text-3xl font-semibold text-stone-900">¥1,999</span>
+        <span class="text-sm text-stone-400 mb-1">/ 一次</span>
+      </div>
+      <p class="mt-3 text-[13px] text-stone-600 leading-relaxed">5 台设备、优先支持，附每版的 PSD 兼容性回归报告。</p>
+      <ul class="mt-4 space-y-2 text-[13px] text-stone-600 flex-1">
+        <li class="flex gap-2"><span class="text-stone-400">✓</span>个人版全部功能</li>
+        <li class="flex gap-2"><span class="text-stone-400">✓</span>5 台设备授权</li>
+        <li class="flex gap-2"><span class="text-stone-400">✓</span>批量授权管理</li>
+        <li class="flex gap-2"><span class="text-stone-400">✓</span>邮件优先支持</li>
+      </ul>
+      <a href="#waitlist" class="mt-6 block text-center px-4 py-2.5 rounded-xl bg-stone-100 text-stone-700 text-sm hover:bg-stone-200 transition">联系定价</a>
+    </div>
+  </div>
+
+  <!-- 候补名单 -->
+  <div id="waitlist" class="mt-6 rounded-2xl bg-stone-900 text-white p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-5">
+    <div class="flex-1">
+      <h3 class="text-base font-semibold">桌面版首发候补名单</h3>
+      <p class="mt-1.5 text-[13px] text-white/60 leading-relaxed">
+        留个邮箱，开放购买时我们通知你。这里只是演示，不会真的提交任何数据。
+      </p>
+    </div>
+    <div class="flex gap-2 w-full md:w-auto">
+      <input id="wlEmail" type="email" value="you@studio.com"
+             class="flex-1 md:w-60 px-4 py-2.5 rounded-xl bg-white/10 border border-white/15 text-sm text-white placeholder-white/40 outline-none focus:border-white/40 transition">
+      <button id="wlBtn" class="px-5 py-2.5 rounded-xl bg-[#e0633f] hover:bg-[#cf5530] text-sm font-medium whitespace-nowrap transition">加入候补</button>
+    </div>
+  </div>
+  <div id="wlMsg" class="hidden mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900"></div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-stone-200">
+  <div class="max-w-6xl mx-auto px-5 py-10">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <svg viewBox="0 0 32 32" class="w-6 h-6 block">
+          <rect width="32" height="32" rx="9" fill="#1e4f74"/>
+          <path d="M5 22.5c5-.8 7.2-5 9.2-10 1.6 5 3.8 9.2 8.8 10" stroke="#f2efe6" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <circle cx="23.5" cy="10.5" r="2.6" fill="#e0633f"/>
+        </svg>
+        <span class="text-sm text-stone-600">刻光 PhotoCraft</span>
+      </div>
+      <div class="text-[11px] text-stone-400">图像编辑，应该装在你自己的机器上。</div>
+    </div>
+    <p class="mt-8 text-center text-xs text-stone-500 leading-relaxed">
+      概念演示，基于开源项目
+      <a href="https://github.com/storytold/photocraft" class="underline decoration-stone-300 hover:text-stone-800 transition">storytold/photocraft</a>（Apache-2.0），
+      非官方产品，数据均为演示数据
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var LAYERS = [
+    { id: 'text',   icon: 'T', kind: '文字', thumbBg: '#3b4450' },
+    { id: 'curves', icon: '◔', kind: '调整', thumbBg: '#2f343c' },
+    { id: 'vib',    icon: '◑', kind: '调整', thumbBg: '#2f343c' },
+    { id: 'bw',     icon: '◒', kind: '调整', thumbBg: '#2f343c' },
+    { id: 'warm',   icon: '◓', kind: '调整', thumbBg: '#2f343c' },
+    { id: 'bg',     icon: '▣', kind: '背景', thumbBg: '#2a3b4a' }
+  ];
+
+  var state = {
+    active: 'text',
+    text: '浪 · 神奈川沖浪裏',
+    shadow: true,
+    curves: 45,
+    vib: 30,
+    bw: 70,
+    warm: 25,
+    on: { text: true, curves: true, vib: true, bw: false, warm: true, bg: true }
+  };
+
+  var art = $('art');
+  var textEl = $('textEl');
+  var textLayer = $('textLayer');
+  var layerList = $('layerList');
+  var curvePath = $('curvePath');
+
+  var EYE_ON = '<svg viewBox="0 0 16 16" width="14" height="14"><path d="M1.4 8S4 3.9 8 3.9 14.6 8 14.6 8 12 12.1 8 12.1 1.4 8 1.4 8Z" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="1.9" fill="currentColor"/></svg>';
+  var EYE_OFF = '<svg viewBox="0 0 16 16" width="14" height="14"><path d="M2.2 8s2.3-3.6 5.8-3.6c1 0 1.9.3 2.7.7M13.8 8s-2.3 3.6-5.8 3.6c-1 0-1.9-.3-2.7-.7" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M3 13.2 13 2.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
+  var LOCK = '<svg viewBox="0 0 16 16" width="12" height="12"><rect x="3.5" y="7" width="9" height="6.5" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.8 7V5.4a2.2 2.2 0 0 1 4.4 0V7" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>';
+
+  function layerName(l) {
+    if (l.id === 'text') return state.text || '文字层';
+    if (l.id === 'curves') return '曲线 1';
+    if (l.id === 'vib') return '自然饱和度 1';
+    if (l.id === 'bw') return '黑白 1';
+    if (l.id === 'warm') return '照片滤镜（暖）';
+    return '背景 · 神奈川冲浪里';
+  }
+
+  function renderLayers() {
+    var html = '';
+    for (var i = 0; i < LAYERS.length; i++) {
+      var l = LAYERS[i];
+      var on = !!state.on[l.id];
+      var active = state.active === l.id;
+      var eyeHtml = l.id === 'bg'
+        ? '<span class="eye" style="cursor:default;">' + LOCK + '</span>'
+        : '<button class="eye ' + (on ? 'on' : '') + '" data-eye="' + l.id + '" aria-label="显示或隐藏">' + (on ? EYE_ON : EYE_OFF) + '</button>';
+
+      html += '<div class="layer-row' + (active ? ' active' : '') + '" data-id="' + l.id + '">'
+            + eyeHtml
+            + '<span class="thumb" style="background:' + l.thumbBg + '">' + l.icon + '</span>'
+            + '<span class="nm">' + escapeHtml(layerName(l)) + '</span>'
+            + '<span class="tag">' + l.kind + '</span>'
+            + '</div>';
+    }
+    layerList.innerHTML = html;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+
+  function showProps() {
+    var keys = ['text', 'curves', 'vib', 'bw', 'warm', 'bg'];
+    for (var i = 0; i < keys.length; i++) {
+      var el = $('p-' + keys[i]);
+      if (el) el.classList.toggle('hidden', state.active !== keys[i]);
+    }
+    var titles = { text: '文字', curves: '曲线', vib: '自然饱和度', bw: '黑白', warm: '照片滤镜', bg: '背景' };
+    $('propTitle').textContent = titles[state.active] || '';
+  }
+
+  function update() {
+    // ---- 合成滤镜（模拟调整图层叠在背景之上） ----
+    var f = [];
+    if (state.on.curves) {
+      var s = state.curves / 100;
+      f.push('contrast(' + (1 + s * 0.55).toFixed(2) + ')');
+      f.push('brightness(' + (1 + s * 0.05).toFixed(2) + ')');
+    }
+    if (state.on.vib) {
+      f.push('saturate(' + (1 + state.vib / 100 * 0.9).toFixed(2) + ')');
+    }
+    if (state.on.bw) {
+      f.push('grayscale(' + (state.bw / 100).toFixed(2) + ')');
+    }
+    if (state.on.warm) {
+      f.push('sepia(' + (state.warm / 100 * 0.45).toFixed(2) + ')');
+    }
+    art.style.filter = f.length ? f.join(' ') : 'none';
+
+    // ---- 文字层 ----
+    textEl.textContent = state.text || '文字层';
+    textEl.style.textShadow = state.shadow
+      ? '0 4px 16px rgba(6,20,30,.75), 0 1px 3px rgba(6,20,30,.6)'
+      : 'none';
+    textLayer.style.opacity = state.on.text ? '1' : '0';
+
+    // ---- 数值标签 ----
+    $('v-curves').textContent = state.curves;
+    $('v-vib').textContent = state.vib;
+    $('v-bw').textContent = state.bw;
+    $('v-warm').textContent = state.warm;
+
+    // ---- 曲线图 ----
+    var t = state.curves / 100;
+    var c1x = 33 + 27 * t, c1y = 67 + 33 * t;
+    var c2x = 67 - 27 * t, c2y = 33 - 33 * t;
+    curvePath.setAttribute('d', 'M 0 100 C ' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) +
+      ', ' + c2x.toFixed(1) + ' ' + c2y.toFixed(1) + ', 100 0');
+
+    // ---- 投影状态 ----
+    $('shadowState').textContent = state.shadow ? '开' : '关';
+    $('shadowState').className = state.shadow ? 'text-[11px] text-emerald-400' : 'text-[11px] text-stone-500';
+  }
+
+  // ---- 图层交互 ----
+  layerList.addEventListener('click', function (e) {
+    var eye = e.target.closest ? e.target.closest('[data-eye]') : null;
+    if (eye) {
+      var id = eye.getAttribute('data-eye');
+      if (id === 'bg') return;
+      state.on[id] = !state.on[id];
+      renderLayers();
+      update();
+      return;
+    }
+    var row = e.target.closest ? e.target.closest('[data-id]') : null;
+    if (row) {
+      state.active = row.getAttribute('data-id');
+      renderLayers();
+      showProps();
+    }
+  });
+
+  // ---- 属性控件 ----
+  $('s-curves').addEventListener('input', function (e) {
+    state.curves = parseInt(e.target.value, 10) || 0;
+    if (!state.on.curves) { state.on.curves = true; renderLayers(); }
+    update();
+  });
+  $('s-vib').addEventListener('input', function (e) {
+    state.vib = parseInt(e.target.value, 10) || 0;
+    if (!state.on.vib) { state.on.vib = true; renderLayers(); }
+    update();
+  });
+  $('s-bw').addEventListener('input', function (e) {
+    state.bw = parseInt(e.target.value, 10) || 0;
+    if (!state.on.bw) { state.on.bw = true; renderLayers(); }
+    update();
+  });
+  $('s-warm').addEventListener('input', function (e) {
+    state.warm = parseInt(e.target.value, 10) || 0;
+    if (!state.on.warm) { state.on.warm = true; renderLayers(); }
+    update();
+  });
+
+  $('i-text').addEventListener('input', function (e) {
+    state.text = e.target.value;
+    if (!state.on.text) { state.on.text = true; }
+    renderLayers();
+    update();
+  });
+
+  $('btn-shadow').addEventListener('click', function () {
+    state.shadow = !state.shadow;
+    update();
+  });
+
+  // ---- 导出 PSD（纯前端模拟） ----
+  var exportBtn = $('exportBtn');
+  var exportMsg = $('exportMsg');
+  var exporting = false;
+
+  exportBtn.addEventListener('click', function () {
+    if (exporting) return;
+    exporting = true;
+    exportBtn.disabled = true;
+    exportBtn.textContent = '写入中…';
+    exportMsg.classList.remove('hidden');
+    exportMsg.className = 'fade-in mt-3 rounded-xl border border-stone-200 bg-white px-4 py-3.5 text-sm text-stone-700';
+    exportMsg.innerHTML =
+      '<div class="flex items-center justify-between mb-2">' +
+        '<span class="text-[13px]">正在写入 kanagawa.psd …</span>' +
+        '<span class="text-[11px] text-stone-400">演示数据</span>' +
+      '</div>' +
+      '<div class="h-1.5 w-full rounded-full bg-stone-100 overflow-hidden">' +
+        '<div id="exportBar" class="bar-fill h-full bg-[#1e4f74]" style="width:6%"></div>' +
+      '</div>';
+
+    setTimeout(function () {
+      var bar = $('exportBar');
+      if (bar) bar.style.width = '100%';
+    }, 60);
+
+    setTimeout(function () {
+      var layerCount = 0;
+      for (var k in state.on) { if (state.on.hasOwnProperty(k) && state.on[k]) layerCount++; }
+      exportMsg.className = 'fade-in mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3.5 text-sm text-emerald-900';
+      exportMsg.innerHTML =
+        '<div class="flex flex-wrap items-center gap-2">' +
+          '<span class="font-medium">✅ 已导出 kanagawa.psd</span>' +
+          '<span class="text-[11px] px-2 py-0.5 rounded bg-emerald-200/60 text-emerald-800">演示数据</span>' +
+        '</div>' +
+        '<div class="mt-1.5 text-[12.5px] text-emerald-800/80">' +
+          layerCount + ' 个可见图层 · 16 位/通道 · sRGB · 12.4 MB · PSD 往返渲染校验 307/309' +
+        '</div>';
+      exportBtn.disabled = false;
+      exportBtn.textContent = '导出 PSD';
+      exporting = false;
+    }, 1150);
+  });
+
+  // ---- 候补名单 ----
+  var wlBtn = $('wlBtn');
+  var wlMsg = $('wlMsg');
+  var wlEmail = $('wlEmail');
+
+  wlBtn.addEventListener('click', function () {
+    var email = (wlEmail.value || '').trim() || '你的邮箱';
+    wlMsg.classList.remove('hidden');
+    wlMsg.className = 'fade-in mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900';
+    wlMsg.textContent = '✨ 已记录（演示）：开放购买时我们会通知 ' + email + '。此页面不会真的提交任何数据。';
+    wlBtn.textContent = '已加入';
+    wlBtn.disabled = true;
+    wlBtn.className = 'px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-medium whitespace-nowrap cursor-default';
+  });
+
+  // ---- 初始化 ----
+  renderLayers();
+  showProps();
+  update();
+})();
+</script>
+</body>
+</html>

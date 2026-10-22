@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-23",
+ "headline": "纯Rust重写的开源PS，能开PSD",
+ "summary_md": "**storytold/photocraft** 是一个用纯 Rust 从零重写的开源图像编辑器，README 里自称是 Adobe Photoshop 的\"clean-room reimplementation\"。它的卖点很直接：图层、蒙版、调整图层、图层样式、文字、矢量、笔刷，还有**能打开和保存真实的 PSD 文件**（README 说重存后 309 个 psd-tools 测试文件里有 307 个能保留渲染结果）。底层用 wgpu 做 GPU 合成，不走 Electron，所以是原生应用，不是套壳网页。\n\n它最近火得有点吓人：22 天冲到 7 万星，日增 3000 多。这个曲线在开源圈不算正常，需要打问号。另外 README 一开头就把流量导到 getartcraft.com 这个商业站，说明团队不是纯社区玩法。\n\n产品机会在于\"不想订阅 Adobe、但工作流里绕不开 PSD\"这群人。做成免安装的桌面版，买断制授权，主打离线、PSD 无缝、快捷键和 PS 一致，对自由摄影师和小设计工作室是有吸引力的。前提是完成度和稳定性经得起真实项目检验，而这一点从 README 还没法确认。",
+ "pick": {
+  "full_name": "storytold/photocraft",
+  "url": "https://github.com/storytold/photocraft",
+  "description": "PhotoCraft: An open-source, photo editor written by scratch in pure Rust",
+  "license": "Apache-2.0",
+  "stars": 71296,
+  "daily_rate": 3240.7,
+  "category": "多媒体创作",
+  "one_liner": "用纯 Rust 重写的开源版 Photoshop，支持真实 PSD 文件。",
+  "reason": "纯 Rust 原生重写 PS 且兼容 PSD，话题与痛点俱佳、Apache 许可友好；但团队已在自营商业站，包装空间有限，星数增长需警惕真实性。",
+  "content": 8.67,
+  "startup": 6.95,
+  "final": 7.13,
+  "category_penalty": 0.8
+ },
+ "demo_path": "demos/2026-10-23-storytold-photocraft",
+ "top": [
+  {
+   "full_name": "storytold/photocraft",
+   "url": "https://github.com/storytold/photocraft",
+   "one_liner": "用纯 Rust 重写的开源版 Photoshop，支持真实 PSD 文件。",
+   "reason": "纯 Rust 原生重写 PS 且兼容 PSD，话题与痛点俱佳、Apache 许可友好；但团队已在自营商业站，包装空间有限，星数增长需警惕真实性。",
+   "content": 8.67,
+   "startup": 6.95,
+   "final": 7.13,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "debpalash/VoiceStudio",
+   "url": "https://github.com/debpalash/VoiceStudio",
+   "one_liner": "本地运行的AI语音工作室，能克隆声音、配音和做有声书",
+   "reason": "话题性强、演示效果好，本地替代ElevenLabs卖点清晰；但AGPL、产品化门槛低且自建站点，壁垒与变现需靠托管服务与合规。",
+   "content": 8.33,
+   "startup": 4.95,
+   "final": 7.11,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "heygen-com/hyperframes",
+   "url": "https://github.com/heygen-com/hyperframes",
+   "one_liner": "用写网页的方式做视频，AI 帮你自动生成",
+   "reason": "话题性强、演示效果直观，但属于大厂官方开源，个人做产品的差异化空间被压缩，更适合做内容而非创业。",
+   "content": 8.67,
+   "startup": 7.15,
+   "final": 7.11,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "akitaonrails/ai-memory",
+   "url": "https://github.com/akitaonrails/ai-memory",
+   "one_liner": "给各种AI编程助手装一个共享的长期记忆，换工具换电脑也能接着干",
+   "reason": "痛点真实且话题热度高，MIT许可友好、架构扎实；但偏开发者基础设施，已有官方站点，演示和大众传播门槛偏高，商业化需靠托管与团队版。",
+   "content": 7.33,
+   "startup": 7.4,
+   "final": 7.03,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "stablyai/orca",
+   "url": "https://github.com/stablyai/orca",
+   "one_liner": "同时并行运行多个AI编程助手、集中监控比较的桌面工作台",
+   "reason": "赛道热门、演示性强、许可证友好，但项目本身已是YC支持的成熟商业产品，个人做产品化差异化几乎无空间，更适合做内容选题而非创业标的。",
+   "content": 7.67,
+   "startup": 5.65,
+   "final": 6.94,
+   "category_penalty": 0
+  }
+ ]
+}

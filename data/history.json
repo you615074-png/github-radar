@@ -23,6 +23,12 @@
    "full_name": "pengchujin/aerial-tv",
    "category": "效率工具",
    "final": 7.16
+  },
+  {
+   "date": "2026-10-23",
+   "full_name": "storytold/photocraft",
+   "category": "多媒体创作",
+   "final": 7.13
   }
  ],
  "top": {
@@ -45,7 +51,12 @@
   "simbasjungles/free-my-tv": "2026-10-22",
   "Gathin23/cleanyourtv": "2026-10-22",
   "tangency-labs/solidcraft": "2026-10-22",
-  "ikow/php2shell-poc": "2026-10-22"
+  "ikow/php2shell-poc": "2026-10-22",
+  "storytold/photocraft": "2026-10-23",
+  "debpalash/VoiceStudio": "2026-10-23",
+  "heygen-com/hyperframes": "2026-10-23",
+  "akitaonrails/ai-memory": "2026-10-23",
+  "stablyai/orca": "2026-10-23"
  },
  "scores": {
   "storytold/artcraft": {
@@ -128,57 +139,60 @@
    }
   },
   "storytold/photocraft": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "多媒体创作",
-    "one_liner": "纯 Rust 重写的开源 Photoshop，支持图层、蒙版和真实 PSD 文件",
-    "target_user": "需要离线专业修图、又不想订阅 Adobe 的自由设计师和小型工作室",
+    "one_liner": "用纯 Rust 重写的开源版 Photoshop，支持真实 PSD 文件。",
+    "target_user": "不想订阅 Adobe、又需要 PSD 兼容的摄影师与平面设计师",
     "scores": {
      "topicality": 9,
      "accessibility": 9,
      "wow": 8,
      "pain": 8,
-     "packaging_room": 4,
-     "monetization": 5,
+     "packaging_room": 5,
+     "monetization": 6,
      "license_safety": 9,
-     "demoability": 4
+     "demoability": 7
     },
-    "product_idea": "把 PhotoCraft 做成开箱即用的桌面修图工具，主打离线、无需订阅、支持 PSD，再用 AI 智能选区吸引设计师。",
-    "demo_idea": "网页演示：拖入一张 PSD，在曲线图层上调色，演示过程中原图像素保持不变，图层可随时关闭。",
+    "product_idea": "打包成免安装桌面版 PS 替代品，卖买断制授权，主打离线、PSD 无缝、无订阅。",
+    "demo_idea": "网页里加载一张公版名画，现场加曲线调整图层、改文字、导出 PSD，30 秒走完。",
+    "attack_tool": false,
     "red_flags": [
-     "项目 18 天就涨到 6.7 万星，增速异常，数据可信度存疑",
-     "自称是 Photoshop 的 clean-room 重实现，可能有法务和商标风险",
-     "桌面原生应用，纯网页 30 秒演示能力弱",
-     "它本身是成熟应用加官方站点，个人可包装的空间有限"
+     "22 天冲到 7 万星、日增 3000+，数据异常，疑似刷星或营销事件",
+     "自建 getartcraft.com 商业站，非纯社区项目",
+     "Photoshop 功能面极广，开源版完成度与稳定性难核实"
     ],
-    "reason": "话题性和易懂度都很高，痛点真实，但项目已是成熟桌面应用，可包装空间和网页演示都受限，商业化要靠增值服务而非重做产品。"
+    "reason": "纯 Rust 原生重写 PS 且兼容 PSD，话题与痛点俱佳、Apache 许可友好；但团队已在自营商业站，包装空间有限，星数增长需警惕真实性。"
    }
   },
   "debpalash/VoiceStudio": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI应用",
-    "one_liner": "本地开源版 ElevenLabs，声音克隆、配音、转录全离线",
-    "target_user": "做短视频、有声书、播客的独立创作者和小工作室",
+    "one_liner": "本地运行的AI语音工作室，能克隆声音、配音和做有声书",
+    "target_user": "内容创作者、自媒体博主、有声书与播客制作者、重视隐私的企业团队",
     "scores": {
      "topicality": 9,
      "accessibility": 8,
-     "wow": 9,
-     "pain": 8,
+     "wow": 8,
+     "pain": 6,
      "packaging_room": 5,
      "monetization": 6,
      "license_safety": 2,
-     "demoability": 7
+     "demoability": 8
     },
-    "product_idea": "面向自媒体创作者的一键本地配音+声音克隆工具，按托管订阅或团队版收费。",
-    "demo_idea": "上传一段音频克隆音色，再输入一句台词即时合成播放，对比原声与合成声。",
+    "product_idea": "面向创作者的一键本地配音/有声书工具，托管模型下载与硬件适配，订阅制。",
+    "demo_idea": "网页上传一段录音，输入文案，30秒内生成同一音色的朗读并视频配音。",
+    "attack_tool": false,
     "red_flags": [
-     "AGPL-3.0 许可证，商用二次开发风险高",
-     "项目已经有 Electron 桌面端和官网，包装空间有限",
-     "高星增速异常，需警惕刷星或营销驱动",
-     "依赖本地 GPU/模型，普通用户安装门槛高"
+     "AGPL-3.0 许可证，商用闭源产品有法律风险",
+     "项目自带头像网站和安装器，已是准成品，可包装空间有限",
+     "声音克隆涉及深度伪造与版权/肖像权合规风险",
+     "目前处热度峰值，实际成熟度和 star 数需谨慎核实"
     ],
-    "reason": "话题性强、wow 感高，本地声音克隆痛点真实；但已自带成熟桌面端，且 AGPL 限制商业化，更适合做内容而非直接做产品。"
+    "reason": "话题性强、演示效果好，本地替代ElevenLabs卖点清晰；但AGPL、产品化门槛低且自建站点，壁垒与变现需靠托管服务与合规。"
    }
   },
   "wheresryan22/anatomy": {
@@ -208,30 +222,32 @@
    }
   },
   "morluto/rea": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "让 AI 代理逆向分析任意 App 或二进制程序，弄清功能实现方式",
-    "target_user": "独立开发者、逆向工程师、想复刻竞品功能的创业者",
+    "one_liner": "让AI代理帮你逆向分析App和二进制程序的工作原理",
+    "target_user": "独立开发者、安全研究/逆向工程从业者、想抄竞品功能的工程师",
     "scores": {
      "topicality": 9,
-     "accessibility": 6,
+     "accessibility": 5,
      "wow": 8,
      "pain": 7,
-     "packaging_room": 4,
-     "monetization": 5,
+     "packaging_room": 6,
+     "monetization": 6,
      "license_safety": 10,
-     "demoability": 5
+     "demoability": 6
     },
-    "product_idea": "面向开发者的 SaaS 版「功能侦察」：上传 App，AI 输出功能原理解析和可复用实现。",
-    "demo_idea": "网页选一个 Electron 小应用，30 秒内生成其搜索功能的模块图与实现说明。",
+    "product_idea": "面向独立开发者的网页版“竞品功能拆解”服务：上传App包，AI给出功能实现方式与证据链报告",
+    "demo_idea": "选一个知名App，让它分析某功能并实时生成带证据的拆解报告和复刻代码片段",
+    "attack_tool": false,
     "red_flags": [
-     "逆向工程数据涉及灰色地带，易被用于破解他人软件",
-     "依赖 Hopper/Ghidra/IDA 等第三方引擎，本地环境门槛高",
-     "项目已自带官网、npm 包和社区，商业化空间有限",
-     "Star 增速异常，需警惕数据真实性"
+     "逆向工程本身处于灰区，可能被用于破解/盗版，需明确合规边界",
+     "star数异常增长，数据真实性存疑",
+     "依赖Hopper/Ghidra等第三方引擎，能力天花板受限",
+     "逆向人群小众，非技术用户几乎无法理解"
     ],
-    "reason": "话题性和惊喜感强，MIT 许可安全，但逆向用途有合规风险，且项目本身已是成熟产品，包装与变现空间受限。"
+    "reason": "话题性和Wow感强，MIT许可干净，但受众偏窄、灰区风险明显；产品化需在合规与低门槛上做文章，适合做内容爆款，创业需谨慎。"
    }
   },
   "Gathin23/tv-vibehack": {
@@ -263,54 +279,60 @@
    }
   },
   "anthropics/claude-plugins-official": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
-    "category": "开发者工具",
-    "one_liner": "Claude Code 官方插件商店，可一键安装扩展 AI 编程助手的能力",
-    "target_user": "使用 Claude Code 的开发者、AI 编程工具团队",
+    "category": "AI基础设施",
+    "one_liner": "Claude Code 官方插件商店，给 AI 编程助手安装扩展能力",
+    "target_user": "Claude Code 重度开发者、企业 AI 工程团队",
     "scores": {
-     "topicality": 9,
+     "topicality": 8,
      "accessibility": 6,
      "wow": 5,
      "pain": 4,
      "packaging_room": 2,
      "monetization": 3,
      "license_safety": 9,
-     "demoability": 5
+     "demoability": 4
     },
-    "product_idea": "做一个第三方插件收录、对比、评测与安全审计站，帮助开发者挑选可靠插件",
-    "demo_idea": "网页列出插件卡片，展示安装量、权限范围、安全评分和一键安装命令复制",
+    "product_idea": "做第三方插件质量评测与订阅推荐，帮用户挑选并安装安全好用的 Claude Code 插件",
+    "demo_idea": "网页展示插件搜索、一键安装命令生成与安全评分对比卡片",
+    "attack_tool": false,
     "red_flags": [
-     "这是 Anthropic 官方维护的市场目录，本质上是资源列表和分发渠道，个人很难在它之上做出差异化产品",
-     "商业价值归属于 Anthropic 生态，第三方难以直接变现"
+     "Anthropic 官方托管的插件目录，不是可包装的独立产品",
+     "本质是资源列表/市场索引，缺乏自有核心功能",
+     "生态依附于 Claude Code，个人难以差异化"
     ],
-    "reason": "话题热度和增长极强，但它是大厂官方基础设施加资源列表，能包装成产品的空间小，更适合做内容选题与生态观察，而非直接创业。"
+    "reason": "大厂官方插件市场，流量极大但个人无法在上面做产品，仅适合做内容解读或周边评测服务。"
    }
   },
   "openai/math": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
-    "category": "教育学习",
-    "one_liner": "OpenAI 用 AI 生成的 700 多篇数学论文与 Lean 形式化证明合集",
-    "target_user": "数学研究者、AI for Science 团队、高校数学系",
+    "category": "AI应用",
+    "one_liner": "OpenAI 模型生成的 700 多篇数学论文和 Lean 证明的合集",
+    "target_user": "数学研究者、AI 研究者、科普内容创作者",
     "scores": {
-     "topicality": 7,
-     "accessibility": 3,
-     "wow": 6,
-     "pain": 2,
-     "packaging_room": 2,
-     "monetization": 1,
+     "topicality": 9,
+     "accessibility": 5,
+     "wow": 8,
+     "pain": 3,
+     "packaging_room": 3,
+     "monetization": 2,
      "license_safety": 9,
-     "demoability": 3
+     "demoability": 4
     },
+    "product_idea": "把论文合集做成可检索的数学 AI 成果知识库与科普解读站",
+    "demo_idea": "网页展示 372 个家族的论文地图，点开看证明摘要和 Lean 验证状态",
+    "attack_tool": false,
     "red_flags": [
-     "本质是论文/形式化证明仓库与模型产出物，不是可产品化的软件",
-     "大厂（OpenAI）官方研究发布，个人难做差异化",
-     "目标用户极窄，普通用户无法理解也无法验证真伪"
+     "这是 OpenAI 官方发布的论文和证明合集，不是软件产品，不能作为创业的基础",
+     "主要由 PDF 和 Lean 文件组成，没有可直接包装成产品的功能",
+     "内容涉及高深数学，普通人难以理解",
+     "属于大厂研究成果发布，个人难以在此基础上做出差异化"
     ],
-    "product_idea": "做 AI 数学成果追踪站：按学科聚合新证明、Lean 验证状态与讨论。",
-    "demo_idea": "网页展示证明地图与 Lean 验证徽章，点开看摘要与核查状态。",
-    "reason": "话题性强但属大厂研究成果合集，无产品形态、痛点弱、难以商业化，做内容可，做产品不行。"
+    "reason": "话题性和惊喜感很强，但本质是大厂发布的数学成果合集，没有可做成产品的功能点，商业化空间很小。"
    }
   },
   "storytold/wordcraft": {
@@ -340,55 +362,58 @@
    }
   },
   "anomalyco/opencode": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "开源版 AI 编程助手，在终端里帮你写代码、改 bug",
-    "target_user": "个人开发者、小团队技术负责人（自托管/隐私敏感场景）",
+    "one_liner": "开源的AI编程助手，能读懂代码库、自动改代码",
+    "target_user": "需要提效的专业开发者与小型技术团队",
     "scores": {
      "topicality": 9,
      "accessibility": 7,
      "wow": 7,
-     "pain": 6,
-     "packaging_room": 4,
+     "pain": 7,
+     "packaging_room": 3,
      "monetization": 4,
      "license_safety": 10,
-     "demoability": 7
+     "demoability": 5
     },
+    "product_idea": "基于它做团队级AI编程工作流托管平台，统一配置、审计和私有模型接入",
+    "demo_idea": "网页里放一个模拟代码库，让Agent读取需求后自动生成并展示diff修改",
+    "attack_tool": false,
     "red_flags": [
-     "已是 21万+ star 的现象级成熟项目，自带桌面端和官网，个人二次包装空间极小",
-     "AI 编程代理赛道被 Claude Code、Cursor、Codex 等大厂产品正面挤压",
-     "核心价值依赖用户自备模型 API Key，体验与成本不受你控制"
+     "已是22万Star的成熟明星项目并自带官网、桌面版，个人难在其上做差异化",
+     "与Cursor、Claude Code等大厂产品正面竞争，商业化空间被挤压"
     ],
-    "product_idea": "面向中文团队的自托管 AI 编程助手，内置企业代码库知识与权限审计",
-    "demo_idea": "网页模拟终端：输入一句需求，实时演示 Agent 读文件、改代码、跑测试的全过程",
-    "reason": "话题热度极高、MIT 安全，但项目本身已高度成熟且竞争白热化，更适合做内容选题而非创业切口"
+    "reason": "话题热度与易懂度都很高，适合做内容，但项目本身已高度成熟且有大厂竞品，包装和收费空间有限，更适合解读而非创业。"
    }
   },
   "stablyai/orca": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
-    "category": "开发者工具",
-    "one_liner": "同时开多个 AI 编程助手并行干活并统一管理的桌面 IDE",
-    "target_user": "同时用 Claude Code / Codex 等多家 AI 编程代理的专业开发者与小团队",
+    "category": "AI应用",
+    "one_liner": "同时并行运行多个AI编程助手、集中监控比较的桌面工作台",
+    "target_user": "重度使用Claude Code/Codex等编程助手的专业开发者与小型AI开发团队",
     "scores": {
      "topicality": 9,
      "accessibility": 6,
      "wow": 8,
-     "pain": 8,
+     "pain": 7,
      "packaging_room": 3,
      "monetization": 4,
      "license_safety": 9,
      "demoability": 7
     },
-    "product_idea": "面向小团队的托管版多代理编排面板，按席位订阅，免安装、云端统一监控",
-    "demo_idea": "网页模拟一屏五个 worktree 并行跑同一提示，实时对比结果并一键合并",
+    "product_idea": "面向白天的打工人做付费SaaS版多智能体编排台，团队共享worktree和用量看板",
+    "demo_idea": "输入一个提示词，同时派发给5个AI智能体，分屏展示隔离工作区结果并一键选优合并",
+    "attack_tool": false,
     "red_flags": [
-     "YC 背景公司官方产品，已有 App Store 上架和官网，开源版即商业版",
-     "Stars 增长异常快，需警惕刷星或营销推动",
-     "个人在其上做差异化产品的空间很小"
+     "已有官网orca.dev、iOS/Android应用和YC背景，是成熟商业产品而非裸开源项目，个人再做包装空间极小",
+     "10万星+日增1200星异常，数据可信度存疑",
+     "强依赖各家CLI agent的订阅与接口，存在政策与稳定性风险"
     ],
-    "reason": "话题和演示效果强，痛点真实，但已是成熟商业化产品，包装与变现空间有限，更适合做内容而非创业。"
+    "reason": "赛道热门、演示性强、许可证友好，但项目本身已是YC支持的成熟商业产品，个人做产品化差异化几乎无空间，更适合做内容选题而非创业标的。"
    }
   },
   "cathrynlavery/diagram-design": {
@@ -418,29 +443,31 @@
    }
   },
   "NationalSecurityAgency/ghidra": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "安全",
-    "one_liner": "美国国安局开源的逆向工程工具，能把编译后的程序还原成可读代码",
-    "target_user": "安全研究员、恶意软件分析团队、漏洞挖掘工程师、CTF 选手",
+    "one_liner": "NSA开源的逆向工程工具，能把程序编译后的机器码还原成可读代码",
+    "target_user": "安全研究员、恶意软件分析团队、漏洞挖掘者与安全教学机构",
     "scores": {
-     "topicality": 7,
-     "accessibility": 5,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 4,
+     "topicality": 6,
+     "accessibility": 4,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 2,
+     "monetization": 3,
      "license_safety": 9,
-     "demoability": 6
+     "demoability": 5
     },
-    "product_idea": "面向 Web 的二进制分析平台，上传样本即可获得反编译和漏洞线索",
-    "demo_idea": "上传一段小程序二进制文件，实时展示反汇编与反编译结果对比图",
+    "product_idea": "面向安全课程的浏览器逆向教学沙箱，内置样本与可视化反编译流程",
+    "demo_idea": "网页上传一个小程序，实时展示从汇编到伪代码的反编译过程与调用图",
+    "attack_tool": false,
     "red_flags": [
-     "由 NSA 维护的官方大型框架，个人很难做出差异化",
-     "README 自带有安全隐患警告，并且安装依赖 JDK 25 和 Gradle，入门门槛较高",
-     "属于网络安全敏感领域，因此商业化会受到合规约束"
+     "NSA官方维护的成熟重型框架，个人难以在其上做出差异化产品",
+     "安装需JDK与完整桌面环境，且本身已是完整GUI工具，包装空间极小",
+     "属于开源版即终态的大厂基础设施，商业授权路径不清晰"
     ],
-    "reason": "NSA 官方逆向框架，话题和演示性不错，但本身是大厂重型项目，包装空间和付费路径有限，更适合做内容而非创业。"
+    "reason": "话题性强、许可宽松，但它是NSA成熟桌面框架，产品化空间和付费场景都很有限，更适合做内容而非创业。"
    }
   },
   "Niko1221/Strata": {
@@ -471,162 +498,173 @@
    }
   },
   "heygen-com/hyperframes": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "多媒体创作",
-    "one_liner": "用写网页的方式生成视频，专为AI助手设计",
-    "target_user": "内容营销团队、社媒视频创作者、AI编程助手重度用户",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "在线HTML转视频工作台，模板+AI改稿一键导出MP4",
-    "demo_idea": "网页输入一段HTML动画，右侧实时预览并30秒内导出MP4",
-    "red_flags": [
-     "HeyGen官方出品，已有Studio/Playground等商业产品，个人差异化空间小",
-     "依赖AI编码助手技能生态，非技术用户上手门槛高"
-    ],
-    "reason": "话题性强、演示效果好，但背后是大厂官方项目，已有成熟托管产品，独立包装和变现空间有限。"
-   }
-  },
-  "Ebony-Vinyl/dsh-our-free-model": {
-   "date": "2026-10-19",
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "装个插件就能免费用上顶级AI模型的工具",
-    "target_user": "不想付费订阅、且愿意自己配置的 AI 重度用户与开发者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 6,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "把多来源免费模型池整合成开箱即用的统一客户端，带用量看板和稳定自动降级",
-    "demo_idea": "网页模拟模型选择器：一键装上插件后，DeepSeek、Kimi 等模型全部亮起可用、可对话",
-    "red_flags": [
-     "依赖抓取 OpenCode、Kilo 等第三方免费网关，属于灰产式薅羊毛，随时失效或有封禁风险",
-     "官方已明确会记录 prompt 用于改进服务，转发用户数据存在隐私与合规风险",
-     "EAC 渠道要求 GitHub star 才放行，本质是绕过上游配额与授权",
-     "变现路径几乎为零：用户付费意愿就是‘免费’，且上游随时断供",
-     "README 极度堆砌功能，产品已相当臃肿，个人再包装空间有限"
-    ],
-    "reason": "话题性和惊喜感强、MIT 宽松，但核心是蹭第三方免费额度，法律与可持续性风险高，几乎无法商业化，适合做内容不适合做产品。"
-   }
-  },
-  "ly05010419/MacNativeGames": {
-   "date": "2026-10-19",
-   "eval": {
-    "category": "生活娱乐",
-    "one_liner": "用脚本把《塞尔达传说：王国之泪》变成能在苹果芯片 Mac 上原生运行的 App",
-    "target_user": "拥有正版 Switch 游戏文件、想在高配 Mac 上以高帧率游玩的硬核玩家",
+    "one_liner": "用写网页的方式做视频，AI 帮你自动生成",
+    "target_user": "需要批量产出营销短视频的中小团队、内容创作者、电商运营",
     "scores": {
      "topicality": 9,
      "accessibility": 8,
      "wow": 9,
      "pain": 7,
-     "packaging_room": 5,
-     "monetization": 2,
-     "license_safety": 2,
-     "demoability": 5
+     "packaging_room": 6,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 8
     },
-    "product_idea": "做个一键打包工具，帮用户把自带的正版游戏文件转成可双击运行的 Mac App，并自动处理着色器预热和字体资源。",
-    "demo_idea": "在网页里模拟脚本运行：放入 XCI 和 prod.keys，进度条走到 \"App 已生成\"，再播放 M4 实机 90 帧的屏幕录像。",
+    "product_idea": "面向非技术用户的在线视频生成台，输入文案或脚本，自动出可编辑视频",
+    "demo_idea": "网页左边写一段 HTML 或一句提示词，右边实时渲染出带动画的 MP4 视频",
+    "attack_tool": false,
     "red_flags": [
-     "项目本质上就是运行 Switch 商业游戏，涉及任天堂版权与破解密钥，法律风险极高",
-     "需要用户自备 prod.keys 和游戏文件，属于规避 DRM 的灰色地带",
-     "1 天内涨到 1052 stars，数据异常，热度真实性可疑",
-     "README 明显由 AI 生成且含推广 AI 编程工具的内容",
-     "只有命令行脚本，且强依赖 macOS 26 和 M4 硬件，产品化门槛高"
+     "HeyGen 官方项目，背后是知名商业公司，个人在上面做差异化产品空间有限",
+     "README 明显面向 AI coding agent，普通用户门槛高",
+     "官方已有 Studio、Playground、云渲染等商业形态，开源版很大程度是流量入口"
     ],
-    "reason": "技术上很惊艳，话题性也强；但它绕过 DRM 运行商业游戏，法律风险高，商业化无路可走，只适合做流量内容，不适合做产品。"
+    "reason": "话题性强、演示效果直观，但属于大厂官方开源，个人做产品的差异化空间被压缩，更适合做内容而非创业。"
    }
   },
-  "storytold/filmcraft": {
-   "date": "2026-10-19",
+  "Ebony-Vinyl/dsh-our-free-model": {
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
-    "category": "多媒体创作",
-    "one_liner": "纯 Rust 重写的开源 Premiere，可在浏览器里剪视频",
-    "target_user": "不想订阅 Adobe 的独立视频创作者、剪辑师、AI Agent 开发者",
+    "category": "开发者工具",
+    "one_liner": "给 AI 编程助手装上免费大模型，不用注册和 API Key",
+    "target_user": "想零成本用前沿大模型的个人开发者、AI 编程爱好者",
     "scores": {
      "topicality": 9,
      "accessibility": 7,
-     "wow": 8,
+     "wow": 7,
      "pain": 6,
-     "packaging_room": 4,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 7
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 8,
+     "demoability": 6
     },
-    "product_idea": "浏览器版轻量剪辑器，主打零安装、WASM 秒开、可被 AI Agent 脚本驱动",
-    "demo_idea": "网页载入公共领域影片，拖时间轴做三点剪辑+调色，右侧实时示波器看变化",
+    "product_idea": "做成一键安装的插件，把免费和自带 Key 的多家模型统一成一条模型清单",
+    "demo_idea": "网页模拟选择器，展示装插件前后模型列表对比、免费模型随点随用",
+    "attack_tool": false,
     "red_flags": [
-     "团队已有商业站点和产品矩阵，开源更像引流，个人难差异化",
-     "18 天 1.4 万星增长异常快，需警惕营销热度",
-     "剪辑器功能面太宽，短期难做完整替代品"
+     "核心卖点是白嫖第三方网关的免费额度，上游随时可能收紧或封禁，产品不可持续",
+     "EAC 渠道要求 GitHub 登录并 star 才放行，有平台规则灰区风险",
+     "免费池上游声明 prompt 可能被记录，存在隐私和合规隐患",
+     "功能极多偏插件配置，不是独立产品，包装空间和收费路径都弱"
     ],
-    "reason": "话题和惊喜感强，纯 Rust+WASM 开源 Premiere 很吸睛；但已有官方产品形态，包装空间和收费点受限，适合做内容引爆点而非独立创业。"
+    "reason": "话题性和热度很高，但本质是聚合白嫖免费额度的插件，依赖上游善意，难做成收费产品，做内容可做产品需谨慎。"
+   }
+  },
+  "ly05010419/MacNativeGames": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "在苹果设备上原生运行塞尔达传说游戏的移植方案",
+    "target_user": "拥有正版游戏和Switch文件、想在Mac/iPhone上玩的塞尔达玩家",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 9,
+     "pain": 7,
+     "packaging_room": 8,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 4
+    },
+    "product_idea": "一键把玩家自己的游戏文件打包成可在Mac/iPhone上流畅运行的App，内置着色器缓存与性能调优",
+    "demo_idea": "网页对比视频：同一台iPhone上原生运行游戏的帧率、画面与卡顿消除效果，配构建流程动图",
+    "attack_tool": false,
+    "red_flags": [
+     "涉及任天堂版权游戏，法律风险极高，随时可能被DMCA下线",
+     "项目本身不提供商业授权，无法直接收费，只能卖打包工具/服务",
+     "README要求用AI助手构建，用户门槛仍需自备正版游戏和keys",
+     "iOS构建需iPhone 14以上和iOS 26，覆盖面受限"
+    ],
+    "reason": "话题性和惊喜感极强，但版权雷区与无法合法收费是硬伤，适合做内容不适合做付费产品。"
+   }
+  },
+  "storytold/filmcraft": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "用 Rust 从零写的开源专业非线性视频剪辑软件，支持网页端",
+    "target_user": "独立创作者、小型视频工作室、想替代 Premiere 或 FCP 的用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成浏览器内免安装的轻量剪辑器，或面向团队的云端协作剪辑与素材管理服务",
+    "demo_idea": "网页上传一段视频，30 秒内完成剪切、调色、加字幕并导出，展示实时预览效果",
+    "attack_tool": false,
+    "red_flags": [
+     "背后是 ArtCraft 商业团队，已有官网下载和生态，个人在上面做差异化的空间有限",
+     "专业剪辑器功能面广，纯前端 30 秒 demo 难以完整展现调色和音频核心价值",
+     "视频编解码、GPU 合成等技术门槛高，个人复刻或二次开发成本大"
+    ],
+    "reason": "技术含量高、话题性强，Apache 许可友好；但已是商业团队成熟产品，个人包装成产品的空间和商业化难度都受限。"
    }
   },
   "storytold/pdfcraft": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "效率工具",
-    "one_liner": "用 Rust 从零写的开源 PDF 阅读编辑器，快、离线、不丢数据",
-    "target_user": "需要处理合同、扫描件和表单的办公用户、法务与行政人员",
+    "one_liner": "用纯Rust写的开源PDF阅读编辑器，快、离线、不上传文件",
+    "target_user": "注重隐私、经常处理PDF的知识工作者和小团队",
     "scores": {
-     "topicality": 7,
+     "topicality": 6,
      "accessibility": 9,
-     "wow": 6,
+     "wow": 5,
      "pain": 6,
      "packaging_room": 4,
      "monetization": 4,
      "license_safety": 9,
-     "demoability": 5
+     "demoability": 7
     },
-    "product_idea": "本地优先的 PDF 工作台：批量合并拆分、加注释、填表单、加密，卖桌面授权",
-    "demo_idea": "网页里拖入 PDF，秒开并演示页面拖拽排序、合并拆分和搜索高亮",
+    "product_idea": "把PdfCraft做成无需安装的在线PDF阅读编辑工作台，本地处理不上传",
+    "demo_idea": "网页中打开一份多语言PDF，演示深缩放清晰、拆分合并、批注，并强调文件不离开本机",
+    "attack_tool": false,
     "red_flags": [
-     "已有成熟官网 getartcraft.com 和完整桌面应用，更像商业产品开源而非可二次包装的早期项目",
-     "PDF 编辑器赛道拥挤，Adobe、Foxit、浏览器自带阅读器免费覆盖大部分需求",
-     "18 天涨 1.6 万星的数据异常偏高，需警惕刷星或话题泡沫",
-     "品牌商标不随开源授权，二次包装有法务风险"
+     "已是成熟产品，官网、Discord、品牌商标齐全，且不属于文档所说的大厂 SDK，但包装空间小",
+     "PDF编辑器赛道拥挤，Adobe、Stirling PDF等强敌林立",
+     "只有 Apache-2.0 开源，品牌商标不随代码开放，二次开发受限制"
     ],
-    "reason": "工程品质高、许可证友好、普通人易懂，但产品化空间小：官方已有成品应用，付费意愿被免费工具挤压，更适合做技术解读内容而非创业底座。"
+    "reason": "工程扎实、渲染质量高，加上纯Rust和隐私卖点，容易理解；但产品已成熟，赛道红海，商业化空间有限，更适合拿来做内容科普。"
    }
   },
   "storytold/lightcraft": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "多媒体创作",
-    "one_liner": "纯 Rust 编写的开源 Lightroom，照片调色不损原图",
-    "target_user": "摄影爱好者、独立摄影师、注重隐私不想订阅 Adobe 的用户",
+    "one_liner": "一个免费开源、你的照片留在本地的专业 RAW 修图软件",
+    "target_user": "不想订阅 Adobe、在意隐私的摄影爱好者和独立摄影师",
     "scores": {
      "topicality": 8,
      "accessibility": 8,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 5,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 6,
      "license_safety": 9,
-     "demoability": 8
+     "demoability": 7
     },
-    "product_idea": "浏览器版轻量修图工具：拖入 RAW 直接调色出片，支持预设导出",
-    "demo_idea": "网页载入一张过曝风景照，拖动高光/去雾滑杆实时变清晰，按 \\ 键展示前后对比",
+    "product_idea": "把 LightCraft 的 RAW 调色引擎做成网页版轻修图工具，再搭配 AI Agent 批量调色能力",
+    "demo_idea": "上传一张曝光过度的照片，拖动滑块一键救回天空高光，并实时对比修图前后",
+    "attack_tool": false,
     "red_flags": [
-     "官方已有商业网站和系列 App 生态，个人做上层产品差异化空间有限",
-     "桌面版 Object/Describe 遮罩依赖额外 SAM 3 模型，体验门槛高"
+     "项目已经自带商业主页和成熟品牌 ArtCraft，很难再把它包装成新产品",
+     "Rust 原生的 RAW 处理引擎较重，网页版性能和体验受限",
+     "Lightroom 等成熟竞品已经占据用户习惯"
     ],
-    "reason": "开源免费替代 Lightroom 是强话题，WebAssembly 版可纯前端演示；但已有官方商业外壳，商业化需靠托管、预设市场或团队协作切入。"
+    "reason": "它是一款开源纯 Rust 的 Lightroom 替代品，免订阅、本地运行、支持 MCP，话题性和好感度都很高；但项目本身已经接近成熟商业产品，创业包装空间有限，更适合做内容传播。"
    }
   },
   "feder-cr/git-ai": {
@@ -658,109 +696,118 @@
    }
   },
   "jhaizhou-ops/d2r-mobile": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "生活娱乐",
-    "one_liner": "在 iPhone 和 Mac 上原生运行你自己购买的暗黑破坏神2重制版",
-    "target_user": "拥有 Switch 版暗黑2的 iPhone/iPad/Mac 玩家，尤其是想随时随地刷装备的系列老玩家",
+    "one_liner": "把你自己买的Switch版暗黑2搬上iPhone/iPad/Mac原生60帧畅玩",
+    "target_user": "有Switch版暗黑2、想在手机/平板上随时随地刷装备的暗黑老玩家",
     "scores": {
      "topicality": 8,
-     "accessibility": 6,
+     "accessibility": 7,
      "wow": 8,
      "pain": 7,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 6
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 8,
+     "demoability": 5
     },
-    "product_idea": "做成一键安装器加手柄/触屏预设包，帮买过 Switch 版的玩家把游戏搬到 iPhone 上",
-    "demo_idea": "对比视频：同一台 iPhone 上原生 60fps 刷地狱难度，触屏与手柄切技能行云流水",
+    "product_idea": "做成一键安装器：自动校验用户自有游戏文件、打包签名分发、云端同步存档，省去编译和越狱式折腾",
+    "demo_idea": "网页播放同一段iPhone实机录像：主菜单点击1秒进游戏、60帧触屏刷怪、耗电对比曲线",
+    "attack_tool": false,
     "red_flags": [
-     "实质是搬运商业游戏《暗黑2重制版》，仓库自身不含内容，但分发兼容层仍有被暴雪发律师函的侵权风险",
-     "只能自带正版游戏文件，用户使用门槛高，难以直接收费",
-     "属于游戏破解/移植灰区，商业化几乎必踩版权红线",
-     "依赖 iOS 侧加载或自签，长期可维护性差"
+     "发行权风险极高：移植、分发商业游戏兼容层易被暴雪/任天堂发函下架",
+     "依赖用户自备正版文件并自行编译，玩法偏硬核，小白门槛高",
+     "无多人和账号体系，付费意愿受限",
+     "项目仅创建10天、stars增长异常，热度真实性存疑"
     ],
-    "reason": "话题性和惊喜感强，痛点真实，但载体是商业游戏的移植兼容层，版权风险高、几乎没有合法变现路径，只适合做内容选题。"
+    "reason": "话题性和惊喜感强，原生移植技术亮眼且可做安装器产品；但版权雷区、用户自备文件和网游缺失让商业化很脆弱，适合内容爆款而非稳健生意。"
    }
   },
   "google-research/harness2": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "让AI智能体自己优化自己的任务执行框架，不用改模型权重",
-    "target_user": "AI应用开发者、智能体框架团队、企业AI平台负责人",
+    "one_liner": "让AI智能体在遇到新任务时自动改写自己的工作流程，越干越强",
+    "target_user": "做AI Agent产品的团队与独立开发者",
     "scores": {
      "topicality": 9,
      "accessibility": 4,
      "wow": 7,
      "pain": 6,
-     "packaging_room": 4,
-     "monetization": 4,
+     "packaging_room": 7,
+     "monetization": 5,
      "license_safety": 9,
      "demoability": 4
     },
-    "product_idea": "把智能体自我优化框架做成可视化调试平台，一键跑基准看提升",
-    "demo_idea": "网页演示同一任务下优化前后智能体表现对比，用模拟数据展示分数提升",
+    "product_idea": "把递归harness调优封装成托管服务，接上自家Agent就能自动提升任务成功率",
+    "demo_idea": "同一任务跑两版Agent，左边原始harness失败、右边自动调优后成功，并列展示差异",
+    "attack_tool": false,
     "red_flags": [
-     "Google Research官方项目，属于大厂基础设施，个人难做差异化",
-     "本质是论文配套的基准与实验框架，偏研究复现",
-     "依赖顶点AI、Docker、多个专业基准，安装门槛高且需API费用"
+     "Google Research官方研究框架，非独立产品，商业化差异化空间受限",
+     "本质是论文配套代码，依赖Vertex AI/Google Cloud与多个benchmark，门槛极高",
+     "README偏学术，普通人难以理解，演示需跑模型和Docker",
+     "依赖闭源商业模型API，成本与可用性受制于人"
     ],
-    "reason": "话题热、许可证友好，但属大厂研究框架，专业性强难翻译成大众内容，包装和变现空间有限"
+    "reason": "话题热度高、Apache许可友好，但属大厂研究框架，理解与演示门槛高，个人难在其上做出差异化产品，更适合做内容解读而非创业包装。"
    }
   },
   "mksglu/context-mode": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "给 AI 编程助手省内存的插件，让它别再忘事、别乱塞数据",
-    "target_user": "重度使用 Claude Code/Cursor 的开发者与 AI 原生开发团队",
+    "one_liner": "给AI编程助手用的省内存插件，让AI少读垃圾数据、不忘记上下文",
+    "target_user": "重度使用Claude Code/Cursor的AI编程开发者与团队技术负责人",
     "scores": {
-     "topicality": 9,
+     "topicality": 8,
      "accessibility": 6,
      "wow": 7,
-     "pain": 8,
+     "pain": 7,
      "packaging_room": 5,
-     "monetization": 7,
+     "monetization": 6,
      "license_safety": 2,
      "demoability": 7
     },
-    "product_idea": "一键接入的上下文管家插件，展示省了多少 token、省了多少钱，并提供团队用量看板",
-    "demo_idea": "左右分屏对比：不用插件时上下文 30 分钟被吃满、忘记文件；用了之后省钱进度条实时上涨",
+    "product_idea": "一键装上的AI编程上下文优化插件，界面显示省了多少token和钱，团队看板做采购依据",
+    "demo_idea": "网页模拟两次AI对话对比：未用插件上下文爆掉丢失任务，用了插件只留关键信息、节省98%",
+    "attack_tool": false,
     "red_flags": [
-     "许可证为 NOASSERTION 自定义条款，商用和二创风险高",
-     "已自带官网、Insight 商业看板，属半商业化项目，个人包装空间小",
-     "17 平台适配 + hooks 依赖，安装门槛和兼容性坑多",
-     "MCP 赛道拥挤，官方大厂方案随时覆盖"
+     "License显示NOASSERTION，实际授权不明，商用风险高",
+     "项目已有官网和Insight付费看板，接近半成品商业产品，个人包装空间有限",
+     "依赖17个平台插件的hook机制，容易被上游平台变更打断",
+     "31816 stars与241天创建时间不匹配，增长异常需警惕刷星"
     ],
-    "reason": "痛点真实、话题热度高、增长惊人，已有付费看板雏形；但许可证不明且产品化空间被原项目自身占据，做内容优于做产品。"
+    "reason": "痛点真实且当下热门，演示性强；但授权不明、已有商业化雏形，适合做内容不适合二次创业包装。"
    }
   },
   "HKUDS/CLI-Anything": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "把各种软件自动包装成命令行接口，让AI智能体直接操作它们",
-    "target_user": "用 Claude Code / Cursor 等 Agent 做自动化开发的团队和重度用户",
+    "one_liner": "把各种软件包装成命令行接口，让AI代理能直接操作它们",
+    "target_user": "做AI代理和自动化工作流的开发者、企业AI平台团队",
     "scores": {
      "topicality": 9,
-     "accessibility": 6,
+     "accessibility": 5,
      "wow": 7,
-     "pain": 6,
+     "pain": 7,
      "packaging_room": 5,
      "monetization": 5,
      "license_safety": 9,
      "demoability": 6
     },
-    "product_idea": "做托管版 CLI-Hub：一键给任意软件生成 agent 可调用的 CLI，并提供在线调试和技能市场",
-    "demo_idea": "网页里输入一个软件名，30 秒内生成对应 CLI 并让演示 agent 实际调它完成一个小任务",
+    "product_idea": "面向企业的AI代理软件工具市场，一键接入CAD、办公、设计软件的标准化CLI层",
+    "demo_idea": "网页里让AI代理用一句话生成CAD模型或剪好视频，实时展示CLI调用轨迹",
+    "attack_tool": false,
     "red_flags": [
-     "港大 HKUDS 实验室项目，社区众包 CLI 仓库形态，偏基础设施与资源聚合",
-     "已有官方 hub 和 pip 安装渠道，个人做二次包装的差异化空间有限",
-     "宣称“所有软件”过大，质量依赖社区贡献，稳定性参差"
+     "港大实验室项目性质，已有官方Hub和论文，个人做产品差异空间有限",
+     "本质是CLI适配器集合，社区众包维护，质量参差",
+     "大厂做代理生态时可能直接吞并这一层"
     ],
-    "reason": "话题性和 star 增速极强，踩中 agent 操作软件热潮；但本体是众包 CLI 注册表加学术项目，商业化和独立产品化空间受限，更适合做内容而非创业。"
+    "reason": "话题性强、方向对，但偏科研基建，个人包装成产品门槛高、变现路径不清，更适合做内容选题。"
    }
   },
   "yetone/magpie": {
@@ -790,58 +837,59 @@
    }
   },
   "storytold/vectorcraft": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "多媒体创作",
-    "one_liner": "一个开源免费、速度极快的矢量画图软件，能替代部分 Illustrator",
-    "target_user": "预算有限的设计师、插画师和需要 AI 绘图自动化的团队",
+    "one_liner": "纯 Rust 写的开源矢量绘图软件，可替代 Illustrator",
+    "target_user": "设计师、插画师、小型设计工作室，以及想让 AI 自动画矢量图的开发者",
     "scores": {
      "topicality": 8,
-     "accessibility": 7,
-     "wow": 7,
+     "accessibility": 8,
+     "wow": 8,
      "pain": 7,
-     "packaging_room": 4,
-     "monetization": 4,
+     "packaging_room": 6,
+     "monetization": 5,
      "license_safety": 10,
-     "demoability": 7
+     "demoability": 9
     },
-    "product_idea": "把 MCP 能力包装成「让 AI 自动画矢量图」的在线工具，输入一句话就生成可编辑的 SVG",
-    "demo_idea": "网页里输入一句描述，AI 实时在画布上画出可拖动的矢量图形，再导出 SVG",
+    "product_idea": "网页版轻量矢量编辑器：即开即用，无需安装，支持 AI 自然语言自动出图",
+    "demo_idea": "在网页里用一句提示词让 AI 画一张霓虹海报，30 秒内实时生成并可拖拽调整",
+    "attack_tool": false,
     "red_flags": [
-     "背后是 ArtCraft 团队的成熟商业产品线，开源版更像官方发行渠道，个人难做差异化",
-     "重桌面 GUI 项目，克隆商用门槛高",
-     "核心用户是设计师，付费意愿受免费 Figma/Inkscape 挤压",
-     "star 增速异常，需警惕营销驱动"
+     "这是官方团队打造的成熟商业级产品，并非个人能轻易做出差异化的项目",
+     "与 Illustrator、Figma 这类大厂产品正面竞争，获客和商业化门槛都很高"
     ],
-    "reason": "技术底子扎实、MCP 卖点有话题，但属官方商业产品生态，包装与变现空间有限，更适合做内容而非创业。"
+    "reason": "技术亮点突出（用纯 Rust 和 WASM 实现，支持 MCP，AI 可以驱动创作），传播性强；但它是团队打造的成熟产品，并且要和大厂正面竞争，个人在上面做产品的空间有限。"
    }
   },
   "xiaoyang111222/cn-math-taxonomy": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "教育学习",
-    "one_liner": "初中数学知识点地图，答错一题就能顺藤摸瓜找出你从哪一步开始没学会",
-    "target_user": "初中生家长、教培机构教研、在线教育产品团队",
+    "one_liner": "把中小学数学、英语、物理的知识点连成一张图，答错一题就能追溯到根源的小学知识点",
+    "target_user": "K12 家长、课后辅导机构、学校教研组、教辅/学习机厂商",
     "scores": {
      "topicality": 7,
      "accessibility": 8,
      "wow": 6,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 3,
+     "pain": 8,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 2,
      "demoability": 8
     },
-    "product_idea": "做成家长/学生用的诊断小程序：做几道题，生成先修缺口报告和补课路径",
-    "demo_idea": "选配方法，故意答错一题，页面顺着先修边高亮亮出根因知识点和推荐学习顺序",
+    "product_idea": "做成家长版‘追根溯源’诊断小程序：拍题或答题后，生成一张薄弱知识点溯源路径图，并推荐补漏练习",
+    "demo_idea": "网页里选一道‘配方法’题，答错后动画从高中知识点沿先修边一路回溯到小学的‘完全平方公式’",
+    "attack_tool": false,
     "red_flags": [
-     "README 自述为 AI 生成初稿，先修关系和题目答案均未经教师审核，数据可信度是最大软肋",
-     "本质是数据集+静态页面，核心资产可被轻易复制（另有同类 Marble 参考项目）",
-     "License 为 NOASSERTION，商用权利不明确",
-     "数据来源多处靠搜索摘要推定，九下目录自己标注为待核",
-     "项目创建仅 1 天却有 543 星，增长异常需警惕"
+     "License 为 NOASSERTION，商用授权不明，是最大风险",
+     "作者自述为 AI 生成初稿、未经教师审核，先修边和答案质量存疑，高中题和英语题未盲解",
+     "本质是数据集/知识图谱，产品化需自行补前端和内容审核",
+     "九下目录等部分内容来自第三方推测，非官方"
     ],
-    "reason": "先修回溯诊断的展示效果直观、家长能懂，适合做内容。但数据未经审核、许可证不明、商业化只能靠教研服务或教辅订阅，产品护城河弱。"
+    "reason": "痛点真实、演示直观、传播有话题性，但数据质量未审、许可证不明，直接商用风险大，更适合做内容或二次开发底座。"
    }
   },
   "tangency-labs/solidcraft": {
@@ -871,81 +919,88 @@
    }
   },
   "storytold/cadcraft": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "纯Rust写的开源版AutoCAD，可浏览器直接画工程图",
-    "target_user": "建筑/机械领域需要画施工图的工程师与小团队",
+    "one_liner": "纯 Rust 写的开源 AutoCAD 替代品，能打开和保存 DWG/DXF 图纸",
+    "target_user": "中小设计院、机械制图工程师、不想付 AutoCAD 订阅费的个人绘图者",
     "scores": {
-     "topicality": 7,
-     "accessibility": 6,
+     "topicality": 8,
+     "accessibility": 8,
      "wow": 8,
      "pain": 7,
      "packaging_room": 6,
      "monetization": 5,
-     "license_safety": 10,
-     "demoability": 7
+     "license_safety": 9,
+     "demoability": 8
     },
-    "product_idea": "浏览器版CAD协作画图工具，免安装、支持DXF/DWG互通和AI代理驱动绘图",
-    "demo_idea": "网页加载公寓平面图DXF，用命令行模式输入L点击两点画墙，再一键PLOT出PDF",
+    "product_idea": "在浏览器里直接打开 DWG 图纸的在线看图+轻编辑工具，按团队订阅收费",
+    "demo_idea": "网页里加载一份公寓平面 DXF，实时演示画墙、标注、图层和导出 PDF",
+    "attack_tool": false,
     "red_flags": [
-     "由ArCraft团队商业化运营，开源版与官方产品/site强绑定，第三方包装空间受限",
-     "CAD属高学习曲线专业工具，普通用户难体会wow",
-     "项目仅11天，功能表很长但成熟度与稳定性未知"
+     "项目很新（15天）宣称支持DWG读写和大量命令，真实性需验证",
+     "背后有 ArtCraft 商业团队和官网，可能是其产品矩阵的一部分，而非纯社区开源",
+     "CAD 领域成熟商业产品（AutoCAD、BricsCAD）极强，差异化空间有限"
     ],
-    "reason": "技术含量高、许可证友好、爆发增长且有MCP agent绘图亮点，但已是团队主导的商业化产品，个人做差异化产品的空间有限，更适合拿来做内容讨论。"
+    "reason": "话题性和演示效果都很强，开源替代 AutoCAD 的叙事容易传播；但背后有公司背景、项目极早期，产品化需在在线看图/协作上找切口。"
    }
   },
   "storytold/gridcraft": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "效率工具",
-    "one_liner": "用 Rust 重写的开源版 Excel，界面操作几乎和 Excel 一样",
-    "target_user": "需要离线、免订阅表格工具的中小团队与开发者；想把表格操作交给 AI Agent 自动化的人",
+    "one_liner": "用 Rust 写的开源 Excel，兼容 XLSX，还能被 AI 代理操控",
+    "target_user": "对数据隐私敏感的中小团队、需要嵌入电子表格能力的 SaaS 开发者、AI Agent 工作流搭建者",
     "scores": {
-     "topicality": 8,
-     "accessibility": 9,
+     "topicality": 7,
+     "accessibility": 8,
      "wow": 7,
      "pain": 6,
-     "packaging_room": 5,
+     "packaging_room": 4,
      "monetization": 4,
-     "license_safety": 10,
+     "license_safety": 9,
      "demoability": 8
     },
-    "product_idea": "做成浏览器版免安装表格工具，主打 XLSX 无损打开和一句句话指挥 AI 改表",
-    "demo_idea": "网页里打开一个带图表和透视表的销售表，再用一句自然语言指令让 AI 自动加一列汇总并生成图表",
+    "product_idea": "面向开发者的可嵌入 Web 电子表格组件，提供 XLSX 兼容与 MCP 接口",
+    "demo_idea": "网页打开示例销售表，输入公式实时计算，再让 AI 通过 MCP 一键生成图表",
+    "attack_tool": false,
     "red_flags": [
-     "这是 Excel 的 clean-room 复刻，功能范围很大，个人很难在上面做出差异化",
-     "背靠 ArtCraft 团队和完整 App 矩阵，更像大厂产品，而不是早期项目",
-     "表格软件的付费意愿被免费 Office、WPS、Google Sheets 压得很低"
+     "功能已非常完整（500+ 函数、透视表、图表），接近成熟产品，包装空间有限",
+     "背靠 ArtCraft 组织，属于其产品矩阵的一部分，个人难以做出差异化",
+     "Excel 市场极难切入，用户迁移成本高",
+     "项目仅创建 15 天、星标暴涨，需警惕刷星或短期热度"
     ],
-    "reason": "话题性强、易懂、许可证安全，Agent 原生交互是亮点，但产品属于成熟大团队的复刻，个人包装和变现的空间很小。"
+    "reason": "完成度惊人、许可证友好、演示性强，但已接近成品且有大厂矩阵背景，做内容好，做独立产品难。"
    }
   },
   "akitaonrails/ai-memory": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "让不同AI编程助手共享同一份跨工具、跨机器的项目记忆",
-    "target_user": "同时使用多个AI编程工具的独立开发者与小团队",
+    "one_liner": "给各种AI编程助手装一个共享的长期记忆，换工具换电脑也能接着干",
+    "target_user": "重度使用多个AI编程助手的独立开发者与小团队技术负责人",
     "scores": {
      "topicality": 9,
      "accessibility": 6,
      "wow": 7,
      "pain": 8,
      "packaging_room": 6,
-     "monetization": 5,
+     "monetization": 6,
      "license_safety": 10,
      "demoability": 5
     },
-    "product_idea": "托管版共享记忆服务：一键接入多个AI编程CLI，团队共享项目知识库并内置交接看板",
-    "demo_idea": "网页模拟同一项目里Claude和Codex两个窗口，中途切换后自动显示前一个会话的进度与未决问题",
+    "product_idea": "托管版共享记忆服务：一条命令接入各家AI编程CLI，跨工具跨机器接续任务，团队知识库可视化",
+    "demo_idea": "左右分屏模拟：Claude Code做一半退出，Codex立刻报出进度、失败方案和待办，点开看记忆wiki页",
+    "attack_tool": false,
     "red_flags": [
-     "接入二十多种agent依赖各家hook机制，上游改动易导致失效",
-     "已有官网aimemory.sh，偏成熟项目，包装空间有限",
-     "团队协作与多机同步需自建服务器，普通用户门槛高"
+     "已有官网aimemory.sh，可能正走向商业产品，个人包装空间被压缩",
+     "核心价值依赖本地钩子与多agent环境，纯网页难以真实复现",
+     "面向开发者的小众痛点，付费意愿需验证"
     ],
-    "reason": "痛点真实且踩中多agent潮流，MIT与零LLM路径加分；但自托管门槛高、已商业化，demo依赖CLI较难网页化"
+    "reason": "痛点真实且话题热度高，MIT许可友好、架构扎实；但偏开发者基础设施，已有官方站点，演示和大众传播门槛偏高，商业化需靠托管与团队版。"
    }
   },
   "Arekejoker/qwen21-nsfw-pose-skill": {
@@ -976,30 +1031,32 @@
    }
   },
   "ruvnet/ruflo": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "给Claude Code装上多智能体协作和记忆的编排层",
-    "target_user": "重度使用Claude Code/Codex的AI编程开发者和自动化团队",
+    "one_liner": "给 Claude Code 加装多智能体协作与记忆层的开源框架",
+    "target_user": "重度使用 Claude Code / Codex 的独立开发者和 AI 工程团队",
     "scores": {
      "topicality": 9,
      "accessibility": 4,
-     "wow": 7,
+     "wow": 6,
      "pain": 6,
      "packaging_room": 5,
      "monetization": 5,
      "license_safety": 10,
      "demoability": 4
     },
-    "product_idea": "面向团队的智能体编排平台，可视化配置Swarm、记忆与成本监控，一键接入现有编码助手",
-    "demo_idea": "网页模拟多智能体协作看板：任务被拆解分派、并行执行、记忆回写、token成本实时跳动",
+    "product_idea": "做一键托管的多智能体编排云服务，免装 CLI 即可可视化调度与查看成本",
+    "demo_idea": "网页模拟一个任务被拆成多智能体并行执行并实时显示记忆与花费",
+    "attack_tool": false,
     "red_flags": [
-     "README概念堆砌、命名营销味重，实际效果难验证",
-     "76664星增长异常，需警惕刷星",
-     "已是大而全框架且自带商业站点Cognitum.One，个人差异化空间小",
-     "核心依赖Claude Code生态，演示难脱离开源环境"
+     "概念堆砌严重，314 个 MCP 工具、100+ agents 等宣称难以验证",
+     "依赖 Claude Code 特定版本与生态，易随上游变化失效",
+     "作者个人风格强、改名频繁，项目定位漂移",
+     "README 信息密度极高，新用户上手门槛高"
     ],
-    "reason": "话题热度高且MIT友好，但项目臃肿、宣传浮夸，商业产品已在做，个人包装空间和可演示性都受限。"
+    "reason": "话题热度极高、MIT 干净，但偏基础设施且概念庞杂，演示性与包装空间有限，适合做内容而非直接产品化。"
    }
   },
   "alchaincyf/huashu-motion": {
@@ -1084,30 +1141,33 @@
    }
   },
   "shihabal3amri/DiPlay": {
-   "date": "2026-10-19",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
-    "category": "开发者工具",
-    "one_liner": "让比亚迪安卓车机免费用上苹果CarPlay的独立应用",
-    "target_user": "比亚迪车主（尤其DiLink车机用户）中想用CarPlay的iPhone用户",
+    "category": "其他",
+    "one_liner": "让比亚迪安卓车机免越狱用上 CarPlay 的独立应用",
+    "target_user": "开比亚迪、车机是安卓、又想用 iPhone 投屏的车主",
     "scores": {
      "topicality": 8,
-     "accessibility": 8,
+     "accessibility": 7,
      "wow": 8,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 3,
-     "demoability": 4
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 4,
+     "demoability": 6
     },
-    "product_idea": "面向比亚迪车主的CarPlay一键安装包+固件适配+诊断工具，提供付费适配服务",
-    "demo_idea": "网页模拟车机屏幕，点击安装后手机界面投到车机上播放导航和音乐",
+    "product_idea": "一键安装包加按车型固件预检的 CarPlay 投屏助手，附带兼容性查询和诊断上传",
+    "demo_idea": "网页模拟车机界面：插入 iPhone 后中控屏跳出 CarPlay 导航与音乐，对比原车机界面",
+    "attack_tool": false,
     "red_flags": [
-     "捆绑来自第三方固件恢复的配件身份和私钥，侵犯苹果MFi/知识产权，法律风险高",
-     "非苹果认证，iOS更新即可能失效，可靠性不可保证",
-     "GPL-3.0且强绑定BYD特定固件，通用性差",
-     "商业模式几乎只能靠灰色预装/破解服务，难以合规变现"
+     "内置从第三方固件提取的 MFi 身份和私钥，存在法律与合规风险，iOS 升级后可能失效",
+     "仅适配比亚迪特定固件，兼容面窄，通用性差",
+     "GPL-3.0，商用闭源分发受限",
+     "依赖用户自行安装 APK，需要开启车机安装权限，门槛不低",
+     "竞品为 Carlinkit 等成熟商业硬件，差异化空间有限"
     ],
-    "reason": "话题性和惊喜度强，需求真实但高度垂直；法律与合规风险、牌照限制使其难以做成正规产品，适合做内容而非创业。"
+    "reason": "痛点真实、话题性强、增长快，但私钥身份与车厂适配带来法律和稳定性风险，GPL 限制商业化，包装空间有限。"
    }
   },
   "Leonxlnx/earshot": {
@@ -1163,29 +1223,32 @@
    }
   },
   "K-Dense-AI/scientific-agent-skills": {
-   "date": "2026-10-20",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI应用",
-    "one_liner": "给AI agent装上177个科研技能，让它像科学家一样做实验分析",
-    "target_user": "生物医药、化学、材料领域的科研人员和实验室",
+    "one_liner": "让AI助手变身科研人员，能直接做生物、化学、医药实验分析",
+    "target_user": "高校与药企的科研人员、计算生物学家、AI科研工具重度用户",
     "scores": {
-     "topicality": 9,
-     "accessibility": 6,
+     "topicality": 8,
+     "accessibility": 5,
      "wow": 7,
      "pain": 7,
      "packaging_room": 5,
      "monetization": 5,
      "license_safety": 10,
-     "demoability": 5
+     "demoability": 4
     },
-    "product_idea": "面向科研团队的桌面AI科研工作台，预装技能库和一键连接数据库，按席位订阅",
-    "demo_idea": "网页上传一份基因表达数据，agent自动调用技能完成差异分析并生成带图表报告",
+    "product_idea": "面向实验室的AI科研助手桌面端，内置技能库和数据库，按席位订阅收费",
+    "demo_idea": "输入一段基因序列，网页端AI自动跑完分析流程并给出图表和报告",
+    "attack_tool": false,
     "red_flags": [
-     "本质是提示词与文档组成的能力集合，属于资源库，本身并非产品",
-     "官方已有K-Dense BYOK商业桌面产品，个人包装空间受限",
-     "科研场景对结果正确性要求高，演示效果难以保证"
+     "本质是技能和提示词集合，更像内容库而非可运行产品",
+     "官方已推出K-Dense BYOK自建产品，第三方包装空间被挤压",
+     "高星增长快，可能存在刷星或营销推动",
+     "科研工作流演示依赖真实数据和专业背景，30秒网页demo难以直观呈现"
     ],
-    "reason": "话题热、星标飙升、MIT协议友好，但项目本身是资源库且官方已有产品，创业差异化空间有限，更适合做内容拆解而非独立创业。"
+    "reason": "方向热门、领域痛点真实、MIT许可友好，但它是技能库而非产品，官方已自有商业布局，外部包装与演示空间有限，做内容优于做产品。"
    }
   },
   "Ansub/tv-detox": {
@@ -1216,29 +1279,31 @@
    }
   },
   "Comfy-Org/ComfyUI": {
-   "date": "2026-10-20",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI应用",
-    "one_liner": "用拖拽节点搭建AI画图和视频生成流程的本地工具",
-    "target_user": "AI绘画/视频创作者、小型工作室、需要私有化部署的企业",
+    "one_liner": "用拖拽节点搭建AI生成图像视频工作流的本地引擎",
+    "target_user": "AI绘画/视频创作者、设计师工作室、工作流定制接单者",
     "scores": {
      "topicality": 9,
-     "accessibility": 5,
-     "wow": 5,
-     "pain": 8,
-     "packaging_room": 3,
-     "monetization": 6,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 5,
      "license_safety": 4,
      "demoability": 7
     },
-    "product_idea": "面向特定行业（如电商图、短视频素材）的预设工作流SaaS，隐藏节点复杂度，按次或订阅收费",
-    "demo_idea": "网页里用模拟节点图连线，右侧实时'生成'一张图，展示同一工作流换参数批量出图",
+    "product_idea": "面向新手和小工作室的现成工作流模板市场+云端一键运行",
+    "demo_idea": "网页里拖三个节点连成线，30秒生成一张图并实时预览每一步",
+    "attack_tool": false,
     "red_flags": [
-     "已是成熟商业产品，官方有桌面版和付费云服务，个人做差异化空间小",
-     "GPL-3.0许可证，商业闭源集成有法律风险",
-     "项目本身已是超14万星的大厂级项目，包装门槛低但竞争壁垒几乎为零"
+     "已是大厂级成熟项目，有官方桌面版、云服务和官网，个人包装空间极小",
+     "GPL-3.0 许可证对商业闭源二次开发限制大",
+     "本身已是完整商业产品，官方云版直接竞争"
     ],
-    "reason": "话题性和痛点都极强，但项目已高度产品化且官方云服务在售，第三方包装空间和许可证是硬伤，适合做内容不适合做产品化创业。"
+    "reason": "话题性和演示效果强，但项目本身已是成熟商业化产品，个人难在上面做差异化，许可证也不利于闭源包装。"
    }
   },
   "humblemuzzu/dumbtv": {
@@ -1536,30 +1601,32 @@
    }
   },
   "deepseek-ai/DeepInfer": {
-   "date": "2026-10-21",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "DeepSeek官方开源的大模型推理引擎，让企业自己部署DeepSeek模型",
-    "target_user": "有GPU集群、需要私有化部署大模型的企业AI平台团队",
+    "one_liner": "DeepSeek官方开源的大模型推理引擎，让模型跑得更快更省",
+    "target_user": "有GPU集群的AI公司基础设施团队、云厂商推理平台工程师",
     "scores": {
-     "topicality": 7,
-     "accessibility": 3,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 2,
-     "monetization": 3,
+     "topicality": 9,
+     "accessibility": 4,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 3,
+     "monetization": 2,
      "license_safety": 10,
-     "demoability": 2
+     "demoability": 3
     },
-    "product_idea": "做DeepSeek私有化部署的一站式托管平台，封装集群配置与调优",
-    "demo_idea": "网页模拟多卡推理吞吐对比图，滑杆调批量看延迟曲线变化",
+    "product_idea": "面向中小团队的托管推理API，把DeepInfer的复杂调优封装成开箱即用的服务",
+    "demo_idea": "网页对比同一模型在普通引擎和DeepInfer下的吞吐与延迟曲线",
+    "attack_tool": false,
     "red_flags": [
-     "DeepSeek官方大厂基础设施项目，个人难做差异化",
-     "需SM100/Ascend 950硬件，普通开发者无法上手",
-     "README自述功能不完整（缺KV cache、PD分离、负载均衡）",
-     "本质是推理引擎，非可包装的终端产品"
+     "DeepSeek官方出品的大厂基础设施，个人难以在其上做差异化产品",
+     "需要SM100/Ascend 950等顶级硬件，普通开发者无法本地体验",
+     "明确声明缺少KV缓存、PD分离、负载均衡，不是完整可用的推理服务",
+     "依赖专有模型权重V4.1-Flash，受官方节奏制约"
     ],
-    "reason": "话题热、许可证友好，但属大厂底层基础设施，硬件门槛极高，缺可演示性和包装空间，适合做技术科普内容而非创业。"
+    "reason": "话题热度和许可证极佳，但属于大厂官方框架加稀缺硬件门槛，传播易、创业难，更适合作为解读类内容而非产品底座。"
    }
   },
   "pengchujin/aerial-tv": {
@@ -1615,30 +1682,32 @@
    }
   },
   "ELY-Open-Source/ElyOffice": {
-   "date": "2026-10-21",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "效率工具",
-    "one_liner": "一套像 Office 一样好用、完全离线、不用账号的桌面办公软件",
-    "target_user": "对隐私敏感的中小企业、开发者、需要离线办公的专业人士",
+    "one_liner": "Rust 写的离线办公套件，文件只存在本地文件夹，不需要账号和云服务",
+    "target_user": "注重隐私、不想把文件上传到云端的个人用户和中小企业",
     "scores": {
-     "topicality": 6,
-     "accessibility": 7,
+     "topicality": 7,
+     "accessibility": 8,
      "wow": 6,
      "pain": 6,
      "packaging_room": 7,
      "monetization": 5,
      "license_safety": 9,
-     "demoability": 5
+     "demoability": 6
     },
-    "product_idea": "打包成开箱即用的离线办公套件，主打隐私、不用账号、文件留在本地",
-    "demo_idea": "网页模拟打开本地 DOCX/XLSX，一键编辑保存，全程无网络请求，并展示断网仍可用的截图",
+    "product_idea": "把开源版打包成开箱即用的本地离线办公套件，省去一小时编译和工具链配置的麻烦",
+    "demo_idea": "在网页上并排演示点击打开本地 DOCX 文件进行编辑，全程不联网，并展示网络请求面板无请求",
+    "attack_tool": false,
     "red_flags": [
-     "刚创建 1 天就 583 star，star 增长异常，需警惕刷量",
-     "核心引擎依赖 LibreOfficeKit/MuPDF 编译，构建需约 1 小时，安装门槛极高",
-     "Linux/Windows 打包脚本未实测，跨平台可用性存疑",
-     "办公套件赛道被 Microsoft/Google/WPS 占据，差异化空间有限"
+     "创建仅 2 天，Star 量级的真实性需要观察，可能存在刷量",
+     "核心引擎是给 LibreOffice 打补丁，构建耗时约一小时，二次开发的成本很高",
+     "Linux 和 Windows 的打包脚本自己说没有实际跑过",
+     "Offline-first 办公套件竞争激烈，还面临 LibreOffice 的成熟生态竞争"
     ],
-    "reason": "离线隐私办公的定位有吸引力，MIT 许可证友好，但构建极重、跨平台未验证、star 增长可疑，包装成产品可行但商业化路径偏窄。"
+    "reason": "离线办公的定位清晰，容易理解，MIT 许可证也很安全，适合做内容；但它是重编译的桌面套件，给 LibreOffice 打补丁，难以在浏览器里演示，商业差异化也难，更适合做内容而不是做产品"
    }
   },
   "msitarzewski/agency-agents": {
@@ -1721,55 +1790,61 @@
    }
   },
   "supabase/supabase": {
-   "date": "2026-10-22",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "开源的 Firebase 替代品，自带数据库、登录和接口",
-    "target_user": "独立开发者与中小创业团队的技术负责人",
+    "one_liner": "开源自建的Firebase替代品，一个Postgres搞定数据库、登录和API",
+    "target_user": "独立开发者和小型创业团队的技术负责人",
     "scores": {
-     "topicality": 7,
-     "accessibility": 5,
-     "wow": 5,
-     "pain": 4,
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 7,
      "packaging_room": 2,
      "monetization": 3,
      "license_safety": 9,
-     "demoability": 6
+     "demoability": 5
     },
-    "product_idea": "已高度成熟的商业平台，做不了轻量包装，只能做垂直模板或教程内容",
-    "demo_idea": "网页里点几下建表，立刻生成 REST 接口和实时订阅更新，三十秒见效",
+    "product_idea": "基于Supabase做垂直行业后端模板，或打包本地一键启动的托管服务",
+    "demo_idea": "网页demo里点按钮创建数据表，实时看到REST API和用户登录自动生成",
+    "attack_tool": false,
     "red_flags": [
-     "知名商业公司的官方平台，个人难以在其上做差异化产品",
-     "自托管部署复杂，商业价值已被官方云服务占据"
+     "已是估值数十亿美元的成熟商业产品（BaaS平台），个人难在上面做出差异化",
+     "本质是大厂级基础设施，开源版就是其官方托管服务的本体",
+     "自托管部署复杂，需Docker编排多个服务，个人包装空间小"
     ],
-    "reason": "传播话题性强、许可证友好，但本质是大厂商业平台，包装空间和付费空间都被官方占据，更适合做内容而非创业。"
+    "reason": "顶级开源BaaS平台，Apache-2.0安全、话题度高；但它本身已是成熟商业产品，个人拿来二次包装做产品的空间和商业化空间都很有限，更适合做技术内容而非创业底座。"
    }
   },
   "eagle-hq/EAGLE-4": {
-   "date": "2026-10-22",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "让大模型回答速度提升约3倍的加速插件",
-    "target_user": "部署自建大模型服务的中小AI团队与推理服务商",
+    "one_liner": "让大模型推理提速3倍的加速插件，答错率不变",
+    "target_user": "部署大模型的AI公司/云厂商推理基础设施团队",
     "scores": {
      "topicality": 8,
-     "accessibility": 5,
+     "accessibility": 2,
      "wow": 6,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 4,
+     "pain": 5,
+     "packaging_room": 3,
+     "monetization": 3,
      "license_safety": 2,
-     "demoability": 3
+     "demoability": 2
     },
-    "product_idea": "做托管式投机解码加速服务，自动调参并支持多引擎一键接入",
-    "demo_idea": "网页并排对比同一提示词开启/关闭加速的每秒生成字数与耗时",
+    "product_idea": "面向自建推理集群的托管加速层，按GPU小时或token用量收提速费",
+    "demo_idea": "网页对比同一提示有无EAGLE-4的首字延迟与每秒出字数动画",
+    "attack_tool": false,
     "red_flags": [
-     "官方研究代码，定位是给SGLang/vLLM打补丁的推理组件",
-     "许可证NOASSERTION，使用与商用风险不明",
-     "需要B300级多卡与大模型权重，个人难复现和二次开发",
-     "本身是大厂/团队主推的基础设施，差异化产品空间小"
+     "官方研究团队发布的推理加速SDK，个人难以在其上差异化",
+     "NOASSERTION/自定义许可证，商用风险高",
+     "需要B300等高端GPU与CUDA环境，普通人无法体验",
+     "本质是论文配套的官方推理代码",
+     "README篇幅在讲安装和测速命令，没讲怎么攻破系统"
     ],
-    "reason": "话题热、加速数字亮眼，但属官方推理基础设施且许可不明，安装与硬件门槛极高，产品化与商业化空间有限，更适合做科普内容而非创业。"
+    "reason": "技术硬核但受众极窄，属于官方基础设施型项目，许可证不明、门槛高，传播和包装空间都有限。"
    }
   },
   "dominikmartn/harp": {
@@ -1852,14 +1927,15 @@
    }
   },
   "Droid-Deck/DroidDeck": {
-   "date": "2026-10-22",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
-    "category": "生活娱乐",
-    "one_liner": "让安卓手机变成一台能玩PC游戏的Steam掌机",
-    "target_user": "有安卓旗舰手机的游戏玩家、掌机爱好者",
+    "category": "AI应用",
+    "one_liner": "让安卓掌机也能跑Steam大屏和Windows游戏",
+    "target_user": "安卓掌机/旗舰手机玩家、Steam重度用户",
     "scores": {
      "topicality": 9,
-     "accessibility": 7,
+     "accessibility": 8,
      "wow": 9,
      "pain": 7,
      "packaging_room": 5,
@@ -1867,15 +1943,16 @@
      "license_safety": 4,
      "demoability": 5
     },
-    "product_idea": "把一键安装、设备兼容检测、游戏库美化做成付费整合包或订阅服务",
-    "demo_idea": "手机横屏运行Steam大屏界面并启动一款3A游戏，与原生手游对比帧率和画质",
+    "product_idea": "做成一键装机向导App，自动检测机型并预配置Proton与Linux运行时",
+    "demo_idea": "在网页里模拟安卓掌机启动Steam大屏并点开游戏进画面",
+    "attack_tool": false,
     "red_flags": [
-     "GPL-3.0，衍生分发和闭源商业化受限",
-     "强依赖特定Adreno机型和Valve的ARM64 Proton，生态稳定性和法务风险高",
-     "本质是整合层，上游Steam/Proton/Android任何变动都可能使其失效",
-     "安装涉及侧载、开发者选项，体验门槛和兼容问题在开源版已由作者承担，付费空间薄"
+     "GPL-3.0许可，商业化受限",
+     "依赖Valve Proton与Steam客户端，法律与合规风险高",
+     "仅限特定Adreno机型，覆盖面窄",
+     "已自带完整安装流程，包装空间有限"
     ],
-    "reason": "话题性和惊喜感极强，演示效果直观，但GPL与上游依赖严重限制商业化，更适合做内容而非产品。"
+    "reason": "话题性强且效果惊艳，但强绑硬件与Valve生态，商业化和可演示性都受限，更适合做内容而非产品。"
    }
   },
   "ikow/php2shell-poc": {
@@ -1906,30 +1983,32 @@
    }
   },
   "openai/php2shell-checker": {
-   "date": "2026-10-22",
+   "date": "2026-10-23",
+   "v": 2,
    "eval": {
     "category": "安全",
-    "one_liner": "检查网站或服务器上的 PHP 版本有没有被 php2shell 漏洞影响",
-    "target_user": "运维工程师、网站站长、安全自查的中小企业",
+    "one_liner": "一键检测网站 PHP 版本是否存在已知远程代码执行漏洞",
+    "target_user": "中小网站站长、运维人员、渗透测试初学者",
     "scores": {
      "topicality": 7,
      "accessibility": 7,
-     "wow": 4,
+     "wow": 5,
      "pain": 6,
-     "packaging_room": 6,
-     "monetization": 3,
+     "packaging_room": 5,
+     "monetization": 4,
      "license_safety": 9,
      "demoability": 7
     },
-    "product_idea": "做成一个输入网址就能一键体检 PHP 漏洞的网页，并附上修复建议和一键升级脚本",
-    "demo_idea": "在网页上输入域名，实时展示解析出的 PHP 版本，用红绿标签显示是否存在风险",
+    "product_idea": "做成网站安全体检工具，输入网址即出 PHP 版本漏洞报告并给修复建议",
+    "demo_idea": "网页输入任意 URL，实时调用接口返回 OK/VULNERABLE/UNKNOWN 三色结果卡片",
+    "attack_tool": false,
     "red_flags": [
-     "OpenAI 官方仓库，属于大厂基础设施工具，个人很难在其上做出差异化",
-     "只是一个轻量 CLI 检测脚本，功能单一，容易复制",
-     "不会跟进重定向，也不会解析响应体，漏报 UNKNOWN 情况多",
-     "商业化空间窄，安全自查多为免费工具"
+     "大厂（OpenAI）官方安全工具，个人难做差异化",
+     "本质是版本比对脚本，逻辑简单、技术护城河浅",
+     "明确声明不验证真实修复，结果可能误报",
+     "仅能读取公开响应头，覆盖面有限"
     ],
-    "reason": "话题有热度，需求真实，也很容易演示；但工具太轻、由官方出品，且检出方式粗糙，适合做内容，不适合独立包装成产品"
+    "reason": "话题性强、易演示、许可证友好，但作为大厂官方安全小工具，产品化和差异化空间有限，适合做内容而非独立创业。"
    }
   },
   "nano-muse/nanoMuse": {
@@ -1957,6 +2036,208 @@
      "团队学术背景+论文，易被质疑为论文工程化，长期维护存疑"
     ],
     "reason": "对标Meta Muse的开源跨设备GUI Agent，话题性与惊喜感强；但自带demo和relay，包装空间和收费路径受限，GPL需合规处理。"
+   }
+  },
+  "tek-sys-hub/Rubix-lang": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "一个42KB、用纯汇编写的编译器，不到1毫秒就能编译出程序",
+    "target_user": "极客程序员、系统编程爱好者、嵌入式开发者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 2,
+     "wow": 8,
+     "pain": 3,
+     "packaging_room": 5,
+     "monetization": 2,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "为这门汇编语言做在线编译器加新手教程，让好奇的人一键跑通第一个程序",
+    "demo_idea": "网页里左边写代码、右边毫秒出执行结果，并展示42KB编译器体积对比",
+    "attack_tool": false,
+    "red_flags": [
+     "创建仅3天却已有1902 stars，增长异常，需警惕刷星或营销噱头",
+     "纯汇编编译器属于极客玩具，真实付费需求弱",
+     "受众极窄，门槛高，难以规模化"
+    ],
+    "reason": "话题性和惊喜感强，极客圈可能愿意转发，但受众极窄、痛点弱、几乎没有商业化路径，更适合当谈资而非产品。"
+   }
+  },
+  "colinhacks/reylo": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "直接导入 .sql 文件到 TypeScript，自动获得完整类型推断，无需代码生成",
+    "target_user": "使用 TypeScript 和 SQL 的全栈开发者、后端工程师、独立开发者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 3,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 4
+    },
+    "product_idea": "面向 TS 全栈团队的 SQL 类型安全开发套件，包含 IDE 插件、查询库管理和团队共享，降低新手上手门槛",
+    "demo_idea": "网页左侧写 SQL、右侧即时显示推断出的 TS 类型，并在拼错列名时当场显示红色类型错误",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖 TypeScript 7.1 beta 的 content mappers，尚不稳定，生态依赖风险高",
+     "目标用户是专业开发者，非技术用户完全看不懂",
+     "本身已是较完整的开源工具（含文档站和插件体系），产品化空间有限",
+     "商业化路径不清晰，开发者工具付费意愿需验证"
+    ],
+    "reason": "痛点明确、类型推断体验惊艳，MIT 许可友好，但纯开发者工具、受众窄、依赖 beta 特性，商业化和大众传播受限，适合做技术内容而非独立产品。"
+   }
+  },
+  "Acelogic/Snapintosh": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在高通骁龙笔记本上黑苹果跑起macOS桌面",
+    "target_user": "硬核黑苹果玩家、ARM逆向爱好者、极客内容创作者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 10,
+     "pain": 3,
+     "packaging_room": 6,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "面向极客的一键式ARM黑苹果引导工具包，配备图形化引导和兼容性检测",
+    "demo_idea": "网页播放A16实机启动macOS桌面并流畅拖拽窗口的对比视频，附启动流程图",
+    "attack_tool": false,
+    "red_flags": [
+     "仅支持单一机型，无法泛化",
+     "不提供Apple/Qualcomm固件，用户须自行提取，法律风险高",
+     "许可证NOASSERTION，来源不明，商用风险大",
+     "作者自述为实验性软件，多数硬件尚不支持"
+    ],
+    "reason": "话题性和惊喜感极强，但仅适配一款机型、无清晰付费路径，且法律与许可证风险高，只适合做内容，不适合做产品。"
+   }
+  },
+  "Jakeschincariol/replica-skill": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "用十一条 AI 技能把别人的应用逆向分析并重建出自己的版本",
+    "target_user": "想快速做 SaaS 副业的独立开发者和无代码创业者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "一键克隆工作流：输入目标 App，产出还原度报告、改进点和可上线的新产品脚手架",
+    "demo_idea": "网页里输入一个 App 名称，实时展示 recon 地图、parity 评分和差评改进清单",
+    "attack_tool": false,
+    "red_flags": [
+     "克隆他人应用存在版权与商标法律风险，README 的免责声明不构成法律保障",
+     "本质是提示词技能包集合，技术壁垒低，容易被复制",
+     "实际产出质量高度依赖底层模型，效果被夸大"
+    ],
+    "reason": "话题性极强、易传播，MIT 许可友好，但核心是提示词套壳、法律风险高、变现路径不清晰，适合做内容而非重投入的产品。"
+   }
+  },
+  "oosexgang/hackios-xnu-kernel": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在安卓手机上启动苹果iOS内核并运行iOS界面的研究项目",
+    "target_user": "iOS 越狱/逆向爱好者、安全研究人员、复古系统折腾党",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 9,
+     "pain": 4,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "面向极客的 iOS 内核实验台托管/一键 QEMU 镜像服务，免折腾体验",
+    "demo_idea": "网页录屏展示安卓手机开机进入 iOS 锁屏、滑动解锁、打开 Safari",
+    "attack_tool": false,
+    "red_flags": [
+     "涉及苹果闭源固件与 IP，法律风险高",
+     "许可证 NOASSERTION、来源不明",
+     "核心用途是运行未授权 iOS 系统，分销/商业化几乎不可行",
+     "依赖特定机型与从本机提取的固件，门槛极高"
+    ],
+    "reason": "话题性和惊喜感极强，但法律与许可证风险压制商业化，只适合做内容不适合做产品。"
+   }
+  },
+  "php/php-src": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "全球最流行的网站后端编程语言 PHP 的官方源代码仓库",
+    "target_user": "无明确付费人群（语言官方基础设施，非产品化对象）",
+    "scores": {
+     "topicality": 2,
+     "accessibility": 3,
+     "wow": 1,
+     "pain": 1,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 9,
+     "demoability": 1
+    },
+    "product_idea": "无：这是语言官方实现，不适合在上面做差异化产品",
+    "demo_idea": "无法演示：用一段网页脚本绕过编译过程来展示语言本身没有意义",
+    "attack_tool": false,
+    "red_flags": [
+     "知名开源基金会官方语言实现/基础设施，个人无法在其上做出差异化产品",
+     "本质是编译器/解释器源码仓库，无产品包装空间",
+     "README 全是构建、测试、贡献流程，无任何产品化切入点",
+     "近期 star 增长疑似刷量或统计噪声，与内容选题无关"
+    ],
+    "reason": "PHP 官方源码仓库，是基础设施而非可包装的产品，痛点、商业化、演示性均不成立，只适合做技术科普，不适合本账号的产品化选题。"
+   }
+  },
+  "wesbos/3d-model-anything": {
+   "date": "2026-10-23",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "用iPhone扫描房间，AI自动重建可编辑的3D网页场景",
+    "target_user": "前端与Three.js开发者、房产/家装展示从业者、3D内容创作者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 5,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 7,
+     "demoability": 7
+    },
+    "product_idea": "上传iPhone房间扫描包，一键生成可编辑Three.js场景的网页服务",
+    "demo_idea": "网页里切换娃娃屋、漫游、线框视图，并对比原照片与重建渲染",
+    "attack_tool": false,
+    "red_flags": [
+     "需要LiDAR iPhone设备和Xcode自建，门槛高",
+     "依赖AI编程Agent工作流，非一键转换",
+     "App Store未上线，仅源码可用",
+     "代码MIT但办公室素材另有资产条款(NOTASSERTION)",
+     "仓库仅1天、无独立扫描数据，可持续性待观察"
+    ],
+    "reason": "创意亮眼、话题性强，展示效果直观；但依赖硬件与Agent流程，商业化路径不清晰，更适合做内容而非马上做产品。"
    }
   }
  }
