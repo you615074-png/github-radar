@@ -23,6 +23,15 @@
 - 大厂或知名公司的官方 SDK、基础设施（个人很难在它上面做出差异化产品）
 - 加密货币投机、灰产、绕过平台规则、侵犯隐私、成人内容
 
+## 攻击工具判定（attack_tool）
+如果项目的主要用途是攻击、入侵或利用别人的系统，attack_tool 填 true，例如：
+- 漏洞利用代码（exploit、PoC、RCE/提权利用包）
+- 远控 / C2 框架、木马、恶意软件、免杀工具
+- 盗取账号密码或 Cookie、钓鱼套件、DDoS 工具、绕过验证码或风控的工具
+
+以下属于防守方工具，attack_tool 填 false：漏洞扫描或检测（用于检查自己的系统）、安全加固、日志审计、入侵检测、安全教学靶场。
+拿不准时，看 README 的主要篇幅在讲"怎么打进别人的系统"还是"怎么保护自己的系统"。
+
 ## 输出格式
 只输出一个 JSON 对象：
 {
@@ -32,6 +41,7 @@
   "scores": {"topicality": 0, "accessibility": 0, "wow": 0, "pain": 0, "packaging_room": 0, "monetization": 0, "license_safety": 0, "demoability": 0},
   "product_idea": "做成产品的最小可行形态，50 字以内",
   "demo_idea": "网页 demo 怎么演示核心价值，50 字以内",
+  "attack_tool": false,
   "red_flags": ["风险点，没有就留空数组"],
   "reason": "综合评价，60 字以内"
 }

@@ -39,6 +39,7 @@ MAX_FOR_README = 80      # 规则过滤后按热度取前 N 个去读 README
 MAX_FOR_SCORING = 40     # 最多送去打分的数量
 SCORE_CACHE_DAYS = 7     # 7 天内打过分的直接复用，省钱
 TOP_N = 5
+TOP_PER_CATEGORY = 2     # Top 5 里同一类别最多 2 个
 TOP_REPEAT_DAYS = 7      # 7 天内上过 Top 5 的不再进 Top 5
 RECENT_CATEGORY_DAYS = 3 # 与最近 3 天精选同类别会被扣分
 DEMO_ATTEMPTS = 3        # demo 生成 + 修复的总次数

@@ -65,10 +65,14 @@ def run(args) -> None:
     ranked = score.score_all(cands, history, today)
     if not ranked:
         raise RuntimeError("没有任何候选完成打分")
-    top = ranked[:config.TOP_N]
+    top = score.pick_top(ranked, config.TOP_N, config.TOP_PER_CATEGORY)
     for i, t in enumerate(top, 1):
         print(f"  #{i} {t['full_name']} 综合 {t['score']['final']} "
-              f"(传播 {t['score']['content']} / 创业 {t['score']['startup']}) {t['eval'].get('one_liner')}")
+              f"(传播 {t['score']['content']} / 创业 {t['score']['startup']}) "
+              f"[{t['eval'].get('category')}] {t['eval'].get('one_liner')}")
+    attack = [r["full_name"] for r in ranked if r["eval"].get("attack_tool")]
+    if attack:
+        print(f"[打分] 判定为攻击工具、已压低分数：{', '.join(attack)}")
 
     # demo：第 1 名做不出来就换第 2 名；都失败则精选第 1 名、不附 demo
     pick, demo_path, attempts, issues = None, None, 0, []
