@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-24",
+ "headline": "AI代理给PC游戏做Mod，这个项目火了",
+ "summary_md": "今天要介绍的是 **rehan-remade/universal-modder**，一个让 AI 代理自动给 PC 游戏做 Mod 的开源项目。简单说，你把它交给 Claude Code 这类编程代理，它就能自动识别游戏引擎、阅读代码、生成 Mod，还能用 fal 生成美术、3D 和音效，最后在游戏里测试并剪出展示视频。\n\n它最近火起来，是因为切中了一个真实痛点：做 Mod 门槛高，需要懂逆向、会写代码、会做素材。而 universal-modder 把这些环节打包成“技能包”，让 AI 代理一条龙完成，加上 MIT 协议友好，传播很快。\n\n如果做成产品，机会在于“一键托管平台”：用户上传游戏，AI 自动生成并安装 Mod，附带素材和试玩视频。这既能服务普通玩家，也能帮小型工作室快速做原型。不过要注意，它依赖 fal 等付费 API，成本会转嫁；涉及逆向工程，可能触碰部分游戏的 EULA 和反作弊条款；效果也高度依赖具体游戏。",
+ "pick": {
+  "full_name": "rehan-remade/universal-modder",
+  "url": "https://github.com/rehan-remade/universal-modder",
+  "description": "Point Claude at any game. Skills, tools and the fal MCP that let Claude Code mod almost any PC game you own: recon, reverse engineering, fal-generated art/3D/audio, in-game testing, showcase videos.",
+  "license": "MIT",
+  "stars": 8804,
+  "daily_rate": 382.8,
+  "category": "AI应用",
+  "one_liner": "让 AI 代理自动给你的 PC 游戏做模组",
+  "reason": "切入点新颖、传播力强，MIT 协议友好，适合做成产品平台；主要风险在于各游戏的合规边界和实际效果的稳定性。",
+  "content": 8.67,
+  "startup": 7.85,
+  "final": 7.75,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-24-rehan-remade-universal-modder",
+ "top": [
+  {
+   "full_name": "rehan-remade/universal-modder",
+   "url": "https://github.com/rehan-remade/universal-modder",
+   "one_liner": "让 AI 代理自动给你的 PC 游戏做模组",
+   "reason": "切入点新颖、传播力强，MIT 协议友好，适合做成产品平台；主要风险在于各游戏的合规边界和实际效果的稳定性。",
+   "content": 8.67,
+   "startup": 7.85,
+   "final": 7.75,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Renhuai123/ziwei-doushu",
+   "url": "https://github.com/Renhuai123/ziwei-doushu",
+   "one_liner": "输入生日就能生成紫微斗数命盘和详细解读",
+   "reason": "传播和演示极强、门槛低，命理赛道付费意愿高，但内容壁垒与同质化竞争是主要风险，开源版偏数据而非产品。",
+   "content": 7.33,
+   "startup": 6.4,
+   "final": 7.28,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "xiaoyang111222/cn-math-taxonomy",
+   "url": "https://github.com/xiaoyang111222/cn-math-taxonomy",
+   "one_liner": "把中小学数学、英语、物理的知识点连成一张图，答错一题就能追溯到根源的小学知识点",
+   "reason": "痛点真实、演示直观、传播有话题性，但数据质量未审、许可证不明，直接商用风险大，更适合做内容或二次开发底座。",
+   "content": 7.0,
+   "startup": 6.05,
+   "final": 6.9,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "xevrion/hatchzip",
+   "url": "https://github.com/xevrion/hatchzip",
+   "one_liner": "边解压边释放原压缩包空间，硬盘不够也能解大压缩包",
+   "reason": "痛点具体、演示直观、传播性强且有桌面成品，但商业化天花板低，免费替代品强势。",
+   "content": 8.33,
+   "startup": 7.15,
+   "final": 6.89,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "storytold/vectorcraft",
+   "url": "https://github.com/storytold/vectorcraft",
+   "one_liner": "纯 Rust 写的开源矢量绘图软件，可替代 Illustrator",
+   "reason": "技术亮点突出（用纯 Rust 和 WASM 实现，支持 MCP，AI 可以驱动创作），传播性强；但它是团队打造的成熟产品，并且要和大厂正面竞争，个人在上面做产品的空间有限。",
+   "content": 8.0,
+   "startup": 6.85,
+   "final": 6.83,
+   "category_penalty": 0.8
+  }
+ ]
+}

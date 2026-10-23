@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>模匠 ModSmith — 一句话给任何 PC 游戏做 Mod</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:#07070b;color:#e2e8f0;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
+  .bg-glow{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(60% 40% at 15% 0%, rgba(139,92,246,.16), transparent 65%),
+      radial-gradient(50% 35% at 85% 5%, rgba(34,211,238,.12), transparent 65%),
+      radial-gradient(60% 50% at 50% 100%, rgba(99,102,241,.10), transparent 70%);
+  }
+  .card{
+    background:linear-gradient(180deg,rgba(24,24,35,.92),rgba(14,14,21,.92));
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:20px;
+    box-shadow:0 30px 70px -50px rgba(0,0,0,1);
+  }
+  .panel{
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:16px;padding:16px;
+  }
+  .panel-title{font-size:13px;font-weight:600;color:#cbd5e1;margin-bottom:12px;letter-spacing:.02em;}
+  .grad{
+    background:linear-gradient(100deg,#a78bfa 10%,#22d3ee 60%,#a3e635 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;color:#a5b4fc;
+    background:rgba(139,92,246,.10);
+    border:1px solid rgba(139,92,246,.28);
+    padding:6px 14px;border-radius:999px;
+  }
+
+  /* 游戏选择 */
+  .gchip{
+    display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;
+    font-size:13px;color:#cbd5e1;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:.18s;line-height:1.2;
+  }
+  .gchip:hover{background:rgba(255,255,255,.09);color:#fff;}
+  .gchip.active{
+    background:linear-gradient(135deg,#a78bfa,#22d3ee);color:#0a0a12;font-weight:600;
+    border-color:transparent;box-shadow:0 8px 22px -12px rgba(139,92,246,.95);
+  }
+  .chip2{
+    padding:5px 11px;border-radius:999px;font-size:12px;color:#94a3b8;
+    background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.12);
+    cursor:pointer;transition:.18s;
+  }
+  .chip2:hover{color:#e2e8f0;border-color:rgba(34,211,238,.5);background:rgba(34,211,238,.08);}
+
+  /* 输入 */
+  .input{
+    width:100%;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.09);
+    border-radius:14px;padding:14px 16px;color:#e6edf7;font-size:14px;line-height:1.7;
+    resize:vertical;outline:none;transition:.2s;font-family:inherit;
+  }
+  .input:focus{border-color:rgba(139,92,246,.75);box-shadow:0 0 0 4px rgba(139,92,246,.13);}
+
+  /* 按钮 */
+  .btn-primary{
+    padding:13px 26px;border-radius:14px;font-weight:600;font-size:14px;color:#0a0a12;
+    background:linear-gradient(135deg,#a78bfa,#22d3ee);border:none;cursor:pointer;
+    box-shadow:0 14px 34px -16px rgba(139,92,246,.95);transition:.2s;white-space:nowrap;
+  }
+  .btn-primary:hover:not(:disabled){filter:brightness(1.08);transform:translateY(-1px);}
+  .btn-primary:disabled{opacity:.55;cursor:not-allowed;transform:none;filter:none;}
+  .btn-ghost{
+    padding:13px 22px;border-radius:14px;font-size:14px;color:#94a3b8;
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:.2s;
+  }
+  .btn-ghost:hover{color:#fff;background:rgba(255,255,255,.08);}
+
+  /* 流水线步骤 */
+  .stage{
+    padding:12px;border-radius:14px;background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.07);transition:.25s;position:relative;overflow:hidden;
+  }
+  .stage.active{
+    border-color:rgba(139,92,246,.6);background:rgba(139,92,246,.09);
+    box-shadow:0 0 0 1px rgba(139,92,246,.3),0 16px 34px -26px rgba(139,92,246,1);
+  }
+  .stage.done{border-color:rgba(52,211,153,.32);background:rgba(52,211,153,.06);}
+  .sbar{height:3px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:10px;overflow:hidden;}
+  .sbar > i{display:block;height:100%;width:0;border-radius:2px;
+    background:linear-gradient(90deg,#a78bfa,#22d3ee);transition:width .45s ease;}
+  .stage.done .sbar > i{background:linear-gradient(90deg,#34d399,#22d3ee);}
+  .sicon{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;
+    background:rgba(255,255,255,.05);flex:none;}
+
+  /* 控制台 */
+  #console{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.85;}
+  #console .ln{color:#7c8a9e;white-space:pre-wrap;word-break:break-all;}
+  #console .ln b{color:#34d399;font-weight:600;}
+
+  /* 文件列表 */
+  .fl{list-style:none;margin:0;padding:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#9aa8bd;}
+  .fl li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,.05);}
+  .fl li:last-child{border-bottom:none;}
+  .fl .sz{margin-left:auto;color:#5b6779;font-size:10.5px;white-space:nowrap;}
+
+  /* 精灵帧 */
+  .spr{
+    width:54px;height:54px;border-radius:9px;background:#0c1420;
+    border:1px solid rgba(255,255,255,.07);display:grid;place-items:center;flex:none;
+  }
+  .spr i{position:relative;display:block;width:22px;height:8px;border-radius:2px;
+    background:linear-gradient(90deg,#c4b5fd,#67e8f9);}
+  .spr i::after{content:'';position:absolute;left:-8px;top:1px;width:7px;height:6px;
+    border-radius:50% 0 0 50%;background:linear-gradient(90deg,#fb923c,#fde047);
+    animation:flame .45s infinite alternate;}
+  .spr.f2 i{transform:translateY(-1px);}
+  .spr.f3 i{transform:rotate(-4deg);}
+  .spr.f4 i{transform:rotate(-6deg);}
+  @keyframes flame{from{opacity:.55;width:5px;}to{opacity:1;width:10px;}}
+
+  .wave{display:flex;align-items:flex-end;gap:3px;height:44px;}
+  .wave span{width:4px;border-radius:2px;background:linear-gradient(180deg,#22d3ee,#6366f1);opacity:.85;}
+
+  /* 游戏内测试小场景 */
+  .scene{
+    position:relative;height:150px;border-radius:12px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.07);
+    background:
+      radial-gradient(120% 90% at 15% 0%, rgba(99,102,241,.20), transparent 62%),
+      linear-gradient(180deg,#0a1220,#070a12);
+  }
+  .scene::after{
+    content:'';position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:20px 20px;
+  }
+  .blk{position:absolute;width:16px;height:16px;border-radius:3px;z-index:2;}
+  .blk.p{left:20px;top:62px;background:#34d399;box-shadow:0 0 14px rgba(52,211,153,.9);}
+  .blk.e1{right:52px;top:40px;background:#f87171;box-shadow:0 0 14px rgba(248,113,113,.8);}
+  .blk.e2{right:28px;top:96px;background:#f87171;box-shadow:0 0 14px rgba(248,113,113,.8);}
+  .mis{
+    position:absolute;left:44px;top:66px;width:18px;height:6px;border-radius:3px;z-index:3;
+    background:linear-gradient(90deg,#fde047,#fb923c);
+    box-shadow:0 0 12px rgba(251,146,60,.9);
+    animation:fly 3s ease-in-out infinite;
+  }
+  .boom{
+    position:absolute;right:44px;top:30px;width:34px;height:34px;border-radius:50%;z-index:4;
+    background:radial-gradient(circle,#fde047 0%,#f97316 38%,rgba(249,115,22,0) 72%);
+    opacity:0;animation:boom 3s infinite;
+  }
+  @keyframes fly{
+    0%{transform:translate(0,0) rotate(0deg);opacity:0;}
+    8%{opacity:1;}
+    45%{transform:translate(92px,-24px) rotate(-14deg);opacity:1;}
+    80%{transform:translate(172px,-6px) rotate(8deg);opacity:1;}
+    88%{transform:translate(178px,-4px) rotate(8deg);opacity:0;}
+    100%{transform:translate(0,0) rotate(0deg);opacity:0;}
+  }
+  @keyframes boom{
+    0%,78%{opacity:0;transform:scale(.25);}
+    86%{opacity:1;transform:scale(1);}
+    96%{opacity:0;transform:scale(1.7);}
+    100%{opacity:0;transform:scale(.25);}
+  }
+
+  /* 视频占位 */
+  .video-box{
+    position:relative;width:100%;max-width:320px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);cursor:pointer;flex:none;
+    display:grid;place-items:center;transition:.25s;
+    background:
+      radial-gradient(100% 100% at 20% 15%, rgba(34,211,238,.35), transparent 62%),
+      radial-gradient(100% 100% at 82% 85%, rgba(139,92,246,.45), transparent 62%),
+      #0b0b14;
+  }
+  .video-box:hover{border-color:rgba(34,211,238,.5);transform:translateY(-2px);}
+  .play-btn{
+    width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(255,255,255,.92);color:#0a0a12;font-size:15px;padding-left:3px;
+    box-shadow:0 12px 30px -12px rgba(0,0,0,.9);
+  }
+  .ts{
+    position:absolute;right:10px;bottom:8px;font-size:10.5px;color:#e6edf7;
+    background:rgba(0,0,0,.6);padding:2px 7px;border-radius:6px;font-family:ui-monospace,monospace;
+  }
+
+  .ok-badge{
+    display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;
+    color:#6ee7b7;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);
+    padding:4px 11px;border-radius:999px;
+  }
+
+  /* Toast */
+  #toast{
+    position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);
+    background:rgba(18,18,28,.96);border:1px solid rgba(139,92,246,.5);color:#e6edf7;
+    padding:11px 20px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;
+    transition:.3s;z-index:80;box-shadow:0 24px 50px -24px #000;max-width:90vw;text-align:center;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0);}
+
+  .price-card{
+    background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;padding:22px;transition:.25s;display:flex;flex-direction:column;
+  }
+  .price-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-3px);}
+  .price-card.hot{
+    background:linear-gradient(180deg,rgba(139,92,246,.14),rgba(34,211,238,.06));
+    border-color:rgba(139,92,246,.45);
+    box-shadow:0 30px 60px -40px rgba(139,92,246,.9);
+  }
+  ul.feat{list-style:none;margin:14px 0 0;padding:0;font-size:13px;color:#9aa8bd;line-height:2.05;}
+  ul.feat li::before{content:'✓';color:#34d399;margin-right:8px;font-weight:700;}
+
+  .sec-title{font-size:26px;font-weight:700;letter-spacing:-.01em;}
+  @media (min-width:768px){.sec-title{font-size:32px;}}
+
+  ::-webkit-scrollbar{width:8px;height:8px;}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:4px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<!-- 顶部导航 -->
+<header class="sticky top-0 z-40 backdrop-blur-xl bg-[#07070b]/70 border-b border-white/5">
+  <div class="wrap flex items-center justify-between h-16">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl grid place-items-center text-[17px]"
+           style="background:linear-gradient(135deg,#a78bfa,#22d3ee);box-shadow:0 8px 22px -12px rgba(139,92,246,.95)">🛠️</div>
+      <div class="leading-tight">
+        <div class="font-semibold tracking-wide text-[15px]">模匠 <span class="text-slate-500 font-normal">ModSmith</span></div>
+        <div class="text-[11px] text-slate-500">AI 托管式游戏 Mod 工厂</div>
+      </div>
+    </div>
+    <nav class="hidden md:flex items-center gap-7 text-sm text-slate-400">
+      <a href="#studio" class="hover:text-white transition">工作台</a>
+      <a href="#scenes" class="hover:text-white transition">使用场景</a>
+      <a href="#pricing" class="hover:text-white transition">定价</a>
+    </nav>
+    <a href="#pricing" class="text-sm px-4 py-2 rounded-full bg-white text-slate-900 font-medium hover:bg-slate-200 transition">加入候补</a>
+  </div>
+</header>
+
+<main class="relative z-10">
+  <!-- Hero -->
+  <section class="pt-12 pb-8 md:pt-20 text-center">
+    <div class="wrap">
+      <span class="badge">🧪 概念演示 · 基于开源项目 universal-modder</span>
+      <h1 class="mt-6 text-[32px] leading-[1.18] md:text-[56px] md:leading-[1.12] font-bold tracking-tight">
+        一句话，<span class="grad">让 AI 给你的游戏做 Mod</span>
+      </h1>
+      <p class="mt-5 text-slate-400 max-w-2xl mx-auto text-[14px] md:text-base leading-relaxed">
+        上传你拥有的 PC 游戏，用大白话描述想要的玩法。AI 自己找到游戏、逆向引擎、写代码、
+        用 fal 生成美术与音效、进游戏跑通测试，最后剪一段试玩视频给你。
+      </p>
+    </div>
+  </section>
+
+  <!-- 工作台 -->
+  <section id="studio" class="pb-6 scroll-mt-24">
+    <div class="wrap">
+      <div class="card p-5 md:p-7">
+        <!-- 选择游戏 -->
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-sm font-medium text-slate-300">1 · 选择游戏</div>
+          <div class="text-[11px] text-slate-500">演示数据</div>
+        </div>
+        <div id="gameChips" class="flex flex-wrap gap-2"></div>
+        <div id="engineHint" class="mt-3 text-[11.5px] text-slate-500 font-mono"></div>
+
+        <!-- 描述 -->
+        <div class="mt-6 flex items-center justify-between mb-3">
+          <div class="text-sm font-medium text-slate-300">2 · 描述你想要的 Mod</div>
+          <div class="text-[11px] text-slate-500">说人话就行</div>
+        </div>
+        <textarea id="promptInput" class="input" rows="3"
+          placeholder="例如：加一把会自动追踪敌人的导弹发射器……">给 Terraria 加一把会自动追踪敌人的导弹发射器，再配一个能把地表炸出弹坑的战术核弹。</textarea>
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <span class="text-[11px] text-slate-500">灵感：</span>
+          <button type="button" class="chip2" data-idea="给 Terraria 加一把会自动追踪敌人的导弹发射器，再配一个能把地表炸出弹坑的战术核弹。">追踪导弹 + 弹坑</button>
+          <button type="button" class="chip2" data-idea="把游戏里所有敌人替换成会下彩虹雨的猫。">敌人变猫</button>
+          <button type="button" class="chip2" data-idea="加入一个酸雨天气系统：下雨时护甲持续掉耐久，怪物变得更强。">酸雨天气系统</button>
+          <button type="button" class="chip2" data-idea="做一个可以抓钩摆荡的移动系统，带绳索物理。">钩爪摆荡</button>
+        </div>
+
+        <!-- 运行 -->
+        <div class="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <button id="runBtn" type="button" class="btn-primary">✨ 开始生成 Mod</button>
+          <button id="resetBtn" type="button" class="btn-ghost">重置</button>
+          <span class="text-[11px] text-slate-500 sm:ml-auto text-center sm:text-right">全程演示 · 不上传任何文件</span>
+        </div>
+      </div>
+
+      <!-- 流水线 -->
+      <div id="runPanel" class="hidden card p-5 md:p-7 mt-5">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-sm font-medium text-slate-200">AI 执行流水线 <span class="text-[11px] text-slate-500">· 模拟过程</span></div>
+          <div id="runTimer" class="text-xs text-slate-500 font-mono">0.0s</div>
+        </div>
+        <div id="stageGrid" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+        <div id="console" class="mt-4 rounded-xl bg-black/55 border border-white/5 p-4 h-40 overflow-y-auto"></div>
+      </div>
+
+      <!-- 结果 -->
+      <div id="resultPanel" class="hidden mt-5"></div>
+    </div>
+  </section>
+
+  <!-- 使用场景 -->
+  <section id="scenes" class="py-14 md:py-20 scroll-mt-24">
+    <div class="wrap">
+      <div class="text-center mb-10">
+        <div class="text-xs tracking-[.22em] text-violet-300/80 mb-3">USE CASES</div>
+        <h2 class="sec-title">三种人，同一套流水线</h2>
+        <p class="mt-3 text-slate-400 text-sm">从「想让老游戏再玩一遍」到「今天就要能上手玩的原型」。</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="card p-6">
+          <div class="text-2xl mb-3">🎮</div>
+          <h3 class="font-semibold text-[15px] text-slate-100">玩家：给老游戏加新玩法</h3>
+          <p class="mt-2 text-[13px] text-slate-400 leading-relaxed">
+            「给星露谷加一个会自动浇水的魔法喷壶。」不用装编译器、不用看教程，一句话就能玩上自己设计的道具。
+          </p>
+          <div class="mt-4 text-[11.5px] font-mono text-cyan-300/80 bg-black/40 rounded-lg px-3 py-2">
+            产出：可加载 Mod + 一键安装命令
+          </div>
+        </div>
+        <div class="card p-6">
+          <div class="text-2xl mb-3">🏢</div>
+          <h3 class="font-semibold text-[15px] text-slate-100">小工作室：当天做完玩法原型</h3>
+          <p class="mt-2 text-[13px] text-slate-400 leading-relaxed">
+            「在《赛博朋克 2077》里试做一套钩爪移动系统。」下午就能自己进游戏手感测试，不用等排期。
+          </p>
+          <div class="mt-4 text-[11.5px] font-mono text-cyan-300/80 bg-black/40 rounded-lg px-3 py-2">
+            产出：原型玩法 + 试玩录像
+          </div>
+        </div>
+        <div class="card p-6">
+          <div class="text-2xl mb-3">🧩</div>
+          <h3 class="font-semibold text-[15px] text-slate-100">Mod 作者：把杂活外包出去</h3>
+          <p class="mt-2 text-[13px] text-slate-400 leading-relaxed">
+            美术贴图、3D 转 8 向精灵、音效、进游戏回归测试、剪宣传片——整条苦力链打包交给 AI。
+          </p>
+          <div class="mt-4 text-[11.5px] font-mono text-cyan-300/80 bg-black/40 rounded-lg px-3 py-2">
+            产出：素材包 + 测试报告 + 成片
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 定价 / 候补 -->
+  <section id="pricing" class="py-14 md:py-20 scroll-mt-24">
+    <div class="wrap">
+      <div class="text-center mb-10">
+        <div class="text-xs tracking-[.22em] text-cyan-300/80 mb-3">PRICING · WAITLIST</div>
+        <h2 class="sec-title">先加入候补，正式版按次付费</h2>
+        <p class="mt-3 text-slate-400 text-sm">价格仅为概念设想，正式发布前会调整。</p>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="price-card">
+          <div class="text-sm text-slate-400">尝鲜</div>
+          <div class="mt-2 flex items-end gap-1">
+            <span class="text-3xl font-bold">¥0</span><span class="text-slate-500 text-sm mb-1">/ 月</span>
+          </div>
+          <ul class="feat">
+            <li>每月 2 个 Mod 生成额度</li>
+            <li>720p 试玩视频</li>
+            <li>社区知识库只读</li>
+          </ul>
+          <button type="button" class="btn-ghost mt-5 w-full" data-wait>加入候补名单</button>
+        </div>
+
+        <div class="price-card hot">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-violet-200">创作者</div>
+            <span class="text-[10.5px] px-2 py-0.5 rounded-full bg-violet-500/25 text-violet-200 border border-violet-400/40">最受欢迎</span>
+          </div>
+          <div class="mt-2 flex items-end gap-1">
+            <span class="text-3xl font-bold">¥39</span><span class="text-slate-500 text-sm mb-1">/ 月</span>
+          </div>
+          <ul class="feat">
+            <li>每月 30 个 Mod 生成额度</li>
+            <li>fal 素材额度（精灵 / 3D / 音效）</li>
+            <li>4K 试玩视频 + 竖版切片</li>
+            <li>发布到 Mod 中心，允许他人 remix</li>
+          </ul>
+          <button type="button" class="btn-primary mt-5 w-full" data-wait>加入候补名单</button>
+        </div>
+
+        <div class="price-card">
+          <div class="text-sm text-slate-400">工作室</div>
+          <div class="mt-2 flex items-end gap-1">
+            <span class="text-3xl font-bold">¥199</span><span class="text-slate-500 text-sm mb-1">/ 月</span>
+          </div>
+          <ul class="feat">
+            <li>团队席位与私有知识库</li>
+            <li>批量回归测试 + 报告导出</li>
+            <li>自建 fal / ComfyUI 端点</li>
+            <li>优先队列与专属支持</li>
+          </ul>
+          <button type="button" class="btn-ghost mt-5 w-full" data-wait>加入候补名单</button>
+        </div>
+      </div>
+
+      <div class="card mt-6 p-6 md:p-7 flex flex-col md:flex-row items-center gap-5">
+        <div class="flex-1 w-full">
+          <div class="font-semibold text-slate-100 text-[15px]">抢先体验邀请</div>
+          <p class="text-[13px] text-slate-400 mt-1">留下邮箱，正式开放时通知你。演示页面不会提交任何数据。</p>
+        </div>
+        <div class="flex w-full md:w-auto gap-2">
+          <input id="emailInput" type="email" class="input" placeholder="you@example.com" autocomplete="off" />
+          <button id="waitBtn" type="button" class="btn-primary">加入</button>
+        </div>
+      </div>
+      <div id="waitMsg" class="mt-3 text-center text-[13px] text-emerald-300/90 hidden"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="relative z-10 border-t border-white/5 py-8">
+  <div class="wrap text-center">
+    <div class="text-[12.5px] text-slate-500 leading-relaxed">
+      概念演示，基于开源项目
+      <a href="https://github.com/rehan-remade/universal-modder" target="_blank" rel="noopener noreferrer"
+         class="text-slate-300 underline underline-offset-2 hover:text-white transition">rehan-remade/universal-modder</a>
+      （MIT），非官方产品，数据均为演示数据
+    </div>
+    <div class="mt-3 text-[11.5px] text-slate-600">ModSmith / 模匠 · 页面内所有流程、素材与指标均为前端模拟生成</div>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------- 内置演示数据 ---------------- */
+  const GAMES = {
+    terraria: {
+      emoji: '🌳', name: 'Terraria', slug: 'terraria',
+      engine: 'FNA / XNA（C#）', route: 'tModLoader 1.4.4',
+      path: 'steamapps/common/Terraria', hooks: 'ModItem / ModProjectile / DamageClass'
+    },
+    minecraft: {
+      emoji: '⛏️', name: 'Minecraft Java', slug: 'minecraft',
+      engine: 'Java 21（JVM）', route: 'Fabric + Mixin',
+      path: '.minecraft/versions/1.21', hooks: 'Item / Entity / WorldTick'
+    },
+    stardew: {
+      emoji: '🌾', name: '星露谷物语', slug: 'stardew-valley',
+      engine: 'MonoGame（C#）', route: 'SMAPI 4.x',
+      path: 'steamapps/common/Stardew Valley', hooks: 'Tool / GameLocation / Farmer'
+    },
+    skyrim: {
+      emoji: '🗡️', name: 'Skyrim SE', slug: 'skyrim-se',
+      engine: 'Creation Engine', route: 'SKSE64 + Papyrus',
+      path: 'steamapps/common/Skyrim Special Edition', hooks: 'Actor.OnHit / MagicEffect'
+    },
+    cyberpunk: {
+      emoji: '🌆', name: '赛博朋克 2077', slug: 'cyberpunk-2077',
+      engine: 'REDengine 4', route: 'REDmod + Lua',
+      path: 'steamapps/common/Cyberpunk 2077', hooks: 'ItemActions / DamageSystem'
+    },
+    hollow: {
+      emoji: '🐛', name: '空洞骑士', slug: 'hollow-knight',
+      engine: 'Unity（C#）', route: 'BepInEx 5 + Harmony',
+      path: 'steamapps/common/Hollow Knight', hooks: 'HeroController / HealthManager'
+    }
+  };
+
+  const state = { game: 'terraria', running: false, timer: null };
+
+  const $ = function (id) { return document.getElementById(id); };
+  const sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  const esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+
+  /* ---------------- Toast ---------------- */
+  let toastTimer = null;
+  function toast(msg) {
+    const el = $('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+
+  /* ---------------- 游戏选择 ---------------- */
+  const chipsEl = $('gameChips');
+  Object.keys(GAMES).forEach(function (key) {
+    const g = GAMES[key];
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'gchip' + (key === state.game ? ' active' : '');
+    b.dataset.game = key;
+    b.innerHTML = '<span>' + g.emoji + '</span><span>' + esc(g.name) + '</span>';
+    b.addEventListener('click', function () {
+      if (state.running) { toast('正在生成中，请稍候…'); return; }
+      state.game = key;
+      document.querySelectorAll('.gchip').forEach(function (x) {
+        x.classList.toggle('active', x.dataset.game === key);
+      });
+      updateEngineHint();
+    });
+    chipsEl.appendChild(b);
+  });
+
+  function updateEngineHint() {
+    const g = GAMES[state.game];
+    $('engineHint').textContent = '引擎 ' + g.engine + ' · Mod 路由 ' + g.route + ' · 目标路径 ' + g.path;
+  }
+  updateEngineHint();
+
+  /* ---------------- 灵感快捷 ---------------- */
+  document.querySelectorAll('[data-idea]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $('promptInput').value = b.dataset.idea;
+      $('promptInput').focus();
+    });
+  });
+
+  /* ---------------- 流水线定义 ---------------- */
+  function buildStages(g) {
+    return [
+      {
+        icon: '🛰️', title: '定位与侦察', sub: '找到游戏，指纹引擎',
+        logs: [
+          '扫描本地安装目录 → ' + g.path,
+          '引擎指纹：' + g.engine,
+          '可用 Mod 路由：' + g.route,
+          '写入知识库 knowledge/games/' + g.slug + '.md'
+        ]
+      },
+      {
+        icon: '🔬', title: '逆向工程', sub: '读真实代码，找挂载点',
+        logs: [
+          '反编译程序集，检索 ' + g.hooks,
+          '命中 3 处可挂载的钩子（伤害 / 物品 / 世界）',
+          '导出调用图，确认加载时机与生命周期'
+        ]
+      },
+      {
+        icon: '⌨️', title: '编写 Mod 代码', sub: '生成并编译通过',
+        logs: [
+          '生成 HomingMissileLauncher.cs / MissileProjectile.cs',
+          '实现追踪转向 + 弹坑地形破坏逻辑',
+          '编译 → 0 错误 0 警告'
+        ]
+      },
+      {
+        icon: '🎨', title: 'fal 生成素材', sub: '精灵 / 3D / 音效',
+        logs: [
+          'fal：生成 4 帧像素导弹发射器精灵图',
+          'fal：生成 3D 弹头模型 → 渲染 8 向贴图',
+          'fal：生成发射音效与爆炸音效（44.1kHz）'
+        ]
+      },
+      {
+        icon: '🎮', title: '游戏内自动测试', sub: '真机跑一遍',
+        logs: [
+          '启动游戏并加载测试存档',
+          '自动获取物品 → 开火 → 追踪命中 ✅',
+          '弹坑生成 ✅ / 无崩溃 ✅ / 稳定 60 FPS'
+        ]
+      },
+      {
+        icon: '🎬', title: '剪辑展示视频', sub: '成片 + 缩略图',
+        logs: [
+          '截取 3 段高光，自动配乐与字幕',
+          '输出 24 秒横版 + 9:16 竖版',
+          '打包为可分享的 Mod 页面'
+        ]
+      }
+    ];
+  }
+
+  function renderStages(stages) {
+    const grid = $('stageGrid');
+    grid.innerHTML = '';
+    stages.forEach(function (s, i) {
+      const d = document.createElement('div');
+      d.className = 'stage';
+      d.dataset.i = String(i);
+      d.innerHTML =
+        '<div class="flex items-start gap-3">' +
+          '<div class="sicon">' + s.icon + '</div>' +
+          '<div style="min-width:0">' +
+            '<div class="text-[13px] font-medium text-slate-200">' + esc(s.title) + '</div>' +
+            '<div class="text-[11px] text-slate-500 mt-0.5">' + esc(s.sub) + '</div>' +
+          '</div>' +
+          '<div class="ml-auto text-[10.5px] text-slate-500 font-mono state-txt shrink-0">待运行</div>' +
+        '</div>' +
+        '<div class="sbar"><i></i></div>';
+      grid.appendChild(d);
+    });
+  }
+
+  function setStage(i, phase) {
+    const el = document.querySelector('.stage[data-i="' + i + '"]');
+    if (!el) return;
+    const bar = el.querySelector('.sbar > i');
+    const txt = el.querySelector('.state-txt');
+    el.classList.remove('active', 'done');
+    if (phase === 'active') {
+      el.classList.add('active');
+      if (bar) bar.style.width = '55%';
+      if (txt) { txt.textContent = '运行中'; txt.style.color = '#a78bfa'; }
+    } else if (phase === 'done') {
+      el.classList.add('done');
+      if (bar) bar.style.width = '100%';
+      if (txt) { txt.textContent = '✓ 完成'; txt.style.color = '#34d399'; }
+    }
+  }
+
+  function log(text) {
+    const c = $('console');
+    const d = document.createElement('div');
+    d.className = 'ln';
+    const now = new Date();
+    const ts = String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+    d.innerHTML = '<span style="color:#3f4a5c">[' + ts + ']</span> <b>›</b> ' + esc(text);
+    c.appendChild(d);
+    c.scrollTop = c.scrollHeight;
+  }
+
+  /* ---------------- 结果渲染 ---------------- */
+  function renderResult(game, prompt, seconds) {
+    const modId = 'homing-missile';
+    const files = [
+      ['📄', 'src/HomingMissileLauncher.cs', '2.1 KB'],
+      ['📄', 'src/MissileProjectile.cs', '3.4 KB'],
+      ['📄', 'src/TacticalNuke.cs', '1.8 KB'],
+      ['🖼️', 'assets/missile_launcher_4f.png', '64×64'],
+      ['🔊', 'assets/launch.wav', '0.8s'],
+      ['🔊', 'assets/boom.wav', '1.2s'],
+      ['📄', 'build.txt', '—']
+    ];
+    const fileHtml = files.map(function (f) {
+      return '<li><span>' + f[0] + '</span><span class="truncate">' + esc(f[1]) + '</span>' +
+             '<span class="sz">' + esc(f[2]) + '</span></li>';
+    }).join('');
+
+    const waveHeights = [10, 18, 30, 22, 36, 16, 28, 40, 20, 12, 32, 24, 38, 14, 26, 18, 34, 20, 10, 22, 30, 16];
+    const waveHtml = waveHeights.map(function (h) {
+      return '<span style="height:' + h + 'px"></span>';
+    }).join('');
+
+    const checks = [
+      ['物品成功注册到游戏', '0.8s'],
+      ['追踪逻辑命中移动目标 12/12', '2.1s'],
+      ['地形弹坑破坏生效', '1.4s'],
+      ['连续运行 10 分钟无崩溃 · 60 FPS', '10m']
+    ];
+    const checkHtml = checks.map(function (c) {
+      return '<li class="flex items-start gap-2 text-[12.5px] text-slate-300 leading-relaxed">' +
+             '<span class="text-emerald-400 shrink-0">✓</span>' +
+             '<span class="flex-1">' + esc(c[0]) + '</span>' +
+             '<span class="text-[10.5px] text-slate-500 font-mono shrink-0">' + esc(c[1]) + '</span></li>';
+    }).join('');
+
+    const html =
+      '<div class="card p-5 md:p-7">' +
+        '<div class="flex flex-wrap items-center gap-3">' +
+          '<span class="ok-badge">✓ 构建完成</span>' +
+          '<span class="text-[13px] text-slate-300">' + esc(game.emoji + ' ' + game.name) +
+            ' <span class="text-slate-600">/</span> ' + esc(game.route) + '</span>' +
+          '<span class="text-[11px] text-slate-500 ml-auto">演示数据 · 用时 ' + seconds + 's</span>' +
+        '</div>' +
+        '<p class="text-slate-400 text-[13px] mt-3 leading-relaxed">需求：「' + esc(prompt) + '」</p>' +
+
+        '<div class="grid lg:grid-cols-3 gap-4 mt-5">' +
+
+          '<div class="panel">' +
+            '<div class="panel-title">📦 生成的 Mod</div>' +
+            '<ul class="fl">' + fileHtml + '</ul>' +
+            '<div class="mt-3 rounded-lg bg-black/55 border border-white/5 px-3 py-2 flex items-center gap-2">' +
+              '<span class="font-mono text-[11.5px] text-emerald-300/90 truncate">um install ' + modId + '</span>' +
+              '<button type="button" class="copy-btn ml-auto text-[11px] px-2.5 py-1 rounded-md bg-white/10 text-slate-200 hover:bg-white/20 transition shrink-0"' +
+              ' data-copy="um install ' + modId + '">复制</button>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="panel">' +
+            '<div class="panel-title">🎨 fal 生成的素材</div>' +
+            '<div class="flex gap-2 mb-3">' +
+              '<div class="spr f1"><i></i></div>' +
+              '<div class="spr f2"><i></i></div>' +
+              '<div class="spr f3"><i></i></div>' +
+              '<div class="spr f4"><i></i></div>' +
+            '</div>' +
+            '<div class="text-[11px] text-slate-500 font-mono mb-2">missile_launcher_4f.png · 64×64 · 4 帧</div>' +
+            '<div class="wave">' + waveHtml + '</div>' +
+            '<div class="text-[11px] text-slate-500 font-mono mt-2">launch.wav + boom.wav · 44.1kHz</div>' +
+          '</div>' +
+
+          '<div class="panel">' +
+            '<div class="panel-title">🎮 游戏内自动测试</div>' +
+            '<div class="scene">' +
+              '<div class="blk p"></div>' +
+              '<div class="blk e1"></div>' +
+              '<div class="blk e2"></div>' +
+              '<div class="mis"></div>' +
+              '<div class="boom"></div>' +
+            '</div>' +
+            '<ul class="mt-3 space-y-1.5" style="list-style:none;padding:0;margin-bottom:0">' + checkHtml + '</ul>' +
+          '</div>' +
+
+        '</div>' +
+
+        '<div class="panel mt-4 flex flex-col md:flex-row items-center gap-5">' +
+          '<div class="video-box" id="videoBox">' +
+            '<div class="play-btn">▶</div>' +
+            '<span class="ts">00:24</span>' +
+          '</div>' +
+          '<div class="flex-1 text-center md:text-left">' +
+            '<div class="text-[14px] font-semibold text-slate-100">试玩展示视频（占位）</div>' +
+            '<p class="text-[12.5px] text-slate-400 mt-1.5 leading-relaxed">' +
+              'AI 自动从测试录像里截取高光片段，配上节奏音乐与中文字幕，同时导出横版与竖版两条。' +
+            '</p>' +
+            '<div class="mt-3 flex flex-wrap gap-2 justify-center md:justify-start">' +
+              '<button type="button" class="btn-primary" id="shareBtn" style="padding:9px 18px;font-size:13px">发布到 Mod 中心</button>' +
+              '<button type="button" class="btn-ghost" id="rerunBtn" style="padding:9px 18px;font-size:13px">换个想法再来</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    const panel = $('resultPanel');
+    panel.innerHTML = html;
+
+    panel.querySelectorAll('[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        const text = b.dataset.copy;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(function () {});
+          }
+        } catch (e) { /* 忽略剪贴板异常 */ }
+        toast('已复制安装命令（演示）');
+      });
+    });
+
+    const vb = panel.querySelector('#videoBox');
+    if (vb) vb.addEventListener('click', function () {
+      toast('演示占位：真实版本由 Agent 自动剪辑生成');
+    });
+
+    const sb = panel.querySelector('#shareBtn');
+    if (sb) sb.addEventListener('click', function () {
+      toast('演示模式：Mod 未真实发布，不会上传任何内容');
+    });
+
+    const rb = panel.querySelector('#rerunBtn');
+    if (rb) rb.addEventListener('click', function () {
+      const p = $('promptInput');
+      p.focus();
+      p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      toast('改个描述，再点一次「开始生成 Mod」');
+    });
+  }
+
+  /* ---------------- 运行主流程 ---------------- */
+  async function run() {
+    if (state.running) return;
+    state.running = true;
+
+    const runBtn = $('runBtn');
+    const runPanel = $('runPanel');
+    const resultPanel = $('resultPanel');
+    const promptEl = $('promptInput');
+    const consoleEl = $('console');
+    const timerEl = $('runTimer');
+
+    runBtn.disabled = true;
+    runBtn.textContent = '生成中…';
+    resultPanel.classList.add('hidden');
+    resultPanel.innerHTML = '';
+    runPanel.classList.remove('hidden');
+    consoleEl.innerHTML = '';
+
+    const game = GAMES[state.game];
+    const prompt = (promptEl.value || '').trim() || '（未填写描述，使用默认示例）';
+    const stages = buildStages(game);
+    renderStages(stages);
+
+    log('会话已启动 · 目标游戏 ' + game.name);
+    log('需求解析完成，开始执行 ' + stages.length + ' 个阶段');
+
+    const t0 = performance.now();
+    if (state.timer) clearInterval(state.timer);
+    state.timer = setInterval(function () {
+      timerEl.textContent = ((performance.now() - t0) / 1000).toFixed(1) + 's';
+    }, 100);
+
+    for (let i = 0; i < stages.length; i++) {
+      setStage(i, 'active');
+      log('— 阶段 ' + (i + 1) + '/' + stages.length + '：' + stages[i].title);
+      for (let j = 0; j < stages[i].logs.length; j++) {
+        await sleep(230 + Math.random() * 140);
+        log(stages[i].logs[j]);
+      }
+      await sleep(220);
+      setStage(i, 'done');
+    }
+
+    await sleep(280);
+    const seconds = ((performance.now() - t0) / 1000).toFixed(1);
+    if (state.timer) { clearInterval(state.timer); state.timer = null; }
+    timerEl.textContent = seconds + 's';
+    log('全部阶段完成，已打包 Mod 与展示素材 ✅');
+
+    renderResult(game, prompt, seconds);
+    resultPanel.classList.remove('hidden');
+    resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    state.running = false;
+    runBtn.disabled = false;
+    runBtn.textContent = '✨ 开始生成 Mod';
+  }
+
+  $('runBtn').addEventListener('click', run);
+
+  $('resetBtn').addEventListener('click', function () {
+    if (state.running) { toast('正在生成中，请稍候…'); return; }
+    $('runPanel').classList.add('hidden');
+    const rp = $('resultPanel');
+    rp.classList.add('hidden');
+    rp.innerHTML = '';
+    $('console').innerHTML = '';
+    $('runTimer').textContent = '0.0s';
+    $('studio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  /* ---------------- 候补名单 ---------------- */
+  function joinWaitlist() {
+    const input = $('emailInput');
+    const msg = $('waitMsg');
+    const v = (input.value || '').trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if (!ok) {
+      toast('请填写一个看起来像邮箱的地址');
+      input.focus();
+      return;
+    }
+    msg.textContent = '已把 ' + v + ' 记在本地演示列表里（概念演示，未提交任何数据）';
+    msg.classList.remove('hidden');
+    toast('已加入候补名单（演示，未提交任何数据）');
+    input.value = '';
+  }
+
+  $('waitBtn').addEventListener('click', joinWaitlist);
+  $('emailInput').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); joinWaitlist(); }
+  });
+
+  document.querySelectorAll('[data-wait]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      const sec = $('pricing');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function () { $('emailInput').focus(); }, 500);
+      toast('在下方留下邮箱即可加入候补（演示）');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
