@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>拆解台 · 说出想抄的功能，剩下的交给 AI 拆</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  @keyframes stepIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .step-in { animation: stepIn .38s ease forwards; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .fade-up { animation: fadeUp .45s ease forwards; }
+  .step { opacity: 0; }
+  ::selection { background: #c7d2fe; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+<!-- ============ 顶部导航 ============ -->
+<header class="sticky top-0 z-30 border-b border-slate-200/80 bg-slate-50/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+    <div class="flex items-center gap-2.5">
+      <div class="grid h-9 w-9 place-items-center rounded-xl bg-slate-900 text-white shadow-sm">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 7.5 12 3l9 4.5-9 4.5-9-4.5Z"/>
+          <path d="M3 12l9 4.5 9-4.5"/>
+          <path d="M3 16.5 12 21l9-4.5"/>
+        </svg>
+      </div>
+      <div class="leading-tight">
+        <div class="text-[15px] font-semibold tracking-tight text-slate-900">拆解台</div>
+        <div class="text-[11px] text-slate-400">Teardown Studio · 概念演示</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="hidden text-[11px] text-slate-400 sm:inline">基于 MIT 开源项目 morluto/rea</span>
+      <button data-waitlist class="rounded-full bg-slate-900 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-slate-800 active:scale-[0.98]">
+        加入候补名单
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="mx-auto max-w-6xl px-5 pb-7 pt-12 sm:pt-16">
+  <div class="flex flex-wrap items-center gap-2 text-[11px]">
+    <span class="rounded-full bg-indigo-50 px-2.5 py-1 font-medium text-indigo-600 ring-1 ring-indigo-100">AI 代理 · 静态分析</span>
+    <span class="rounded-full bg-white px-2.5 py-1 text-slate-500 ring-1 ring-slate-200">本地运行 · 不上传代码</span>
+    <span class="rounded-full bg-white px-2.5 py-1 text-slate-500 ring-1 ring-slate-200">每条结论都附证据</span>
+  </div>
+  <h1 class="mt-5 max-w-3xl text-[30px] font-semibold leading-[1.28] tracking-tight text-slate-900 sm:text-[42px]">
+    说出你想抄的功能，<br class="hidden sm:block" />剩下的交给 AI 拆。
+  </h1>
+  <p class="mt-4 max-w-2xl text-[15px] leading-relaxed text-slate-500">
+    上传一个 App 包，AI 代理会解包、扫符号、追调用链，把「这个功能到底是怎么实现的」翻译成人话 ——
+    并给出每条结论的出处：文件路径、字符串常量、网络请求，还有一段能直接改造的复刻代码。
+  </p>
+</section>
+
+<!-- ============ 核心交互区 ============ -->
+<section class="mx-auto max-w-6xl px-5 pb-4">
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_16px_40px_-16px_rgba(15,23,42,0.16)]">
+    <div class="grid lg:grid-cols-[350px_minmax(0,1fr)]">
+
+      <!-- 左：输入 -->
+      <div class="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+        <div class="space-y-6">
+
+          <div>
+            <div class="mb-2.5 flex items-center gap-2 text-[11.5px] font-medium text-slate-500">
+              <span class="grid h-5 w-5 place-items-center rounded-full bg-slate-900 text-[10px] text-white">1</span>
+              选择目标 App
+            </div>
+            <div id="appChoices" class="grid grid-cols-2 gap-2"></div>
+          </div>
+
+          <div>
+            <div class="mb-2.5 flex items-center gap-2 text-[11.5px] font-medium text-slate-500">
+              <span class="grid h-5 w-5 place-items-center rounded-full bg-slate-900 text-[10px] text-white">2</span>
+              你想拆解哪个功能？
+            </div>
+            <textarea id="featureInput" rows="3" spellcheck="false"
+              class="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 text-[13.5px] leading-relaxed text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-50"></textarea>
+            <div id="chips" class="mt-2.5 flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <div>
+            <div class="mb-2.5 text-[11.5px] font-medium text-slate-500">分析范围</div>
+            <div id="scopes" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <button id="runBtn"
+            class="w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-300">
+            开始拆解
+          </button>
+          <p class="text-center text-[11px] leading-relaxed text-slate-400">不会上传任何文件 · 演示环境</p>
+        </div>
+      </div>
+
+      <!-- 右：输出 -->
+      <div class="min-h-[520px] bg-slate-50/60 p-5 sm:p-6">
+
+        <div id="stageEmpty" class="flex min-h-[420px] flex-col items-center justify-center text-center">
+          <div class="grid h-14 w-14 place-items-center rounded-2xl border border-dashed border-slate-300 bg-white text-2xl">🔍</div>
+          <p class="mt-4 text-sm font-medium text-slate-700">选一个 App，说出你想拆的功能</p>
+          <p class="mt-1 max-w-xs text-[12.5px] leading-relaxed text-slate-400">AI 代理会给你一份带证据链的拆解报告，以及一段能直接改造的复刻代码。</p>
+        </div>
+
+        <div id="stageAnalyzing" class="hidden">
+          <div class="flex items-center gap-3">
+            <span class="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-indigo-50">
+              <span class="absolute inset-0 animate-ping rounded-full bg-indigo-100 opacity-70"></span>
+              <span class="relative text-sm">🤖</span>
+            </span>
+            <div class="min-w-0">
+              <div id="analyzeTitle" class="text-sm font-semibold text-slate-900">正在拆解</div>
+              <div id="analyzeSub" class="truncate text-[11.5px] text-slate-400">目标功能：</div>
+            </div>
+          </div>
+          <div class="mt-5">
+            <div class="mb-1.5 flex items-center justify-between text-[11px] text-slate-400">
+              <span>分析进度</span><span id="progressText">0%</span>
+            </div>
+            <div class="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+              <div id="progressBar" class="h-full w-0 rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400 transition-all duration-300"></div>
+            </div>
+          </div>
+          <ul id="steps" class="mt-5 space-y-3"></ul>
+        </div>
+
+        <div id="stageReport" class="hidden"></div>
+      </div>
+
+    </div>
+  </div>
+  <p class="mt-3 text-center text-[11px] text-slate-400">演示数据：报告由前端脚本模拟生成，未连接任何服务，也不会读取你的文件。</p>
+</section>
+
+<!-- ============ 使用场景 ============ -->
+<section class="mx-auto max-w-6xl px-5 py-14">
+  <div class="mb-7">
+    <h2 class="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">它到底能帮你干什么</h2>
+    <p class="mt-2 text-[13.5px] text-slate-500">同一个动作：输入目标 → 拿到证据 → 抄走代码。</p>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-3">
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-slate-300 hover:shadow-sm">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-lg">🧩</div>
+      <h3 class="mt-4 text-[14.5px] font-semibold text-slate-900">竞品这个交互挺爽，我想自己也做一个</h3>
+      <p class="mt-2 text-[12.5px] leading-relaxed text-slate-500">
+        选中功能，拿到实现路径与最小复刻代码。省掉一周的「它大概是这么做的吧」的黑盒猜测。
+      </p>
+      <div class="mt-4 font-mono text-[10.5px] text-slate-400">输入 → 证据 → 代码</div>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-slate-300 hover:shadow-sm">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-lg">🛡️</div>
+      <h3 class="mt-4 text-[14.5px] font-semibold text-slate-900">这个 SDK 到底偷偷干了什么</h3>
+      <p class="mt-2 text-[12.5px] leading-relaxed text-slate-500">
+        上传二进制，看它读了哪些文件、连了哪些域名、要了哪些权限 —— 每一条都能点回具体出处。
+      </p>
+      <div class="mt-4 font-mono text-[10.5px] text-slate-400">符号 · 常量 · 请求</div>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-slate-300 hover:shadow-sm">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-lg">🐞</div>
+      <h3 class="mt-4 text-[14.5px] font-semibold text-slate-900">线上崩溃只在某个机型出现</h3>
+      <p class="mt-2 text-[12.5px] leading-relaxed text-slate-500">
+        顺着符号与调用链还原现场，比对着堆栈一行行猜要快得多，也更容易说服同事。
+      </p>
+      <div class="mt-4 font-mono text-[10.5px] text-slate-400">调用链 → 复现条件</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 定价 / 候补名单 ============ -->
+<section id="waitlist" class="mx-auto max-w-6xl px-5 pb-16">
+  <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-9">
+    <div class="mb-7 text-center">
+      <h2 class="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">还没上线，先排个队</h2>
+      <p class="mt-2 text-[13.5px] text-slate-500">下面是设想中的定价，价格和额度都可能变。</p>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div class="rounded-2xl border border-slate-200 p-5">
+        <div class="text-[12px] font-medium text-slate-500">免费试用</div>
+        <div class="mt-2 text-2xl font-semibold text-slate-900">¥0</div>
+        <ul class="mt-4 space-y-2 text-[12.5px] text-slate-500">
+          <li>· 每月 3 次拆解</li>
+          <li>· 报告 7 天有效</li>
+          <li>· 社区支持</li>
+        </ul>
+        <button data-waitlist class="mt-5 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-[13px] font-medium text-slate-700 transition hover:bg-slate-50 active:scale-[0.99]">加入候补名单</button>
+      </div>
+
+      <div class="relative rounded-2xl border-2 border-indigo-500 bg-indigo-50/40 p-5">
+        <span class="absolute -top-2.5 left-5 rounded-full bg-indigo-600 px-2 py-0.5 text-[10px] font-medium text-white">最受欢迎</span>
+        <div class="text-[12px] font-medium text-indigo-600">独立开发者</div>
+        <div class="mt-2 text-2xl font-semibold text-slate-900">¥99<span class="text-[13px] font-normal text-slate-500"> / 月</span></div>
+        <ul class="mt-4 space-y-2 text-[12.5px] text-slate-600">
+          <li>· 每月 50 次拆解</li>
+          <li>· 导出 Markdown + 复刻代码</li>
+          <li>· 私有项目，报告不外泄</li>
+          <li>· 邮件支持</li>
+        </ul>
+        <button data-waitlist class="mt-5 w-full rounded-xl bg-indigo-600 px-4 py-2.5 text-[13px] font-semibold text-white transition hover:bg-indigo-500 active:scale-[0.99]">加入候补名单</button>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 p-5">
+        <div class="text-[12px] font-medium text-slate-500">团队</div>
+        <div class="mt-2 text-2xl font-semibold text-slate-900">¥399<span class="text-[13px] font-normal text-slate-500"> / 月</span></div>
+        <ul class="mt-4 space-y-2 text-[12.5px] text-slate-500">
+          <li>· 无限次拆解</li>
+          <li>· 5 个席位</li>
+          <li>· 团队知识库（证据可检索）</li>
+          <li>· SLA 与私有部署咨询</li>
+        </ul>
+        <button data-waitlist class="mt-5 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-[13px] font-medium text-slate-700 transition hover:bg-slate-50 active:scale-[0.99]">联系团队</button>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-8 max-w-md">
+      <div class="flex flex-col gap-2 sm:flex-row">
+        <input id="emailInput" type="email" placeholder="you@example.com"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-[13px] text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-50" />
+        <button id="joinBtn" class="shrink-0 rounded-xl bg-slate-900 px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-slate-800 active:scale-[0.99]">排队</button>
+      </div>
+      <p id="joinMsg" class="mt-2 h-4 text-center text-[11.5px] text-slate-400"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 页脚 ============ -->
+<footer class="border-t border-slate-200 py-8">
+  <div class="mx-auto max-w-6xl px-5 text-center text-[11.5px] leading-relaxed text-slate-400">
+    概念演示，基于开源项目 <a href="https://github.com/morluto/rea" target="_blank" rel="noopener" class="underline decoration-slate-300 underline-offset-2 transition hover:text-slate-600">morluto/rea</a>（MIT），非官方产品，数据均为演示数据
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 translate-y-3 rounded-full bg-slate-900 px-4 py-2 text-[12.5px] font-medium text-white opacity-0 shadow-lg transition-all duration-300"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 工具 ---------- */
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  };
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  var clampText = function (s, n) { return s.length > n ? s.slice(0, n) + '…' : s; };
+
+  var toastTimer = null;
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.remove('opacity-0', 'translate-y-3');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      t.classList.add('opacity-0', 'translate-y-3');
+    }, 2200);
+  }
+
+  /* 代码高亮（安全版：先转义再着色） */
+  function highlight(code) {
+    var safe = esc(code);
+    try {
+      return safe.replace(
+        /(\/\/[^\n]*)|('(?:[^'\\\n]|\\.)*')|\b(export|function|const|let|for|of|if|return|new|async|await|class|import|from|true|false|null|try|catch|while)\b/g,
+        function (m, comment, str, kw) {
+          if (comment) return '<span class="text-slate-500">' + comment + '</span>';
+          if (str) return '<span class="text-emerald-300">' + str + '</span>';
+          return '<span class="text-indigo-300">' + kw + '</span>';
+        }
+      );
+    } catch (e) {
+      return safe;
+    }
+  }
+
+  /* ---------- 演示数据 ---------- */
+  var SCOPES = ['二进制符号', 'JS / Bundle', '资源与网络', '运行时行为'];
+
+  var APPS = {
+    notes: {
+      id: 'notes', icon: '📝', short: 'Apple Notes', name: 'Apple Notes',
+      platform: 'iOS · IPA', pkg: 'Notes.app · 212 MB', files: 1284, conf: 92,
+      hint: '搜索：输入即筛选、命中文字高亮，还支持模糊匹配',
+      chips: ['实时搜索与高亮', '导出为 PDF', '附件缩略图生成', 'iCloud 增量同步'],
+      summary: '「<span class="font-medium text-slate-800">{f}</span>」不是简单的字符串包含。Notes 在 CoreData 里维护了一张持久化倒排索引（<span class="font-mono text-[12px] text-indigo-600">ZSEARCHINDEX</span>），输入时由 <span class="font-mono text-[12px] text-indigo-600">ICSearchIndexer</span> 做增量过滤，命中区间通过 NSAttributedString 的属性区间直接绘制高亮；匹配走的是子序列算法，所以输入 “ntes” 也能命中 “Notes”。',
+      evidence: [
+        { type: '二进制符号', path: 'Notes.app/Notes → ICSearchIndexer', detail: '符号表中 -queryWithString:limit: 与 ZSEARCHINDEX 表的读写强相关，调用点位于 NoteSearchViewController 的 textDidChange 路径。', conf: '高' },
+        { type: '字符串常量', path: 'Frameworks/NotesShared.framework', detail: '常量 ZSEARCHINDEX、indexedText、lastIndexedAt 与 CoreData 模型字段一一对应，确认是持久化索引而非每次全量扫描。', conf: '高' },
+        { type: '运行时行为', path: '设备侧输入观察（模拟）', detail: '输入 “ntes” 仍命中 “Notes”，且首字符出结果 < 200ms → 子序列模糊匹配 + 内存索引，排除 SQL LIKE 全表扫描。', conf: '中' },
+        { type: '权限/资源', path: 'Info.plist · NSUserActivityTypes', detail: '搜索上下文被序列化进 NSUserActivity，用于恢复上次搜索状态，可参考复刻「回到上次搜索」。', conf: '中' }
+      ],
+      code: {
+        title: 'search-index.js',
+        note: '最小复刻：倒排索引 + 子序列模糊匹配（可直接替换成你的数据结构）',
+        body: [
+          "// 复刻 1/2：为每条记录建立倒排索引（对齐 Notes 的增量搜索）",
+          "export function buildIndex(items, fields = ['title', 'body']) {",
+          "  const index = new Map();",
+          "  for (const item of items) {",
+          "    const text = fields.map((f) => item[f] || '').join(' ').toLowerCase();",
+          "    for (const token of new Set(text.split(' ').filter(Boolean))) {",
+          "      if (!index.has(token)) index.set(token, new Set());",
+          "      index.get(token).add(item.id);",
+          "    }",
+          "  }",
+          "  return index;",
+          "}",
+          "",
+          "// 复刻 2/2：子序列模糊匹配（'ntes' 也能命中 'Notes'）+ 返回高亮区间",
+          "export function matchRanges(text, query) {",
+          "  const t = text.toLowerCase();",
+          "  const q = query.trim().toLowerCase();",
+          "  if (!q) return [];",
+          "  const ranges = [];",
+          "  let cursor = 0;",
+          "  for (const ch of q) {",
+          "    const hit = t.indexOf(ch, cursor);",
+          "    if (hit === -1) return null;   // 不匹配，直接从结果里剔除",
+          "    ranges.push([hit, hit + 1]);",
+          "    cursor = hit + 1;",
+          "  }",
+          "  return ranges;                   // 交给渲染层做 backgroundColor 高亮",
+          "}"
+        ].join('\n')
+      },
+      limits: '符号名经过还原，不同 iOS 版本命名可能变化；模糊匹配的具体权重未在静态分析中恢复，属于行为推断。'
+    },
+
+    spotify: {
+      id: 'spotify', icon: '🎧', short: 'Spotify', name: 'Spotify',
+      platform: 'Android · APK', pkg: 'base.apk · 96 MB', files: 2310, conf: 86,
+      hint: '歌词逐字高亮与播放进度同步',
+      chips: ['歌词逐字染色', '封面主色渐变', '离线缓存策略', '切歌交叉淡入'],
+      summary: '「<span class="font-medium text-slate-800">{f}</span>」的关键在于服务端已经切好时间片：<span class="font-mono text-[12px] text-indigo-600">/color-lyrics/v2</span> 返回的每行歌词带 <span class="font-mono text-[12px] text-indigo-600">syllables[]</span>（startMs / endMs / text），客户端只负责按播放进度插值染色，而不是自己做分词对齐。绘制挂在动画帧上而非播放事件回调，所以进度看起来是「连续」的。',
+      evidence: [
+        { type: '网络请求', path: 'GET /color-lyrics/v2/track/{id}?format=json', detail: '响应体 lines[].syllables[] 含 startMs / endMs / text 三个字段，粒度到音节 → 对齐发生在服务端。', conf: '高' },
+        { type: '字符串常量', path: 'libassistant.so → LyricsScrollCoordinator', detail: '命中 syllableProgress、lineStartMs 等符号，与接口字段命名一致，确认客户端按同一套时间轴渲染。', conf: '高' },
+        { type: '二进制符号', path: 'Hermes 字节码 · useAnimatedReaction', detail: '染色逻辑挂在动画帧上，而不是 PlayerState 回调 —— 解释了切歌瞬间的平滑过渡。', conf: '中' },
+        { type: '运行时行为', path: '断网观察（模拟）', detail: '断网后已加载歌词仍可逐字滚动，仅在换行时请求新数据 → 客户端确有本地插值层。', conf: '中' }
+      ],
+      code: {
+        title: 'lyrics-sync.js',
+        note: '最小复刻：按 requestAnimationFrame 推进，逐字返回 0~1 的填充比例',
+        body: [
+          "// 复刻：把『播放进度』换算成每个音节的染色比例",
+          "export function paintLine(line, positionMs) {",
+          "  return line.syllables.map((s) => {",
+          "    const span = Math.max(1, s.endMs - s.startMs);",
+          "    return {",
+          "      text: s.text,",
+          "      fill: clamp((positionMs - s.startMs) / span, 0, 1),",
+          "    };",
+          "  });",
+          "}",
+          "",
+          "// 关键点：用 rAF 驱动，而不是监听播放事件（事件粒度太粗会跳字）",
+          "export function startLyricsLoop(state, raf = requestAnimationFrame) {",
+          "  const tick = () => {",
+          "    state.positionMs = state.audio.currentTime * 1000;",
+          "    state.line = state.lines.find((l) => state.positionMs < l.endMs) || state.lines[state.lines.length - 1];",
+          "    state.frame = paintLine(state.line, state.positionMs);",
+          "    state.raf = raf(tick);",
+          "  };",
+          "  state.raf = raf(tick);",
+          "  return () => cancelAnimationFrame(state.raf);",
+          "}",
+          "",
+          "const clamp = (v, min, max) => Math.min(max, Math.max(min, v));"
+        ].join('\n')
+      },
+      limits: 'v2 接口字段随版本变动，正式复刻前需确认当前版本的实际返回；其服务端用什么模型做对齐未经验证。'
+    },
+
+    figma: {
+      id: 'figma', icon: '🎨', short: 'Figma', name: 'Figma',
+      platform: 'Web · Electron', pkg: 'app.asar · 148 MB', files: 642, conf: 78,
+      hint: '多人光标与选区实时同步',
+      chips: ['多人光标同步', '组件变体切换', '画布缩放性能', '评论锚点定位'],
+      summary: '「<span class="font-medium text-slate-800">{f}</span>」靠一条长连接传增量操作，而不是同步整份文档。光标这类高频数据走 <span class="font-mono text-[12px] text-indigo-600">40ms</span> 节流、以相对坐标广播；渲染端对远端位置做一阶插值，所以 25fps 的更新看起来是 60fps 的顺滑。',
+      evidence: [
+        { type: '网络请求', path: 'wss://www.figma.com/socket（二进制帧）', detail: '操作以二进制帧下发，含 docId + op 序列号 → 增量同步，而非全量快照。', conf: '高' },
+        { type: '字符串常量', path: 'app.asar · multiplayer', detail: '命中 multiplayer、cursorChannel、throttleMs 等常量，节流窗口为 40ms。', conf: '高' },
+        { type: '运行时行为', path: '双窗口对照（模拟）', detail: 'A 窗口拖拽时 B 窗口更新间隔稳定 ≈40ms，但位置平滑 → 接收侧存在插值。', conf: '中' },
+        { type: '资源', path: '光标 SVG sprite', detail: '光标图形为内联 sprite + 每用户品牌色，可用 CSS 变量替代位图实现。', conf: '低' }
+      ],
+      code: {
+        title: 'cursor-sync.js',
+        note: '最小复刻：发送侧节流 + 接收侧插值，两个函数就够跑起来',
+        body: [
+          "// 发送侧：40ms 节流，避免把鼠标每帧都塞进长连接",
+          "export function createCursorSender(socket, throttleMs = 40) {",
+          "  let last = 0;",
+          "  return function send(point) {",
+          "    const now = performance.now();",
+          "    if (now - last < throttleMs) return;",
+          "    last = now;",
+          "    socket.send(JSON.stringify({ t: 'cursor', x: point.x, y: point.y }));",
+          "  };",
+          "}",
+          "",
+          "// 接收侧：一阶插值，把 25fps 的抖动抹成 60fps 的顺滑",
+          "export function createRemoteCursors(onDraw) {",
+          "  const cursors = new Map();",
+          "  return {",
+          "    receive(msg) {",
+          "      const c = cursors.get(msg.id) || { x: msg.x, y: msg.y, tx: msg.x, ty: msg.y };",
+          "      c.tx = msg.x;",
+          "      c.ty = msg.y;",
+          "      cursors.set(msg.id, c);",
+          "    },",
+          "    step(k = 0.35) {",
+          "      cursors.forEach((c) => {",
+          "        c.x += (c.tx - c.x) * k;",
+          "        c.y += (c.ty - c.y) * k;",
+          "      });",
+          "      onDraw(cursors);",
+          "    },",
+          "  };",
+          "}"
+        ].join('\n')
+      },
+      limits: '冲突合并策略未完全恢复（疑似自研 OT 而非 CRDT），高并发编辑行为需要实测；二进制帧的具体编码为推断。'
+    },
+
+    notion: {
+      id: 'notion', icon: '📓', short: 'Notion', name: 'Notion',
+      platform: 'Web · Electron', pkg: 'app.asar · 121 MB', files: 903, conf: 88,
+      hint: '块编辑器的离线草稿与乐观更新',
+      chips: ['乐观更新与回滚', '离线草稿保存', '块级重渲染', '拖拽排序实现'],
+      summary: '「<span class="font-medium text-slate-800">{f}</span>」本质是一个本地事务队列：编辑先改内存里的 block store 并立刻重绘，同时把事务压进 <span class="font-mono text-[12px] text-indigo-600">pendingTransactions</span>，由后台 flusher 串行提交；失败则按保存的 before 快照回滚，并保留离线草稿。',
+      evidence: [
+        { type: '网络请求', path: 'POST /api/v3/saveTransactions', detail: '请求体为 { transactions: [{ id, shardId, spaceId, operations }] }，批量且带顺序号 → 事务队列 + 串行提交。', conf: '高' },
+        { type: '字符串常量', path: 'indexedDB · notion-cache / pendingTransactions', detail: '本地库中 pendingTransactions 在离线编辑时增长、联网后清空，正好对应乐观更新与重放。', conf: '高' },
+        { type: '运行时行为', path: '弱网观察（模拟）', detail: '网络限速后输入仍零延迟，状态栏出现 “Saving…” 约 1.2s 后消失 → 内存优先、落盘异步。', conf: '中' },
+        { type: '二进制/资源', path: 'block renderer · 组件树', detail: '每个 block 是独立订阅节点，单块更新不会触发整页重绘。', conf: '中' }
+      ],
+      code: {
+        title: 'optimistic-queue.js',
+        note: '最小复刻：乐观更新 + 串行提交 + 失败回滚，一个队列五十行以内',
+        body: [
+          "// 复刻：先改内存立刻重绘，再把事务丢进队列等持久化",
+          "const queue = [];",
+          "let flushing = false;",
+          "",
+          "export function applyBlock(block, patch) {",
+          "  const before = Object.assign({}, block);",
+          "  Object.assign(block, patch);           // 1. 乐观更新，界面立刻变",
+          "  queue.push({ block, before, patch });  // 2. 入队",
+          "  flush();",
+          "  return before;",
+          "}",
+          "",
+          "async function flush() {",
+          "  if (flushing) return;",
+          "  flushing = true;",
+          "  while (queue.length) {",
+          "    const tx = queue[0];",
+          "    try {",
+          "      await saveTransaction(tx);         // POST /api/v3/saveTransactions",
+          "      queue.shift();",
+          "    } catch (err) {",
+          "      Object.assign(tx.block, tx.before); // 3. 失败回滚到快照",
+          "      queue.shift();",
+          "      console.warn('transaction failed, rolled back', tx, err);",
+          "    }",
+          "  }",
+          "  flushing = false;",
+          "}"
+        ].join('\n')
+      },
+      limits: 'shardId / spaceId 的分配规则未逆出；本地缓存结构版本间变化较快，复刻时建议只借鉴队列模型，不要照搬存储格式。'
+    }
+  };
+
+  /* ---------- 状态 ---------- */
+  var state = {
+    app: 'notes',
+    running: false,
+    scopes: new Set(SCOPES)
+  };
+
+  /* ---------- DOM ---------- */
+  var appChoices = document.getElementById('appChoices');
+  var chipsWrap = document.getElementById('chips');
+  var scopesWrap = document.getElementById('scopes');
+  var featureInput = document.getElementById('featureInput');
+  var runBtn = document.getElementById('runBtn');
+  var stageEmpty = document.getElementById('stageEmpty');
+  var stageAnalyzing = document.getElementById('stageAnalyzing');
+  var stageReport = document.getElementById('stageReport');
+  var analyzeTitle = document.getElementById('analyzeTitle');
+  var analyzeSub = document.getElementById('analyzeSub');
+  var stepsEl = document.getElementById('steps');
+  var progressBar = document.getElementById('progressBar');
+  var progressText = document.getElementById('progressText');
+
+  /* ---------- 渲染：App 选择 ---------- */
+  function renderApps() {
+    appChoices.innerHTML = Object.keys(APPS).map(function (key) {
+      var a = APPS[key];
+      var active = a.id === state.app;
+      var cls = active
+        ? 'border-indigo-500 bg-indigo-50/70 ring-1 ring-indigo-200'
+        : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50';
+      return '<button data-app="' + a.id + '" class="flex flex-col items-start gap-0.5 rounded-xl border px-3 py-2.5 text-left transition ' + cls + '">' +
+        '<span class="text-base leading-none">' + a.icon + '</span>' +
+        '<span class="text-[12.5px] font-medium text-slate-800">' + a.short + '</span>' +
+        '<span class="text-[10px] text-slate-400">' + a.platform + '</span>' +
+        '</button>';
+    }).join('');
+  }
+
+  /* ---------- 渲染：功能快捷 chips ---------- */
+  function renderChips() {
+    var app = APPS[state.app];
+    chipsWrap.innerHTML = app.chips.map(function (c) {
+      return '<button data-chip="' + esc(c) + '" class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-500 transition hover:border-indigo-300 hover:text-indigo-600 active:scale-[0.98]">' + esc(c) + '</button>';
+    }).join('');
+  }
+
+  /* ---------- 渲染：分析范围 ---------- */
+  function renderScopes() {
+    scopesWrap.innerHTML = SCOPES.map(function (s) {
+      var on = state.scopes.has(s);
+      var cls = on
+        ? 'bg-slate-900 text-white border-slate-900'
+        : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300';
+      return '<button data-scope="' + esc(s) + '" class="rounded-full border px-2.5 py-1 text-[11px] transition ' + cls + '">' + esc(s) + '</button>';
+    }).join('');
+  }
+
+  /* ---------- 事件：选择 App ---------- */
+  appChoices.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-app]');
+    if (!btn || state.running) return;
+    var id = btn.getAttribute('data-app');
+    if (!APPS[id] || id === state.app) return;
+    state.app = id;
+    renderApps();
+    renderChips();
+    featureInput.value = APPS[id].hint;
+  });
+
+  /* ---------- 事件：chips ---------- */
+  chipsWrap.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-chip]');
+    if (!btn || state.running) return;
+    var val = btn.getAttribute('data-chip');
+    var app = APPS[state.app];
+    featureInput.value = val + '：' + app.hint.split('：').slice(1).join('：');
+    featureInput.focus();
+  });
+
+  /* ---------- 事件：分析范围 ---------- */
+  scopesWrap.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-scope]');
+    if (!btn || state.running) return;
+    var s = btn.getAttribute('data-scope');
+    if (state.scopes.has(s)) state.scopes.delete(s); else state.scopes.add(s);
+    renderScopes();
+  });
+
+  /* ---------- 分析流程 ---------- */
+  function buildStages(app, feature) {
+    var f = clampText(feature, 16);
+    return [
+      '解包 ' + app.name + '，为 ' + app.files + ' 个文件建立索引',
+      '定位与「' + f + '」相关的入口：扫描符号与字符串常量',
+      '沿调用链回溯，抽取文件路径、常量与依赖',
+      '交叉验证：网络请求、本地存储与运行时行为',
+      '生成证据链报告与可复刻的代码片段'
+    ];
+  }
+
+  function makeStep(text) {
+    var li = document.createElement('li');
+    li.className = 'step flex items-start gap-2.5';
+    var dot = document.createElement('span');
+    dot.className = 'mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full border border-slate-300 bg-white text-[9px] text-slate-400';
+    dot.textContent = '·';
+    var span = document.createElement('span');
+    span.className = 'text-[12.5px] leading-relaxed text-slate-500';
+    span.textContent = text;
+    li.appendChild(dot);
+    li.appendChild(span);
+    stepsEl.appendChild(li);
+    requestAnimationFrame(function () { li.classList.add('step-in'); });
+    return { li: li, dot: dot, span: span };
+  }
+
+  function doneStep(ref) {
+    ref.dot.className = 'mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-emerald-500 text-[9px] font-bold text-white';
+    ref.dot.textContent = '✓';
+    ref.span.className = 'text-[12.5px] leading-relaxed text-slate-700';
+  }
+
+  function confBadge(conf) {
+    var map = {
+      '高': 'bg-emerald-50 text-emerald-600 ring-emerald-100',
+      '中': 'bg-amber-50 text-amber-600 ring-amber-100',
+      '低': 'bg-slate-100 text-slate-500 ring-slate-200'
+    };
+    var cls = map[conf] || map['低'];
+    return '<span class="rounded-md px-1.5 py-0.5 text-[10px] font-medium ring-1 ' + cls + '">' + esc(conf) + ' 可信度</span>';
+  }
+
+  function renderReport(app, feature) {
+    var featureSafe = esc(clampText(feature, 40));
+    var summary = app.summary.replace('{f}', featureSafe);
+    var scopeText = state.scopes.size ? Array.from(state.scopes).join(' · ') : '全部';
+
+    var evidenceHtml = app.evidence.map(function (ev) {
+      return '<div class="rounded-lg border border-slate-100 bg-slate-50/70 p-3">' +
+        '<div class="flex items-center justify-between gap-2">' +
+        '<span class="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-600 ring-1 ring-slate-200">' + esc(ev.type) + '</span>' +
+        confBadge(ev.conf) +
+        '</div>' +
+        '<div class="mt-1.5 break-all font-mono text-[11px] text-indigo-600">' + esc(ev.path) + '</div>' +
+        '<p class="mt-1 text-[12.5px] leading-relaxed text-slate-600">' + esc(ev.detail) + '</p>' +
+        '</div>';
+    }).join('');
+
+    var html = '' +
+      '<div class="space-y-4 fade-up">' +
+        '<div class="rounded-xl border border-slate-200 bg-white p-5">' +
+          '<div class="flex flex-wrap items-start justify-between gap-3">' +
+            '<div class="min-w-0">' +
+              '<div class="flex items-center gap-1.5 text-[11px] text-slate-400">' +
+                '<span class="rounded bg-slate-100 px-1.5 py-0.5 font-medium text-slate-500">拆解报告</span>' +
+                '<span class="rounded bg-emerald-50 px-1.5 py-0.5 font-medium text-emerald-600">演示数据</span>' +
+              '</div>' +
+              '<h2 class="mt-2 text-[17px] font-semibold leading-snug text-slate-900">' + esc(app.name) + ' · ' + featureSafe + '</h2>' +
+              '<div class="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-slate-400">' +
+                '<span>📦 ' + esc(app.pkg) + '</span>' +
+                '<span>🗂 ' + app.files + ' 个文件</span>' +
+                '<span>🎯 ' + esc(scopeText) + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="text-right">' +
+              '<div class="text-[11px] text-slate-400">结论置信度</div>' +
+              '<div class="text-2xl font-semibold leading-tight text-slate-900">' + app.conf + '%</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">' +
+            '<div class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400" style="width:' + app.conf + '%"></div>' +
+          '</div>' +
+          '<p class="mt-4 text-[13.5px] leading-relaxed text-slate-600">' + summary + '</p>' +
+        '</div>' +
+
+        '<div class="rounded-xl border border-slate-200 bg-white p-5">' +
+          '<div class="flex items-center justify-between">' +
+            '<h3 class="text-sm font-semibold text-slate-900">证据链</h3>' +
+            '<span class="text-[11px] text-slate-400">' + app.evidence.length + ' 条 · 按可信度排序</span>' +
+          '</div>' +
+          '<div class="mt-3 space-y-2.5">' + evidenceHtml + '</div>' +
+        '</div>' +
+
+        '<div class="overflow-hidden rounded-xl border border-slate-800 bg-slate-900">' +
+          '<div class="flex items-center justify-between border-b border-slate-800 px-4 py-2.5">' +
+            '<div class="flex items-center gap-2">' +
+              '<span class="flex gap-1"><i class="h-2 w-2 rounded-full bg-slate-700"></i><i class="h-2 w-2 rounded-full bg-slate-700"></i><i class="h-2 w-2 rounded-full bg-slate-700"></i></span>' +
+              '<span class="font-mono text-[11.5px] text-slate-300">' + esc(app.code.title) + '</span>' +
+            '</div>' +
+            '<button id="copyBtn" class="rounded-md bg-slate-800 px-2.5 py-1 text-[11px] font-medium text-slate-200 transition hover:bg-slate-700 active:scale-[0.97]">复制</button>' +
+          '</div>' +
+          '<pre class="overflow-x-auto p-4 font-mono text-[12px] leading-relaxed text-slate-100"><code>' + highlight(app.code.body) + '</code></pre>' +
+          '<div class="border-t border-slate-800 px-4 py-2.5 text-[11px] leading-relaxed text-slate-400">' + esc(app.code.note) + '</div>' +
+        '</div>' +
+
+        '<div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-[12px] leading-relaxed text-amber-800">' +
+          '<span class="font-semibold">局限与不确定性</span> · ' + esc(app.limits) +
+        '</div>' +
+      '</div>';
+
+    stageReport.innerHTML = html;
+
+    var copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        var code = app.code.body;
+        var ok = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).then(function () {
+              showToast('代码已复制到剪贴板');
+            }).catch(function () {
+              showToast('当前环境不允许自动复制，请手动选择代码');
+            });
+            ok = true;
+          }
+        } catch (err) {
+          ok = false;
+        }
+        if (!ok) showToast('当前环境不允许自动复制，请手动选择代码');
+      });
+    }
+  }
+
+  async function run() {
+    if (state.running) return;
+    state.running = true;
+    runBtn.disabled = true;
+    runBtn.textContent = '拆解中…';
+
+    var app = APPS[state.app];
+    var feature = (featureInput.value || app.hint).trim();
+    if (!feature) feature = app.hint;
+
+    stageEmpty.classList.add('hidden');
+    stageReport.classList.add('hidden');
+    stageReport.innerHTML = '';
+    stageAnalyzing.classList.remove('hidden');
+    analyzeTitle.textContent = '正在拆解 ' + app.short;
+    analyzeSub.textContent = '目标功能：' + clampText(feature, 26);
+    stepsEl.innerHTML = '';
+    progressBar.style.width = '0%';
+    progressText.textContent = '0%';
+
+    var stages = buildStages(app, feature);
+
+    for (var i = 0; i < stages.length; i++) {
+      var ref = makeStep(stages[i]);
+      await sleep(340 + Math.floor(Math.random() * 240));
+      doneStep(ref);
+      var pct = Math.round(((i + 1) / stages.length) * 100);
+      progressBar.style.width = pct + '%';
+      progressText.textContent = pct + '%';
+    }
+
+    await sleep(420);
+
+    renderReport(app, feature);
+    stageAnalyzing.classList.add('hidden');
+    stageReport.classList.remove('hidden');
+
+    runBtn.disabled = false;
+    runBtn.textContent = '重新拆解';
+    state.running = false;
+  }
+
+  runBtn.addEventListener('click', function () {
+    run().catch(function (err) {
+      state.running = false;
+      runBtn.disabled = false;
+      runBtn.textContent = '重新拆解';
+      stageAnalyzing.classList.add('hidden');
+      showToast('演示脚本出错了，请重试');
+      console.warn(err);
+    });
+  });
+
+  /* ---------- 候补名单 ---------- */
+  document.querySelectorAll('[data-waitlist]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      showToast('已加入候补名单（演示，没有提交任何数据）');
+    });
+  });
+
+  var joinBtn = document.getElementById('joinBtn');
+  var joinMsg = document.getElementById('joinMsg');
+  var emailInput = document.getElementById('emailInput');
+  if (joinBtn) {
+    joinBtn.addEventListener('click', function () {
+      var val = (emailInput && emailInput.value || '').trim();
+      joinMsg.textContent = val
+        ? '已记录 ' + val + '（演示环境，数据不会离开本页）'
+        : '已加入候补名单（演示，没有提交任何数据）';
+      showToast('已加入候补名单（演示，没有提交任何数据）');
+    });
+  }
+
+  /* ---------- 初始化 ---------- */
+  renderApps();
+  renderChips();
+  renderScopes();
+  featureInput.value = APPS[state.app].hint;
+
+  setTimeout(function () {
+    run().catch(function (err) {
+      state.running = false;
+      runBtn.disabled = false;
+      runBtn.textContent = '开始拆解';
+      console.warn(err);
+    });
+  }, 700);
+})();
+</script>
+</body>
+</html>

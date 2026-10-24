@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-25",
+ "headline": "AI帮你拆解竞品App功能原理",
+ "summary_md": "**morluto/rea** 是一个 MCP 工具，能让你的 AI 代理（比如 Claude Code、Cursor）去分析 App、Electron 应用、.NET 程序甚至原生二进制文件，搞清楚某个功能到底是怎么实现的。你直接问代理：“Notes 里的搜索是怎么做的？给我看证据，然后帮我写一个类似的。” 它就会在本地运行分析，并给出证据链。\n\n最近它火得有点夸张，一天涨了上万星，从 README 看，项目支持多语言、有官网和案例展示，安装也简单，一句 `npx rea-agents setup` 就能接上各种代理。不过 star 数增长这么猛，真实性需要打个问号。\n\n如果做成产品，机会在于“低门槛的竞品功能拆解服务”。面向独立开发者，上传一个 App 包，AI 自动生成功能实现方式报告，附带证据和合规提示。这比单纯给逆向工程师用更广，也更容易收费。但逆向本身处于灰区，得把合规边界说清楚，别碰破解和盗版。",
+ "pick": {
+  "full_name": "morluto/rea",
+  "url": "https://github.com/morluto/rea",
+  "description": "Reverse engineer anything with agents, from app behavior down to native binaries.",
+  "license": "MIT",
+  "stars": 378031,
+  "daily_rate": 12606.1,
+  "category": "开发者工具",
+  "one_liner": "让AI代理帮你逆向分析App和二进制程序的工作原理",
+  "reason": "话题性和Wow感强，MIT许可干净，但受众偏窄、灰区风险明显；产品化需在合规与低门槛上做文章，适合做内容爆款，创业需谨慎。",
+  "content": 7.33,
+  "startup": 7.1,
+  "final": 7.44,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-25-morluto-rea",
+ "top": [
+  {
+   "full_name": "morluto/rea",
+   "url": "https://github.com/morluto/rea",
+   "one_liner": "让AI代理帮你逆向分析App和二进制程序的工作原理",
+   "reason": "话题性和Wow感强，MIT许可干净，但受众偏窄、灰区风险明显；产品化需在合规与低门槛上做文章，适合做内容爆款，创业需谨慎。",
+   "content": 7.33,
+   "startup": 7.1,
+   "final": 7.44,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/cadcraft",
+   "url": "https://github.com/storytold/cadcraft",
+   "one_liner": "纯 Rust 写的开源 AutoCAD 替代品，能打开和保存 DWG/DXF 图纸",
+   "reason": "话题性和演示效果都很强，开源替代 AutoCAD 的叙事容易传播；但背后有公司背景、项目极早期，产品化需在在线看图/协作上找切口。",
+   "content": 8.0,
+   "startup": 6.65,
+   "final": 7.37,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Nutlope/hallmark",
+   "url": "https://github.com/Nutlope/hallmark",
+   "one_liner": "让 AI 生成的网页彻底摆脱千篇一律的机器味",
+   "reason": "话题性强、视觉冲击大，很适合拿来做内容，但它是大厂出品的 skill，变现只能靠主题定制和审计服务，做独立产品空间偏窄。",
+   "content": 8.33,
+   "startup": 6.85,
+   "final": 6.97,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "ARahim3/DigUp",
+   "url": "https://github.com/ARahim3/DigUp",
+   "one_liner": "用一句话描述内容，就能搜到电脑里的图片、PDF、录音和视频片段",
+   "reason": "话题性强、演示效果好、痛点真实，但项目本身已是成熟跨平台应用，留给二次包装做差异化的空间较小，商业化需与系统级搜索竞争。",
+   "content": 8.67,
+   "startup": 6.45,
+   "final": 6.82,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "pollen-robotics/microduck",
+   "url": "https://github.com/pollen-robotics/microduck",
+   "one_liner": "一只会走路、打滚、捡东西、自己爬起来的小型双足机器鸭",
+   "reason": "话题性和惊喜感强，机器鸭视频易传播，但本质是硬件固件，变现路径窄，更适合做内容而非产品化。",
+   "content": 8.67,
+   "startup": 5.05,
+   "final": 6.78,
+   "category_penalty": 0
+  }
+ ]
+}
