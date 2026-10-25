@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>开源双胞胎 OpenTwin · 一键试用全世界软件的开源平替</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+  .compare{display:grid;grid-template-columns:1fr 1fr}
+  .compare.mode-left,.compare.mode-right{grid-template-columns:1fr}
+  .compare.mode-left #paneOpen,.compare.mode-right #paneOrig{display:none}
+  .pane{min-height:420px;display:flex;flex-direction:column;min-width:0}
+  #paneOrig{border-right:1px dashed #e2e8f0}
+  @media (max-width:767px){
+    .compare.mode-split{grid-template-columns:1fr}
+    #paneOrig{border-right:none;border-bottom:1px dashed #e2e8f0}
+    .pane{min-height:0}
+  }
+  .seg-btn{padding:.35rem .7rem;border-radius:.55rem;color:#64748b;font-weight:500;transition:.15s;font-size:.75rem;white-space:nowrap}
+  .seg-btn.active{background:#fff;color:#0f172a;box-shadow:0 1px 2px rgba(15,23,42,.12)}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:999px;background:#e2e8f0;outline:none;width:100%}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#059669;cursor:pointer;box-shadow:0 0 0 3px rgba(5,150,105,.15)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border:none;border-radius:50%;background:#059669;cursor:pointer}
+  [contenteditable]:focus{outline:2px solid #34d399;outline-offset:-2px;background:#ecfdf5}
+  .fade-in{animation:fade .28s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+<header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-slate-200/70">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-3">
+    <div class="flex items-center gap-2 font-bold">
+      <span class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white grid place-items-center text-sm">⇄</span>
+      <span>开源双胞胎</span>
+      <span class="hidden sm:inline text-[11px] font-normal text-slate-400">OpenTwin</span>
+    </div>
+    <nav class="ml-auto flex items-center gap-1.5 text-sm">
+      <a href="#lab" class="hidden sm:inline px-3 py-1.5 rounded-lg text-slate-600 hover:bg-slate-100">对照台</a>
+      <a href="#cases" class="hidden sm:inline px-3 py-1.5 rounded-lg text-slate-600 hover:bg-slate-100">使用场景</a>
+      <a href="#pricing" class="px-3 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800">加入候补名单</a>
+    </nav>
+  </div>
+</header>
+
+<section class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-6">
+  <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
+    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>基于 HeyPuter/everything · MIT 开源 · 概念演示
+  </div>
+  <h1 class="mt-4 text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
+    全世界软件的<span class="text-emerald-600">开源双胞胎</span><br class="hidden sm:block" />
+    左边看原版，右边直接免费用
+  </h1>
+  <p class="mt-4 text-slate-600 max-w-2xl text-sm sm:text-base leading-7">
+    Excel、Photoshop、Slack、Zoom 都有了 MIT 开源重制版。输入你正在付费的软件，立刻找到它的免费替代，并在同一屏里并排试用——不用注册、不用下载。
+  </p>
+
+  <div class="mt-6 max-w-2xl">
+    <div class="flex items-center gap-2 bg-white border border-slate-200 rounded-2xl p-2 shadow-sm focus-within:border-emerald-400 focus-within:ring-4 focus-within:ring-emerald-50">
+      <span class="pl-2 text-slate-400 select-none">🔍</span>
+      <input id="search" class="flex-1 min-w-0 bg-transparent outline-none text-sm sm:text-base py-2" placeholder="输入你在用的软件，比如 Excel" value="Excel" autocomplete="off" />
+      <button id="searchBtn" class="px-3 sm:px-4 py-2 rounded-xl bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 whitespace-nowrap">找平替</button>
+    </div>
+    <div class="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-slate-500">
+      <span>试试：</span>
+      <button class="quick px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-emerald-400 hover:text-emerald-600" data-q="Excel">Excel</button>
+      <button class="quick px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-emerald-400 hover:text-emerald-600" data-q="Slack">Slack</button>
+      <button class="quick px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-emerald-400 hover:text-emerald-600" data-q="Photoshop">Photoshop</button>
+      <button class="quick px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-emerald-400 hover:text-emerald-600" data-q="Zoom">Zoom</button>
+      <button class="quick px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-emerald-400 hover:text-emerald-600" data-q="PowerPoint">PowerPoint</button>
+      <button class="quick px-2 py-0.5 rounded-full bg-white border border-slate-200 hover:border-emerald-400 hover:text-emerald-600" data-q="Word">Word</button>
+    </div>
+  </div>
+
+  <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl">
+    <div class="bg-white border border-slate-200 rounded-xl px-3 py-2.5"><div class="text-lg font-bold">6</div><div class="text-[11px] text-slate-500">已上架可试用</div></div>
+    <div class="bg-white border border-slate-200 rounded-xl px-3 py-2.5"><div class="text-lg font-bold">9</div><div class="text-[11px] text-slate-500">分类索引</div></div>
+    <div class="bg-white border border-slate-200 rounded-xl px-3 py-2.5"><div class="text-lg font-bold">100%</div><div class="text-[11px] text-slate-500">MIT 开源</div></div>
+    <div class="bg-white border border-slate-200 rounded-xl px-3 py-2.5"><div class="text-lg font-bold text-emerald-600">¥0</div><div class="text-[11px] text-slate-500">永久免费</div></div>
+  </div>
+</section>
+
+<section id="lab" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 scroll-mt-16">
+  <div class="flex items-end justify-between flex-wrap gap-3 mb-3">
+    <div>
+      <h2 class="text-xl sm:text-2xl font-bold">平替对照台</h2>
+      <p class="text-sm text-slate-500 mt-1">左边是你要付费的原版，右边是 MIT 开源版的可交互界面（演示数据）</p>
+    </div>
+    <div class="inline-flex p-1 rounded-xl bg-slate-100" id="modeSeg">
+      <button class="seg-btn active" data-mode="split">并排对比</button>
+      <button class="seg-btn" data-mode="left">只看原版</button>
+      <button class="seg-btn" data-mode="right">只看开源版</button>
+    </div>
+  </div>
+
+  <div id="searchBanner" class="mb-3"></div>
+  <div id="catTabs" class="flex gap-2 flex-wrap mb-3"></div>
+  <div id="appGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-4"></div>
+
+  <div id="compare" class="compare mode-split bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <div id="paneOrig" class="pane"></div>
+    <div id="paneOpen" class="pane"></div>
+  </div>
+  <p class="text-[11px] text-slate-400 mt-2">＊ 左侧为原版软件的示意效果（非真实截图）；右侧为概念演示，所有操作与数据都只存在于你的浏览器本地。</p>
+</section>
+
+<section id="cases" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 scroll-mt-16">
+  <h2 class="text-xl sm:text-2xl font-bold">三个典型场景</h2>
+  <p class="text-sm text-slate-500 mt-1">他们不是技术团队，只是不想再为同一件事付第二遍钱。</p>
+  <div class="mt-5 grid md:grid-cols-3 gap-4">
+    <div class="bg-white border border-slate-200 rounded-2xl p-5">
+      <div class="text-2xl">💸</div>
+      <h3 class="mt-2 font-semibold">创业公司砍订阅费</h3>
+      <p class="mt-1.5 text-sm text-slate-600 leading-6">12 人小团队同时在缴 Excel、Slack、Zoom 的月费。在对照台逐个换掉，一年省下两三万，也不怕自动续费偷袭。</p>
+      <button data-try="spreadsheet" class="mt-3 text-sm text-emerald-700 font-medium hover:underline">试用 Spreadsheet →</button>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-2xl p-5">
+      <div class="text-2xl">🎨</div>
+      <h3 class="mt-2 font-semibold">设计同学临时改图</h3>
+      <p class="mt-1.5 text-sm text-slate-600 leading-6">只为裁一张图去装 4GB 的 Photoshop？打开网页版编辑器，拖两下滑块就出图，还能直接导出参数。</p>
+      <button data-try="editor" class="mt-3 text-sm text-emerald-700 font-medium hover:underline">试用 Image Editor →</button>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-2xl p-5">
+      <div class="text-2xl">🎓</div>
+      <h3 class="mt-2 font-semibold">学生与个人用户</h3>
+      <p class="mt-1.5 text-sm text-slate-600 leading-6">写论文要文档、做汇报要幻灯片、小组沟通要聊天工具——全部在线打开就能用，零安装、零订阅。</p>
+      <button data-try="teamchat" class="mt-3 text-sm text-emerald-700 font-medium hover:underline">试用 Teamchat →</button>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="max-w-6xl mx-auto px-4 sm:px-6 pb-14 scroll-mt-16">
+  <div class="rounded-3xl bg-slate-900 text-white p-6 sm:p-10">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold">定价：代码开源，我们只卖「省心」</h2>
+        <p class="mt-2 text-sm text-slate-300 max-w-xl leading-6">应用本体永远是 MIT 免费。我们只对「托管 + 团队共享 + 自动备份」收一点点钱——不付，也照样能用。</p>
+      </div>
+      <button class="waitlist px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-semibold text-sm">加入候补名单</button>
+    </div>
+
+    <div class="mt-6 grid sm:grid-cols-3 gap-3">
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+        <div class="text-xs text-slate-300">开源版</div>
+        <div class="mt-1 text-2xl font-bold">¥0</div>
+        <ul class="mt-3 space-y-1.5 text-[13px] text-slate-300">
+          <li>· 全部应用源码</li>
+          <li>· 本地 / 私有部署</li>
+          <li>· MIT 可商用</li>
+        </ul>
+        <a href="https://github.com/HeyPuter/everything" target="_blank" rel="noopener" class="mt-4 inline-block text-xs font-medium text-emerald-300 hover:underline">去看代码 ↗</a>
+      </div>
+      <div class="rounded-2xl bg-emerald-500/10 border border-emerald-400/40 p-4 relative">
+        <div class="absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full bg-emerald-400 text-slate-900 font-semibold">候补中</div>
+        <div class="text-xs text-emerald-200">托管版</div>
+        <div class="mt-1 text-2xl font-bold">¥29<span class="text-sm font-normal text-slate-300">/人/月</span></div>
+        <ul class="mt-3 space-y-1.5 text-[13px] text-slate-200">
+          <li>· 打开即用，免安装</li>
+          <li>· 团队共享与权限</li>
+          <li>· 自动备份与版本历史</li>
+        </ul>
+        <button class="waitlist mt-4 inline-block text-xs font-semibold text-emerald-300 hover:underline">加入候补名单 →</button>
+      </div>
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+        <div class="text-xs text-slate-300">迁移支持</div>
+        <div class="mt-1 text-2xl font-bold">¥199<span class="text-sm font-normal text-slate-300">/月</span></div>
+        <ul class="mt-3 space-y-1.5 text-[13px] text-slate-300">
+          <li>· 文件格式迁移协助</li>
+          <li>· 私有化部署指导</li>
+          <li>· 专属答疑通道</li>
+        </ul>
+        <button class="waitlist mt-4 inline-block text-xs font-medium text-emerald-300 hover:underline">了解详情 →</button>
+      </div>
+    </div>
+
+    <div class="mt-6 rounded-2xl bg-white/5 border border-white/10 p-4 sm:p-5">
+      <div class="flex items-center justify-between text-sm">
+        <span class="text-slate-200">你的团队规模</span>
+        <span><b id="teamNum" class="text-lg">12</b> 人</span>
+      </div>
+      <input id="teamSlider" type="range" min="1" max="100" value="12" class="mt-3" />
+      <div class="mt-4 grid grid-cols-3 gap-3 text-center">
+        <div>
+          <div class="text-[11px] text-slate-400">传统订阅年支出</div>
+          <div id="costOld" class="text-base sm:text-lg font-bold text-rose-300 mt-1">¥21,600</div>
+        </div>
+        <div>
+          <div class="text-[11px] text-slate-400">开源方案</div>
+          <div class="text-base sm:text-lg font-bold text-emerald-300 mt-1">¥0</div>
+        </div>
+        <div>
+          <div class="text-[11px] text-slate-400">每年省下</div>
+          <div id="costSave" class="text-base sm:text-lg font-bold text-white mt-1">¥21,600</div>
+        </div>
+      </div>
+      <div class="mt-2 text-[11px] text-slate-400">按每人每年 ¥1,800 的订阅费估算 · 演示数据</div>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 text-xs text-slate-500 leading-6">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="font-semibold text-slate-700">开源双胞胎 OpenTwin</span>
+      <span class="text-slate-400">·</span>
+      <span>把全世界的开源平替讲清楚，并让你当场试用</span>
+    </div>
+    <p class="mt-3">
+      概念演示，基于开源项目 <a href="https://github.com/HeyPuter/everything" class="text-emerald-700 hover:underline">HeyPuter/everything</a>（MIT License），非官方产品，数据均为演示数据
+    </p>
+  </div>
+</footer>
+
+<div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-6 z-50 px-4 py-2.5 rounded-xl bg-slate-900 text-white text-sm shadow-lg opacity-0 translate-y-4 transition-all duration-300 pointer-events-none"></div>
+
+<script>
+/* ================= 基础工具 ================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+let toastTimer = null;
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.remove('opacity-0', 'translate-y-4');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.add('opacity-0', 'translate-y-4'), 2600);
+}
+
+/* ================= 演示数据 ================= */
+const APPS = [
+  {id:'spreadsheet', open:'Spreadsheet', orig:'Microsoft Excel', alts:['Google Sheets','Apple Numbers','WPS 表格'],
+   cat:'办公', icon:'📊', brand:'#217346', price:'¥398/年', url:'https://spreadsheet.puter.com/', demo:'sheet',
+   blurb:'公式、函数、多工作表，打开就会用'},
+  {id:'documents', open:'Documents', orig:'Microsoft Word', alts:['Google Docs','Apple Pages'],
+   cat:'办公', icon:'📝', brand:'#2b579a', price:'¥398/年', url:'https://documents.puter.com/', demo:'doc',
+   blurb:'实时字数统计、段落排版、一键导出'},
+  {id:'presentation', open:'Presentation', orig:'Microsoft PowerPoint', alts:['Google Slides','Apple Keynote'],
+   cat:'办公', icon:'📽️', brand:'#d24726', price:'¥398/年', url:'https://presentation.puter.com/', demo:'slides',
+   blurb:'幻灯片、主题配色，开个会投屏够用'},
+  {id:'teamchat', open:'Teamchat', orig:'Slack', alts:['Microsoft Teams','Google Chat'],
+   cat:'协作', icon:'💬', brand:'#4a154b', price:'$8.75/人/月', url:'https://teamchat.puter.com/', demo:'chat',
+   blurb:'频道、消息、@提醒，团队沟通一个不少'},
+  {id:'meetings', open:'Meetings', orig:'Zoom', alts:['Google Meet','Microsoft Teams'],
+   cat:'协作', icon:'📹', brand:'#2d8cff', price:'$15.99/月', url:'https://meetings.puter.com/', demo:'meet',
+   blurb:'视频会议、屏幕共享，浏览器直接开会'},
+  {id:'editor', open:'Image Editor', orig:'Adobe Photoshop', alts:['Affinity Photo','GIMP','美图秀秀'],
+   cat:'创意', icon:'🎨', brand:'#31a8ff', price:'¥268/月', url:'https://github.com/HeyPuter/everything', demo:'filter',
+   blurb:'调色、滤镜、导出，网页里改图'}
+];
+
+const CATS = ['全部', '办公', '协作', '创意'];
+
+const state = { q:'Excel', cat:'全部', appId:'spreadsheet', mode:'split' };
+
+const SHEET = [
+  {n:'服务器托管', v:1200},
+  {n:'设计软件', v:2388},
+  {n:'办公套件', v:1560},
+  {n:'团队协作', v:840}
+];
+
+const CHAT_SEED = [
+  {n:'林悦', e:'🧑‍💻', t:'换到开源版之后，我们这季度的订阅费直接归零了 🎉'},
+  {n:'陈默', e:'🧑‍🎨', t:'设计那边用网页版编辑器，比装 4GB 的 Photoshop 快多了'},
+  {n:'你', e:'🙂', t:'那这周的预算表也换成 Spreadsheet 试试？'}
+];
+
+const MEET_PEOPLE = [
+  {n:'你', e:'🙂', g:'from-emerald-500 to-teal-600', self:true},
+  {n:'林悦', e:'🧑‍💻', g:'from-indigo-500 to-purple-600'},
+  {n:'陈默', e:'🧑‍🎨', g:'from-amber-500 to-orange-600'},
+  {n:'Sara', e:'👩‍💼', g:'from-sky-500 to-blue-600'}
+];
+
+const SLIDES = [
+  {t:'为什么我们在换开源软件', b:['订阅费占 IT 预算 38%','每个工具都能找到 MIT 替代','迁移成本几乎为零']},
+  {t:'迁移路线图', b:['第 1 周：表格 + 文档','第 2 周：团队沟通','第 3 周：设计与会议']},
+  {t:'一年能省下多少', b:['12 人团队约 ¥21,600/年','不涨价、不绑卡','数据留在自己手里']}
+];
+
+const THEMES = [
+  'linear-gradient(135deg,#065f46,#0d9488)',
+  'linear-gradient(135deg,#1e3a8a,#4f46e5)',
+  'linear-gradient(135deg,#7c2d12,#ea580c)',
+  'linear-gradient(135deg,#3b0764,#a21caf)'
+];
+
+/* ================= 右侧：各应用演示界面 ================= */
+const DEMOS = {};
+
+DEMOS.sheet = function(){
+  const head = '<tr class="text-[10px] text-slate-400">' +
+    '<th class="text-left font-normal pb-1 w-6">#</th>' +
+    '<th class="text-left font-normal pb-1">项目</th>' +
+    '<th class="text-right font-normal pb-1 w-20">月费</th></tr>';
+  const rows = SHEET.map(function(r, i){
+    return '<tr class="border-b border-slate-100">' +
+      '<td class="py-1 text-[10px] text-slate-400">' + (i + 1) + '</td>' +
+      '<td class="py-1"><div contenteditable="true" data-sheet="name" class="px-1.5 py-1 rounded text-xs text-slate-700 hover:bg-slate-50">' + escapeHtml(r.n) + '</div></td>' +
+      '<td class="py-1"><div contenteditable="true" data-sheet="val" class="px-1.5 py-1 rounded text-xs text-right font-semibold tabular-nums text-slate-800 hover:bg-slate-50">' + r.v + '</div></td>' +
+    '</tr>';
+  }).join('');
+
+  return '<div class="p-3 sm:p-4">' +
+    '<div class="flex items-center justify-between gap-2 mb-2">' +
+      '<span class="text-[11px] text-slate-500">2024 预算表 · 点数字可以直接改</span>' +
+      '<button id="sheetReset" class="text-[11px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600">重置</button>' +
+    '</div>' +
+    '<div class="overflow-x-auto">' +
+      '<table id="sheetTable" class="w-full text-xs border-collapse">' +
+        '<thead>' + head + '</thead>' +
+        '<tbody>' + rows + '</tbody>' +
+        '<tfoot>' +
+          '<tr><td></td><td class="pt-2 text-[11px] text-slate-500">传统订阅合计 / 月</td>' +
+            '<td class="pt-2 text-right text-sm font-bold text-rose-500 tabular-nums" id="sheetSum">¥0</td></tr>' +
+          '<tr><td></td><td class="text-[11px] text-emerald-700">开源双胞胎合计 / 月</td>' +
+            '<td class="text-right text-sm font-bold text-emerald-600 tabular-nums">¥0</td></tr>' +
+        '</tfoot>' +
+      '</table>' +
+    '</div>' +
+    '<div class="mt-3 rounded-lg bg-emerald-50 border border-emerald-100 px-2.5 py-2 text-[11px] text-emerald-800 leading-5">' +
+      '这里改完不会保存；真实版在 <a class="underline" href="https://spreadsheet.puter.com/" target="_blank" rel="noopener">spreadsheet.puter.com</a>' +
+    '</div>' +
+  '</div>';
+};
+
+DEMOS.doc = function(){
+  return '<div class="p-3 sm:p-4">' +
+    '<div class="flex items-center flex-wrap gap-1.5 mb-2">' +
+      '<button data-doc="bold" class="text-[11px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 font-bold">B</button>' +
+      '<button data-doc="italic" class="text-[11px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 italic">I</button>' +
+      '<button data-doc="underline" class="text-[11px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 underline">U</button>' +
+      '<span class="ml-auto text-[11px] text-slate-500">字数 <b id="docCount" class="text-slate-800">0</b></span>' +
+    '</div>' +
+    '<div id="docBody" contenteditable="true" class="rounded-lg border border-slate-200 p-3 text-xs leading-6 text-slate-700 min-h-[210px]">' +
+      '<div class="text-sm font-bold text-slate-900 mb-1.5">季度迁移计划</div>' +
+      '<div>我们计划在本季度把团队正在付费的表格、文档与沟通工具，逐步切换为 MIT 开源方案。</div>' +
+      '<div class="mt-2">第一步先迁移预算表，第二步把聊天记录导入 Teamchat，第三步是例会。</div>' +
+      '<div class="mt-2 text-slate-400">（这段文字可以直接编辑，右上角字数会实时变化）</div>' +
+    '</div>' +
+  '</div>';
+};
+
+DEMOS.slides = function(){
+  return '<div class="p-3 sm:p-4">' +
+    '<div id="slideStage" class="rounded-xl overflow-hidden aspect-[16/10] flex flex-col justify-center px-4 sm:px-6 text-white" style="background:' + THEMES[0] + '">' +
+      '<div class="text-[10px] uppercase tracking-[0.2em] opacity-70">季度回顾</div>' +
+      '<div id="slideTitle" class="mt-1 text-sm sm:text-base font-bold leading-snug">' + SLIDES[0].t + '</div>' +
+      '<ul id="slideList" class="mt-2 space-y-1 text-[11px] opacity-90">' + SLIDES[0].b.map(function(x){ return '<li>· ' + x + '</li>'; }).join('') + '</ul>' +
+    '</div>' +
+    '<div class="mt-2 flex items-center gap-2">' +
+      '<button id="slidePrev" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-[11px]">←</button>' +
+      '<span id="slideLabel" class="text-[11px] text-slate-500">1 / 3</span>' +
+      '<button id="slideNext" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-[11px]">→</button>' +
+      '<div id="themeDots" class="ml-auto flex gap-1.5">' +
+        THEMES.map(function(t, i){
+          return '<button data-theme="' + i + '" class="w-4 h-4 rounded-full border border-slate-300" style="background:' + t + '"></button>';
+        }).join('') +
+      '</div>' +
+    '</div>' +
+  '</div>';
+};
+
+function chatRow(m){
+  return '<div class="flex gap-2">' +
+    '<div class="w-6 h-6 rounded-lg bg-slate-100 grid place-items-center text-[11px] shrink-0">' + m.e + '</div>' +
+    '<div class="min-w-0">' +
+      '<div class="text-[10px] text-slate-400 leading-4">' + escapeHtml(m.n) + '</div>' +
+      '<div class="text-[11px] text-slate-700 leading-5 break-words">' + escapeHtml(m.t) + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+DEMOS.chat = function(){
+  const channels = [['# general', true], ['# 财务', false], ['# 设计', false], ['# 随机', false]];
+  return '<div class="flex min-h-[300px]">' +
+    '<div class="w-20 sm:w-24 shrink-0 border-r border-slate-100 bg-slate-50 p-2 space-y-1">' +
+      channels.map(function(c){
+        const on = c[1];
+        return '<div class="text-[10px] px-1.5 py-1 rounded-md ' + (on ? 'bg-emerald-100 text-emerald-800 font-semibold' : 'text-slate-500') + '">' + c[0] + '</div>';
+      }).join('') +
+    '</div>' +
+    '<div class="flex-1 min-w-0 flex flex-col">' +
+      '<div class="px-2.5 py-1.5 border-b border-slate-100 flex items-center gap-1.5">' +
+        '<span class="text-[11px] font-semibold text-slate-800"># general</span>' +
+        '<span class="text-[10px] text-slate-400">4 位成员</span>' +
+      '</div>' +
+      '<div id="chatList" class="flex-1 p-2.5 space-y-2.5 overflow-y-auto max-h-[220px]">' +
+        CHAT_SEED.map(chatRow).join('') +
+      '</div>' +
+      '<div class="p-2 border-t border-slate-100 flex gap-1.5">' +
+        '<input id="chatInput" class="flex-1 min-w-0 text-[11px] px-2 py-1.5 rounded-lg border border-slate-200 outline-none focus:border-emerald-400" placeholder="发消息（回车发送）" />' +
+        '<button id="chatSend" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white text-[11px] hover:bg-emerald-700">发送</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+};
+
+DEMOS.meet = function(){
+  const tiles = MEET_PEOPLE.map(function(p, i){
+    return '<div class="relative rounded-lg overflow-hidden aspect-[4/3] bg-gradient-to-br ' + p.g + ' grid place-items-center">' +
+      '<div class="text-2xl">' + p.e + '</div>' +
+      '<div class="absolute bottom-1 left-1.5 text-[9px] text-white/90 bg-black/25 px-1.5 py-0.5 rounded">' + escapeHtml(p.n) + '</div>' +
+      (p.self ? '<div id="meetSelfBadge" class="absolute top-1 right-1.5 text-[9px] text-white/90 bg-black/25 px-1.5 py-0.5 rounded">🎤 开</div>' : '') +
+    '</div>';
+  }).join('');
+
+  return '<div class="p-2.5 sm:p-3">' +
+    '<div class="flex items-center justify-between mb-2">' +
+      '<span class="text-[11px] text-slate-500">周会 · 4 人</span>' +
+      '<span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 border border-rose-100">● 进行中 12:04</span>' +
+    '</div>' +
+    '<div id="meetGrid" class="grid grid-cols-2 gap-2">' + tiles + '</div>' +
+    '<div class="mt-3 flex items-center justify-center gap-1.5 flex-wrap">' +
+      '<button id="meetMic" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-slate-700">🎤 静音</button>' +
+      '<button id="meetCam" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-slate-700">📷 关摄像头</button>' +
+      '<button id="meetShare" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-slate-700">🖥 共享</button>' +
+      '<button id="meetLeave" class="px-2.5 py-1.5 rounded-lg bg-rose-600 text-white text-[11px] hover:bg-rose-700">离开</button>' +
+    '</div>' +
+  '</div>';
+};
+
+DEMOS.filter = function(){
+  return '<div class="p-2.5 sm:p-3">' +
+    '<div class="rounded-lg overflow-hidden aspect-[4/3] bg-slate-100">' +
+      '<div id="fxStage" class="w-full h-full grid place-items-center text-5xl" ' +
+        'style="background:radial-gradient(circle at 30% 30%,#34d399,#0ea5e9 46%,#7c3aed 100%); filter:brightness(100%) saturate(100%) blur(0px); transition:filter .15s">' +
+        '🌄' +
+      '</div>' +
+    '</div>' +
+    '<div class="mt-2.5 space-y-2">' +
+      '<label class="block"><span class="text-[10px] text-slate-500">亮度</span>' +
+        '<input id="fxBright" type="range" min="50" max="150" value="100" class="mt-1" /></label>' +
+      '<label class="block"><span class="text-[10px] text-slate-500">饱和度</span>' +
+        '<input id="fxSat" type="range" min="0" max="200" value="100" class="mt-1" /></label>' +
+      '<label class="block"><span class="text-[10px] text-slate-500">模糊</span>' +
+        '<input id="fxBlur" type="range" min="0" max="8" value="0" class="mt-1" /></label>' +
+    '</div>' +
+    '<div class="mt-2.5 flex items-center gap-1.5 flex-wrap">' +
+      '<button data-fx="raw" class="text-[10px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200">原图</button>' +
+      '<button data-fx="bw" class="text-[10px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200">黑白</button>' +
+      '<button data-fx="warm" class="text-[10px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200">复古</button>' +
+      '<button data-fx="punch" class="text-[10px] px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200">高对比</button>' +
+      '<button id="fxExport" class="ml-auto text-[10px] px-2.5 py-1 rounded-md bg-emerald-600 text-white hover:bg-emerald-700">导出</button>' +
+    '</div>' +
+  '</div>';
+};
+
+/* ================= 事件绑定（每次渲染后重新挂载） ================= */
+const WIRES = {};
+
+WIRES.sheet = function(){
+  const table = $('#sheetTable');
+  if(!table) return;
+  const sumEl = $('#sheetSum');
+
+  const recalc = function(){
+    let sum = 0;
+    $$('[data-sheet="val"]', table).forEach(function(cell){
+      const n = parseInt(String(cell.textContent).replace(/[^\d-]/g, ''), 10);
+      if(!isNaN(n)) sum += n;
+    });
+    if(sumEl) sumEl.textContent = '¥' + sum.toLocaleString('zh-CN');
+  };
+
+  table.addEventListener('input', recalc);
+
+  const reset = $('#sheetReset');
+  if(reset){
+    reset.onclick = function(){
+      $$('[data-sheet="val"]', table).forEach(function(cell, i){ cell.textContent = SHEET[i].v; });
+      $$('[data-sheet="name"]', table).forEach(function(cell, i){ cell.textContent = SHEET[i].n; });
+      recalc();
+      toast('已重置为初始演示数据');
+    };
+  }
+  recalc();
+};
+
+WIRES.doc = function(){
+  const body = $('#docBody');
+  const count = $('#docCount');
+  if(!body) return;
+
+  const recount = function(){
+    const txt = String(body.textContent || '').replace(/\s/g, '');
+    if(count) count.textContent = txt.length;
+  };
+
+  body.addEventListener('input', recount);
+  $$('[data-doc]').forEach(function(btn){
+    btn.onclick = function(){
+      try {
+        body.focus();
+        document.execCommand(btn.dataset.doc, false, null);
+      } catch(e) {
+        toast('当前浏览器不支持该格式操作');
+      }
+      recount();
+    };
+  });
+  recount();
+};
+
+WIRES.slides = function(){
+  const stage = $('#slideStage');
+  const title = $('#slideTitle');
+  const list = $('#slideList');
+  const label = $('#slideLabel');
+  if(!stage || !title) return;
+
+  let idx = 0;
+  let theme = 0;
+
+  const draw = function(){
+    const s = SLIDES[idx];
+    title.textContent = s.t;
+    list.innerHTML = s.b.map(function(x){ return '<li>· ' + escapeHtml(x) + '</li>'; }).join('');
+    label.textContent = (idx + 1) + ' / ' + SLIDES.length;
+    stage.style.background = THEMES[theme];
+  };
+
+  const prev = $('#slidePrev');
+  const next = $('#slideNext');
+  if(prev) prev.onclick = function(){ idx = (idx - 1 + SLIDES.length) % SLIDES.length; draw(); };
+  if(next) next.onclick = function(){ idx = (idx + 1) % SLIDES.length; draw(); };
+
+  $$('#themeDots [data-theme]').forEach(function(dot){
+    dot.onclick = function(){ theme = Number(dot.dataset.theme) || 0; draw(); };
+  });
+
+  draw();
+};
+
+WIRES.chat = function(){
+  const input = $('#chatInput');
+  const send = $('#chatSend');
+  const listEl = $('#chatList');
+  if(!input || !send || !listEl) return;
+
+  const push = function(){
+    const text = input.value.trim();
+    if(!text){ toast('先写点什么再发送吧'); return; }
+    const node = document.createElement('div');
+    node.innerHTML = chatRow({n:'你', e:'🙂', t:text});
+    listEl.appendChild(node);
+    listEl.scrollTop = listEl.scrollHeight;
+    input.value = '';
+    toast('已发送（演示：消息不会离开本页面）');
+  };
+
+  send.onclick = push;
+  input.addEventListener('keydown', function(ev){
+    if(ev.key === 'Enter'){ ev.preventDefault(); push(); }
+  });
+};
+
+WIRES.meet = function(){
+  const mic = $('#meetMic');
+  const cam = $('#meetCam');
+  const share = $('#meetShare');
+  const leave = $('#meetLeave');
+  const badge = $('#meetSelfBadge');
+  const grid = $('#meetGrid');
+
+  let micOn = true;
+  let camOn = true;
+
+  if(mic){
+    mic.onclick = function(){
+      micOn = !micOn;
+      mic.textContent = micOn ? '🎤 静音' : '🔇 已静音';
+      mic.classList.toggle('bg-rose-100', !micOn);
+      mic.classList.toggle('text-rose-700', !micOn);
+      if(badge) badge.textContent = micOn ? '🎤 开' : '🔇 静音';
+      toast(micOn ? '麦克风已打开（演示）' : '麦克风已静音（演示）');
+    };
+  }
+
+  if(cam){
+    cam.onclick = function(){
+      camOn = !camOn;
+      cam.textContent = camOn ? '📷 关摄像头' : '📷 开摄像头';
+      cam.classList.toggle('bg-rose-100', !camOn);
+      cam.classList.toggle('text-rose-700', !camOn);
+      if(grid){
+        const selfTile = $('.aspect-\\[4\\/3\\]', grid);
+        if(selfTile) selfTile.style.filter = camOn ? 'none' : 'grayscale(1) brightness(.5)';
+      }
+      toast(camOn ? '摄像头已打开（演示）' : '摄像头已关闭（演示）');
+    };
+  }
+
+  if(share){
+    share.onclick = function(){ toast('屏幕共享在演示里不可用 🙂'); };
+  }
+  if(leave){
+    leave.onclick = function(){ toast('已离开会议（演示数据，不影响任何真实会议）'); };
+  }
+};
+
+WIRES.filter = function(){
+  const stage = $('#fxStage');
+  const bright = $('#fxBright');
+  const sat = $('#fxSat');
+  const blur = $('#fxBlur');
+  if(!stage || !bright || !sat || !blur) return;
+
+  const apply = function(){
+    stage.style.filter = 'brightness(' + bright.value + '%) saturate(' + sat.value + '%) blur(' + blur.value + 'px)';
+  };
+
+  [bright, sat, blur].forEach(function(el){ el.addEventListener('input', apply); });
+
+  const presets = {
+    raw:   {b:100, s:100, u:0},
+    bw:    {b:105, s:0,   u:0},
+    warm:  {b:112, s:135, u:0},
+    punch: {b:120, s:170, u:0}
+  };
+
+  $$('[data-fx]').forEach(function(btn){
+    btn.onclick = function(){
+      const p = presets[btn.dataset.fx];
+      if(!p) return;
+      bright.value = p.b; sat.value = p.s; blur.value = p.u;
+      apply();
+      toast('已应用「' + btn.textContent + '」预设');
+    };
+  });
+
+  const exp = $('#fxExport');
+  if(exp){
+    exp.onclick = function(){
+      toast('导出成功（演示：brightness ' + bright.value + '% / saturate ' + sat.value + '% / blur ' + blur.value + 'px）');
+    };
+  }
+
+  apply();
+};
+
+/* ================= 列表与搜索渲染 ================= */
+function matchText(a){
+  return [a.open, a.orig, a.blurb].concat(a.alts).join(' ').toLowerCase();
+}
+
+function queryMatches(){
+  const q = state.q.trim().toLowerCase();
+  if(!q) return [];
+  return APPS.filter(function(a){ return matchText(a).indexOf(q) !== -1; });
+}
+
+function renderCats(){
+  const box = $('#catTabs');
+  box.innerHTML = CATS.map(function(c){
+    const on = state.cat === c;
+    return '<button data-cat="' + c + '" class="px-3 py-1.5 rounded-full text-xs font-medium border transition ' +
+      (on ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300') +
+      '">' + c + '</button>';
+  }).join('');
+  $$('#catTabs [data-cat]').forEach(function(b){
+    b.onclick = function(){
+      state.cat = b.dataset.cat;
+      renderCats();
+      renderGrid();
+    };
+  });
+}
+
+function renderBanner(matches){
+  const el = $('#searchBanner');
+  const q = state.q.trim();
+
+  if(!q){
+    el.innerHTML = '<div class="text-xs text-slate-500">输入软件名，或直接点下面的卡片挑选平替。</div>';
+    return;
+  }
+
+  if(matches.length){
+    el.innerHTML = '<div class="flex items-center gap-2 flex-wrap rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs sm:text-sm text-emerald-800">' +
+      '<span>✅ 找到 ' + matches.length + ' 个「' + escapeHtml(q) + '」的开源平替：<b>' +
+      matches.map(function(m){ return escapeHtml(m.open); }).join(' / ') + '</b></span>' +
+      '<button id="bannerTry" class="ml-auto px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs hover:bg-emerald-700 whitespace-nowrap">立即并排试用 →</button>' +
+    '</div>';
+    const bt = $('#bannerTry');
+    if(bt) bt.onclick = function(){ selectApp(matches[0].id, true); };
+  } else {
+    el.innerHTML = '<div class="rounded-xl bg-amber-50 border border-amber-200 px-3 py-2 text-xs sm:text-sm text-amber-800 leading-5">' +
+      '还没有收录「' + escapeHtml(q) + '」的平替。试试 Excel、Word、Slack、Photoshop、Zoom、PowerPoint。' +
+    '</div>';
+  }
+}
+
+function renderGrid(){
+  const matches = queryMatches();
+  const hitSet = {};
+  matches.forEach(function(a){ hitSet[a.id] = true; });
+  const hasQ = Boolean(state.q.trim());
+
+  const list = APPS.filter(function(a){
+    return state.cat === '全部' || a.cat === state.cat;
+  });
+
+  $('#appGrid').innerHTML = list.map(function(a){
+    const sel = a.id === state.appId;
+    const hit = hasQ && hitSet[a.id];
+    let cls = 'relative text-left rounded-2xl border p-3 transition ';
+    if(sel) cls += 'bg-emerald-50 border-emerald-400 ring-2 ring-emerald-200';
+    else if(hit) cls += 'bg-amber-50 border-amber-300';
+    else cls += 'bg-white border-slate-200 hover:border-slate-300';
+
+    return '<button data-app="' + a.id + '" class="' + cls + '" title="' + escapeHtml(a.blurb) + '">' +
+      '<div class="text-xl leading-none">' + a.icon + '</div>' +
+      '<div class="mt-1.5 text-sm font-semibold truncate">' + escapeHtml(a.open) + '</div>' +
+      '<div class="text-[11px] text-slate-500 truncate">替代 ' + escapeHtml(a.orig.replace('Microsoft ', '')) + '</div>' +
+      (sel ? '<span class="absolute top-2 right-2 text-[10px] text-emerald-600">●</span>' : '') +
+    '</button>';
+  }).join('');
+
+  $$('#appGrid [data-app]').forEach(function(b){
+    b.onclick = function(){ selectApp(b.dataset.app, false); };
+  });
+
+  renderBanner(matches);
+}
+
+/* ================= 左侧：原版软件示意 ================= */
+function origHTML(app){
+  const lines = [92, 78, 86, 64, 90, 72, 56].map(function(w){
+    return '<div class="h-2.5 rounded bg-slate-400/50" style="width:' + w + '%"></div>';
+  }).join('');
+
+  const blocks = [0, 1, 2, 3, 4, 5].map(function(){
+    return '<div class="h-9 rounded" style="background:' + app.brand + '22"></div>';
+  }).join('');
+
+  return '<div class="flex items-center gap-1.5 px-3 py-2 bg-white border-b border-slate-200">' +
+      '<span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>' +
+      '<span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>' +
+      '<span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>' +
+      '<span class="ml-2 text-[11px] font-medium truncate" style="color:' + app.brand + '">' + escapeHtml(app.orig) + '</span>' +
+      '<span class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-slate-900 text-white whitespace-nowrap">' + escapeHtml(app.price) + '</span>' +
+    '</div>' +
+    '<div class="relative flex-1 p-4 overflow-hidden bg-slate-50">' +
+      '<div class="space-y-2.5 opacity-70">' + lines + '</div>' +
+      '<div class="mt-3 grid grid-cols-3 gap-2 opacity-70">' + blocks + '</div>' +
+      '<div class="absolute inset-0 grid place-items-center bg-white/60 p-4">' +
+        '<div class="text-center">' +
+          '<div class="text-2xl">🔒</div>' +
+          '<div class="mt-2 text-sm font-semibold text-slate-800">需要订阅才能编辑</div>' +
+          '<div class="mt-1 text-xs text-slate-500">' + escapeHtml(app.price) + ' · 绑定信用卡 · 按人头计费</div>' +
+          '<button id="origSubscribe" class="mt-3 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs hover:bg-slate-800">开通订阅</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="px-3 py-2 bg-white border-t border-slate-100 text-[10px] text-slate-400">左侧为原版软件示意效果（非真实截图）</div>';
+}
+
+/* ================= 右侧：开源版容器 ================= */
+function openHTML(app){
+  const demo = DEMOS[app.demo] ? DEMOS[app.demo](app) : '<div class="p-4 text-xs text-slate-500">演示界面准备中</div>';
+  return '<div class="flex items-center gap-2 px-3 py-2 bg-white border-b border-slate-200">' +
+      '<span class="text-sm leading-none">' + app.icon + '</span>' +
+      '<span class="text-[11px] font-semibold text-slate-800 truncate">' + escapeHtml(app.open) + '</span>' +
+      '<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 whitespace-nowrap">MIT · ¥0</span>' +
+      '<a href="' + app.url + '" target="_blank" rel="noopener" class="ml-auto text-[11px] text-emerald-700 hover:underline whitespace-nowrap">真实版 ↗</a>' +
+    '</div>' +
+    '<div class="flex-1 min-h-0 overflow-y-auto bg-white">' + demo + '</div>' +
+    '<div class="px-3 py-2 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-400">演示数据 · 所有操作只发生在你的浏览器里</div>';
+}
+
+function renderCompare(){
+  const app = APPS.filter(function(a){ return a.id === state.appId; })[0] || APPS[0];
+
+  $('#paneOrig').innerHTML = origHTML(app);
+
+  const paneOpen = $('#paneOpen');
+  paneOpen.innerHTML = openHTML(app);
+  paneOpen.classList.remove('fade-in');
+  void paneOpen.offsetWidth;
+  paneOpen.classList.add('fade-in');
+
+  const sub = $('#origSubscribe');
+  if(sub){
+    sub.onclick = function(){ toast('这是原版软件的示意，不会真的开通订阅 😉'); };
+  }
+
+  const wire = WIRES[app.demo];
+  if(wire) wire();
+}
+
+function selectApp(id, scroll){
+  state.appId = id;
+  renderGrid();
+  renderCompare();
+  if(scroll){
+    const el = $('#compare');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+/* ================= 顶部搜索与模式切换 ================= */
+function bindSearch(){
+  const input = $('#search');
+  const btn = $('#searchBtn');
+
+  input.addEventListener('input', function(){
+    state.q = input.value;
+    renderGrid();
+  });
+
+  input.addEventListener('keydown', function(ev){
+    if(ev.key === 'Enter'){
+      ev.preventDefault();
+      const m = queryMatches();
+      if(m.length) selectApp(m[0].id, true);
+      else toast('暂时没有找到这个软件的平替');
+    }
+  });
+
+  btn.onclick = function(){
+    const m = queryMatches();
+    if(m.length) selectApp(m[0].id, true);
+    else toast('暂时没有找到这个软件的平替，试试 Excel / Slack / Photoshop');
+  };
+
+  $$('.quick').forEach(function(b){
+    b.onclick = function(){
+      state.q = b.dataset.q;
+      input.value = b.dataset.q;
+      renderGrid();
+      const m = queryMatches();
+      if(m.length) selectApp(m[0].id, false);
+    };
+  });
+}
+
+function bindMode(){
+  $$('#modeSeg [data-mode]').forEach(function(b){
+    b.onclick = function(){
+      state.mode = b.dataset.mode;
+      $$('#modeSeg [data-mode]').forEach(function(x){
+        x.classList.toggle('active', x === b);
+      });
+      const c = $('#compare');
+      c.className = 'compare mode-' + state.mode + ' bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden';
+    };
+  });
+}
+
+function bindCases(){
+  $$('[data-try]').forEach(function(b){
+    b.onclick = function(){
+      const id = b.dataset.try;
+      const app = APPS.filter(function(a){ return a.id === id; })[0];
+      if(!app) return;
+      state.cat = '全部';
+      state.q = app.orig;
+      const input = $('#search');
+      if(input) input.value = app.orig;
+      renderCats();
+      selectApp(id, true);
+    };
+  });
+}
+
+function bindWaitlist(){
+  $$('.waitlist').forEach(function(b){
+    b.onclick = function(){
+      toast('已加入候补名单 ✅（演示：不会提交任何数据）');
+    };
+  });
+}
+
+function bindPricing(){
+  const slider = $('#teamSlider');
+  if(!slider) return;
+  const num = $('#teamNum');
+  const old = $('#costOld');
+  const save = $('#costSave');
+
+  const update = function(){
+    const n = Number(slider.value) || 1;
+    const total = n * 1800;
+    const txt = '¥' + total.toLocaleString('zh-CN');
+    num.textContent = n;
+    old.textContent = txt;
+    save.textContent = txt;
+  };
+
+  slider.addEventListener('input', update);
+  update();
+}
+
+/* ================= 初始化 ================= */
+document.addEventListener('DOMContentLoaded', function(){
+  renderCats();
+  renderGrid();
+  renderCompare();
+  bindSearch();
+  bindMode();
+  bindCases();
+  bindWaitlist();
+  bindPricing();
+});
+</script>
+</body>
+</html>

@@ -41,6 +41,12 @@
    "full_name": "morluto/rea",
    "category": "开发者工具",
    "final": 7.44
+  },
+  {
+   "date": "2026-10-26",
+   "full_name": "HeyPuter/everything",
+   "category": "效率工具",
+   "final": 7.42
   }
  ],
  "top": {
@@ -78,7 +84,12 @@
   "storytold/cadcraft": "2026-10-25",
   "Nutlope/hallmark": "2026-10-25",
   "ARahim3/DigUp": "2026-10-25",
-  "pollen-robotics/microduck": "2026-10-25"
+  "pollen-robotics/microduck": "2026-10-25",
+  "HeyPuter/everything": "2026-10-26",
+  "rddmwmddr/android-ad-cleaner": "2026-10-26",
+  "designfuchen/word-atlas": "2026-10-26",
+  "seedds/nxnative": "2026-10-26",
+  "TauricResearch/TradingAgents": "2026-10-26"
  },
  "scores": {
   "storytold/artcraft": {
@@ -2840,6 +2851,324 @@
      "依赖LLM API，持续运行有模型调用成本"
     ],
     "reason": "痛点明确、包装空间大、MIT许可友好，开源即引擎售卖雏形；但强依赖用户行业KnowHow，商业化靠代做站或SaaS订阅，需自证工程质量。"
+   }
+  },
+  "TauricResearch/TradingAgents": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "让多个AI分析师像真实交易团队一样开会讨论，给出买卖建议",
+    "target_user": "散户投资者、量化爱好者、金融内容创作者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "把多智能体投研讨论做成网页版：输入股票代码，实时生成多角色辩论与结论报告",
+    "demo_idea": "输入一只热门股票，展示分析师、看空派、交易员、风控几方你一言我一语辩论并给出结论",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是论文配套的研究框架，README明确仅供研究用途",
+     "交易建议合规风险高，容易滑向荐股",
+     "金融类AI产品需承担误导用户的责任"
+    ],
+    "reason": "多智能体金融投研话题性强、演示效果好、许可证安全，包装空间足；但产品合规风险与付费意愿需验证，适合做成内容与投研工具而非荐股产品。"
+   }
+  },
+  "routerhubSI/glm-5.3-abliterated": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "提供无审核大模型的API中转服务",
+    "target_user": "需要绕过内容审核的开发者、灰色应用开发者",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 4,
+     "wow": 3,
+     "pain": 3,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 2
+    },
+    "product_idea": "无审核模型API的聚合充值中转，按token计费",
+    "demo_idea": "网页里对比同一敏感提示，普通模型拒答而无审核版回答",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是带推广链接的jailbreak提示词清单，仓库内容多为营销导流",
+     "核心业务是无审核API中转，涉及绕过模型安全机制，合规风险高",
+     "README以推广注册链接为主，不是真正开源产品",
+     "创建仅1天，star增长可疑，可能是刷星营销"
+    ],
+    "reason": "营销导流仓库，靠jailbreak提示词吸引流量，卖无审核API。合规和平台风险高，不适合做内容或产品。"
+   }
+  },
+  "mirkobrombin/raven": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让 Linux 直接安装并运行 Windows 软件，无需虚拟机",
+    "target_user": "Linux 桌面用户、游戏玩家、需要特定 Windows 软件的专业用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 8,
+     "monetization": 6,
+     "license_safety": 3,
+     "demoability": 7
+    },
+    "product_idea": "打造一键安装版 Linux 上的 Windows 兼容层，图形化管理各应用的独立环境与备份回滚",
+    "demo_idea": "网页动画对比：传统虚拟机卡顿启动 vs Raven 直接运行 Notepad++ 秒开并编辑文件",
+    "attack_tool": false,
+    "red_flags": [
+     "许可证为 NOASSERTION，来源与授权不明，商用风险高",
+     "项目创建仅1天却已有373星，数据异常需警惕",
+     "与 Wine 生态正面竞争，技术壁垒高、维护成本极大",
+     "依赖 Skia/DXVK 等组件，构建安装门槛极高"
+    ],
+    "reason": "对标 Wine 的 Windows 兼容层，痛点真实、话题性强，包装成易用产品空间大，但许可证不明和极早期阶段是显著风险。"
+   }
+  },
+  "Jakeschincariol/day-trader-skill": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "11个Claude技能，帮你选股择时、模拟交易结果再下手",
+    "target_user": "业余日内交易者、Claude深度用户、股票社群内容创作者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "做个网页版交易陪练：先模拟盘推演胜率，再一键下单",
+    "demo_idea": "选一只股票，看它把当日行情重放一万次，实时显示止盈止损先后概率",
+    "attack_tool": false,
+    "red_flags": [
+     "金融建议合规风险，极易被用户当投资信号",
+     "5天1539星增长异常，有刷星或营销炒作嫌疑",
+     "数据源依赖免费公开接口，稳定性和延迟无保障",
+     "README含大量具体收益示例，有过度承诺倾向"
+    ],
+    "reason": "话题热，易演示，制作门槛低，MIT可商用；但合规与数据依赖是硬伤，适合做内容，做交易产品需谨慎。"
+   }
+  },
+  "mizorewww/gdirect": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "在终端里浏览、下载、上传和挂载 Google Drive 的极客工具",
+    "target_user": "需要管理 Google Drive 的开发者、运维人员，以及身处网络受限地区的用户",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 4,
+     "wow": 6,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 4,
+     "demoability": 5
+    },
+    "product_idea": "做成带图形界面的跨平台 Google Drive 客户端，内置加速与断点续传，让普通用户也能稳定访问。",
+    "demo_idea": "网页模拟终端 TUI 界面，演示用多连接下载大文件的速度对比和断点续传效果。",
+    "attack_tool": false,
+    "red_flags": [
+     "主要卖点是通过 IP 扫描并伪造 SNI 来绕过网络封锁，合法性存疑",
+     "需要用户自建 Google Cloud OAuth 客户端，使用门槛高",
+     "GPL-2.0 许可证对商业封装限制较大",
+     "项目过于小众，目前只在开发者圈层传播",
+     "依赖第三方网络环境，难以标准化为商业服务"
+    ],
+    "reason": "技术实现出色，TUI 体验好，但核心价值依赖绕过网络限制，合规风险高，商业化路径不清晰；更适合做技术内容，而不是做产品。"
+   }
+  },
+  "songjianyang/xss-audit": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "安全",
+    "one_liner": "给前端代码做XSS安全体检的AI审计工具",
+    "target_user": "前端团队负责人、安全工程师、做漏洞赏金的独立研究者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "上传代码仓库或粘贴组件代码，一键生成带修复建议的XSS审计报告",
+    "demo_idea": "左侧贴一段含dangerouslySetInnerHTML和svg注入的React代码，右侧实时高亮风险点并生成修复diff",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是一份Agent技能提示词(SKILL.md)，不是可执行的扫描引擎，Star增长异常可疑",
+     "仅静态模式匹配，误报高，交付价值依赖调用它的模型能力",
+     "作者个人声誉背书，产品化护城河薄"
+    ],
+    "reason": "防守型静态审计、MIT许可、有真实赏金战绩做话题，但形态是提示词技能而非工具，包装成SaaS审计平台有空间，商业化偏弱。"
+   }
+  },
+  "rddmwmddr/android-ad-cleaner": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "插上电脑点几下，关掉国产安卓手机系统里的广告和营销推送",
+    "target_user": "被国产安卓系统广告困扰的普通手机用户、数码爱好者、给家人朋友代劳的技术型用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "面向普通用户的一键去广告桌面客户端，按机型自动适配，提供备份与一键还原",
+    "demo_idea": "前后对比：分屏展示设置前后的应用商店首页和通知栏，广告位、热搜、营销推送消失",
+    "attack_tool": false,
+    "red_flags": [
+     "仅靠 adb 连接，需要开发者模式和 USB 调试，普通用户门槛不低",
+     "机型与系统版本强耦合，长尾适配成本极高，且系统更新会让脚本失效",
+     "需求虽真实但几乎没有人愿意付费，商业化路径很弱",
+     "诞生仅 1 天即 700+ star，增长异常，需警惕刷星"
+    ],
+    "reason": "痛点真实、话题性强、许可证宽松，但强依赖 adb 与机型适配、无付费意愿，适合做爆款内容而非创业项目。"
+   }
+  },
+  "DenisSergeevitch/ex-ussr-kinship-research": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "帮 AI 代理严谨地查前苏联家谱档案的开源技能包",
+    "target_user": "做前苏联/东欧家族史研究的海外家谱爱好者与专业谱系学家",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 8,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "做个家谱证据工作台：上传档案扫描件，AI 自动建人物档案、核验证据链并出可追溯报告",
+    "demo_idea": "网页上传两张扫描件，实时展示 AI 识别同名、拆分人物、标注证据等级并生成关系链",
+    "attack_tool": false,
+    "red_flags": [
+     "创建仅 1 天、星数标题，增长数据可疑",
+     "本质是提示词/技能包加几个小脚本，非独立产品",
+     "依赖 AI 代理运行时，纯前端难复现核心证据审核能力",
+     "目标人群窄，集中在前苏联家谱细分领域"
+    ],
+    "reason": "细分痛点真实、许可证宽松、包装空间大，适合做内容；但技术含量偏薄、受众窄、星数存疑，产品化需重建。"
+   }
+  },
+  "routerhubSI/uncensored-ai-api": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "一个 API 密钥调用所有主流大模型的聚合网关",
+    "target_user": "需要多模型切换的开发者、AI 应用团队",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 4,
+     "wow": 3,
+     "pain": 4,
+     "packaging_room": 3,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 3
+    },
+    "product_idea": "多模型 API 聚合网关，统一计费和密钥管理，按量收费",
+    "demo_idea": "网页里同一个输入分别调用 GPT、Claude、Gemini，展示统一返回",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是商业 API 转售服务，GitHub 仓库只是营销落地页",
+     "主打 uncensored/abliterated 变体，属灰色地带，可能违反上游厂商条款",
+     "创建仅 1 天即 360 星，增长异常，疑似买量",
+     "无实际开源代码，只是资源引流页"
+    ],
+    "reason": "这是商业 API 转售的营销仓库，非真实开源项目；无技术资产可包装，uncensored 定位有合规风险，不建议做内容或产品。"
+   }
+  },
+  "designfuchen/word-atlas": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "教育学习",
+    "one_liner": "7298个雅思词，每个配一幅原创插画和英美发音的背词网站",
+    "target_user": "备考雅思/托福的中国学生与英语自学者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 9,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 5,
+     "demoability": 9
+    },
+    "product_idea": "雅思背词App：插画记忆+FSRS复习+词汇星图，卖订阅和词库授权",
+    "demo_idea": "网页随机抽词，展示插画+双例句+发音，再切到WebGL星图点亮一颗星",
+    "attack_tool": false,
+    "red_flags": [
+     "许可证为NOASSERTION且媒体资源CC BY 4.0，商用条款需核实",
+     "项目仅创建1天即345星，数据异常需警惕",
+     "作者个人项目，插画/录音AI生成，后续维护与版权存疑",
+     "本人已免费开源并提供完整词库，第三方难做差异化包装"
+    ],
+    "reason": "内容体验和演示性极强，插画加星图很有传播力；但已免费开源、变现空间窄，包装余地有限，适合做内容而非产品。"
+   }
+  },
+  "wangrongding/tv-fresh": {
+   "date": "2026-10-26",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "免root给小米电视去广告、换开源桌面、装应用的AI助手技能包",
+    "target_user": "有小米电视、讨厌开机广告、愿意折腾的技术型用户和小白家庭用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 8,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "把电视改造流程做成手机或网页向导，扫码连ADB，自动去广告换桌面，全程可逆",
+    "demo_idea": "网页模拟小米电视界面：点一下，广告和瀑布流消失、Projectivy桌面出现、HOME键回到它，还能一键回滚",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是教程+脚本集合，无核心代码，产品化需自研ADB自动化",
+     "依赖具体机型和固件版本，通用性受限",
+     "面向国内智能电视，政策与厂商封堵风险",
+     "变现路径不清晰，用户多为一次性改造"
+    ],
+    "reason": "痛点真实、可逆设计贴心、话题性强；但交付物是攻略和agent技能而非软件，需二次包装为向导产品，商业化偏弱。"
    }
   }
  }

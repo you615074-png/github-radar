@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-26",
+ "headline": "全世界商业软件都要有开源平替了？",
+ "summary_md": "**它是什么**：`HeyPuter/everything` 是 HeyPuter 团队发起的一个“重造全世界软件”的开源项目，想把 Excel、Word、Slack、Zoom、Photoshop 等商业软件，用 MIT 协议从头做出免费开源版，所有应用都放在同一个仓库里维护。\n\n**为什么最近火**：README 里列出的对照表覆盖面很宽，从 Office、协作、创意工具到工程、财务、小游戏都有，每个应用都给了 `Try it` 在线体验链接，上手门槛低。加上“全部 MIT、全部免费”这个说法本身很适合传播，每天新增约 300 星。\n\n**产品机会在哪里**：单个应用成熟度还不好判断，直接在里面挑一个做商业产品风险不小。更适合的机会是往“入口”方向做：比如做一个“商业软件开源平替”导航站，按原软件分类索引（Excel 的平替、PS 的平替……），每个条目给在线试用、GitHub 源码、成熟度测评和迁移笔记。目标不是再造软件，而是帮预算敏感的人快速找到可上手的替代品。相当于做“替代品版 Product Hunt”。",
+ "pick": {
+  "full_name": "HeyPuter/everything",
+  "url": "https://github.com/HeyPuter/everything",
+  "description": "We're rebuilding and open-sourcing the world’s software from scratch.",
+  "license": "MIT",
+  "stars": 3871,
+  "daily_rate": 322.6,
+  "category": "效率工具",
+  "one_liner": "开源重造全世界商业软件，Excel、Photoshop、Slack 全都有免费版",
+  "reason": "话题性与易懂度极强、MIT 安全，作为内容素材极佳；但为团队级基建合集，商业化与个人包装空间有限，适合做测评与导航而非独立产品。",
+  "content": 8.33,
+  "startup": 6.6,
+  "final": 7.42,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-26-heyputer-everything",
+ "top": [
+  {
+   "full_name": "HeyPuter/everything",
+   "url": "https://github.com/HeyPuter/everything",
+   "one_liner": "开源重造全世界商业软件，Excel、Photoshop、Slack 全都有免费版",
+   "reason": "话题性与易懂度极强、MIT 安全，作为内容素材极佳；但为团队级基建合集，商业化与个人包装空间有限，适合做测评与导航而非独立产品。",
+   "content": 8.33,
+   "startup": 6.6,
+   "final": 7.42,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "rddmwmddr/android-ad-cleaner",
+   "url": "https://github.com/rddmwmddr/android-ad-cleaner",
+   "one_liner": "插上电脑点几下，关掉国产安卓手机系统里的广告和营销推送",
+   "reason": "痛点真实、话题性强、许可证宽松，但强依赖 adb 与机型适配、无付费意愿，适合做爆款内容而非创业项目。",
+   "content": 8.0,
+   "startup": 6.65,
+   "final": 7.03,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "designfuchen/word-atlas",
+   "url": "https://github.com/designfuchen/word-atlas",
+   "one_liner": "7298个雅思词，每个配一幅原创插画和英美发音的背词网站",
+   "reason": "内容体验和演示性极强，插画加星图很有传播力；但已免费开源、变现空间窄，包装余地有限，适合做内容而非产品。",
+   "content": 7.67,
+   "startup": 5.35,
+   "final": 6.88,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "seedds/nxnative",
+   "url": "https://github.com/seedds/nxnative",
+   "one_liner": "把 Switch 游戏转成能在 iPhone 上原生运行的 IPA",
+   "reason": "技术上非常惊艳，传播潜力强，但项目本质上是绕过 DRM 的破解工具，并且需要用户自带受版权保护的游戏，商业化路径几乎不存在，合规风险也高。可以拿来做内容，不宜投入产品化。",
+   "content": 8.67,
+   "startup": 5.9,
+   "final": 6.86,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "TauricResearch/TradingAgents",
+   "url": "https://github.com/TauricResearch/TradingAgents",
+   "one_liner": "让多个AI分析师像真实交易团队一样开会讨论，给出买卖建议",
+   "reason": "多智能体金融投研话题性强、演示效果好、许可证安全，包装空间足；但产品合规风险与付费意愿需验证，适合做成内容与投研工具而非荐股产品。",
+   "content": 8.33,
+   "startup": 6.85,
+   "final": 6.84,
+   "category_penalty": 0.8
+  }
+ ]
+}
