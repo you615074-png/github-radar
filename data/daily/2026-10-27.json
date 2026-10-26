@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-27",
+ "headline": "Agent-Reach：给AI装眼睛读小红书B站",
+ "summary_md": "Agent-Reach（仓库：Panniantong/Agent-Reach）是一个开源命令行工具，目标是让 AI 助手能读到那些它自己上不去的互联网内容：需要登录才能搜的小红书笔记、B站字幕、X 账号动态、V2EX 帖子，以及雪球行情。从 README 看，它把各平台背后的抓取工具装好、测好，Agent 一条命令就能用，支持 B 站、V2EX、GitHub、YouTube、小红书、雪球等十几个渠道，默认渠道装好即用，可选渠道说一句“帮我加上”就会自动安装。\n\n它最近火的原因很直接：Agent 产品今年集中爆发，但“能写代码”和“能读真实互联网”是两回事。通用搜索覆盖不到中文社区和登录墙后的内容，而 Agent-Reach 正好补上这块，加上 MIT 协议和零 API 费用的口号，传播很快，每天新增约 723 星。\n\n如果做成产品，机会在“托管版数据网关”：统一 API 让 Agent 读取各平台内容，按调用量或渠道订阅收费。对做垂直 Agent 的团队来说，自己维护十几套抓取逻辑不划算，有人把脏活包掉就有付费空间。但要注意，它的核心是合规爬虫封装，商业化会被平台条款压着走，产品化得先想清楚登录态和封禁怎么绕。",
+ "pick": {
+  "full_name": "Panniantong/Agent-Reach",
+  "url": "https://github.com/Panniantong/Agent-Reach",
+  "description": "Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero API fees.",
+  "license": "MIT",
+  "stars": 103483,
+  "daily_rate": 723,
+  "category": "AI基础设施",
+  "one_liner": "给AI助手装上眼睛，一条命令读取小红书、B站、X等平台的真实内容",
+  "reason": "痛点真实、话题热，但核心是合规爬虫封装，产品化需绕开登录与封禁难题，商业化受平台条款压制。",
+  "content": 8.0,
+  "startup": 7.2,
+  "final": 7.56,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-27-panniantong-agent-reach",
+ "top": [
+  {
+   "full_name": "Panniantong/Agent-Reach",
+   "url": "https://github.com/Panniantong/Agent-Reach",
+   "one_liner": "给AI助手装上眼睛，一条命令读取小红书、B站、X等平台的真实内容",
+   "reason": "痛点真实、话题热，但核心是合规爬虫封装，产品化需绕开登录与封禁难题，商业化受平台条款压制。",
+   "content": 8.0,
+   "startup": 7.2,
+   "final": 7.56,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/lightcraft",
+   "url": "https://github.com/storytold/lightcraft",
+   "one_liner": "一个免费开源、你的照片留在本地的专业 RAW 修图软件",
+   "reason": "它是一款开源纯 Rust 的 Lightroom 替代品，免订阅、本地运行、支持 MCP，话题性和好感度都很高；但项目本身已经接近成熟商业产品，创业包装空间有限，更适合做内容传播。",
+   "content": 8.0,
+   "startup": 6.65,
+   "final": 7.29,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/filmcraft",
+   "url": "https://github.com/storytold/filmcraft",
+   "one_liner": "用 Rust 从零写的开源专业非线性视频剪辑软件，支持网页端",
+   "reason": "技术含量高、话题性强，Apache 许可友好；但已是商业团队成熟产品，个人包装成产品的空间和商业化难度都受限。",
+   "content": 7.67,
+   "startup": 7.1,
+   "final": 7.24,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "ludovic111/horizon",
+   "url": "https://github.com/ludovic111/horizon",
+   "one_liner": "用 Rust 重写的《我的世界》，可以直接打开原版存档，还更快",
+   "reason": "话题性和惊喜感极强，技术含量高、演示直观；但法律风险大、付费点弱、原版已有成熟渠道，更适合做内容而非创业。",
+   "content": 8.67,
+   "startup": 5.85,
+   "final": 7.19,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "alchaincyf/huashu-design",
+   "url": "https://github.com/alchaincyf/huashu-design",
+   "one_liner": "在AI助手里说一句话，就能拿到可交付的网页、原型或PPT设计",
+   "reason": "话题性强且star增长迅速，痛点真实，MIT协议友好；但它是依赖外部agent的skill包，产品化需自己搭建生成UI，付费意愿有限。",
+   "content": 8.33,
+   "startup": 7.65,
+   "final": 7.08,
+   "category_penalty": 0.8
+  }
+ ]
+}

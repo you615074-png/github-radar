@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReachGate · 给你的 Agent 装上眼睛</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { color-scheme: light; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .5rem .9rem; border-radius: 9999px;
+    border: 1px solid #e2e8f0; background: #fff;
+    font-size: .875rem; color: #475569; cursor: pointer;
+    transition: all .18s ease; white-space: nowrap;
+  }
+  .chip:hover { border-color: #c7d2fe; color: #4338ca; transform: translateY(-1px); }
+  .chip-active { background: #0f172a; color: #fff; border-color: #0f172a; }
+  .chip-active:hover { color: #fff; border-color: #0f172a; }
+
+  .tab {
+    padding: .45rem .85rem; border-radius: 9999px;
+    border: 1px solid #e2e8f0; background: #fff;
+    font-size: .75rem; color: #475569; cursor: pointer; transition: all .15s ease;
+  }
+  .tab:hover { border-color: #c7d2fe; color: #4338ca; }
+  .tab-active { background: #0f172a; color: #fff; border-color: #0f172a; }
+  .tab-active:hover { color: #fff; }
+
+  .result-card {
+    border-left: 3px solid #6366f1;
+    border-radius: .75rem;
+    background: #fff;
+    border-top: 1px solid #f1f5f9;
+    border-right: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    padding: .9rem 1rem;
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .result-card:hover { box-shadow: 0 8px 24px -12px rgba(15, 23, 42, .25); transform: translateY(-1px); }
+
+  .shake { animation: shake .38s ease; }
+  @keyframes shake { 20% { transform: translateX(-5px); } 60% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+
+  .step-row { animation: fadeIn .25s ease both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+
+  .fade-up { animation: fadeUp .35s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .spinner {
+    display: inline-block; width: 12px; height: 12px; flex: 0 0 auto;
+    border: 2px solid rgba(255,255,255,.35); border-top-color: #fff;
+    border-radius: 50%; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }
+  @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+<header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <div class="flex items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-slate-900 text-lg">👁️</span>
+      <div class="leading-tight">
+        <div class="text-sm font-semibold tracking-wide">ReachGate</div>
+        <div class="text-[11px] text-slate-400">Agent 数据网关</div>
+      </div>
+    </div>
+    <nav class="hidden items-center gap-6 text-sm text-slate-500 sm:flex">
+      <a href="#demo" class="transition hover:text-slate-900">在线体验</a>
+      <a href="#usecases" class="transition hover:text-slate-900">使用场景</a>
+      <a href="#pricing" class="transition hover:text-slate-900">定价</a>
+    </nav>
+    <a href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noopener"
+       class="rounded-full border border-slate-200 px-3 py-1.5 text-xs text-slate-600 transition hover:border-slate-300 hover:text-slate-900">GitHub ↗</a>
+  </div>
+</header>
+
+<section class="mx-auto max-w-6xl px-4 pb-8 pt-12 text-center sm:pt-16">
+  <span class="inline-flex items-center gap-1.5 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs text-indigo-600">
+    🔌 由 MIT 开源项目 Agent-Reach 驱动 · 演示数据
+  </span>
+  <h1 class="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+    给你的 Agent 装上<span class="text-indigo-600">眼睛</span>
+  </h1>
+  <p class="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-slate-500 sm:text-base">
+    一条命令，读取小红书、B站、X、Reddit、V2EX 的正文与评论，返回干净的结构化 JSON。
+    不用申请平台 API，也不用为每一次调用付平台费。
+  </p>
+  <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-[11px] text-slate-500">
+    <span class="rounded-full bg-white px-3 py-1 ring-1 ring-slate-200">13 个渠道</span>
+    <span class="rounded-full bg-white px-3 py-1 ring-1 ring-slate-200">登录态复用</span>
+    <span class="rounded-full bg-white px-3 py-1 ring-1 ring-slate-200">视频字幕 / 语音转文字</span>
+    <span class="rounded-full bg-white px-3 py-1 ring-1 ring-slate-200">结构化输出</span>
+  </div>
+</section>
+
+<section id="demo" class="mx-auto max-w-6xl px-4 pb-16">
+  <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <h2 class="text-sm font-semibold text-slate-700">1 · 选一个渠道</h2>
+      <span class="text-[11px] text-slate-400">演示数据 · 不会真的发起抓取</span>
+    </div>
+    <div id="channelRow" class="mt-3 flex flex-wrap gap-2"></div>
+
+    <h2 class="mt-7 text-sm font-semibold text-slate-700">2 · 输入关键词</h2>
+    <div class="mt-3 flex flex-col gap-2 sm:flex-row">
+      <input id="kwInput" type="text" value="露营装备" autocomplete="off"
+             class="w-full flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-50"
+             placeholder="例如：露营装备 / AI Agent / 咖啡机">
+      <button id="runBtn" type="button"
+              class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400">
+        让 Agent 去抓 →
+      </button>
+    </div>
+    <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-400">
+      <span>试试：</span>
+      <div id="quickTags" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <div id="stage" class="mt-6"></div>
+  </div>
+</section>
+
+<section id="usecases" class="mx-auto max-w-6xl px-4 pb-16">
+  <h2 class="text-center text-2xl font-semibold tracking-tight">三种最典型的用法</h2>
+  <p class="mt-2 text-center text-sm text-slate-500">来自开发者与内容团队最常提的三个诉求。</p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:shadow-md">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-rose-50 text-xl">🗂️</div>
+      <h3 class="mt-4 text-base font-semibold">内容运营 · 关键词日报</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-500">
+        每天把竞品关键词下的最新笔记和评论区拉一遍，自动生成选题池与差评清单，不再靠人工刷。
+      </p>
+      <pre class="mt-4 overflow-x-auto rounded-lg bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-200"><code>agent-reach xiaohongshu search "露营装备"</code></pre>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:shadow-md">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-sky-50 text-xl">🤖</div>
+      <h3 class="mt-4 text-base font-semibold">Agent 产品 · 中文真实语料</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-500">
+        研究类、问答类 Agent 终于能回答「大家实际在怎么讨论 X」，而不是复述百科词条。
+      </p>
+      <pre class="mt-4 overflow-x-auto rounded-lg bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-200"><code>agent-reach bilibili search "大模型"</code></pre>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:shadow-md">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-xl">🧑‍💻</div>
+      <h3 class="mt-4 text-base font-semibold">开发者 · 一条命令替代五个爬虫</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-500">
+        不用注册五个开发者账号，不用自己维护代理、登录态和反爬更新，按链接自动选渠道。
+      </p>
+      <pre class="mt-4 overflow-x-auto rounded-lg bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-200"><code>agent-reach read https://www.v2ex.com/t/123</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="mx-auto max-w-6xl px-4 pb-16">
+  <h2 class="text-center text-2xl font-semibold tracking-tight">按渠道订阅，不按「席位」收费</h2>
+  <p class="mt-2 text-center text-sm text-slate-500">默认渠道装好即用；需要登录态的渠道单独开启，用多少付多少。</p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="text-xs font-medium text-slate-400">Starter</div>
+      <div class="mt-2 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold">¥0</span><span class="text-sm text-slate-400">/ 月</span>
+      </div>
+      <p class="mt-2 text-sm text-slate-500">适合个人开发者试水。</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>1,000 次调用 / 月</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>默认渠道：GitHub / V2EX / B站 / YouTube / Web</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>社区支持</li>
+      </ul>
+    </div>
+
+    <div class="relative rounded-2xl border-2 border-slate-900 bg-white p-6 shadow-lg">
+      <span class="absolute -top-3 left-6 rounded-full bg-slate-900 px-2.5 py-1 text-[11px] text-white">推荐</span>
+      <div class="text-xs font-medium text-slate-400">Growth</div>
+      <div class="mt-2 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold">¥299</span><span class="text-sm text-slate-400">/ 月</span>
+      </div>
+      <p class="mt-2 text-sm text-slate-500">适合内容团队与 Agent 产品团队。</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>50,000 次调用 / 月</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>全部渠道：+ 小红书 / X / Reddit / 雪球 / BOSS</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>会话池并发 3、Webhook 推送</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>结构化字段与 JSON 导出</li>
+      </ul>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="text-xs font-medium text-slate-400">Scale</div>
+      <div class="mt-2 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold">定制</span>
+      </div>
+      <p class="mt-2 text-sm text-slate-500">适合规模化数据管道。</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>专享 IP 与会话池</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>SLA 99.9% + 审计日志</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>私有化部署与渠道定制</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-8 rounded-3xl bg-slate-900 px-6 py-10 text-center text-white">
+    <h3 class="text-xl font-semibold">加入候补名单</h3>
+    <p class="mt-2 text-sm text-slate-300">公测排队中，先到先得。演示环境不会提交任何数据。</p>
+    <div class="mx-auto mt-5 flex max-w-xl flex-col gap-2 sm:flex-row">
+      <input id="waitEmail" type="email" value="you@team.com" autocomplete="off"
+             class="w-full flex-1 rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white placeholder-slate-400 outline-none transition focus:border-white/40 focus:ring-4 focus:ring-white/10"
+             placeholder="你的邮箱">
+      <button id="waitBtn" type="button"
+              class="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-slate-300">
+        加入候补
+      </button>
+    </div>
+    <p id="waitMsg" class="mt-3 hidden text-xs text-emerald-300"></p>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200 bg-white py-8">
+  <div class="mx-auto max-w-6xl px-4 text-center text-xs leading-relaxed text-slate-400">
+    <p>ReachGate · 概念演示，基于开源项目
+      <a href="https://github.com/Panniantong/Agent-Reach" class="text-slate-500 underline decoration-slate-300 underline-offset-2 transition hover:text-slate-800">Panniantong/Agent-Reach</a>
+      （MIT License），非官方产品，数据均为演示数据</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var CHANNELS = {
+    xiaohongshu: {
+      id: 'xiaohongshu',
+      name: '小红书',
+      icon: '📕',
+      color: '#e11d48',
+      blank: '只返回 SEO 聚合页与榜单，笔记正文与评论都拿不到。',
+      steps: [
+        '唤醒专用浏览器会话',
+        '复用已授权的小红书登录态',
+        '按关键词检索笔记',
+        '展开正文、点赞与评论',
+        '清洗为结构化 JSON 字段'
+      ],
+      posts: [
+        {
+          title: '{kw}｜我把踩过的 6 个坑做成了一张表',
+          author: '@阿哲在路上',
+          meta: '赞 3,204 · 收藏 5,881 · 评论 214',
+          excerpt: '先给结论：预算 800 以内完全不必上顶配。这张表是我这三个月实测的价格、重量和翻车原因，直接抄作业就行。',
+          comments: [
+            { u: '@小鹿不迷路', t: '求那张表！尤其想知道 500 档怎么选', l: '312' },
+            { u: '@Capybara', t: '博主买的是哪家？我上周那单已经退了', l: '87' },
+            { u: '@{kw}重度用户', t: '同款用了半年没翻车，补充一条：千万别买套装', l: '54' }
+          ]
+        },
+        {
+          title: '关于{kw}，说点得罪人的大实话',
+          author: '@不吃素的兔子',
+          meta: '赞 1,876 · 收藏 2,203 · 评论 486',
+          excerpt: '这行水太深。同一条供应链，贴不同牌子能差三倍价。我按出厂地和代工厂整理了一份对照表，看完少花冤枉钱。',
+          comments: [
+            { u: '@momo', t: '能不能出个新手版清单呀，字太多了😭', l: '201' },
+            { u: '@夜航船', t: '第三条我不认同，我实测差别挺明显的', l: '168' },
+            { u: '@十七', t: '看完退了，省下 600，谢谢博主', l: '95' }
+          ]
+        },
+        {
+          title: '{kw}平价替代清单（附价格对照）',
+          author: '@省钱研究所',
+          meta: '赞 948 · 收藏 3,120 · 评论 97',
+          excerpt: '整理了 12 个平价替代，全部实际购买验证过。最便宜的只要 1/3 价格，缺点是售后基本靠运气。',
+          comments: [
+            { u: '@半糖去冰', t: '第 7 个链接失效了，求更新', l: '42' },
+            { u: '@Kevin_', t: '已下单，到货回来汇报', l: '29' }
+          ]
+        }
+      ]
+    },
+
+    bilibili: {
+      id: 'bilibili',
+      name: 'B站',
+      icon: '📺',
+      color: '#0ea5e9',
+      blank: '搜不到视频里的字幕与口播内容，只能看到标题和简介。',
+      steps: [
+        '解析视频页与播放地址',
+        '拉取字幕 / 语音转文字',
+        '按关键词检索相关视频',
+        '提取置顶与高赞评论',
+        '清洗为结构化 JSON 字段'
+      ],
+      posts: [
+        {
+          title: '【硬核实测】{kw}横评：2000 元预算怎么花最值',
+          author: '@硬核测评室',
+          meta: '播放 42.1 万 · 弹幕 3,204 · 时长 18:24',
+          excerpt: '字幕已提取（12,842 字）。结论段落在 14:30 —— 同价位里只有两款通过了跌落测试，其中一款售后极差。',
+          comments: [
+            { u: '@路过的骑士', t: '05:12 那段的数据是不是写反了？', l: '1,204' },
+            { u: '@一只柯基', t: '字幕提取太顶了，直接丢给 AI 总结', l: '386' },
+            { u: '@nobody', t: '看了三遍，最后买了 UP 说不推荐的那个😂', l: '77' }
+          ]
+        },
+        {
+          title: '{kw}新手避坑指南（最新版）',
+          author: '@老王说装备',
+          meta: '播放 11.8 万 · 弹幕 642 · 时长 09:51',
+          excerpt: '字幕已提取。UP 主列出的 5 个避坑点里，第 3 点和置顶评论的说法互相矛盾，值得单独核对。',
+          comments: [
+            { u: '@山顶洞人', t: '第 3 点真的别信，我踩过这个坑', l: '210' }
+          ]
+        },
+        {
+          title: '花 500 块搞定{kw}？我试了',
+          author: '@穷玩实验室',
+          meta: '播放 6.4 万 · 弹幕 388 · 时长 07:12',
+          excerpt: '语音已转文字（Whisper）。全程无广告，结尾有翻车画面，评论区吵成了两派。',
+          comments: [
+            { u: '@躺平的猫', t: '结尾笑死，太真实了', l: '88' },
+            { u: '@小满', t: '500 那个链接还有吗', l: '36' }
+          ]
+        }
+      ]
+    },
+
+    x: {
+      id: 'x',
+      name: 'X',
+      icon: '𝕏',
+      color: '#0f172a',
+      blank: '未登录访问只能看到零散结果，推文串与回复基本抓不到。',
+      steps: [
+        '加载 X 登录会话',
+        '检索推文与线程',
+        '展开回复与引用',
+        '去重、按热度排序',
+        '清洗为结构化 JSON 字段'
+      ],
+      posts: [
+        {
+          title: 'Thread: 我们如何把 {kw} 的成本从 $40 砍到 $2',
+          author: '@buildwithjia',
+          meta: '转发 2.1k · 喜欢 8.4k',
+          excerpt: '1/ 问题：每次调用都在重复抓同一批页面。2/ 解法：本地缓存 + 渠道级限流。3/ 真实数字在最后一条……',
+          comments: [
+            { u: '@dev_null', t: '第 3 点的数字有出处吗？想引用一下', l: '96' },
+            { u: '@agentmax', t: '缓存这招我们也用了，命中率大概 40%', l: '48' }
+          ]
+        },
+        {
+          title: '{kw} 现在最大的瓶颈不是模型，是数据入口',
+          author: '@panniantong',
+          meta: '转发 486 · 喜欢 1,923',
+          excerpt: 'Agent 能写代码，却读不到登录墙后面的真实讨论。这是今年最被低估的一类基础设施缺口。',
+          comments: [
+            { u: '@agentmax', t: '完全同意，我们前后接了三家代理都不稳定', l: '142' }
+          ]
+        },
+        {
+          title: '把 {kw} 相关讨论全爬下来做 RAG，效果比官方文档好',
+          author: '@rag_hana',
+          meta: '转发 312 · 喜欢 2,057',
+          excerpt: '1,200 条真实用户反馈 vs 官方 FAQ，问答准确率 71% → 89%。清洗管道下周开源。',
+          comments: [
+            { u: '@nlp_daily', t: '清洗管道开源吗？想直接抄', l: '65' },
+            { u: '@lin', t: '89% 是怎么评估的，人工打分？', l: '33' }
+          ]
+        }
+      ]
+    },
+
+    reddit: {
+      id: 'reddit',
+      name: 'Reddit',
+      icon: '👽',
+      color: '#f97316',
+      blank: '公开搜索只给标题摘要，正文折叠、评论层层收起。',
+      steps: [
+        '加载 Reddit 会话',
+        '在相关版块内检索',
+        '拉取正文与全部楼层',
+        '按 upvote 排序',
+        '清洗为结构化 JSON 字段'
+      ],
+      posts: [
+        {
+          title: 'Anyone actually tried {kw}? Honest review inside',
+          author: 'u/datalurk',
+          meta: '1.4k upvotes · 236 comments',
+          excerpt: 'I ran it for 3 weeks before buying anything. The top comment completely changed my mind — details below.',
+          comments: [
+            { u: 'u/thriftking', t: 'The "cheap" option costs more long-term. Ask me how I know.', l: '512' },
+            { u: 'u/skeptical_dev', t: 'Source for the 30% claim? No link in the post.', l: '188' }
+          ]
+        },
+        {
+          title: '{kw} — what nobody tells beginners',
+          author: 'u/nightowl_88',
+          meta: '862 upvotes · 141 comments',
+          excerpt: '5 things I wish I knew before spending money. #3 is the reason most people quit in the first month.',
+          comments: [
+            { u: 'u/plainjane', t: '#3 saved me $200, thanks for writing this up.', l: '94' }
+          ]
+        },
+        {
+          title: 'Weekly {kw} thread — post your setups',
+          author: 'u/modteam',
+          meta: '430 upvotes · 902 comments',
+          excerpt: 'Share what works, what broke, and what you regret. Sort by new for the freshest takes.',
+          comments: [
+            { u: 'u/builderguy', t: 'Mine broke in a week, avoid the bundle kit.', l: '77' },
+            { u: 'u/quietstorm', t: 'Two years in, still going strong.', l: '61' }
+          ]
+        }
+      ]
+    },
+
+    v2ex: {
+      id: 'v2ex',
+      name: 'V2EX',
+      icon: '🅥',
+      color: '#059669',
+      blank: '中文技术社区内容在通用搜索里几乎没有收录。',
+      steps: [
+        '打开 V2EX 主题页',
+        '抓取楼主正文与楼层',
+        '拉取回复者与时间线',
+        '按楼层排序去重',
+        '清洗为结构化 JSON 字段'
+      ],
+      posts: [
+        {
+          title: '有没有人在生产环境用过 {kw}？想听点真话',
+          author: '@Livid_fan',
+          meta: '86 回复 · 2,104 次点击',
+          excerpt: '试用了一周，文档写得很漂亮但坑不少。想听听有没有人真的上过线，以及后来怎么解决的。',
+          comments: [
+            { u: '@est', t: '我们上了，最大的坑是并发限制，见第 12 楼', l: '33' },
+            { u: '@shuai', t: '别用默认配置，其他还好', l: '18' }
+          ]
+        },
+        {
+          title: '{kw} 相关的开源自荐，顺便求个 code review',
+          author: '@panniantong',
+          meta: '42 回复 · 886 次点击',
+          excerpt: '做了个 CLI，把几个常用平台的数据抓取封装成一条命令，欢迎拍砖，也欢迎提想要的新渠道。',
+          comments: [
+            { u: '@v2exer', t: '已 star，希望支持小宇宙播客', l: '21' }
+          ]
+        },
+        {
+          title: '深圳 / {kw} 方向，最近行情怎么样？',
+          author: '@bluefrog',
+          meta: '63 回复 · 1,522 次点击',
+          excerpt: '想跳槽，但听说这个方向今年在收缩。有内部的朋友说说真实情况吗，感谢。',
+          comments: [
+            { u: '@anon', t: '确实在收，但细分领域还有坑位', l: '27' }
+          ]
+        }
+      ]
+    }
+  };
+
+  var state = {
+    channel: 'xiaohongshu',
+    kw: '露营装备',
+    running: false,
+    tab: 'notes',
+    posts: null
+  };
+
+  function $(id) { return document.getElementById(id); }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function fill(s, kw) {
+    return String(s).split('{kw}').join(kw);
+  }
+
+  function hl(text, kw) {
+    var t = esc(text);
+    var k = esc(kw);
+    if (!k) return t;
+    return t.split(k).join('<span style="background:#fef3c7;border-radius:3px;padding:0 2px;">' + k + '</span>');
+  }
+
+  function buildPosts(ch, kw) {
+    return ch.posts.map(function (p) {
+      return {
+        title: fill(p.title, kw),
+        author: fill(p.author, kw),
+        meta: p.meta,
+        excerpt: fill(p.excerpt, kw),
+        comments: p.comments.map(function (c) {
+          return { u: fill(c.u, kw), t: fill(c.t, kw), l: c.l };
+        })
+      };
+    });
+  }
+
+  /* ---------- 渠道选择 ---------- */
+  function renderChannels() {
+    var row = $('channelRow');
+    if (!row) return;
+    row.innerHTML = '';
+    Object.keys(CHANNELS).forEach(function (key) {
+      var ch = CHANNELS[key];
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip' + (state.channel === key ? ' chip-active' : '');
+      var ic = document.createElement('span');
+      ic.className = 'text-base';
+      ic.textContent = ch.icon;
+      var nm = document.createElement('span');
+      nm.textContent = ch.name;
+      b.appendChild(ic);
+      b.appendChild(nm);
+      b.addEventListener('click', function () { switchChannel(key); });
+      row.appendChild(b);
+    });
+  }
+
+  function renderTags() {
+    var box = $('quickTags');
+    if (!box) return;
+    box.innerHTML = '';
+    ['露营装备', 'AI Agent', '咖啡机', '显卡', '小众旅行'].forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-500 transition hover:border-indigo-300 hover:text-indigo-600';
+      b.textContent = t;
+      b.addEventListener('click', function () {
+        var inp = $('kwInput');
+        if (inp) inp.value = t;
+      });
+      box.appendChild(b);
+    });
+  }
+
+  function renderPlaceholder(text) {
+    var stage = $('stage');
+    if (!stage) return;
+    stage.innerHTML =
+      '<div class="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 p-8 text-center">' +
+        '<div class="text-2xl">🕳️</div>' +
+        '<p class="mt-2 text-sm text-slate-500">' + esc(text || '点上面那个按钮，看看 Agent 能抓回什么') + '</p>' +
+        '<p class="mt-1 text-xs text-slate-400">真实环境耗时约 8–25 秒 · 这里加速演示</p>' +
+      '</div>';
+  }
+
+  function switchChannel(key) {
+    if (state.running) return;
+    if (state.channel === key) return;
+    state.channel = key;
+    state.tab = 'notes';
+    renderChannels();
+    if (state.posts) {
+      var inp = $('kwInput');
+      var kw = (inp && inp.value.trim()) || state.kw;
+      state.kw = kw;
+      state.posts = buildPosts(CHANNELS[key], kw);
+      renderResult(CHANNELS[key]);
+    } else {
+      renderPlaceholder('已切换到「' + CHANNELS[key].name + '」，点按钮开始抓取');
+    }
+  }
+
+  /* ---------- 抓取流程 ---------- */
+  function run() {
+    if (state.running) return;
+    var input = $('kwInput');
+    var kw = input ? input.value.trim() : '';
+    if (!kw) {
+      if (input) {
+        input.classList.add('shake');
+        setTimeout(function () { input.classList.remove('shake'); }, 400);
+        input.focus();
+      }
+      return;
+    }
+
+    state.kw = kw;
+    state.running = true;
+    state.tab = 'notes';
+
+    var ch = CHANNELS[state.channel];
+    var btn = $('runBtn');
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span><span>Agent 正在抓取…</span>';
+    }
+
+    var stage = $('stage');
+    if (!stage) return;
+    stage.innerHTML =
+      '<div class="rounded-2xl border border-slate-200 bg-white p-5">' +
+        '<div class="mb-3 flex flex-wrap items-center justify-between gap-2">' +
+          '<div class="text-sm font-medium text-slate-700">正在执行 ' +
+            '<code class="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-600">agent-reach ' +
+            esc(ch.id) + ' search "' + esc(kw) + '"</code>' +
+          '</div>' +
+          '<span class="rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-600">演示数据</span>' +
+        '</div>' +
+        '<div id="log" class="space-y-2"></div>' +
+        '<div class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">' +
+          '<div id="bar" class="h-full w-0 rounded-full bg-indigo-500 transition-all duration-300"></div>' +
+        '</div>' +
+      '</div>';
+
+    var log = document.getElementById('log');
+    var bar = document.getElementById('bar');
+    var total = ch.steps.length;
+    var i = 0;
+
+    function step() {
+      if (i > 0 && log && log.children[i - 1]) {
+        var prevDot = log.children[i - 1].querySelector('.dot');
+        if (prevDot) {
+          prevDot.textContent = '✓';
+          prevDot.className = 'dot grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-100 text-[10px] font-bold text-emerald-600';
+        }
+      }
+      if (i >= total) { finish(); return; }
+
+      var row = document.createElement('div');
+      row.className = 'step-row flex items-center gap-2.5 text-sm text-slate-600';
+      var dot = document.createElement('span');
+      dot.className = 'dot grid h-5 w-5 shrink-0 place-items-center rounded-full bg-slate-100 text-[10px] text-slate-400 pulse-dot';
+      dot.textContent = '●';
+      var label = document.createElement('span');
+      label.textContent = ch.steps[i];
+      row.appendChild(dot);
+      row.appendChild(label);
+      if (log) log.appendChild(row);
+      if (bar) bar.style.width = Math.round(((i + 1) / total) * 100) + '%';
+      i++;
+      setTimeout(step, 300);
+    }
+
+    setTimeout(step, 150);
+  }
+
+  function finish() {
+    var ch = CHANNELS[state.channel];
+    state.running = false;
+    state.posts = buildPosts(ch, state.kw);
+
+    var btn = $('runBtn');
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = '再抓一次 ↻';
+    }
+    renderResult(ch);
+  }
+
+  /* ---------- 结果渲染 ---------- */
+  function renderResult(ch) {
+    var posts = state.posts || [];
+    var commentsCount = posts.reduce(function (a, p) { return a + p.comments.length; }, 0);
+    var latency = (0.9 + posts.length * 0.22).toFixed(1);
+    var stage = $('stage');
+    if (!stage) return;
+
+    var html = '' +
+      '<div class="fade-up rounded-2xl border border-slate-200 bg-white shadow-sm">' +
+        '<div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">' +
+          '<div class="flex items-center gap-2 text-sm">' +
+            '<span class="text-base">' + esc(ch.icon) + '</span>' +
+            '<span class="font-medium text-slate-800">' + esc(ch.name) + '</span>' +
+            '<span class="text-slate-300">/</span>' +
+            '<span class="text-slate-500">「' + esc(state.kw) + '」</span>' +
+          '</div>' +
+          '<div class="flex flex-wrap items-center gap-2 text-[11px]">' +
+            '<span class="rounded-full bg-emerald-50 px-2 py-1 text-emerald-600">✓ 抓取成功</span>' +
+            '<span class="rounded-full bg-slate-100 px-2 py-1 text-slate-500">耗时 ' + latency + 's（演示加速）</span>' +
+            '<span class="rounded-full bg-slate-100 px-2 py-1 text-slate-500">费用 ¥0.00</span>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="grid gap-3 border-b border-slate-100 p-5 md:grid-cols-2">' +
+          '<div class="rounded-xl border border-slate-200 bg-slate-50 p-4">' +
+            '<div class="text-xs font-medium text-slate-400">传统通用搜索</div>' +
+            '<div class="mt-2 flex items-start gap-2 text-sm leading-relaxed text-slate-400">' +
+              '<span class="text-base leading-none">🚫</span>' +
+              '<span>' + esc(ch.blank) + '</span>' +
+            '</div>' +
+            '<div class="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-400">' +
+              '<span class="rounded border border-slate-200 bg-white px-2 py-1">正文 0 篇</span>' +
+              '<span class="rounded border border-slate-200 bg-white px-2 py-1">评论 0 条</span>' +
+              '<span class="rounded border border-slate-200 bg-white px-2 py-1">不可结构化</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="rounded-xl border border-indigo-200 bg-indigo-50/60 p-4">' +
+            '<div class="text-xs font-medium text-indigo-500">ReachGate 网关</div>' +
+            '<div class="mt-2 text-sm leading-relaxed text-slate-700">' +
+              '拿到 ' + posts.length + ' 篇正文 + ' + commentsCount + ' 条评论，可直接喂给模型或入库。' +
+            '</div>' +
+            '<div class="mt-3 flex flex-wrap gap-2 text-[11px]">' +
+              '<span class="rounded border border-indigo-200 bg-white px-2 py-1 text-indigo-600">正文 ' + posts.length + ' 篇</span>' +
+              '<span class="rounded border border-indigo-200 bg-white px-2 py-1 text-indigo-600">评论 ' + commentsCount + ' 条</span>' +
+              '<span class="rounded border border-indigo-200 bg-white px-2 py-1 text-indigo-600">JSON 就绪</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="flex flex-wrap gap-2 px-5 pt-4">' +
+          '<button type="button" data-tab="notes" class="tab' + (state.tab === 'notes' ? ' tab-active' : '') + '">正文 · ' + posts.length + '</button>' +
+          '<button type="button" data-tab="comments" class="tab' + (state.tab === 'comments' ? ' tab-active' : '') + '">评论 · ' + commentsCount + '</button>' +
+          '<button type="button" data-tab="json" class="tab' + (state.tab === 'json' ? ' tab-active' : '') + '">结构化 JSON</button>' +
+        '</div>' +
+        '<div id="tabBody" class="p-5"></div>' +
+        '<div class="border-t border-slate-100 px-5 py-3 text-[11px] text-slate-400">' +
+          '以上内容为演示数据，用于展示产品形态；真实数据来自 Agent-Reach 抓取的公开内容。' +
+        '</div>' +
+      '</div>';
+
+    stage.innerHTML = html;
+
+    var tabButtons = stage.querySelectorAll('[data-tab]');
+    for (var i = 0; i < tabButtons.length; i++) {
+      (function (btn) {
+        btn.addEventListener('click', function () {
+          state.tab = btn.getAttribute('data-tab');
+          for (var j = 0; j < tabButtons.length; j++) {
+            tabButtons[j].classList.toggle('tab-active', tabButtons[j] === btn);
+          }
+          renderTabBody();
+        });
+      })(tabButtons[i]);
+    }
+
+    renderTabBody();
+  }
+
+  function renderTabBody() {
+    var ch = CHANNELS[state.channel];
+    var posts = state.posts || [];
+    var body = $('tabBody');
+    if (!body) return;
+
+    if (state.tab === 'notes') {
+      body.innerHTML = '<div class="space-y-3">' + posts.map(function (p, idx) {
+        return '' +
+          '<article class="result-card" style="border-left-color:' + ch.color + '">' +
+            '<div class="flex items-start justify-between gap-3">' +
+              '<h4 class="text-sm font-medium leading-snug text-slate-800">' + hl(p.title, state.kw) + '</h4>' +
+              '<span class="shrink-0 text-[11px] text-slate-300 mono">#' + (idx + 1) + '</span>' +
+            '</div>' +
+            '<div class="mt-1 text-[11px] text-slate-400">' + esc(p.author) + ' · ' + esc(p.meta) + '</div>' +
+            '<p class="mt-2 text-sm leading-relaxed text-slate-600">' + hl(p.excerpt, state.kw) + '</p>' +
+            '<div class="mt-2 text-[11px] text-indigo-500">已展开 ' + p.comments.length + ' 条高赞评论</div>' +
+          '</article>';
+      }).join('') + '</div>';
+    } else if (state.tab === 'comments') {
+      body.innerHTML = '<div class="space-y-5">' + posts.map(function (p) {
+        return '' +
+          '<div>' +
+            '<div class="mb-2 truncate text-[11px] text-slate-400">▸ ' + esc(p.title) + '</div>' +
+            '<div class="space-y-2">' + p.comments.map(function (c) {
+              return '' +
+                '<div class="rounded-lg bg-slate-50 px-3 py-2">' +
+                  '<div class="flex items-center justify-between text-[11px] text-slate-400">' +
+                    '<span>' + esc(c.u) + '</span><span>赞 ' + esc(c.l) + '</span>' +
+                  '</div>' +
+                  '<div class="mt-1 text-sm leading-relaxed text-slate-700">' + hl(c.t, state.kw) + '</div>' +
+                '</div>';
+            }).join('') + '</div>' +
+          '</div>';
+      }).join('') + '</div>';
+    } else {
+      var payload = {
+        ok: true,
+        channel: ch.id,
+        query: state.kw,
+        fetched_at: new Date().toISOString(),
+        cost: { currency: 'CNY', amount: 0 },
+        count: posts.length,
+        results: posts.map(function (p) {
+          return {
+            title: p.title,
+            author: p.author,
+            stats: p.meta,
+            text: p.excerpt,
+            comments: p.comments.map(function (c) {
+              return { author: c.u, text: c.t, likes: c.l };
+            })
+          };
+        })
+      };
+      var pre = document.createElement('pre');
+      pre.className = 'overflow-x-auto rounded-xl bg-slate-900 p-4 text-[11px] leading-relaxed text-slate-100';
+      pre.textContent = JSON.stringify(payload, null, 2);
+      body.innerHTML = '';
+      body.appendChild(pre);
+    }
+  }
+
+  /* ---------- 候补名单 ---------- */
+  function initWaitlist() {
+    var btn = $('waitBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var input = $('waitEmail');
+      var msg = $('waitMsg');
+      var email = input ? input.value.trim() : '';
+      if (msg) {
+        msg.classList.remove('hidden');
+        msg.textContent = email
+          ? '已记录 ' + email + ' —— 演示环境，不会真的提交任何数据。'
+          : '演示环境：这里不会真的提交任何数据。';
+      }
+      btn.disabled = true;
+      btn.textContent = '已加入候补 ✓';
+    });
+  }
+
+  /* ---------- 初始化 ---------- */
+  function init() {
+    renderChannels();
+    renderTags();
+    renderPlaceholder('点上面那个按钮，看看 Agent 能抓回什么');
+
+    var runBtn = $('runBtn');
+    if (runBtn) runBtn.addEventListener('click', run);
+
+    var kwInput = $('kwInput');
+    if (kwInput) {
+      kwInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') run();
+      });
+    }
+
+    initWaitlist();
+
+    setTimeout(run, 650);
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
