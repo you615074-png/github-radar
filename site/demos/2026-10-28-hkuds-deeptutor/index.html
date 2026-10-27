@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知途 PathTutor · 记得你学到哪的 AI 私人家教</title>
+<style>
+  :root{
+    --bg:#faf8f4;
+    --card:#ffffff;
+    --ink:#141a17;
+    --muted:#6b7671;
+    --line:#e7e3da;
+    --brand:#1f6f5c;
+    --brand-2:#2f8f74;
+    --brand-soft:#e8f2ee;
+    --accent:#dd7a3a;
+    --ok:#2f9e6b;
+    --bad:#cf5c56;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    color:var(--ink);
+    line-height:1.6;
+    background:
+      radial-gradient(1200px 620px at 82% -12%, #e9f3ef 0%, rgba(233,243,239,0) 62%),
+      radial-gradient(900px 520px at -5% -5%, #fdf1e6 0%, rgba(253,241,230,0) 58%),
+      var(--bg);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .hidden{display:none !important}
+  a{color:inherit}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(250,248,244,.84);backdrop-filter:saturate(150%) blur(10px);border-bottom:1px solid rgba(231,227,218,.9)}
+  .nav-in{display:flex;align-items:center;gap:16px;height:64px}
+  .brand{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:800;letter-spacing:-.01em;font-size:16px}
+  .brand-mark{width:32px;height:32px;border-radius:10px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .brand-name em{font-style:normal;font-weight:500;color:var(--muted);font-size:12.5px;margin-left:6px}
+  .nav-links{margin-left:auto;display:flex;gap:20px}
+  .nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .18s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-tag{font-size:12px;color:var(--brand);background:var(--brand-soft);border-radius:999px;padding:4px 11px;white-space:nowrap}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:56px;padding-bottom:6px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);background:var(--brand-soft);border-radius:999px;padding:5px 13px;font-weight:600}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--brand);display:inline-block}
+  h1{font-size:clamp(28px,5vw,46px);line-height:1.16;letter-spacing:-.025em;margin:18px 0 0;font-weight:800}
+  .lede{font-size:clamp(14.5px,2vw,17px);color:#4c5a54;max-width:640px;margin:16px 0 0}
+  .hero-points{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:22px 0 0}
+  .hero-points li{font-size:13px;color:#3f4d47;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+
+  /* ---------- cards ---------- */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 1px 2px rgba(20,26,23,.04),0 18px 40px -34px rgba(20,26,23,.6)}
+  .studio{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:18px;align-items:start;margin-top:34px}
+  .card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+  .card-head h2{font-size:16px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .badge-demo{font-size:11px;color:var(--accent);background:#fdf0e5;border:1px solid #f6dcc5;border-radius:999px;padding:3px 9px;white-space:nowrap;font-weight:600}
+
+  /* ---------- form ---------- */
+  .field{display:block;margin-bottom:16px}
+  .field-label{font-size:13px;font-weight:600;color:#3f4d47;display:block;margin-bottom:8px}
+  .field-label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .field-value{font-size:13px;font-weight:700;color:var(--brand)}
+  .file-row{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:#fcfbf8;transition:border-color .18s}
+  .file-row:focus-within{border-color:var(--brand-2);background:#fff}
+  .file-row input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:14px;font-family:inherit;color:var(--ink)}
+  .file-icon{font-size:15px}
+  .file-ok{font-size:11px;color:var(--ok);background:#eaf7f0;border-radius:999px;padding:2px 8px;white-space:nowrap}
+  .seg{display:flex;flex-wrap:wrap;gap:8px}
+  .seg-btn{font-family:inherit;font-size:13.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#3f4d47;cursor:pointer;transition:.18s}
+  .seg-btn:hover{border-color:var(--brand-2);color:var(--brand)}
+  .seg-btn.active{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600}
+  input[type=range]{width:100%;accent-color:var(--brand);height:22px}
+  .range-scale{display:flex;justify-content:space-between;font-size:11px;color:#9aa5a0;margin-top:-2px}
+  .btn-primary{font-family:inherit;font-size:14.5px;font-weight:700;width:100%;padding:12px 18px;border-radius:12px;border:0;background:var(--brand);color:#fff;cursor:pointer;transition:.18s;box-shadow:0 10px 22px -14px rgba(31,111,92,.9)}
+  .btn-primary:hover:not(:disabled){background:#1a5f4f;transform:translateY(-1px)}
+  .btn-primary:disabled{opacity:.62;cursor:default}
+  .btn-ghost{font-family:inherit;font-size:13.5px;font-weight:600;width:100%;padding:11px 16px;border-radius:11px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:.18s}
+  .btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+  .hint{font-size:11.5px;color:#9aa5a0;margin:12px 0 0;line-height:1.55}
+
+  /* ---------- output ---------- */
+  .card-output{min-height:380px}
+  .out-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+  .out-head span.out-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9aa5a0}
+  .empty{text-align:center;padding:64px 12px}
+  .empty-icon{font-size:34px}
+  .empty-title{font-weight:700;margin:12px 0 6px;font-size:15px}
+  .empty-text{font-size:13.5px;color:var(--muted);max-width:330px;margin:0 auto;line-height:1.7}
+
+  .loading-head{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;margin-bottom:14px}
+  .spinner{width:16px;height:16px;border-radius:50%;border:2px solid var(--brand-soft);border-top-color:var(--brand);display:inline-block;animation:spin .8s linear infinite;flex:0 0 auto}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .progress{height:7px;background:#eef1ed;border-radius:99px;overflow:hidden}
+  .progress i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--brand),#3fa987);transition:width .4s ease}
+  .steps{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+  .steps li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:#9aa5a0;transition:color .25s}
+  .steps li::before{content:"○";font-size:11px;color:#c8d2cc;transition:color .25s}
+  .steps li.done{color:#2b3833}
+  .steps li.done::before{content:"●";color:var(--ok)}
+
+  .result-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .result-head h3{margin:0;font-size:17px;letter-spacing:-.01em}
+  .res-sub{font-size:13px;color:var(--muted);margin:5px 0 0}
+  .res-source{font-size:11.5px;color:#a4aeaa;margin:3px 0 0}
+  .section-label{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#9aa5a0;margin:22px 0 14px}
+
+  .route{display:grid;gap:0}
+  .route-item{display:grid;grid-template-columns:18px minmax(0,1fr);gap:12px;padding-bottom:18px}
+  .route-item:last-child{padding-bottom:0}
+  .route-rail{position:relative;display:flex;justify-content:center}
+  .rail-dot{width:10px;height:10px;border-radius:50%;background:var(--brand);margin-top:7px;box-shadow:0 0 0 4px var(--brand-soft);flex:0 0 auto}
+  .route-item:not(:last-child) .route-rail::after{content:"";position:absolute;top:22px;bottom:-4px;left:50%;transform:translateX(-50%);width:2px;background:var(--line)}
+  .route-line{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:baseline}
+  .route-line strong{font-size:14.5px}
+  .route-meta{font-size:11.5px;color:var(--muted);white-space:nowrap}
+  .route-tags{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0 9px}
+  .tag{font-size:11.5px;color:#4c5a54;background:#f3f5f1;border-radius:8px;padding:2px 8px}
+  .bar{height:5px;background:#eef1ed;border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--brand),#47ad8b);transition:width .7s ease}
+  .bar-label{font-size:11px;color:#9aa5a0;margin-top:5px}
+
+  .quiz{border:1px solid var(--line);border-radius:16px;padding:18px;background:#fcfbf8;margin-top:22px}
+  .quiz-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14.5px;font-weight:700}
+  .quiz-from{font-weight:400;font-size:11.5px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .q-text{margin:12px 0 14px;font-size:14.5px;line-height:1.7}
+  .opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;font-size:14px;font-family:inherit;color:inherit;cursor:pointer;transition:.18s;line-height:1.45}
+  .opt:last-child{margin-bottom:0}
+  .opt:not(.locked):hover{border-color:var(--brand-2);background:#f5fbf8}
+  .opt-key{width:22px;height:22px;border-radius:50%;background:#f0f2ee;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:var(--muted);flex:0 0 auto}
+  .opt-text{flex:1;min-width:0;word-break:break-word}
+  .opt.locked{cursor:default}
+  .opt.correct{border-color:var(--ok);background:#eff8f2}
+  .opt.correct .opt-key{background:var(--ok);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:#fdf1f0}
+  .opt.wrong .opt-key{background:var(--bad);color:#fff}
+  .explain{margin-top:14px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);font-size:13.5px}
+  .explain-title{font-weight:700;margin-bottom:7px;font-size:14px}
+  .explain p{margin:0 0 10px;color:#3c4a44;line-height:1.7}
+  .memory{font-size:12.5px;color:#1c5f4f;background:var(--brand-soft);border-radius:10px;padding:9px 12px;line-height:1.6}
+
+  /* ---------- scenes ---------- */
+  .sec-title{font-size:clamp(21px,3vw,28px);letter-spacing:-.02em;margin:0;font-weight:800}
+  .sec-sub{color:var(--muted);font-size:14px;margin:10px 0 0}
+  .scenes{margin-top:72px}
+  .scene-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}
+  .scene{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;transition:.2s}
+  .scene:hover{transform:translateY(-2px);box-shadow:0 18px 34px -28px rgba(20,26,23,.7)}
+  .scene-icon{font-size:22px}
+  .scene h3{font-size:15px;margin:12px 0 8px;letter-spacing:-.01em}
+  .scene p{font-size:13.5px;color:#4c5a54;margin:0;line-height:1.7}
+  .scene-quote{font-size:12.5px;color:var(--brand);background:var(--brand-soft);border-radius:10px;padding:9px 12px;margin-top:14px;line-height:1.6}
+
+  /* ---------- pricing ---------- */
+  .pricing{margin-top:72px}
+  .price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}
+  .price-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column}
+  .price-card.featured{border-color:var(--brand);box-shadow:0 20px 44px -34px rgba(31,111,92,.9);position:relative}
+  .price-badge{position:absolute;top:-11px;left:20px;font-size:11px;font-weight:700;color:#fff;background:var(--brand);border-radius:999px;padding:3px 10px}
+  .price-name{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+  .price-num{font-size:30px;font-weight:800;letter-spacing:-.03em;margin:8px 0 4px}
+  .price-num span{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0}
+  .price-desc{font-size:12.5px;color:#9aa5a0;margin:0}
+  .price-list{list-style:none;padding:0;margin:16px 0 20px;display:grid;gap:9px;flex:1}
+  .price-list li{font-size:13px;color:#3f4d47;display:flex;gap:8px;line-height:1.6}
+  .price-list li::before{content:"✓";color:var(--brand);font-weight:700;flex:0 0 auto}
+
+  /* ---------- join ---------- */
+  .join{margin-top:26px}
+  .join-card{background:linear-gradient(135deg,#123f34,#1f6f5c);color:#fff;border-radius:20px;padding:26px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .join-card h3{margin:0;font-size:17px;letter-spacing:-.01em}
+  .join-card p{margin:6px 0 0;font-size:13px;color:#c9e3d9;max-width:420px}
+  .join-form{display:flex;gap:8px;flex-wrap:wrap}
+  .join-form input{font-family:inherit;font-size:13.5px;padding:11px 14px;border-radius:11px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;outline:none;min-width:190px}
+  .join-form input::placeholder{color:#b7d4c9}
+  .join-form input:focus{border-color:#8fd6bf;background:rgba(255,255,255,.18)}
+  .join-form button{font-family:inherit;font-size:13.5px;font-weight:700;padding:11px 20px;border-radius:11px;border:0;background:#fff;color:var(--brand);cursor:pointer;transition:.18s}
+  .join-form button:hover{background:#e9f6f0}
+  .join-msg{font-size:12.5px;color:var(--brand);margin:10px 2px 0;min-height:18px}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:64px;border-top:1px solid var(--line);padding:26px 0 40px}
+  .foot-line{font-size:12.5px;color:#8b9691;line-height:1.8;margin:0}
+  .foot-line a{color:var(--brand);text-decoration:none;font-weight:600}
+  .foot-line a:hover{text-decoration:underline}
+
+  /* ---------- toast ---------- */
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:#141a17;color:#fff;font-size:13.5px;padding:11px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:82vw;text-align:center;line-height:1.5}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:900px){
+    .studio{grid-template-columns:minmax(0,1fr)}
+    .scene-grid{grid-template-columns:minmax(0,1fr)}
+    .price-grid{grid-template-columns:minmax(0,1fr)}
+    .card{padding:18px}
+    .empty{padding:48px 8px}
+  }
+  @media (max-width:720px){
+    .nav-links{display:none}
+    .nav-tag{margin-left:auto}
+    .hero{padding-top:38px}
+    .scenes,.pricing{margin-top:52px}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/>
+          <path d="M8 8h7M8 11.5h4.5"/>
+        </svg>
+      </span>
+      <span class="brand-name">知途<em>PathTutor</em></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#studio">试用</a>
+      <a href="#scenes">使用场景</a>
+      <a href="#pricing">价格</a>
+      <a href="#join">候补</a>
+    </nav>
+    <span class="nav-tag">概念演示</span>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero" id="top">
+    <div class="eyebrow"><span class="dot"></span>Lifelong Personalized Tutoring</div>
+    <h1>把教材交给它，<br>它会记得你学到哪一步。</h1>
+    <p class="lede">上传教材或考试大纲，30 秒生成专属学习路线。每天只练你还不熟的那几道题，讲解跟着你的水平走，错过的知识点它不会忘。</p>
+    <ul class="hero-points">
+      <li>⚡ 30 秒生成路线</li>
+      <li>🎯 每日 1 道针对性练习</li>
+      <li>🧠 跨设备学习记忆</li>
+    </ul>
+  </section>
+
+  <!-- ================= 核心交互区 ================= -->
+  <section class="wrap studio" id="studio">
+
+    <!-- 左：控制面板 -->
+    <div class="card">
+      <div class="card-head">
+        <h2>生成你的学习路线</h2>
+        <span class="badge-demo">演示数据</span>
+      </div>
+
+      <label class="field" for="sourceInput">
+        <span class="field-label">教材 / 考试大纲</span>
+        <span class="file-row">
+          <span class="file-icon" aria-hidden="true">📄</span>
+          <input id="sourceInput" type="text" value="高等数学（同济第七版）上册.pdf" autocomplete="off" spellcheck="false">
+          <span class="file-ok">已解析</span>
+        </span>
+      </label>
+
+      <div class="field">
+        <span class="field-label">学习目标</span>
+        <div class="seg" id="goalSeg">
+          <button class="seg-btn active" type="button" data-goal="exam">考研上岸</button>
+          <button class="seg-btn" type="button" data-goal="cert">考证冲刺</button>
+          <button class="seg-btn" type="button" data-goal="code">编程入门</button>
+          <button class="seg-btn" type="button" data-goal="lang">留学语言</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label-row">
+          <span class="field-label" style="margin:0">每周可投入</span>
+          <span class="field-value" id="hoursOut">8 小时</span>
+        </div>
+        <input id="hoursRange" type="range" min="3" max="20" step="1" value="8" aria-label="每周可投入小时数">
+        <div class="range-scale"><span>3h</span><span>20h</span></div>
+      </div>
+
+      <button class="btn-primary" id="genBtn" type="button">生成学习路线图 →</button>
+      <p class="hint">演示环境不会读取或上传你的文件，路线、掌握度与题目均为内置示例数据。</p>
+    </div>
+
+    <!-- 右：结果面板 -->
+    <div class="card card-output">
+      <div class="out-head">
+        <span class="out-title">学习工作台</span>
+        <span class="badge-demo">演示数据</span>
+      </div>
+
+      <!-- idle -->
+      <div class="empty" id="outIdle">
+        <div class="empty-icon" aria-hidden="true">🧭</div>
+        <p class="empty-title">还没开始</p>
+        <p class="empty-text">选好学习目标，点击左边的「生成学习路线图」。这里会出现分阶段路线、当前掌握度，以及一道只针对你薄弱点的今日练习。</p>
+      </div>
+
+      <!-- loading -->
+      <div class="hidden" id="outLoading">
+        <div class="loading-head">
+          <span class="spinner" aria-hidden="true"></span>
+          <span id="loadingTitle">正在生成学习路线…</span>
+        </div>
+        <div class="progress"><i id="progressBar"></i></div>
+        <ul class="steps" id="steps">
+          <li>解析文档结构与目录</li>
+          <li>抽取知识点并评估难度</li>
+          <li>按目标与每周时长编排路径</li>
+          <li>生成今日针对性练习与讲解</li>
+        </ul>
+        <p class="hint">演示加速版 · 正式版约需 30 秒</p>
+      </div>
+
+      <!-- result -->
+      <div class="hidden" id="outResult">
+        <div class="result-head">
+          <div>
+            <h3 id="resTitle">高等数学 · 考研数学一</h3>
+            <p class="res-sub" id="resSub">4 个阶段 · 预计 6 周完成 · 每周 8 小时</p>
+            <p class="res-source" id="resSource">来源：高等数学（同济第七版）上册.pdf（演示解析）</p>
+          </div>
+        </div>
+
+        <div class="section-label">学习路线图</div>
+        <div class="route" id="routeList"></div>
+
+        <div class="quiz">
+          <div class="quiz-head">
+            <span>今日针对性练习</span>
+            <span class="quiz-from" id="quizFrom">来自 · 极限与连续</span>
+          </div>
+          <p class="q-text" id="quizQ">题目加载中…</p>
+          <div id="options"></div>
+          <div class="explain hidden" id="explainBox"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 使用场景 ================= -->
+  <section class="wrap scenes" id="scenes">
+    <h2 class="sec-title">三种人，同一种「它记得」</h2>
+    <p class="sec-sub">长期记忆是核心：它记录的不是聊天记录，而是你的知识状态。</p>
+    <div class="scene-grid">
+      <div class="scene">
+        <div class="scene-icon" aria-hidden="true">🎓</div>
+        <h3>备考学生</h3>
+        <p>把三门课的大纲一起导入，它按剩余天数倒排日程，每天只推你还没掌握的知识点，越临近考试越聚焦。</p>
+        <div class="scene-quote">「距考试 47 天，今天只练定积分换元的 3 种变形。」</div>
+      </div>
+      <div class="scene">
+        <div class="scene-icon" aria-hidden="true">💻</div>
+        <h3>自学编程的职场人</h3>
+        <p>晚上只有 40 分钟。它挑出你上周卡住的递归题，先讲思路再给变式训练，第二天用小测确认没忘。</p>
+        <div class="scene-quote">「上周这题你错了 2 次，今天换了个场景再试一次。」</div>
+      </div>
+      <div class="scene">
+        <div class="scene-icon" aria-hidden="true">🌍</div>
+        <h3>海外留学生</h3>
+        <p>上传英文教材，用中文追问、按英文作答，术语自动对照；它会记得你哪一节没看懂，第二天先补那一节。</p>
+        <div class="scene-quote">「第 4 章第 2 节你说没懂，我们先回顾 6 分钟。」</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 定价 ================= -->
+  <section class="wrap pricing" id="pricing">
+    <h2 class="sec-title">价格</h2>
+    <p class="sec-sub">概念定价，仅用于演示产品形态，正式版以官方发布为准。</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name">自学</div>
+        <div class="price-num">¥0<span> / 月</span></div>
+        <p class="price-desc">先看看它懂不懂你的教材</p>
+        <ul class="price-list">
+          <li>1 份教材 / 大纲</li>
+          <li>每周 20 次提问</li>
+          <li>基础学习路线</li>
+        </ul>
+        <button class="btn-ghost" type="button" data-plan="自学">当前方案</button>
+      </div>
+
+      <div class="price-card featured">
+        <span class="price-badge">最多人选</span>
+        <div class="price-name">长期陪学</div>
+        <div class="price-num">¥39<span> / 月</span></div>
+        <p class="price-desc">把它当成一直跟着你的家教</p>
+        <ul class="price-list">
+          <li>无限教材与知识库</li>
+          <li>每日针对练习 + 讲解</li>
+          <li>长期学习记忆与掌握度曲线</li>
+          <li>多设备同步</li>
+        </ul>
+        <button class="btn-ghost" type="button" data-plan="长期陪学">选择长期陪学</button>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">考试冲刺</div>
+        <div class="price-num">¥99<span> / 月</span></div>
+        <p class="price-desc">考前 3 个月，按天倒排</p>
+        <ul class="price-list">
+          <li>含长期陪学全部功能</li>
+          <li>主观题精批与评分</li>
+          <li>每周学习诊断报告</li>
+          <li>限时模考与错题回炉</li>
+        </ul>
+        <button class="btn-ghost" type="button" data-plan="考试冲刺">选择考试冲刺</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 候补 ================= -->
+  <section class="wrap join" id="join">
+    <div class="join-card">
+      <div>
+        <h3>想第一个用上正式版？</h3>
+        <p>留下邮箱，开放测试时通知你。演示页面不会真的提交任何数据。</p>
+      </div>
+      <form class="join-form" id="joinForm">
+        <input id="joinEmail" type="email" value="learner@example.com" placeholder="you@example.com" aria-label="邮箱地址">
+        <button type="submit">加入候补</button>
+      </form>
+    </div>
+    <p class="join-msg" id="joinMsg" role="status" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-line">
+      概念演示，基于开源项目 <a href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener">HKUDS/DeepTutor</a>（Apache-2.0），非官方产品，数据均为演示数据
+    </p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============ 内置演示数据 ============ */
+  var DATA = {
+    exam: {
+      source: '高等数学（同济第七版）上册.pdf',
+      title: '高等数学 · 考研数学一',
+      baseHours: 48,
+      route: [
+        { name: '极限与连续', days: '3 天', points: ['数列极限', '两个重要极限', '无穷小比较'], mastery: 68 },
+        { name: '一元函数微分学', days: '5 天', points: ['导数定义', '中值定理', '单调与极值'], mastery: 41 },
+        { name: '不定积分与定积分', days: '6 天', points: ['换元积分', '分部积分', '定积分应用'], mastery: 23 },
+        { name: '综合证明与真题', days: '8 天', points: ['证明题框架', '近 5 年真题', '限时模考'], mastery: 0 }
+      ],
+      quiz: {
+        from: '来自 · 极限与连续（你上周错了 2 次）',
+        q: '当 x → 0 时，(1 - cos x) / x² 的极限是：',
+        options: ['0', '1/2', '1', '不存在'],
+        answer: 1,
+        explain: '利用等价无穷小：1 - cos x ~ x²/2，所以原式 = (x²/2) / x² = 1/2。也可以用洛必达法则：分子求导得 sin x，分母求导得 2x，极限同样是 1/2。',
+        memory: '易错点：等价无穷小替换只在乘除中使用；1 - cos x 替换后是 x²/2，不是 x²。'
+      }
+    },
+    cert: {
+      source: 'CPA《财务成本管理》考试大纲.pdf',
+      title: 'CPA 财务成本管理 · 冲刺',
+      baseHours: 40,
+      route: [
+        { name: '财务报表分析', days: '4 天', points: ['杜邦分析', '现金流量指标', '管理用报表'], mastery: 55 },
+        { name: '长期投资决策', days: '4 天', points: ['NPV 与 IRR', '回收期法', '敏感性分析'], mastery: 32 },
+        { name: '资本成本与资本结构', days: '5 天', points: ['CAPM', 'WACC', '杠杆效应'], mastery: 18 },
+        { name: '营运资本与机考演练', days: '6 天', points: ['现金周转期', '短期融资', '机考模考'], mastery: 0 }
+      ],
+      quiz: {
+        from: '来自 · 资本成本与资本结构（新学）',
+        q: '某公司 β = 1.2，无风险利率 3%，市场组合必要收益率 8%。按 CAPM，其权益资本成本为：',
+        options: ['8.2%', '9.0%', '11.4%', '6.0%'],
+        answer: 1,
+        explain: 'CAPM：Ke = Rf + β × (Rm - Rf) = 3% + 1.2 × (8% - 3%) = 9.0%。常见错误是把 Rm 直接当成风险溢价，或漏掉无风险利率。',
+        memory: '公式记忆：Ke = Rf + β(Rm - Rf)。风险溢价是 (Rm - Rf) = 5%，别把 Rm 直接代进去。'
+      }
+    },
+    code: {
+      source: 'CS50x · 第 6 周 Python 讲义.pdf',
+      title: 'Python 编程入门 · CS50x',
+      baseHours: 56,
+      route: [
+        { name: '变量与数据类型', days: '2 天', points: ['int / float / str', '类型转换', 'f-string'], mastery: 80 },
+        { name: '条件与循环', days: '3 天', points: ['if / elif', 'for 与 while', '循环嵌套'], mastery: 61 },
+        { name: '函数与作用域', days: '4 天', points: ['参数与返回值', '递归', '作用域规则'], mastery: 27 },
+        { name: '列表 · 字典 · 文件', days: '6 天', points: ['切片与推导式', '字典遍历', '读写文件'], mastery: 0 }
+      ],
+      quiz: {
+        from: '来自 · 函数与作用域（你卡在递归那一节）',
+        q: '下面哪一段代码会输出 3？',
+        options: [
+          'print(len("abc"))',
+          'print(len(["a", "b"]))',
+          'print("1" + "2")',
+          'print(int("3.5"))'
+        ],
+        answer: 0,
+        explain: 'len("abc") 返回字符串中字符的个数 3。第二行返回列表长度 2；第三行是字符串拼接，得到 "12"；第四行 int("3.5") 会抛出 ValueError。',
+        memory: '易错点：len() 对字符串按字符计数；int() 不能直接解析带小数点的字符串，需要先用 float()。'
+      }
+    },
+    lang: {
+      source: 'Cambridge IELTS 18 · Academic.pdf',
+      title: 'IELTS 7.0 冲刺 · 学术类',
+      baseHours: 36,
+      route: [
+        { name: '学术词汇与搭配', days: '3 天', points: ['主题词表', 'collocation', '同义替换'], mastery: 64 },
+        { name: 'Task 2 论证结构', days: '4 天', points: ['四段式结构', '让步段写法', '例证密度'], mastery: 38 },
+        { name: '阅读定位技巧', days: '4 天', points: ['关键词定位', 'True/False/NG', '时间分配'], mastery: 29 },
+        { name: '听力 · 口语模考', days: '4 天', points: ['Part 3 预测', '口语 Part 2', '全套模考'], mastery: 0 }
+      ],
+      quiz: {
+        from: '来自 · 学术词汇与搭配（写作批改发现）',
+        q: '在 Task 2 写作中，下列哪个词替换 "important" 最符合学术书面语？',
+        options: ['big', 'crucial', 'nice', 'good'],
+        answer: 1,
+        explain: '"crucial" 是学术写作里的高频正式表达，语义更精确。big / nice / good 偏口语化，在评分标准 Lexical Resource 这一项上会拉低分数。',
+        memory: '搭配积累：crucial / pivotal / essential factor 都比 important 更稳，但注意同一篇文章里不要重复使用同一个词。'
+      }
+    }
+  };
+
+  /* ============ 元素引用 ============ */
+  var $ = function (id) { return document.getElementById(id); };
+  var sourceInput = $('sourceInput');
+  var goalSeg = $('goalSeg');
+  var hoursRange = $('hoursRange');
+  var hoursOut = $('hoursOut');
+  var genBtn = $('genBtn');
+  var outIdle = $('outIdle');
+  var outLoading = $('outLoading');
+  var outResult = $('outResult');
+  var progressBar = $('progressBar');
+  var stepsEl = $('steps');
+  var loadingTitle = $('loadingTitle');
+  var resTitle = $('resTitle');
+  var resSub = $('resSub');
+  var resSource = $('resSource');
+  var routeList = $('routeList');
+  var quizFrom = $('quizFrom');
+  var quizQ = $('quizQ');
+  var optionsEl = $('options');
+  var explainEl = $('explainBox');
+  var toastEl = $('toast');
+
+  /* ============ 状态 ============ */
+  var goal = 'exam';
+  var hasResult = false;
+  var running = false;
+  var quizLocked = false;
+  var toastTimer = null;
+
+  /* ============ 工具 ============ */
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    if (toastTimer) { clearTimeout(toastTimer); }
+    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
+  }
+
+  function weekEstimate() {
+    var d = DATA[goal];
+    var hours = Number(hoursRange.value) || 8;
+    return Math.max(2, Math.round(d.baseHours / hours));
+  }
+
+  function updateMeta() {
+    var d = DATA[goal];
+    var hours = Number(hoursRange.value) || 8;
+    var file = sourceInput.value.trim() || '未命名教材';
+    resTitle.textContent = d.title;
+    resSub.textContent = d.route.length + ' 个阶段 · 预计 ' + weekEstimate() + ' 周完成 · 每周 ' + hours + ' 小时';
+    resSource.textContent = '来源：' + file + '（演示解析）';
+  }
+
+  /* ============ 渲染路线 ============ */
+  function renderRoute() {
+    var d = DATA[goal];
+    routeList.innerHTML = '';
+    d.route.forEach(function (r, idx) {
+      var item = document.createElement('div');
+      item.className = 'route-item';
+
+      var rail = document.createElement('div');
+      rail.className = 'route-rail';
+      var dot = document.createElement('span');
+      dot.className = 'rail-dot';
+      rail.appendChild(dot);
+
+      var main = document.createElement('div');
+      main.className = 'route-main';
+
+      var line = document.createElement('div');
+      line.className = 'route-line';
+      var name = document.createElement('strong');
+      name.textContent = r.name;
+      var meta = document.createElement('span');
+      meta.className = 'route-meta';
+      meta.textContent = '第 ' + (idx + 1) + ' 阶段 · ' + r.days;
+      line.appendChild(name);
+      line.appendChild(meta);
+
+      var tags = document.createElement('div');
+      tags.className = 'route-tags';
+      r.points.forEach(function (p) {
+        var t = document.createElement('span');
+        t.className = 'tag';
+        t.textContent = p;
+        tags.appendChild(t);
+      });
+
+      var bar = document.createElement('div');
+      bar.className = 'bar';
+      var fill = document.createElement('i');
+      fill.style.width = '0%';
+      bar.appendChild(fill);
+
+      var label = document.createElement('div');
+      label.className = 'bar-label';
+      label.textContent = r.mastery > 0 ? ('当前掌握度 ' + r.mastery + '%') : '尚未开始';
+
+      main.appendChild(line);
+      main.appendChild(tags);
+      main.appendChild(bar);
+      main.appendChild(label);
+
+      item.appendChild(rail);
+      item.appendChild(main);
+      routeList.appendChild(item);
+
+      setTimeout(function () {
+        fill.style.width = Math.max(r.mastery, 1.5) + '%';
+      }, 80 + idx * 90);
+    });
+  }
+
+  /* ============ 渲染题目 ============ */
+  function renderQuiz() {
+    var q = DATA[goal].quiz;
+    quizLocked = false;
+    quizFrom.textContent = q.from;
+    quizQ.textContent = q.q;
+    optionsEl.innerHTML = '';
+    explainEl.classList.add('hidden');
+    explainEl.innerHTML = '';
+
+    q.options.forEach(function (opt, i) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt';
+
+      var key = document.createElement('span');
+      key.className = 'opt-key';
+      key.textContent = 'ABCD'.charAt(i);
+
+      var txt = document.createElement('span');
+      txt.className = 'opt-text';
+      txt.textContent = opt;
+
+      btn.appendChild(key);
+      btn.appendChild(txt);
+      btn.addEventListener('click', function () { chooseOption(i, btn); });
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function chooseOption(index, btn) {
+    if (quizLocked) { return; }
+    quizLocked = true;
+    var q = DATA[goal].quiz;
+    var isRight = index === q.answer;
+
+    Array.prototype.forEach.call(optionsEl.querySelectorAll('.opt'), function (node, i) {
+      node.classList.add('locked');
+      if (i === q.answer) { node.classList.add('correct'); }
+    });
+    if (!isRight) { btn.classList.add('wrong'); }
+
+    explainEl.innerHTML = '';
+    var title = document.createElement('div');
+    title.className = 'explain-title';
+    title.textContent = isRight ? '✅ 答对了，这一题纳入已掌握' : '💡 讲解';
+    explainEl.appendChild(title);
+
+    var p = document.createElement('p');
+    p.textContent = q.explain;
+    explainEl.appendChild(p);
+
+    var mem = document.createElement('div');
+    mem.className = 'memory';
+    mem.textContent = '🧠 已写入学习记忆：' + q.memory;
+    explainEl.appendChild(mem);
+
+    explainEl.classList.remove('hidden');
+  }
+
+  /* ============ 整体渲染 ============ */
+  function render() {
+    updateMeta();
+    renderRoute();
+    renderQuiz();
+  }
+
+  function resetToIdle() {
+    outIdle.classList.remove('hidden');
+    outLoading.classList.add('hidden');
+    outResult.classList.add('hidden');
+    hasResult = false;
+  }
+
+  /* ============ 生成流程 ============ */
+  function startGenerate() {
+    if (running) { return; }
+    running = true;
+    genBtn.disabled = true;
+    genBtn.textContent = '正在生成…';
+
+    var file = sourceInput.value.trim() || '你的教材';
+    loadingTitle.textContent = '正在为「' + file + '」生成学习路线…';
+
+    outIdle.classList.add('hidden');
+    outResult.classList.add('hidden');
+    outLoading.classList.remove('hidden');
+    progressBar.style.width = '0%';
+
+    var stepEls = Array.prototype.slice.call(stepsEl.children);
+    stepEls.forEach(function (li) { li.classList.remove('done'); });
+
+    var i = 0;
+    var timer = setInterval(function () {
+      if (i < stepEls.length) {
+        stepEls[i].classList.add('done');
+        i += 1;
+        progressBar.style.width = Math.round((i / stepEls.length) * 100) + '%';
+      } else {
+        clearInterval(timer);
+        setTimeout(function () {
+          outLoading.classList.add('hidden');
+          outResult.classList.remove('hidden');
+          render();
+          hasResult = true;
+          running = false;
+          genBtn.disabled = false;
+          genBtn.textContent = '重新生成学习路线';
+        }, 320);
+      }
+    }, 450);
+  }
+
+  /* ============ 事件绑定 ============ */
+  genBtn.addEventListener('click', startGenerate);
+
+  goalSeg.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.seg-btn') : null;
+    if (!btn || running) { return; }
+    var next = btn.getAttribute('data-goal');
+    if (!next || next === goal) { return; }
+    goal = next;
+    Array.prototype.forEach.call(goalSeg.children, function (b) {
+      b.classList.toggle('active', b === btn);
+    });
+    sourceInput.value = DATA[goal].source;
+    if (hasResult) {
+      render();
+    } else {
+      resetToIdle();
+    }
+  });
+
+  hoursRange.addEventListener('input', function () {
+    hoursOut.textContent = hoursRange.value + ' 小时';
+    if (hasResult && !running) { updateMeta(); }
+  });
+
+  sourceInput.addEventListener('change', function () {
+    if (hasResult && !running) { updateMeta(); }
+  });
+
+  var fileRow = document.querySelector('.file-row');
+  if (fileRow) {
+    fileRow.addEventListener('click', function (e) {
+      if (e.target === fileRow || (e.target.classList && e.target.classList.contains('file-icon'))) {
+        toast('演示环境不支持真实上传，已使用示例文件');
+      }
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-plan]'), function (btn) {
+    btn.addEventListener('click', function () {
+      toast('「' + btn.getAttribute('data-plan') + '」为概念方案，演示环境不提供付费');
+    });
+  });
+
+  var joinForm = $('joinForm');
+  var joinMsg = $('joinMsg');
+  joinForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = $('joinEmail').value.trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!ok) {
+      joinMsg.textContent = '请输入一个有效的邮箱地址（演示数据）。';
+      return;
+    }
+    joinMsg.textContent = '已加入候补名单：' + email + '。这是演示提示，没有提交任何数据。';
+    toast('已加入候补（演示）');
+  });
+})();
+</script>
+</body>
+</html>

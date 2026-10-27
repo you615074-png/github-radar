@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-28",
+ "headline": "会记住你的AI家教，45734星",
+ "summary_md": "**HKUDS/DeepTutor** 是香港大学 HKUDS 实验室开源的一个 AI 家教项目，Apache-2.0 许可。从 README 看，它最核心的特点是「长期记忆 + 个性化」：你上传教材、考纲或资料，它会建知识库、生成学习路径、出每日练习题，还能记住你学到哪、错在哪，继续往下讲。\n\n最近火的原因很直接：星标已经 45734，每天还在涨约 1500。一是「AI 家教」这个场景几乎人人有体感，二来项目迭代极快，几乎每天一个版本，功能覆盖阅读、听力、题库、语音、多语言界面，看起来很像一个成型产品，而不是 demo。\n\n如果做成产品，机会不在复刻它的全功能，而在收窄：比如只做某一类考试的备考（雅思、考研、考证），用户上传大纲，系统每天推一套题加讲解；或者只做「错题追踪」这一个环节，把长期记忆做成卖点。官方版本太重、要配多种模型 key 和 RAG 索引，普通用户装不起来，这就是轻量产品的空间。",
+ "pick": {
+  "full_name": "HKUDS/DeepTutor",
+  "url": "https://github.com/HKUDS/DeepTutor",
+  "description": "DeepTutor: Lifelong Personalized Tutoring. https://deeptutor.info/.",
+  "license": "Apache-2.0",
+  "stars": 45734,
+  "daily_rate": 1587,
+  "category": "教育学习",
+  "one_liner": "一个能长期记住你学习进度的私人 AI 家教",
+  "reason": "话题性强、痛点真实、许可证宽松，但官方迭代太快且功能齐全，适合做内容选题，产品化宜聚焦单一场景。",
+  "content": 8.0,
+  "startup": 7.45,
+  "final": 7.8,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-28-hkuds-deeptutor",
+ "top": [
+  {
+   "full_name": "HKUDS/DeepTutor",
+   "url": "https://github.com/HKUDS/DeepTutor",
+   "one_liner": "一个能长期记住你学习进度的私人 AI 家教",
+   "reason": "话题性强、痛点真实、许可证宽松，但官方迭代太快且功能齐全，适合做内容选题，产品化宜聚焦单一场景。",
+   "content": 8.0,
+   "startup": 7.45,
+   "final": 7.8,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "andyhuo520/digital-human-koubo",
+   "url": "https://github.com/andyhuo520/digital-human-koubo",
+   "one_liner": "一张照片一句话，AI帮你生成带精美包装的数字人口播视频",
+   "reason": "话题性强、演示直观、MIT合规，但核心依赖外部付费模型，独立护城河弱，热度真实性需观察。",
+   "content": 8.33,
+   "startup": 7.35,
+   "final": 7.79,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Jakeschincariol/day-trader-skill",
+   "url": "https://github.com/Jakeschincariol/day-trader-skill",
+   "one_liner": "11个Claude技能，帮你选股择时、模拟交易结果再下手",
+   "reason": "话题热，易演示，制作门槛低，MIT可商用；但合规与数据依赖是硬伤，适合做内容，做交易产品需谨慎。",
+   "content": 7.33,
+   "startup": 7.35,
+   "final": 7.42,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "KnifeLemon/Filee",
+   "url": "https://github.com/KnifeLemon/Filee",
+   "one_liner": "拖一下文件就转成任意格式的本地离线转换器",
+   "reason": "需求真实高频、演示感强、MIT安全、增长迅猛；但产品已相当成熟，个人做差异化需聚焦企业隐私与批量部署。",
+   "content": 8.33,
+   "startup": 7.15,
+   "final": 7.13,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "wheresryan22/anatomy",
+   "url": "https://github.com/wheresryan22/anatomy",
+   "one_liner": "让AI把抽象技术概念画成可交互的等轴测机械图",
+   "reason": "视觉惊艳、话题性强、MIT友好，但核心是技能包而非产品，商业化需靠托管生成平台与团队模板库，Packaging有空间但护城河弱。",
+   "content": 7.67,
+   "startup": 6.6,
+   "final": 6.65,
+   "category_penalty": 0.8
+  }
+ ]
+}

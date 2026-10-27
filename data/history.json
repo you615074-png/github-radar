@@ -53,17 +53,23 @@
    "full_name": "Panniantong/Agent-Reach",
    "category": "AI基础设施",
    "final": 7.56
+  },
+  {
+   "date": "2026-10-28",
+   "full_name": "HKUDS/DeepTutor",
+   "category": "教育学习",
+   "final": 7.8
   }
  ],
  "top": {
   "MadsLorentzen/ai-job-search": "2026-10-19",
   "cathrynlavery/diagram-design": "2026-10-19",
   "alchaincyf/huashu-motion": "2026-10-19",
-  "wheresryan22/anatomy": "2026-10-19",
+  "wheresryan22/anatomy": "2026-10-28",
   "Niko1221/Strata": "2026-10-19",
   "lemomo-ai/lemo-opuscar": "2026-10-20",
   "storytold/wordcraft": "2026-10-20",
-  "KnifeLemon/Filee": "2026-10-20",
+  "KnifeLemon/Filee": "2026-10-28",
   "Ansub/tv-detox": "2026-10-20",
   "storytold/artcraft": "2026-10-20",
   "DietrichGebert/ponytail": "2026-10-21",
@@ -100,7 +106,10 @@
   "storytold/lightcraft": "2026-10-27",
   "storytold/filmcraft": "2026-10-27",
   "ludovic111/horizon": "2026-10-27",
-  "alchaincyf/huashu-design": "2026-10-27"
+  "alchaincyf/huashu-design": "2026-10-27",
+  "HKUDS/DeepTutor": "2026-10-28",
+  "andyhuo520/digital-human-koubo": "2026-10-28",
+  "Jakeschincariol/day-trader-skill": "2026-10-28"
  },
  "scores": {
   "storytold/photocraft": {
@@ -900,58 +909,6 @@
     "reason": "痛点真实、话题性强、增长快，但私钥身份与车厂适配带来法律和稳定性风险，GPL 限制商业化，包装空间有限。"
    }
   },
-  "Leonxlnx/earshot": {
-   "date": "2026-10-20",
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "给AI编程助手装上耳朵，能听懂、评价并生成音效",
-    "target_user": "做游戏/产品视频的独立开发者和小型内容团队",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 8,
-     "pain": 5,
-     "packaging_room": 7,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "网页版AI音效工作室：上传视频自动卡点配音效并给出改进评分",
-    "demo_idea": "上传一段无声视频，网页实时生成并贴合音效，旁边显示听感评分与修正建议",
-    "red_flags": [
-     "上线仅4天即1500星，增长异常的刷星/营销嫌疑",
-     "核心价值依赖Agent生态，脱离Claude Code等场景单用价值弱",
-     "首次加载模型20-40秒，体验门槛不低"
-    ],
-    "reason": "创意新颖、演示效果强、MIT友好，但用户群窄、付费意愿待验证，需警惕短期爆红的可持续性"
-   }
-  },
-  "lemomo-ai/lemo-opuscar": {
-   "date": "2026-10-20",
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "用一句话让 AI 写代码，帮你拍出一支完整短片",
-    "target_user": "想低成本做品牌短片的小商家、自媒体创作者、独立导演",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "网页版选风格、写故事，云端渲染成片，按片付费",
-    "demo_idea": "选水彩风格输入一句故事，30 秒内播放代码渲染的成片片段",
-    "red_flags": [
-     "风格提示词强绑定 Claude Opus 5.5，换模型效果可能大幅下降",
-     "单支片耗时 30-60 分钟且消耗大量 token，结果成本很重",
-     "作者单人 IP 依赖，风格库属内容资产非技术壁垒"
-    ],
-    "reason": "纯代码生成的短片效果惊艳，自带传播爆点；但生成慢、成本高、绑定单一模型，商业化需靠云端渲染和成品服务切开门槛。"
-   }
-  },
   "K-Dense-AI/scientific-agent-skills": {
    "date": "2026-10-23",
    "v": 2,
@@ -979,33 +936,6 @@
      "科研工作流演示依赖真实数据和专业背景，30秒网页demo难以直观呈现"
     ],
     "reason": "方向热门、领域痛点真实、MIT许可友好，但它是技能库而非产品，官方已自有商业布局，外部包装与演示空间有限，做内容优于做产品。"
-   }
-  },
-  "Ansub/tv-detox": {
-   "date": "2026-10-20",
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "让卡顿的老 Android 电视变快，去掉广告和臃肿预装应用",
-    "target_user": "家里有老旧 Android TV / Chromecast、讨厌电视广告且愿意动手折腾的科技爱好者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "做成一个手机 App 或一键脚本，自动识别电视型号、清理广告与预装并把电视恢复干净主页",
-    "demo_idea": "网页左右对比：清理前满屏广告推荐、卡顿加载；清理后只剩应用和时钟，并展示内存前后数字",
-    "red_flags": [
-     "本质是提示词 + shell 脚本，工程门槛低，易被复制",
-     "依赖 ADB 调试和机型适配，兼容性风险高，误关系统组件可能变砖",
-     "用户付费意愿弱，多被视为一次性免费折腾",
-     "品牌分散（Sony/TCL/海信等）导致支持成本高"
-    ],
-    "reason": "话题性强、演示直观、MIT 友好，痛点真实；但商业化薄弱、适配复杂，更适合做内容爆款而非独立产品。"
    }
   },
   "Comfy-Org/ComfyUI": {
@@ -1036,111 +966,31 @@
     "reason": "话题性和演示效果强，但项目本身已是成熟商业化产品，个人难在上面做差异化，许可证也不利于闭源包装。"
    }
   },
-  "humblemuzzu/dumbtv": {
-   "date": "2026-10-20",
+  "KnifeLemon/Filee": {
+   "date": "2026-10-28",
+   "v": 2,
    "eval": {
     "category": "效率工具",
-    "one_liner": "用电脑给智能电视去广告、关追踪、换干净桌面的开源工具箱",
-    "target_user": "拥有 Fire TV / Android TV、讨厌开机广告和追踪的极客与家庭用户",
+    "one_liner": "拖一下文件就转成任意格式的本地离线转换器",
+    "target_user": "常处理文档/图片/PDF格式转换的职场白领、行政与设计人员",
     "scores": {
      "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 8,
-     "monetization": 5,
-     "license_safety": 3,
-     "demoability": 6
-    },
-    "product_idea": "一键连接电视、自动去广告换桌面的图形化桌面工具，按机型适配",
-    "demo_idea": "左右对比：同一台电视原厂满是广告的行首页 vs 运行后纯净桌面",
-    "red_flags": [
-     "LICENSE 为 NOASSERTION 自定义条款，商用需谨慎核查",
-     "依赖 ADB 与逐机型适配，维护成本高、易随系统更新失效",
-     "面向极客，普通用户门槛仍在，付费意愿不明"
-    ],
-    "reason": "痛点真实、话题性强、包装空间大；但许可证不明、机型适配重、变现路径弱，适合内容爆款，产品化需谨慎"
-   }
-  },
-  "KnifeLemon/Filee": {
-   "date": "2026-10-20",
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "按住快捷键拖拽文件，就能离线转换成244种格式的桌面工具",
-    "target_user": "经常处理文档、图片、视频格式转换的普通办公室职员、学生和小型团队",
-    "scores": {
-     "topicality": 7,
      "accessibility": 9,
      "wow": 8,
      "pain": 8,
-     "packaging_room": 4,
-     "monetization": 4,
+     "packaging_room": 6,
+     "monetization": 5,
      "license_safety": 10,
      "demoability": 8
     },
-    "product_idea": "面向非技术用户推出订阅版，包含在线格式转换、云端批处理和团队模板库。",
-    "demo_idea": "网页模拟拖拽文件到光标环形菜单，立即展示转换进度和前后大小对比。",
+    "product_idea": "做成桌面轻工具+团队批量订阅，企业版加隐私合规与集中部署",
+    "demo_idea": "网页上拖入一张图，光标处弹出甜甜圈选格式，即时生成转换结果预览",
+    "attack_tool": false,
     "red_flags": [
-     "开源版已完成度极高，同时提供官网、多平台安装包和交互式demo，产品化空间小",
-     "免费且离线内置转换引擎，用户付费意愿弱",
-     "依赖大量第三方转换引擎，产品化需处理引擎授权与分发"
+     "已自带官网、安装器和多语言界面，开源版完成度高，包装空间有限",
+     "免费开源替代品多，付费意愿需靠企业合规与批量场景支撑"
     ],
-    "reason": "话题性和体验感强，需求真实，但项目本身已是完整免费产品，商业包装空间和付费动力有限，适合做内容而非创业。"
-   }
-  },
-  "Gathin23/cleanyourtv": {
-   "date": "2026-10-20",
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "用电脑连Wi-Fi给电视去广告、换成像Apple TV的干净桌面",
-    "target_user": "买安卓电视后被广告和预装App烦到的中产家庭用户",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 8,
-     "monetization": 4,
-     "license_safety": 2,
-     "demoability": 6
-    },
-    "product_idea": "做一个Mac/Win桌面App：自动发现同网电视、一键去广告并换干净桌面，支持撤销",
-    "demo_idea": "网页模拟电视遥控：切换原版满屏广告桌面与干净Apple TV风格桌面，展示一键去广告清单",
-    "red_flags": [
-     "许可证为NOASSERTION，来源不明，商用有法律风险",
-     "核心是给Claude Code的提示词+机型列表，属于提示词/资源合集性质",
-     "依赖ADB调试，普通用户门槛高且各品牌兼容性参差",
-     "去广告可能违反电视厂商服务条款，存在平台规则风险",
-     "两天涨粉5000+属病毒式传播，热度可能快速回落"
-    ],
-    "reason": "痛点真实、话题传播强、Launcher包装空间大，但许可证不明、本质是提示词合集、付费意愿弱，适合做内容不宜直接商用。"
-   }
-  },
-  "Kruk2/jasna": {
-   "date": "2026-10-20",
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "用显卡自动修复视频中被马赛克遮挡的画面",
-    "target_user": "有视频修复需求的成人内容消费者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 2,
-     "demoability": 6
-    },
-    "product_idea": "做成一键网页/桌面端视频去马赛克工具，按处理时长订阅收费，附预设与批量队列。",
-    "demo_idea": "网页上放一段打码短视频，点按钮后播放前后对比，30秒展示局部修复效果。",
-    "red_flags": [
-     "AGPL-3.0 且核心模型需付费许可证码，商用受限",
-     "本质是去马赛克，涉及成人内容/伦理与合规风险",
-     "已有官方 GUI 与付费体系，包装空间有限",
-     "强依赖 NVIDIA 显卡与本地算力，难以纯云端低成本演示"
-    ],
-    "reason": "效果惊艳、话题性强，但用途敏感、许可证受限且已有商业化雏形，做产品合规风险高，更适合做内容评测。"
+    "reason": "需求真实高频、演示感强、MIT安全、增长迅猛；但产品已相当成熟，个人做差异化需聚焦企业隐私与批量部署。"
    }
   },
   "aicodeking/leanrea": {
@@ -3325,6 +3175,320 @@
      "GEO概念较新，数据准确性依赖爬虫识别规则"
     ],
     "reason": "话题性不错，切中AI搜索时代的GEO痛点，MIT开源友好；但系统本身成熟度高、部署偏重，包装空间和演示冲击力一般，需谨慎核实来源真实性。"
+   }
+  },
+  "elayadesign/ai-design-skills": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给 AI 编程助手装上设计师大脑的提示词技能包",
+    "target_user": "用 Claude Code / Cursor 做产品的独立开发者和技术创业者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成设计技能市场：可视化挑技能、一键注入 Cursor/Claude，附带效果预览",
+    "demo_idea": "同一句需求，左边无技能生成土味页面，右边加载技能生成精致落地页对比",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是 markdown 提示词集合/资源列表，技术壁垒极低",
+     "目前只有 1 个技能，内容单薄，增长靠热点而非积累",
+     "单文件即可复制，付费逻辑很难成立"
+    ],
+    "reason": "蹭 AI 编码热点、传播性强，但本质是提示词清单，易被复制、商业化空间小，更适合做内容而非产品。"
+   }
+  },
+  "gitroomhq/postiz-app": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "开源自托管的社媒排期与自动发布工具，可替代 Buffer",
+    "target_user": "做多平台内容分发的自媒体团队、代运营机构",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 7,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "面向小团队的托管版多平台发布助手，免去各平台开发者应用审批",
+    "demo_idea": "网页演示一次排版，自动分发到多个社媒并展示排期日历和数据分析",
+    "attack_tool": false,
+    "red_flags": [
+     "AGPL-3.0 许可证，商用和二次分发限制大",
+     "官方已有 Postiz Cloud 商业版，自托管版与云版形成直接竞争",
+     "自托管需要自行申请各平台开发者应用，Meta/TikTok 审批可能数周，门槛高"
+    ],
+    "reason": "需求真实、热度高，但 AGPL 加官方商业化使个人包装空间受限，做内容比做产品更合适。"
+   }
+  },
+  "HKUDS/DeepTutor": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "教育学习",
+    "one_liner": "一个能长期记住你学习进度的私人 AI 家教",
+    "target_user": "备考学生、自学编程/考证的职场人、海外留学生",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "attack_tool": false,
+    "red_flags": [
+     "项目由 HKUDS 实验室主导、发版极频繁（几乎每天发布新版本），功能已经很完整，个人在上面做差异化的空间有限",
+     "依赖多种大模型 key 与 RAG 索引，部署和成本门槛较高",
+     "教育赛道竞争激烈，用户对‘AI 家教’的付费意愿需要验证"
+    ],
+    "product_idea": "做成开箱即用的网页版 AI 家教：上传教材或考试大纲，自动生成学习路径、每日练习与讲解",
+    "demo_idea": "网页上传一份 PDF 教材，30 秒生成学习路线图并演示一次针对性出题和讲解",
+    "reason": "话题性强、痛点真实、许可证宽松，但官方迭代太快且功能齐全，适合做内容选题，产品化宜聚焦单一场景。"
+   }
+  },
+  "obra/superpowers": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "给AI编程助手装上从需求到上线的开发流程",
+    "target_user": "重度使用AI编程的开发者与工程团队负责人",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 4,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "把技能包做成可视化编排面板，团队可定制AI开发流程与规范模板",
+    "demo_idea": "前后端模拟对话，AI先追问需求、拆计划、分派子代理写码并自检",
+    "attack_tool": false,
+    "red_flags": [
+     "已是Claude/Codex/Cursor等官方插件市场上的成熟项目，个人差异化空间小",
+     "本质是提示词与流程规范集合，护城河浅、易被复制",
+     "README大量篇幅是安装指南，产品化包装方向不明显"
+    ],
+    "reason": "话题度高、痛点真实，但已深度绑定大厂生态且商业化入口自留，适合做内容不适合再包产品。"
+   }
+  },
+  "storytold/wordcraft": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "用Rust写的开源版Word，能打开保存docx，还能在浏览器里用",
+    "target_user": "需要处理文档的办公用户、注重隐私和离线使用的团队、开发者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "浏览器版轻量Word，免安装打开和编辑docx，突出离线隐私和API自动化",
+    "demo_idea": "网页里打开一个docx，拖入图片、改样式、开修订、导出PDF，全程即时渲染",
+    "attack_tool": false,
+    "red_flags": [
+     "已有成品产品定位和官网，属团队商业项目而非毛坯开源",
+     "重新实现Word功能量巨大，个人难以二次开发差异化",
+     "办公套件市场被巨头垄断，付费转化难",
+     "20天1.6万星增长异常快，需警惕营销炒作"
+    ],
+    "reason": "技术惊艳、易懂好演示，但已是成熟产品、包装空间小，商业化路径弱，适合做内容而非创业切入点。"
+   }
+  },
+  "amosblomqvist/learnharness": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "教育学习",
+    "one_liner": "AI 老师先测你的理解，再按依赖关系一步步教你到目标",
+    "target_user": "自学硬技能（编程、数学、考试）的成年学习者和知识付费用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 6
+    },
+    "product_idea": "托管版 AI 学习教练：知识图谱加自适应课程，无需配置 API，按订阅收费",
+    "demo_idea": "网页输入一个学习目标，展示 AI 测水平、生成依赖图谱、逐步教并修复误解的过程",
+    "attack_tool": false,
+    "red_flags": [
+     "AGPL-3.0 许可证限制商业闭源包装",
+     "作者已做桌面端成品和官网，包装空间有限",
+     "用户需自备 30+ 家模型 API key，门槛高",
+     "笔记、思维导图类学习工具竞争激烈",
+     "仅 11 天新项目，星标增速异常，需警惕热度虚高"
+    ],
+    "reason": "教育痛点真实、概念清晰，但 AGPL 限制商用，且已有成品和自带 key 模式，包装与变现空间受限，更适合做内容而非创业。"
+   }
+  },
+  "nightly-labs/openbot": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "给每个AI助手一间独立办公室的桌面工作台",
+    "target_user": "同时用多个AI编程助手、需要并行跑任务的开发者与小型AI团队",
+    "scores": {
+     "topicality": 10,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 5,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "面向多Agent团队的可视化调度台：任务队列、共享文件、消息协作，一键接管多模型会话",
+    "demo_idea": "网页模拟三个AI助手在各自工作区并行接单、互发消息、交付文件，展示调度与协作",
+    "attack_tool": false,
+    "red_flags": [
+     "许可证为NOASSERTION，商用授权不明确",
+     "默认danger-full-access+无审批，安全风险高",
+     "已是完整Electron桌面产品+云账户+多端，包装空间有限",
+     "依赖Codex/Claude/Grok等第三方CLI，受其条款与接口变动影响"
+    ],
+    "reason": "话题热度极高、概念直观有爽点，但已是成熟商业形态且许可证不明，做内容强、做增量产品空间小。"
+   }
+  },
+  "Motionsites-AI/claude-skill": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "让 Claude 自动做出电影级高端落地页的产品化技能包",
+    "target_user": "独立开发者、接单设计师、用 AI 建站的创业者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 7,
+     "license_safety": 3,
+     "demoability": 6
+    },
+    "product_idea": "把 Prompt 和素材库做成在线建站工作台，一键生成并自检页面",
+    "demo_idea": "同一句提示词对比普通 AI 版面与技能产出的电影感首页",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是付费产品的免费引流包，核心素材与 prompt 版权归 MotionSites 不开放",
+     "许可证 NOASSERTION，指令代码 MIT 但素材受限，不能自由二次分发",
+     "同类 Claude skill 涌现，可复制性高"
+    ],
+    "reason": "选题紧跟 AI 建站热点、痛点真实，但本质是商业引流、素材受限，独立包装空间有限。"
+   }
+  },
+  "kargulstudio/calender-app-design": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "像素级还原 Figma 设计的前端日历与请假管理界面原型",
+    "target_user": "寻找日历/HR 看板 UI 模板的前端团队与独立开发者",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 3,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "把原型做成可购买的前端日历与请假管理模板，同时附带 SaaS 定制服务",
+    "demo_idea": "网页上拖拽建事件、按工作日计算请假天数并实时更新余额",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是设计稿复刻的 UI 原型，没有后端与真实业务逻辑",
+     "无商业验证，只是纯展示项目，很难形成差异化产品",
+     "创建仅 1 天、Star 增长异常，数据可信度存疑"
+    ],
+    "reason": "前端完成度高、可演示，适合做 UI 模板内容；但无后端、无痛点深度，商业化空间有限。"
+   }
+  },
+  "martinkeith700/ruyiJS": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "用 Python 跑真实 Firefox 引擎，绕过反爬拿数据",
+    "target_user": "做数据采集和风控对抗的爬虫工程师、逆向团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 2,
+     "demoability": 5
+    },
+    "product_idea": "云端反爬采集 API，托管小狐狸引擎，按请求数收费",
+    "demo_idea": "网页输入目标站 URL，实时展示其 JS 签名被本地引擎算出 token",
+    "attack_tool": false,
+    "red_flags": [
+     "许可证为 NOASSERTION、自定义不确定条款",
+     "README 明说用于绕过反爬和验证码式 bot 检查，存在合规与平台条款风险",
+     "仅支持 Windows x64，一创建即日涨 440 星，疑似营销刷量",
+     "域名站与赞助商链接明显是营销页"
+    ],
+    "reason": "技术有意思、痛点真实，但是绕过反爬的合规灰色地带、许可不明、平台单一，做内容有话题但产品化风险高。"
+   }
+  },
+  "blakeandersonw/ai-app-playbook": {
+   "date": "2026-10-28",
+   "v": 2,
+   "eval": {
+    "category": "教育学习",
+    "one_liner": "一份教人用AI快速做出赚钱小App的开源创业手册",
+    "target_user": "想做独立开发/AI副业的个人开发者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 5,
+     "pain": 5,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 3
+    },
+    "product_idea": "把手册做成带模板的AI建站陪跑服务，Claude Code一键生成可上线的App骨架",
+    "demo_idea": "网页演示：输入一个痛点，自动生成技术栈清单、成本估算和分阶段路线图",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是教程/资源列表+模板集合，非可产品化的软件",
+     "内容含大量未经验证的收益数字和厂商推广链接，可信度存疑",
+     "星标一天暴涨386、创建于1天前，疑似营销造势",
+     "同质内容网上极多，个人难以差异化"
+    ],
+    "reason": "内容话题性强、易懂，但作为产品是教程合集，缺少可包装的核心软件，商业化路径弱，更适合做内容选题而非创业项目。"
    }
   }
  }
