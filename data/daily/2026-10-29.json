@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-29",
+ "headline": "Taste Skill：让AI网页设计有品味",
+ "summary_md": "Leonxlnx/taste-skill 是一个给编码 AI 加“设计品味”的 Agent Skill。装进 Claude Code 或 Codex 后，AI 不再是套模板生成千篇一律的落地页，而是先做艺术方向、找真实图片，再用浏览器亲自检查页面丑不丑。从 README 看，它基于对 247 个精选网站的研究，构建流程分六步：读 brief、三选一风格方向、提炼核心概念、从开放图库找配图并标注来源、在三种宽度下用真实浏览器检查、看截图修掉前三名问题。一个页面跑下来约 30-45 分钟、几十万 token。最近涨得快，是因为 AI 编程已经能跑通，但“生成的前端太丑”是几乎所有人都能感知的痛，这个项目 demo 效果直接。做成产品的机会在于：把命令行流程包成网页版，提供并排风格对比、一键换方向、托管浏览器检查，对没有设计师的独立开发者按订阅收费。",
+ "pick": {
+  "full_name": "Leonxlnx/taste-skill",
+  "url": "https://github.com/Leonxlnx/taste-skill",
+  "description": "Agent skills that give coding agents taste: art direction, reference images and a browser check instead of generic AI pages",
+  "license": "MIT",
+  "stars": 104379,
+  "daily_rate": 563.0,
+  "category": "AI应用",
+  "one_liner": "让AI写代码时自动做出有设计感的网页，而不是千篇一律的模板。",
+  "reason": "痛点真实、增长迅猛、MIT许可友好，演示性强；但作者自己已在商业化，外部包装空间有限，token成本也是难点。",
+  "content": 8.0,
+  "startup": 7.65,
+  "final": 7.84,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-29-leonxlnx-taste-skill",
+ "top": [
+  {
+   "full_name": "Leonxlnx/taste-skill",
+   "url": "https://github.com/Leonxlnx/taste-skill",
+   "one_liner": "让AI写代码时自动做出有设计感的网页，而不是千篇一律的模板。",
+   "reason": "痛点真实、增长迅猛、MIT许可友好，演示性强；但作者自己已在商业化，外部包装空间有限，token成本也是难点。",
+   "content": 8.0,
+   "startup": 7.65,
+   "final": 7.84,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "pbakaus/impeccable",
+   "url": "https://github.com/pbakaus/impeccable",
+   "one_liner": "给AI编程助手装上设计品味，专门抓AI生成的丑前端",
+   "reason": "话题性和wow都强，AI丑前端是真痛点且可秒懂演示；但开源已相当完整，付费点需靠托管报告和团队规则库撑起来。",
+   "content": 8.0,
+   "startup": 6.9,
+   "final": 7.78,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "obra/superpowers",
+   "url": "https://github.com/obra/superpowers",
+   "one_liner": "给编码AI装上一套软件开发方法论，让它先想清楚再动手写代码",
+   "reason": "话题性和演示效果都很强，痛点是真实存在的，许可证也友好。但它已经是各大官方市场里的明星插件，本身又只是提示词集合，个人开发者的包装空间和变现空间都被压缩了，更适合拿来做内容，不太适合直接做成产品。",
+   "content": 8.0,
+   "startup": 7.15,
+   "final": 7.61,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "t3dotgg/tstack",
+   "url": "https://github.com/t3dotgg/tstack",
+   "one_liner": "让 AI 编程助手自动改代码、提 PR、盯 CI、合并上线的技能包",
+   "reason": "话题性强、包装空间大，但本质是提示词集合，商业化靠托管与团队治理而非技能本身。",
+   "content": 7.67,
+   "startup": 7.6,
+   "final": 7.42,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "ly05010419/MacNativeGames",
+   "url": "https://github.com/ly05010419/MacNativeGames",
+   "one_liner": "在苹果设备上原生跑《塞尔达》等 Switch 游戏的移植工具",
+   "reason": "话题性和惊喜感极强，技术叙事极具传播价值；但法律与 IP 风险锁死商业化，只适合做内容与个人工具。",
+   "content": 9.0,
+   "startup": 6.4,
+   "final": 7.34,
+   "category_penalty": 0
+  }
+ ]
+}

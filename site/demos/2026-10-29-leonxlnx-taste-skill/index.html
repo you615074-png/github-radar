@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Palate — design taste for AI-built websites</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --paper:#faf8f4; --ink:#17140f; --muted:#5b564d; --line:#e5e0d6; --accent:#b4542f;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Iowan Old Style",Georgia,"Times New Roman",serif}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .eyebrow{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#8a8272}
+
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;
+    color:#3f3a32;border-radius:999px;padding:7px 13px;font-size:12.5px;line-height:1.1;cursor:pointer;
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  .chip:hover{border-color:#c9c2b4;background:#fffdf8}
+  .chip-on,.chip-on:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .swatch{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.14) inset}
+
+  .browser{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(23,20,15,.05)}
+  .browser-bar{display:flex;align-items:center;gap:8px;padding:7px 10px;background:#f4f1ea;border-bottom:1px solid var(--line)}
+  .dots{display:flex;gap:4px}
+  .dots i{display:block;width:6px;height:6px;border-radius:50%;background:#d5cfc2}
+  .url{
+    flex:1;text-align:center;font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#8a8272;
+    background:#fff;border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .pane{height:400px;overflow:hidden;background:#fff;position:relative}
+  @media (max-width:420px){ .pane{height:378px} }
+
+  .shimmer{height:100%;background:linear-gradient(90deg,#f1eee8 25%,#e7e2d8 37%,#f1eee8 63%);background-size:400% 100%;animation:shim 1.1s ease-in-out infinite}
+  @keyframes shim{0%{background-position:100% 0}100%{background-position:0 0}}
+
+  .checks{list-style:none;margin:12px 0 0;padding:0}
+  .checks li{font-size:12px;line-height:1.5;color:#4a453c;padding-left:17px;position:relative;margin-bottom:6px}
+  .checks li::before{position:absolute;left:0;top:-1px;font-size:11px}
+  .checks li.fail::before{content:"\2715";color:var(--accent)}
+  .checks li.pass::before{content:"\2713";color:#3f6b3a}
+  .verdict{font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:9px}
+  .verdict.fail{color:var(--accent)}
+  .verdict.pass{color:#3f6b3a}
+
+  .badge{background:#f2efe8;color:#6f675c;border-radius:999px;padding:3px 9px;font-size:10px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase}
+  .badge-bad{background:#fbeee9;color:#a94b28;border-radius:999px;padding:3px 9px;font-size:11px;font-family:ui-monospace,Menlo,monospace}
+  .badge-good{background:#eaf1e8;color:#3f6b3a;border-radius:999px;padding:3px 9px;font-size:11px;font-family:ui-monospace,Menlo,monospace}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;
+    padding:11px 18px;font-size:14px;font-weight:500;cursor:pointer;text-decoration:none;
+    border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;
+  }
+  .btn-dark{background:var(--ink);color:#fbfaf7}
+  .btn-dark:hover{background:#2b2620}
+  .btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:#c9c2b4}
+
+  .logline{
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.7;color:#6f675c;
+    animation:fadeUp .28s ease both;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+  /* ---------- Generic agent preview (the "before") ---------- */
+  .gv{height:100%;overflow:hidden;background:#fff;color:#1f2937;display:flex;flex-direction:column;
+      font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  .gv-nav{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #eef0f4}
+  .gv-logo{font-size:11px;font-weight:800;letter-spacing:-.3px;color:#7c3aed}
+  .gv-links{display:flex;gap:7px;font-size:7.5px;color:#9ca3af}
+  .gv-cta{font-size:7.5px;font-weight:700;color:#fff;background:#7c3aed;border-radius:4px;padding:3px 7px}
+  .gv-hero{flex:1;text-align:center;padding:12px 14px 0;display:flex;flex-direction:column;align-items:center;min-height:0}
+  .gv-badge{font-size:6.5px;letter-spacing:.08em;text-transform:uppercase;color:#7c3aed;background:#f5f3ff;border-radius:999px;padding:2px 7px}
+  .gv-h1{font-size:16px;font-weight:800;line-height:1.16;letter-spacing:-.4px;margin-top:7px;max-width:246px;
+         background:linear-gradient(90deg,#7c3aed,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .gv-sub{font-size:8px;color:#6b7280;line-height:1.5;margin-top:5px;max-width:232px}
+  .gv-btns{display:flex;gap:5px;margin-top:8px}
+  .gv-b1{font-size:7.5px;font-weight:700;color:#fff;background:#7c3aed;border-radius:4px;padding:4px 9px}
+  .gv-b2{font-size:7.5px;font-weight:700;color:#374151;background:#f3f4f6;border-radius:4px;padding:4px 9px}
+  .gv-shot{margin-top:10px;width:100%;flex:1;min-height:66px;border-radius:6px;border:1px solid #f3f4f6;
+           background:linear-gradient(120deg,#ede9fe,#fce7f3 45%,#dbeafe)}
+  .gv-cards{display:flex;gap:6px;width:100%;margin-top:8px}
+  .gv-card{flex:1;background:#f9fafb;border:1px solid #f3f4f6;border-radius:6px;padding:6px}
+  .gv-card-e{font-size:10px}
+  .gv-card-t{font-size:7.5px;font-weight:700;margin-top:3px}
+  .gv-bar{height:3px;background:#e5e7eb;border-radius:2px;margin-top:5px}
+  .gv-bar.s{width:66%;margin-top:3px}
+  .gv-cookie{margin:8px 10px;background:#111827;color:#d1d5db;font-size:6.5px;border-radius:4px;
+             padding:4px 7px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+  .gv-cookie b{color:#fff;background:#374151;border-radius:3px;padding:1px 5px;font-weight:600}
+
+  /* ---------- Palate / Taste Skill preview (the "after") ---------- */
+  .tv{height:100%;overflow:hidden;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;
+      padding:11px 13px;font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  .tv-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .tv-brand{font-size:11.5px;font-weight:600;letter-spacing:-.2px}
+  .tv-nav{font-family:ui-monospace,Menlo,monospace;font-size:6.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.62;white-space:nowrap}
+  .tv-rule{height:1px;margin:7px 0 8px}
+  .tv-kicker{font-family:ui-monospace,Menlo,monospace;font-size:6.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  .tv-h1{font-size:18px;line-height:1.08;letter-spacing:-.5px;margin-top:6px;font-weight:400}
+  .tv-h1.serif{font-family:"Iowan Old Style",Georgia,"Times New Roman",serif}
+  .tv-h1.mono{font-family:ui-monospace,Menlo,monospace;text-transform:uppercase;font-size:12.5px;letter-spacing:.015em;
+              font-weight:600;line-height:1.35}
+  .tv-sub{font-size:8px;line-height:1.55;margin-top:6px;opacity:.78;max-width:255px}
+  .tv-row{display:flex;align-items:center;gap:9px;margin-top:9px}
+  .tv-cta{font-size:7.5px;font-weight:600;background:var(--ac);color:var(--cta);border-radius:var(--rad);padding:4.5px 10px}
+  .tv-tag{font-family:ui-monospace,Menlo,monospace;font-size:6.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.6;white-space:nowrap}
+  .tv-photo{flex:1;min-height:52px;margin-top:9px;border-radius:var(--rad);background:var(--photo);position:relative;overflow:hidden}
+  .tv-credit{position:absolute;bottom:5px;left:6px;font-family:ui-monospace,Menlo,monospace;font-size:5.5px;
+             letter-spacing:.08em;text-transform:uppercase;color:#fff;opacity:.85;background:rgba(0,0,0,.34);
+             padding:1px 4px;border-radius:2px}
+  .tv-facts{display:flex;gap:15px;margin-top:9px;padding-top:7px;border-top:1px solid transparent}
+  .tv-fact-n{font-size:12.5px;line-height:1;font-weight:400}
+  .tv-fact-l{font-family:ui-monospace,Menlo,monospace;font-size:6px;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-top:3px}
+
+  #toast{
+    position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);background:var(--ink);color:#fbfaf7;
+    border-radius:999px;padding:10px 18px;font-size:13px;opacity:0;pointer-events:none;
+    transition:opacity .25s,transform .25s;z-index:60;max-width:calc(100vw - 32px);text-align:center;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between py-5">
+  <div class="flex items-center gap-3">
+    <span class="inline-flex items-center justify-center w-8 h-8 rounded-[9px] bg-[#17140f] text-[#faf8f4]">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 19V7l8 6 8-6v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="text-[15px] font-semibold tracking-tight">Palate</span>
+    <span class="mono text-[9px] uppercase tracking-[.18em] text-[#8a8272] border border-[#e5e0d6] rounded-full px-2 py-[3px] hidden sm:inline">Concept demo</span>
+  </div>
+  <nav class="hidden md:flex items-center gap-7 text-[13px] text-[#5b564d]">
+    <a href="#demo" class="hover:text-[#17140f] transition-colors">Demo</a>
+    <a href="#uses" class="hover:text-[#17140f] transition-colors">Use cases</a>
+    <a href="#pricing" class="hover:text-[#17140f] transition-colors">Pricing</a>
+  </nav>
+  <a href="#demo" class="btn btn-dark !py-2 !px-4 !text-[13px]">Try the demo</a>
+</header>
+
+<section class="max-w-6xl mx-auto px-5 sm:px-8 pt-2 pb-10 sm:pt-8 sm:pb-14">
+  <p class="eyebrow mb-4">Agent skill, packaged</p>
+  <h1 class="serif text-[34px] sm:text-[54px] leading-[1.03] tracking-[-0.02em] max-w-3xl">
+    Your AI ships the code.<br class="hidden sm:block" />
+    <span class="text-[#b4542f]">Palate</span> makes it look designed.
+  </h1>
+  <p class="mt-5 max-w-2xl text-[15px] sm:text-[16.5px] leading-relaxed text-[#5b564d]">
+    One brief, two websites. On the left, what a coding agent ships by default. On the right, what it ships with
+    <strong class="font-semibold text-[#17140f]">Taste Skill</strong> installed: an art direction, real photographs,
+    and a browser check that fails on slop instead of shipping it.
+  </p>
+  <div class="mt-7 flex flex-wrap items-center gap-3">
+    <a href="#demo" class="btn btn-dark">Compare a build &rarr;</a>
+    <a href="#pricing" class="btn btn-ghost">See pricing</a>
+    <span class="mono text-[10px] uppercase tracking-[.16em] text-[#8a8272] ml-1">Built on an MIT skill &middot; v2.1</span>
+  </div>
+</section>
+
+<section id="demo" class="max-w-6xl mx-auto px-5 sm:px-8 pb-16">
+  <div class="rounded-2xl border border-[#e5e0d6] bg-white p-5 sm:p-7 shadow-[0_1px_2px_rgba(23,20,15,0.04)]">
+
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div class="flex items-center gap-2.5">
+        <h2 class="text-[15px] font-semibold tracking-tight">Side-by-side generator</h2>
+        <span class="badge">Sample data</span>
+      </div>
+      <div class="mono text-[10px] uppercase tracking-[.16em] text-[#a9a294]">6-step build &middot; 3 browser widths</div>
+    </div>
+
+    <label for="briefInput" class="mono block text-[10px] uppercase tracking-[.18em] text-[#8a8272] mb-2">1 &middot; The brief</label>
+    <textarea id="briefInput" rows="2" class="w-full resize-none rounded-xl border border-[#e5e0d6] bg-[#fffdf8] p-3.5 text-[14px] leading-relaxed text-[#17140f] outline-none focus:border-[#c9c2b4]"></textarea>
+    <div id="presetChips" class="flex flex-wrap gap-2 mt-3"></div>
+
+    <div class="flex flex-wrap items-center justify-between gap-2 mt-6 mb-2">
+      <span class="mono block text-[10px] uppercase tracking-[.18em] text-[#8a8272]">2 &middot; Art direction &mdash; swap it in one click</span>
+      <span class="mono text-[9.5px] text-[#b3ac9e] uppercase tracking-[.14em]">dealt from 20 researched directions</span>
+    </div>
+    <div id="dirChips" class="flex flex-wrap gap-2"></div>
+
+    <div class="flex flex-wrap items-center gap-3 mt-6">
+      <button id="generateBtn" type="button" class="btn btn-dark">Generate both pages</button>
+      <span class="mono text-[10px] text-[#8a8272] leading-relaxed max-w-sm">A real build takes 30&ndash;45 minutes inside your agent. Here it takes about a second.</span>
+    </div>
+
+    <hr class="border-[#eee9df] my-6" />
+
+    <div class="flex flex-wrap items-start justify-between gap-2 mb-2">
+      <p id="ideaLine" class="serif text-[14.5px] leading-snug text-[#3f3a32] max-w-xl"></p>
+      <span class="badge shrink-0">Sample data</span>
+    </div>
+    <p id="briefQuote" class="text-[12.5px] text-[#8a8272] mb-4 leading-relaxed"></p>
+
+    <div id="buildLog" class="rounded-xl border border-[#eee9df] bg-[#fffdf8] p-3.5 mb-5" style="min-height:58px" aria-live="polite"></div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#b4542f]"></span>
+            <span class="text-[12.5px] font-medium">Default coding agent</span>
+          </div>
+          <span class="badge-bad">4.1 / 10</span>
+        </div>
+        <div class="browser">
+          <div class="browser-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url" id="defaultUrl">your-app.vercel.app</span>
+          </div>
+          <div class="pane" id="paneDefault"></div>
+        </div>
+        <ul class="checks">
+          <li class="fail">Title on the first screen &mdash; three competing headlines and two CTAs</li>
+          <li class="fail">Equal margins at 390 / 768 / 1440 &mdash; hero block shoved left, 32px vs 96px</li>
+          <li class="fail">Colour spent on data &mdash; accent used 11 times, all decorative</li>
+          <li class="fail">Photographs real and credited &mdash; 0 of 6, gradient placeholders</li>
+        </ul>
+        <p class="verdict fail">Ship-blocked by the browser check</p>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#3f6b3a]"></span>
+            <span class="text-[12.5px] font-medium">Palate &middot; Taste Skill</span>
+          </div>
+          <span class="badge-good">8.7 / 10</span>
+        </div>
+        <div class="browser">
+          <div class="browser-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url" id="tasteUrl">harborrow.com</span>
+          </div>
+          <div class="pane" id="paneTaste"></div>
+        </div>
+        <ul class="checks">
+          <li class="pass">One title, one CTA, above the fold at all three widths</li>
+          <li class="pass">Margins equal; grid holds at 390 / 768 / 1440</li>
+          <li class="pass">Accent spent twice &mdash; a rule and the button</li>
+          <li class="pass">4 photographs, credited; body contrast 4.9:1</li>
+        </ul>
+        <p class="verdict pass">Passed &middot; 3 fixes over 2 review rounds</p>
+      </div>
+
+    </div>
+
+    <p class="mt-4 text-[11.5px] text-[#b3ac9e] leading-relaxed max-w-2xl">
+      Both previews are rendered live in this page from sample content. Photo blocks stand in for the credited
+      photographs the real skill pulls from open archives.
+    </p>
+  </div>
+</section>
+
+<section id="uses" class="max-w-6xl mx-auto px-5 sm:px-8 pb-16">
+  <p class="eyebrow mb-3">Where it pays for itself</p>
+  <h2 class="serif text-[26px] sm:text-[34px] leading-tight tracking-[-0.01em] max-w-2xl">Three briefs people actually type.</h2>
+  <div class="grid sm:grid-cols-3 gap-4 mt-7">
+
+    <div class="rounded-2xl border border-[#e5e0d6] bg-white p-5">
+      <div class="text-[18px]">&#128640;</div>
+      <h3 class="mt-3 text-[14.5px] font-semibold tracking-tight">Launch pages that don't look like templates</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-[#5b564d]">
+        Pre-seed founders ship the landing page the same week they ship the product. The agent picks a direction,
+        writes to it, and refuses to stop while the browser check is red.
+      </p>
+      <p class="mono mt-3 text-[10px] uppercase tracking-[.14em] text-[#b3ac9e]">~35 min &middot; 1 brief &rarr; 1 page</p>
+    </div>
+
+    <div class="rounded-2xl border border-[#e5e0d6] bg-white p-5">
+      <div class="text-[18px]">&#127912;</div>
+      <h3 class="mt-3 text-[14.5px] font-semibold tracking-tight">Design taste without a designer</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-[#5b564d]">
+        A two-person team gets a house style: type pairing, margins, and a palette that gets spent on data
+        instead of decoration. Swap the direction and the whole page follows.
+      </p>
+      <p class="mono mt-3 text-[10px] uppercase tracking-[.14em] text-[#b3ac9e]">1 click &middot; 20 directions</p>
+    </div>
+
+    <div class="rounded-2xl border border-[#e5e0d6] bg-white p-5">
+      <div class="text-[18px]">&#128202;</div>
+      <h3 class="mt-3 text-[14.5px] font-semibold tracking-tight">App screens and dashboards (v2.1)</h3>
+      <p class="mt-2 text-[13px] leading-relaxed text-[#5b564d]">
+        Quiet panels, aligned figures, colour spent on data, navigation that folds away on a phone. The landing page
+        builds the screen it advertises, so the screenshots look like a working product.
+      </p>
+      <p class="mono mt-3 text-[10px] uppercase tracking-[.14em] text-[#b3ac9e]">app rules &middot; phone layout</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="pricing" class="max-w-6xl mx-auto px-5 sm:px-8 pb-16">
+  <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
+    <div>
+      <p class="eyebrow mb-3">Pricing</p>
+      <h2 class="serif text-[26px] sm:text-[34px] leading-tight tracking-[-0.01em]">Cheaper than one revision round.</h2>
+    </div>
+    <span class="mono text-[10px] uppercase tracking-[.14em] text-[#a9a294]">USD &middot; monthly &middot; cancel anytime</span>
+  </div>
+
+  <div class="grid sm:grid-cols-3 gap-4">
+
+    <div class="rounded-2xl border border-[#e5e0d6] bg-white p-5 flex flex-col">
+      <span class="text-[13px] font-medium">Free</span>
+      <div class="mt-3 flex items-baseline gap-1">
+        <span class="serif text-[30px] leading-none">$0</span><span class="text-[12px] text-[#8a8272]">/mo</span>
+      </div>
+      <ul class="mt-4 space-y-2 text-[12.5px] text-[#5b564d] flex-1">
+        <li>5 side-by-side builds a month</li>
+        <li>3 art directions</li>
+        <li>Browser check report</li>
+      </ul>
+      <button type="button" class="btn btn-ghost mt-5 w-full" data-toast="Concept demo &mdash; no checkout, nothing was sent.">Start free</button>
+    </div>
+
+    <div class="rounded-2xl border-2 border-[#17140f] bg-white p-5 flex flex-col">
+      <div class="flex items-center justify-between">
+        <span class="text-[13px] font-medium">Studio</span>
+        <span class="mono text-[9px] uppercase tracking-[.14em] bg-[#17140f] text-white rounded-full px-2 py-[3px]">Most picked</span>
+      </div>
+      <div class="mt-3 flex items-baseline gap-1">
+        <span class="serif text-[30px] leading-none">$19</span><span class="text-[12px] text-[#8a8272]">/mo</span>
+      </div>
+      <ul class="mt-4 space-y-2 text-[12.5px] text-[#5b564d] flex-1">
+        <li>Unlimited builds and style swaps</li>
+        <li>All 20 researched directions</li>
+        <li>Photo credits and export to your repo</li>
+        <li>App screens and dashboards</li>
+      </ul>
+      <button type="button" class="btn btn-dark mt-5 w-full" data-toast="Concept demo &mdash; no checkout, nothing was sent.">Choose Studio</button>
+    </div>
+
+    <div class="rounded-2xl border border-[#e5e0d6] bg-white p-5 flex flex-col">
+      <span class="text-[13px] font-medium">Team</span>
+      <div class="mt-3 flex items-baseline gap-1">
+        <span class="serif text-[30px] leading-none">$49</span><span class="text-[12px] text-[#8a8272]">/mo</span>
+      </div>
+      <ul class="mt-4 space-y-2 text-[12.5px] text-[#5b564d] flex-1">
+        <li>5 seats, shared brand kits</li>
+        <li>Private direction library</li>
+        <li>Slop-check rules for your own team</li>
+      </ul>
+      <button type="button" class="btn btn-ghost mt-5 w-full" data-toast="Concept demo &mdash; no checkout, nothing was sent.">Choose Team</button>
+    </div>
+
+  </div>
+
+  <div class="mt-6 rounded-2xl bg-[#17140f] text-[#f6f2ea] p-6 sm:p-8">
+    <div class="grid sm:grid-cols-[1.15fr_1fr] gap-6 sm:items-center">
+      <div>
+        <h3 class="serif text-[22px] sm:text-[26px] leading-tight">Early access opens in waves.</h3>
+        <p class="mt-2 text-[13px] leading-relaxed text-[#c8c1b4]">
+          Palate is a wrapper, not a rewrite: the design taste comes from the open-source skill itself.
+          Leave an address and we would send exactly one email when the beta opens.
+        </p>
+      </div>
+      <form id="waitlistForm" class="flex flex-col gap-2" novalidate>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="waitlistEmail" type="email" value="you@studio.com" aria-label="Email address"
+                 class="flex-1 rounded-lg bg-[#26221c] border border-[#3a352d] px-3 py-2.5 text-[13.5px] text-[#f6f2ea] outline-none focus:border-[#6f675c]" />
+          <button type="submit" class="btn bg-[#f6f2ea] text-[#17140f] hover:bg-white">Join the waitlist</button>
+        </div>
+        <p id="waitlistNote" class="mono text-[10.5px] text-[#a9a294] tracking-[.06em] min-h-[15px]"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-[#e5e0d6]">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+    <p class="text-[11.5px] text-[#8a8272] leading-relaxed max-w-xl">
+      Concept demo, based on the open-source project <a href="https://github.com/Leonxlnx/taste-skill" class="underline decoration-[#c9c2b4] hover:text-[#17140f] transition-colors">Leonxlnx/taste-skill</a> (MIT), unofficial, all data is sample data
+    </p>
+    <div class="flex items-center gap-3 mono text-[10px] uppercase tracking-[.16em] text-[#b3ac9e]">
+      <span>Palate</span><span>&middot;</span><span>2026 concept</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var PRESETS = [
+    {
+      id: "coffee",
+      chip: "\u2615 Coffee roaster",
+      brief: "Landing page for a small-batch coffee roaster in Portland. Subscription first, roasted to order, ships weekly. No stock photos, no purple gradients.",
+      brand: "Harbor Row",
+      kicker: "Portland, OR \u2014 est. 2016",
+      headline: "Coffee roasted the week you drink it.",
+      sub: "Twelve kilos at a time on a 1954 Probat, three blocks from the river. Bagged the morning it ships.",
+      cta: "Start a subscription",
+      tag: "Week 41 \u00b7 Ethiopia Guji",
+      facts: [["12 kg", "per roast"], ["52 h", "roast to door"], ["4.9", "avg cup"]]
+    },
+    {
+      id: "analytics",
+      chip: "\ud83d\udcc8 SaaS analytics",
+      brief: "Launch page for an analytics tool for indie SaaS founders. One dashboard screenshot, a pricing table, a free tier.",
+      brand: "Kettle",
+      kicker: "Analytics for indie SaaS",
+      headline: "Know which numbers actually moved this week.",
+      sub: "One screen, four figures, no dashboard theatre. Connects to Stripe and your database in about a minute.",
+      cta: "See a live board",
+      tag: "MRR \u00b7 churn \u00b7 activation",
+      facts: [["4", "numbers only"], ["60 s", "to connect"], ["$0", "free tier"]]
+    },
+    {
+      id: "ceramics",
+      chip: "\ud83c\udffa Ceramics studio",
+      brief: "Portfolio and shop for a ceramicist in Asheville. Small runs, wood-fired, sells out in a few hours.",
+      brand: "Mora Clay",
+      kicker: "Asheville, NC \u2014 wood-fired",
+      headline: "Pots that come out of the kiln a little wrong.",
+      sub: "Two firings a year. Everything is thrown, trimmed and glazed by one person, so nothing matches exactly.",
+      cta: "See the next firing",
+      tag: "Firing 07 \u00b7 41 pieces",
+      facts: [["2", "firings / yr"], ["41", "pieces"], ["0", "two alike"]]
+    },
+    {
+      id: "notes",
+      chip: "\ud83d\uddd2\ufe0f Local notes app",
+      brief: "Launch page for a note-taking app that runs locally and never phones home. Privacy is the whole pitch.",
+      brand: "Marginalia",
+      kicker: "Notes that stay on your disk",
+      headline: "Your notes never leave this laptop.",
+      sub: "Local files, plain Markdown, no account. Search forty thousand notes in under a second, offline.",
+      cta: "Download for macOS",
+      tag: "v1.4 \u00b7 12 MB",
+      facts: [["0", "servers"], ["MD", "plain files"], ["1 s", "search"]]
+    }
+  ];
+
+  var DIRS = {
+    editorial: {
+      label: "Swiss editorial",
+      swatch: "#8d7a63",
+      bg: "#faf8f4", fg: "#17140f", ac: "#8d7a63", cta: "#faf8f4",
+      rad: "2px", rul: "rgba(23,20,15,.18)",
+      photo: "linear-gradient(150deg,#9a9c88,#6c7160 58%,#3f4439)",
+      head: "serif",
+      nav: "Journal \u00b7 Shop \u00b7 Subscribe",
+      idea: function (p) {
+        return "Treat " + p.brand + " like a printed journal \u2014 a dated masthead, one headline, the numbers kept in the margin.";
+      }
+    },
+    warm: {
+      label: "Warm analog",
+      swatch: "#b4542f",
+      bg: "#f6ece0", fg: "#2b1f14", ac: "#b4542f", cta: "#fff7ef",
+      rad: "10px", rul: "rgba(43,31,20,.16)",
+      photo: "linear-gradient(150deg,#dda883,#b4542f 62%,#7d3618)",
+      head: "serif",
+      nav: "Shop \u00b7 Story \u00b7 Visit",
+      idea: function (p) {
+        return "Make the page feel like what the customer actually holds \u2014 for " + p.brand + ", unbleached paper, warm ink, edges that are not perfectly straight.";
+      }
+    },
+    grid: {
+      label: "Brutalist grid",
+      swatch: "#0a0a0a",
+      bg: "#ffffff", fg: "#0a0a0a", ac: "#0a0a0a", cta: "#ffffff",
+      rad: "0px", rul: "#0a0a0a",
+      photo: "linear-gradient(150deg,#2b2b2b,#0a0a0a)",
+      head: "mono",
+      nav: "Index \u00b7 Stock \u00b7 Contact",
+      idea: function (p) {
+        return "Build " + p.brand + " like a shipping manifest: every element is a row, a rule, or a number, and nothing is decorative.";
+      }
+    }
+  };
+
+  var STEPS = [
+    "Read the brief \u2014 listed what only this client has",
+    "Dealt 3 of 20 researched directions, picked one",
+    "Found the idea in a single sentence",
+    "Set type scale, grid and a two-colour palette",
+    "Pulled 4 photographs from open archives, credited",
+    "Checked in a real browser at 390 / 768 / 1440 \u2014 failed it, rebuilt"
+  ];
+
+  var state = { preset: "coffee", dir: "editorial" };
+  var buildRun = 0;
+  var toastTimer = null;
+
+  function $(id) { return document.getElementById(id); }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function slug(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+
+  function currentPreset() {
+    for (var i = 0; i < PRESETS.length; i++) {
+      if (PRESETS[i].id === state.preset) return PRESETS[i];
+    }
+    return PRESETS[0];
+  }
+
+  /* ---------- the "before": generic agent output ---------- */
+
+  function genericPage() {
+    var cards = [
+      ["\u26a1", "Fast"],
+      ["\ud83d\udd12", "Secure"],
+      ["\ud83d\udcc8", "Scalable"]
+    ].map(function (c) {
+      return '<div class="gv-card">' +
+        '<div class="gv-card-e">' + c[0] + '</div>' +
+        '<div class="gv-card-t">' + c[1] + '</div>' +
+        '<div class="gv-bar"></div>' +
+        '<div class="gv-bar s"></div>' +
+      '</div>';
+    }).join("");
+
+    return '<div class="gv">' +
+      '<div class="gv-nav">' +
+        '<span class="gv-logo">YourBrand</span>' +
+        '<span class="gv-links"><span>Features</span><span>Pricing</span><span>Docs</span><span>About</span></span>' +
+        '<span class="gv-cta">Get started</span>' +
+      '</div>' +
+      '<div class="gv-hero">' +
+        '<span class="gv-badge">\u2728 AI-powered platform</span>' +
+        '<div class="gv-h1">Empower Your Business With Next-Gen Solutions</div>' +
+        '<div class="gv-sub">The all-in-one platform that helps teams streamline workflows, unlock insights, and scale faster than ever before.</div>' +
+        '<div class="gv-btns"><span class="gv-b1">Get Started Free</span><span class="gv-b2">Learn More</span></div>' +
+        '<div class="gv-shot"></div>' +
+        '<div class="gv-cards">' + cards + '</div>' +
+      '</div>' +
+      '<div class="gv-cookie"><span>We use cookies to improve your experience.</span><b>Accept</b></div>' +
+    '</div>';
+  }
+
+  /* ---------- the "after": Palate / Taste Skill output ---------- */
+
+  function tastePage(p, dirKey) {
+    var d = DIRS[dirKey] || DIRS.editorial;
+
+    var facts = p.facts.map(function (f) {
+      return '<div><div class="tv-fact-n">' + esc(f[0]) + '</div>' +
+             '<div class="tv-fact-l">' + esc(f[1]) + '</div></div>';
+    }).join("");
+
+    return '<div class="tv" style="--bg:' + d.bg + ';--fg:' + d.fg + ';--ac:' + d.ac +
+             ';--cta:' + d.cta + ';--rad:' + d.rad + ';--photo:' + d.photo + ';">' +
+      '<div class="tv-top">' +
+        '<span class="tv-brand">' + esc(p.brand) + '</span>' +
+        '<span class="tv-nav">' + esc(d.nav) + '</span>' +
+      '</div>' +
+      '<div class="tv-rule" style="background:' + d.rul + '"></div>' +
+      '<div class="tv-kicker">' + esc(p.kicker) + '</div>' +
+      '<div class="tv-h1 ' + d.head + '">' + esc(p.headline) + '</div>' +
+      '<div class="tv-sub">' + esc(p.sub) + '</div>' +
+      '<div class="tv-row">' +
+        '<span class="tv-cta">' + esc(p.cta) + '</span>' +
+        '<span class="tv-tag">' + esc(p.tag) + '</span>' +
+      '</div>' +
+      '<div class="tv-photo"><span class="tv-credit">Photo \u00b7 open archive \u00b7 credited</span></div>' +
+      '<div class="tv-facts" style="border-top-color:' + d.rul + '">' + facts + '</div>' +
+    '</div>';
+  }
+
+  /* ---------- rendering ---------- */
+
+  function render() {
+    var p = currentPreset();
+    var d = DIRS[state.dir] || DIRS.editorial;
+
+    $("paneDefault").innerHTML = genericPage();
+    $("paneTaste").innerHTML = tastePage(p, state.dir);
+    $("defaultUrl").textContent = "your-app.vercel.app";
+    $("tasteUrl").textContent = slug(p.brand) + ".com";
+    $("ideaLine").textContent = d.idea(p);
+
+    var typed = $("briefInput").value.trim();
+    var shown = typed.length > 150 ? typed.slice(0, 150) + "\u2026" : typed;
+    $("briefQuote").textContent = shown ? "Brief: \u201c" + shown + "\u201d" : "";
+  }
+
+  function fillLog() {
+    var html = "";
+    for (var i = 0; i < STEPS.length; i++) {
+      html += '<div class="logline">\u2713 ' + esc(STEPS[i]) + '</div>';
+    }
+    $("buildLog").innerHTML = html;
+  }
+
+  /* ---------- interactions ---------- */
+
+  function buildChips() {
+    var presetWrap = $("presetChips");
+    presetWrap.innerHTML = "";
+    PRESETS.forEach(function (p) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (p.id === state.preset ? " chip-on" : "");
+      b.textContent = p.chip;
+      b.addEventListener("click", function () {
+        state.preset = p.id;
+        $("briefInput").value = p.brief;
+        buildChips();
+        render();
+      });
+      presetWrap.appendChild(b);
+    });
+
+    var dirWrap = $("dirChips");
+    dirWrap.innerHTML = "";
+    Object.keys(DIRS).forEach(function (key) {
+      var d = DIRS[key];
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (key === state.dir ? " chip-on" : "");
+      b.innerHTML = '<span class="swatch" style="background:' + d.swatch + '"></span>' + esc(d.label);
+      b.addEventListener("click", function () {
+        state.dir = key;
+        buildChips();
+        render();
+      });
+      dirWrap.appendChild(b);
+    });
+  }
+
+  function runBuild() {
+    var runId = ++buildRun;
+    $("paneDefault").innerHTML = '<div class="shimmer"></div>';
+    $("paneTaste").innerHTML = '<div class="shimmer"></div>';
+    $("buildLog").innerHTML = '<div class="logline" style="opacity:.7">\u2026 reading the brief</div>';
+
+    STEPS.forEach(function (step, i) {
+      window.setTimeout(function () {
+        if (runId !== buildRun) return;
+        if (i === 0) $("buildLog").innerHTML = "";
+        var line = document.createElement("div");
+        line.className = "logline";
+        line.textContent = "\u2713 " + step;
+        $("buildLog").appendChild(line);
+
+        if (i === STEPS.length - 1) {
+          window.setTimeout(function () {
+            if (runId !== buildRun) return;
+            render();
+          }, 300);
+        }
+      }, 260 * (i + 1));
+    });
+  }
+
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      t.classList.remove("show");
+    }, 2800);
+  }
+
+  /* ---------- init ---------- */
+
+  $("briefInput").value = PRESETS[0].brief;
+  buildChips();
+  render();
+  fillLog();
+
+  $("briefInput").addEventListener("input", function () {
+    var typed = $("briefInput").value.trim();
+    $("briefQuote").textContent = typed
+      ? "Brief: \u201c" + (typed.length > 150 ? typed.slice(0, 150) + "\u2026" : typed) + "\u201d"
+      : "";
+  });
+
+  $("generateBtn").addEventListener("click", runBuild);
+
+  var toastBtns = document.querySelectorAll("[data-toast]");
+  for (var i = 0; i < toastBtns.length; i++) {
+    toastBtns[i].addEventListener("click", function () {
+      toast(this.getAttribute("data-toast"));
+    });
+  }
+
+  $("waitlistForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = $("waitlistEmail").value.trim();
+    var note = $("waitlistNote");
+    if (!email || email.indexOf("@") < 1 || email.indexOf(".") < 0) {
+      note.textContent = "Enter a valid email address.";
+      note.style.color = "#e7a48c";
+      return;
+    }
+    note.textContent = "Sample only \u2014 nothing was sent, no address was stored.";
+    note.style.color = "#a9a294";
+    toast("Thanks! This is a concept demo, so no email was sent.");
+  });
+
+  window.addEventListener("resize", function () {
+    if (toastTimer) {
+      var t = $("toast");
+      if (t.classList.contains("show")) {
+        t.style.maxWidth = "calc(100vw - 32px)";
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
