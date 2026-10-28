@@ -8,7 +8,7 @@ from . import config, llm
 KEYS = ["topicality", "accessibility", "wow", "pain", "packaging_room",
         "monetization", "license_safety", "demoability"]
 # 评分标准有改动时 +1，旧缓存会自动重新打分
-RUBRIC_VERSION = 2
+RUBRIC_VERSION = 3
 ATTACK_TOOL_CAP = 2.0  # 漏洞利用、攻击工具类项目的综合分上限
 
 

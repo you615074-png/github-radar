@@ -7,16 +7,16 @@
 2. 外部资源只能来自这些 CDN：cdn.tailwindcss.com、cdn.jsdelivr.net、unpkg.com、cdnjs.cloudflare.com。不要引用外部图片和字体，图标用 emoji、内联 SVG 或 CSS。
 3. 禁止任何网络请求：不能使用 fetch、XMLHttpRequest、WebSocket、EventSource、navigator.sendBeacon。所有数据都写成内置的演示数据。
 4. 禁止使用 eval、new Function、document.cookie。
-5. 页面底部必须有一行说明："概念演示，基于开源项目 <a href="原仓库地址">仓库全名</a>（License），非官方产品，数据均为演示数据"。
+5. 页面底部必须有一行说明："Concept demo, based on the open-source project <a href="原仓库地址">owner/repo</a> (License), unofficial, all data is sample data"。
 6. 不要出现运行时错误。
 
 ## 页面内容
 - 顶部：产品名（可以起一个新名字）+ 一句话价值主张
-- 核心交互区（最重要，占页面主体）：用户可以输入、选择或点击，并立刻看到结果。输入框要预填示例值，打开页面就能直接体验。结果用演示数据或前端逻辑模拟，标注"演示数据"
+- 核心交互区（最重要，占页面主体）：用户可以输入、选择或点击，并立刻看到结果。输入框要预填示例值，打开页面就能直接体验。结果用演示数据或前端逻辑模拟，标注 "Sample data"
 - 2-3 个典型使用场景
 - 一个简单的定价或"加入候补名单"区块（按钮点击后只在页面上提示，不提交任何数据）
 
 ## 风格
-中文界面，现代简洁，留白充足，手机上也能正常使用。可以用 Tailwind（通过 cdn.tailwindcss.com）。
+英文界面（面向美国用户，价格用美元），现代简洁，留白充足，手机上也能正常使用。可以用 Tailwind（通过 cdn.tailwindcss.com）。
 
 只输出 HTML 代码，放在一个 ```html 代码块里，不要任何解释。

@@ -17,7 +17,7 @@
 - 不需要构建步骤：不要用 npm 或打包工具。第三方库只能通过 `<script src>` 从这些 CDN 引入：cdn.tailwindcss.com、cdn.jsdelivr.net、unpkg.com、cdnjs.cloudflare.com。
 - 页面运行时不发起任何网络请求（禁止 fetch、XMLHttpRequest、WebSocket、EventSource、sendBeacon），不使用 eval、new Function、document.cookie。
 - 不引用外部图片或字体。
-- `out/index.html` 底部必须写明："概念演示，基于开源项目 <a href="https://github.com/{{REPO}}">{{REPO}}</a>（写上它的 License），非官方产品"。
-- 中文界面，在手机上也能正常使用，视觉精致。
+- `out/index.html` 底部必须写明："Concept demo, based on the open-source project <a href="https://github.com/{{REPO}}">{{REPO}}</a>(with its License), unofficial"。
+- 英文界面（面向美国用户，价格用美元），在手机上也能正常使用，视觉精致。
 
 完成后简要说明：产品定位、哪些功能是真实实现的、哪些用了演示数据。
