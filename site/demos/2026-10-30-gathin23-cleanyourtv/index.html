@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TidyTV — Turn your Android TV into an Apple TV</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  body { -webkit-font-smoothing: antialiased; }
+
+  .tv-frame{
+    position: relative;
+    background: linear-gradient(160deg,#242836,#0a0c12);
+    border-radius: 24px;
+    padding: 14px 14px 24px;
+    border: 1px solid rgba(255,255,255,.07);
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .tv-screen{
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #06060a;
+    box-shadow: inset 0 0 40px rgba(0,0,0,.8);
+  }
+  .layer{ position:absolute; inset:0; transition: opacity .7s ease, transform .7s ease; }
+  .layer.out{ opacity:0; transform: scale(1.02); pointer-events:none; }
+
+  .screen-before{ background: radial-gradient(circle at 80% 0%, #1b2334, #07070a 65%); }
+  .screen-after{ background: radial-gradient(circle at 15% 0%, #1c2440, #06060a 70%); }
+
+  @keyframes fadeUp { from{opacity:0; transform:translateY(5px);} to{opacity:1; transform:none;} }
+  .line-in{ animation: fadeUp .35s ease both; }
+
+  @keyframes scanSweep { 0%{ top:-12%; opacity:0;} 25%{opacity:1;} 75%{opacity:1;} 100%{ top:112%; opacity:0;} }
+  .scanline{
+    position:absolute; left:0; right:0; height:24%;
+    background: linear-gradient(to bottom, rgba(99,102,241,0), rgba(99,102,241,.4), rgba(99,102,241,0));
+    animation: scanSweep 1.5s ease-in-out infinite;
+    pointer-events:none; z-index:30;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner{ animation: spin .9s linear infinite; }
+</style>
+</head>
+<body id="top" class="bg-[#0a0b10] text-slate-100 antialiased">
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-white/5 bg-[#0a0b10]/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-lg shadow-lg shadow-indigo-600/25">🧼</span>
+      <span class="text-[15px] font-semibold tracking-tight">TidyTV</span>
+      <span class="hidden rounded-full border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-slate-400 sm:inline">Concept</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm text-slate-400 md:flex">
+      <a href="#console" class="transition hover:text-white">Demo</a>
+      <a href="#scenarios" class="transition hover:text-white">Use cases</a>
+      <a href="#pricing" class="transition hover:text-white">Pricing</a>
+    </nav>
+    <a href="#console" class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">Try the demo</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="mx-auto max-w-4xl px-5 pt-14 pb-10 text-center sm:pt-20">
+  <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-wider text-slate-400">
+    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+    Works over Wi-Fi · No root · Nothing uninstalled
+  </span>
+  <h1 class="mt-6 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-6xl">
+    Turn your Android TV into<br class="hidden sm:block">
+    <span class="bg-gradient-to-r from-indigo-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">the TV it should have been.</span>
+  </h1>
+  <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+    TidyTV connects to your TV over Wi-Fi, backs everything up, disables the ads and bloat, and installs a clean
+    Apple TV–style home screen. One click. Fully reversible.
+  </p>
+  <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+    <a href="#console" class="w-full rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 sm:w-auto">Try the 30-second demo</a>
+    <a href="#pricing" class="w-full rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10 sm:w-auto">Join the waitlist</a>
+  </div>
+  <div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-500">
+    <span>✓ Backup runs first</span>
+    <span>✓ Keep voice assistant &amp; casting</span>
+    <span>✓ One-line restore</span>
+  </div>
+</section>
+
+<!-- ============ INTERACTIVE CONSOLE ============ -->
+<section id="console" class="mx-auto max-w-6xl px-5 py-10 sm:py-14">
+  <div class="flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Try it on a pretend TV</h2>
+      <p class="mt-2 max-w-xl text-sm text-slate-400">Pick a device, hit scan, then watch the home screen change. Everything below is a simulation.</p>
+    </div>
+    <span class="rounded-full border border-indigo-400/30 bg-indigo-400/10 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-indigo-300">Sample data</span>
+  </div>
+
+  <div class="mt-8 grid gap-6 lg:grid-cols-5 lg:gap-8">
+
+    <!-- TV mockup -->
+    <div class="lg:col-span-3">
+      <div class="tv-frame">
+        <div class="tv-screen">
+
+          <!-- BEFORE -->
+          <div class="layer" id="layerBefore">
+            <div class="screen-before absolute inset-0 flex flex-col overflow-hidden p-2.5 text-white sm:p-3.5">
+              <div class="flex items-center justify-between text-[8px] tracking-wide text-white/40 sm:text-[10px]">
+                <span class="flex items-center gap-1"><span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400"></span>ANDROID TV</span>
+                <span>10:24</span>
+              </div>
+
+              <div class="relative mt-2 overflow-hidden rounded-md bg-gradient-to-r from-orange-600 via-rose-600 to-fuchsia-700 px-2 py-1.5 sm:px-3 sm:py-2">
+                <span class="absolute right-1.5 top-1.5 rounded bg-black/40 px-1 py-0.5 text-[7px] uppercase tracking-wider text-white/80 sm:text-[8px]">Sponsored</span>
+                <p class="text-[9px] font-semibold sm:text-[11px]">Binge the new season</p>
+                <p class="text-[7px] text-white/75 sm:text-[9px]">Recommended by your TV's ad network</p>
+              </div>
+
+              <p class="mt-2 text-[7px] uppercase tracking-wider text-white/30 sm:text-[8px]">Promoted row</p>
+              <div class="mt-1 grid h-14 grid-cols-6 gap-1 sm:h-20 sm:gap-1.5">
+                <div class="grid place-items-center rounded bg-gradient-to-br from-slate-700 to-slate-900 text-[11px]">📺</div>
+                <div class="grid place-items-center rounded bg-gradient-to-br from-amber-700 to-amber-900 text-[11px]">🎮</div>
+                <div class="grid place-items-center rounded bg-gradient-to-br from-cyan-800 to-slate-900 text-[11px]">🌤️</div>
+                <div class="grid place-items-center rounded bg-gradient-to-br from-rose-800 to-slate-900 text-[11px]">🛒</div>
+                <div class="grid place-items-center rounded bg-gradient-to-br from-slate-600 to-slate-800 text-[11px]">📰</div>
+                <div class="grid place-items-center rounded bg-gradient-to-br from-violet-800 to-slate-900 text-[11px]">🎲</div>
+              </div>
+
+              <p class="mt-2 hidden text-[8px] uppercase tracking-wider text-white/30 sm:block">More from your TV</p>
+              <div class="mt-1 hidden flex-1 grid-cols-8 gap-1 sm:grid sm:gap-1.5">
+                <div class="rounded bg-white/[0.06]"></div>
+                <div class="rounded bg-white/[0.06]"></div>
+                <div class="rounded bg-white/[0.06]"></div>
+                <div class="rounded bg-white/[0.09]"></div>
+                <div class="rounded bg-white/[0.06]"></div>
+                <div class="rounded bg-white/[0.06]"></div>
+                <div class="rounded bg-white/[0.09]"></div>
+                <div class="rounded bg-white/[0.06]"></div>
+              </div>
+
+              <div class="mt-1.5 hidden items-center justify-between rounded bg-white/5 px-2 py-1 text-[8px] text-white/40 sm:flex">
+                <span>Ad · Shop the holiday sale</span><span>Skip in 5s</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AFTER -->
+          <div class="layer out" id="layerAfter">
+            <div class="screen-after absolute inset-0 flex flex-col overflow-hidden p-2.5 text-white sm:p-3.5">
+              <div class="flex items-center justify-between text-[8px] sm:text-[10px]">
+                <span class="font-medium tracking-wide text-white/70">TidyTV Home</span>
+                <span class="text-white/40">10:24</span>
+              </div>
+
+              <div class="mt-2 grid grid-cols-3 gap-1.5 sm:gap-2">
+                <div class="col-span-2 rounded-lg bg-gradient-to-br from-indigo-500 via-violet-600 to-fuchsia-600 p-2 sm:p-3">
+                  <p class="text-[7px] uppercase tracking-[0.18em] text-white/70 sm:text-[8px]">Up next</p>
+                  <p class="mt-0.5 text-[10px] font-semibold leading-tight sm:text-sm">The Bear · S3 E4</p>
+                  <p class="mt-0.5 hidden text-[8px] text-white/70 sm:block">Resume · 24 min left</p>
+                </div>
+                <div class="rounded-lg bg-gradient-to-br from-emerald-500 to-teal-700 p-2">
+                  <p class="text-[10px] sm:text-sm">🎵</p>
+                  <p class="mt-1 text-[7px] font-medium sm:text-[9px]">Focus mix</p>
+                </div>
+              </div>
+
+              <div class="mt-2 grid flex-1 grid-cols-5 gap-1.5 sm:gap-2">
+                <div class="flex flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-rose-600 to-red-900">
+                  <span class="text-sm sm:text-lg">🍿</span><span class="text-[6px] text-white/80 sm:text-[8px]">Netflix</span>
+                </div>
+                <div class="flex flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-red-500 to-red-800">
+                  <span class="text-sm sm:text-lg">▶️</span><span class="text-[6px] text-white/80 sm:text-[8px]">YouTube</span>
+                </div>
+                <div class="flex flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-sky-600 to-indigo-900">
+                  <span class="text-sm sm:text-lg">✨</span><span class="text-[6px] text-white/80 sm:text-[8px]">Disney+</span>
+                </div>
+                <div class="flex flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-800">
+                  <span class="text-sm sm:text-lg">📦</span><span class="text-[6px] text-white/80 sm:text-[8px]">Prime</span>
+                </div>
+                <div class="flex flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-violet-600 to-purple-900">
+                  <span class="text-sm sm:text-lg">🎬</span><span class="text-[6px] text-white/80 sm:text-[8px]">Max</span>
+                </div>
+              </div>
+
+              <div class="mt-1.5 hidden items-center gap-1.5 sm:flex">
+                <span class="rounded-full bg-white/10 px-2 py-0.5 text-[8px] text-white/70">TV</span>
+                <span class="rounded-full bg-white/10 px-2 py-0.5 text-[8px] text-white/70">Movies</span>
+                <span class="rounded-full bg-white/10 px-2 py-0.5 text-[8px] text-white/70">Music</span>
+                <span class="rounded-full bg-white/10 px-2 py-0.5 text-[8px] text-white/70">Plex</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="scanline" class="scanline hidden"></div>
+        </div>
+
+        <div class="mt-3 text-center text-[9px] font-semibold uppercase tracking-[0.2em] text-white/30">
+          <span id="screenBadge">Before</span>
+        </div>
+      </div>
+      <p class="mt-3 text-center text-[11px] text-slate-500">Illustration of a TV home screen — no real device is connected.</p>
+    </div>
+
+    <!-- Control panel -->
+    <div class="lg:col-span-2">
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-semibold text-white">Control panel</h3>
+          <span class="text-[10px] uppercase tracking-wider text-slate-500">Sample data</span>
+        </div>
+
+        <!-- Idle -->
+        <div id="panelConnect" class="mt-4 space-y-4">
+          <label class="block">
+            <span class="mb-1.5 block text-xs font-medium text-slate-400">TV IP address</span>
+            <input id="ip" value="192.168.1.42" inputmode="decimal"
+              class="w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400/60 focus:ring-2 focus:ring-indigo-500/20">
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-xs font-medium text-slate-400">Device</span>
+            <select id="brand"
+              class="w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none transition focus:border-indigo-400/60 focus:ring-2 focus:ring-indigo-500/20">
+              <option>Google TV (Chromecast HD)</option>
+              <option>Android TV (Sony Bravia)</option>
+              <option>Fire TV (Stick 4K)</option>
+            </select>
+          </label>
+
+          <div class="space-y-2.5 rounded-lg border border-white/5 bg-black/20 p-3">
+            <label class="flex items-center gap-2.5 text-xs text-slate-300">
+              <input type="checkbox" checked class="h-4 w-4 shrink-0 rounded border-white/20 bg-black/40 accent-indigo-500">
+              Disable ad &amp; telemetry services
+            </label>
+            <label class="flex items-center gap-2.5 text-xs text-slate-300">
+              <input type="checkbox" checked class="h-4 w-4 shrink-0 rounded border-white/20 bg-black/40 accent-indigo-500">
+              Keep voice assistant
+            </label>
+            <label class="flex items-center gap-2.5 text-xs text-slate-300">
+              <input type="checkbox" checked class="h-4 w-4 shrink-0 rounded border-white/20 bg-black/40 accent-indigo-500">
+              Keep Chromecast casting
+            </label>
+          </div>
+
+          <button id="btnScan"
+            class="w-full rounded-lg bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            Connect &amp; scan
+          </button>
+
+          <div id="scanStatus" class="hidden space-y-1.5 rounded-lg border border-white/5 bg-black/30 p-3 text-xs"></div>
+        </div>
+
+        <!-- Scanned -->
+        <div id="panelScanned" class="mt-4 hidden space-y-4">
+          <div class="rounded-lg border border-emerald-400/20 bg-emerald-400/10 p-3">
+            <p class="flex items-center gap-2 text-sm font-medium text-emerald-300"><span>✓</span> Connected</p>
+            <p id="deviceLine" class="mt-1 text-xs text-emerald-200/70">Living Room TV · 192.168.1.42</p>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span>Bloat found</span><span class="font-medium text-slate-300">12 packages</span>
+            </div>
+            <div class="mt-2 max-h-52 space-y-1 overflow-y-auto pr-1">
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>📺</span><span class="flex-1 truncate">Live TV promo row</span><span class="text-[10px] uppercase tracking-wider text-slate-500">row</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>📢</span><span class="flex-1 truncate">Manufacturer ad service</span><span class="text-[10px] uppercase tracking-wider text-slate-500">ads</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>📊</span><span class="flex-1 truncate">Viewership telemetry</span><span class="text-[10px] uppercase tracking-wider text-slate-500">track</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🛒</span><span class="flex-1 truncate">Brand app store</span><span class="text-[10px] uppercase tracking-wider text-slate-500">store</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🎮</span><span class="flex-1 truncate">Preloaded game demos</span><span class="text-[10px] uppercase tracking-wider text-slate-500">app</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🌤️</span><span class="flex-1 truncate">Weather &amp; news widget</span><span class="text-[10px] uppercase tracking-wider text-slate-500">widget</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🖼️</span><span class="flex-1 truncate">Cloud photo screensaver</span><span class="text-[10px] uppercase tracking-wider text-slate-500">ads</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🔁</span><span class="flex-1 truncate">Recommendation engine</span><span class="text-[10px] uppercase tracking-wider text-slate-500">service</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🎯</span><span class="flex-1 truncate">Screensaver ads</span><span class="text-[10px] uppercase tracking-wider text-slate-500">ads</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🗣️</span><span class="flex-1 truncate">Voice shopping</span><span class="text-[10px] uppercase tracking-wider text-slate-500">service</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>🏬</span><span class="flex-1 truncate">Retail demo mode</span><span class="text-[10px] uppercase tracking-wider text-slate-500">system</span></div>
+              <div class="flex items-center gap-2 rounded-md bg-white/[0.03] px-2.5 py-1.5 text-xs text-slate-300"><span>📈</span><span class="flex-1 truncate">Usage analytics</span><span class="text-[10px] uppercase tracking-wider text-slate-500">track</span></div>
+            </div>
+          </div>
+
+          <button id="btnClean"
+            class="w-full rounded-lg bg-gradient-to-r from-indigo-500 to-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-600/25 transition hover:from-indigo-400 hover:to-violet-400">
+            Clean &amp; install launcher
+          </button>
+          <p class="text-center text-[11px] text-slate-500">Backup runs first. Nothing is uninstalled.</p>
+        </div>
+
+        <!-- Cleaning -->
+        <div id="panelCleaning" class="mt-4 hidden space-y-4">
+          <div class="flex items-center gap-2.5 text-sm font-medium text-slate-200">
+            <span class="spinner inline-block h-4 w-4 rounded-full border-2 border-indigo-400 border-t-transparent"></span>
+            Working on your TV…
+          </div>
+          <div id="cleanLog" class="space-y-2 rounded-lg border border-white/5 bg-black/30 p-3 text-xs"></div>
+        </div>
+
+        <!-- Done -->
+        <div id="panelDone" class="mt-4 hidden space-y-4">
+          <div class="rounded-lg border border-emerald-400/20 bg-emerald-400/10 p-3">
+            <p class="text-sm font-semibold text-emerald-300">✓ All clean</p>
+            <p class="mt-1 text-xs text-emerald-200/70">Backup saved as tidy-backup.json · restore anytime</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div class="rounded-lg border border-white/10 bg-black/30 p-2.5">
+              <p class="text-lg font-semibold text-white">12</p>
+              <p class="text-[10px] uppercase tracking-wider text-slate-500">packages disabled</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-black/30 p-2.5">
+              <p class="text-lg font-semibold text-white">6</p>
+              <p class="text-[10px] uppercase tracking-wider text-slate-500">ad endpoints blocked</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-black/30 p-2.5">
+              <p class="text-lg font-semibold text-white">1.4 GB</p>
+              <p class="text-[10px] uppercase tracking-wider text-slate-500">storage freed</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-black/30 p-2.5">
+              <p class="text-lg font-semibold text-white">38%</p>
+              <p class="text-[10px] uppercase tracking-wider text-slate-500">faster boot</p>
+            </div>
+          </div>
+
+          <button id="btnRestore"
+            class="w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+            Restore my TV (undo)
+          </button>
+          <p class="text-center text-[11px] text-slate-500">Simulated results · Sample data</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENARIOS ============ -->
+<section id="scenarios" class="mx-auto max-w-6xl px-5 py-12 sm:py-16">
+  <div class="max-w-2xl">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Three ways people actually use it</h2>
+    <p class="mt-3 text-sm leading-relaxed text-slate-400">Same three steps every time: connect, review the checklist, clean. No root, no cables, no factory reset.</p>
+  </div>
+
+  <div class="mt-8 grid gap-5 md:grid-cols-3">
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/20 hover:bg-white/[0.05]">
+      <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-violet-500/10 text-xl">🎁</div>
+      <h3 class="mt-4 text-base font-semibold text-white">New TV day</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">You unboxed a 65-inch and the first thing it shows is somebody else's ad. Clean it before the family even plugs in the soundbar.</p>
+      <p class="mt-4 text-xs font-medium text-indigo-300">≈ 15 minutes · one laptop</p>
+    </div>
+
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/20 hover:bg-white/[0.05]">
+      <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 text-xl">🛋️</div>
+      <h3 class="mt-4 text-base font-semibold text-white">Living room rescue</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">Keep Netflix, YouTube and Plex. Drop the promo rows, the telemetry and the screensaver nobody asked for. Keep casting and voice.</p>
+      <p class="mt-4 text-xs font-medium text-emerald-300">Backup first · reversible</p>
+    </div>
+
+    <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/20 hover:bg-white/[0.05]">
+      <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 text-xl">📦</div>
+      <h3 class="mt-4 text-base font-semibold text-white">Hand-me-down TV</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">Selling the TV or moving out? Run the restore script and every package goes back exactly the way it shipped.</p>
+      <p class="mt-4 text-xs font-medium text-amber-300">One command · nothing lost</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="mx-auto max-w-6xl px-5 py-12 sm:py-16">
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Simple, one-time pricing</h2>
+    <p class="mt-3 text-sm leading-relaxed text-slate-400">The project stays open source. The desktop app is for people who'd rather click a button than paste a prompt.</p>
+  </div>
+
+  <div class="mt-10 grid gap-5 md:grid-cols-3">
+
+    <div class="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <p class="text-sm font-medium text-slate-300">Open source</p>
+      <p class="mt-3 text-3xl font-semibold tracking-tight text-white">$0</p>
+      <p class="mt-1 text-xs text-slate-500">Forever</p>
+      <ul class="mt-5 flex-1 space-y-2.5 text-sm text-slate-400">
+        <li class="flex gap-2"><span class="text-slate-600">·</span>Wi-Fi ADB setup &amp; prompts</li>
+        <li class="flex gap-2"><span class="text-slate-600">·</span>Bloat discovery checklist</li>
+        <li class="flex gap-2"><span class="text-slate-600">·</span>Launcher build &amp; install scripts</li>
+        <li class="flex gap-2"><span class="text-slate-600">·</span>One-line restore</li>
+      </ul>
+      <a href="https://github.com/Gathin23/cleanyourtv" class="mt-6 block rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-white/10">View on GitHub</a>
+    </div>
+
+    <div class="flex flex-col rounded-2xl border border-indigo-400/40 bg-gradient-to-b from-indigo-500/[0.12] to-white/[0.02] p-6 shadow-xl shadow-indigo-900/20">
+      <div class="flex items-center justify-between">
+        <p class="text-sm font-medium text-indigo-200">TidyTV Pro</p>
+        <span class="rounded-full bg-indigo-400/20 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-indigo-200">Most popular</span>
+      </div>
+      <p class="mt-3 text-3xl font-semibold tracking-tight text-white">$29<span class="text-sm font-normal text-slate-400"> one-time</span></p>
+      <p class="mt-1 text-xs text-slate-400">Up to 3 TVs · Mac &amp; Windows</p>
+      <ul class="mt-5 flex-1 space-y-2.5 text-sm text-slate-300">
+        <li class="flex gap-2"><span class="text-indigo-300">✓</span>Auto-detect &amp; scan over Wi-Fi</li>
+        <li class="flex gap-2"><span class="text-indigo-300">✓</span>Guided checklist before anything runs</li>
+        <li class="flex gap-2"><span class="text-indigo-300">✓</span>Backup + one-click restore</li>
+        <li class="flex gap-2"><span class="text-indigo-300">✓</span>Apple TV–style launcher included</li>
+      </ul>
+      <button data-waitlist class="mt-6 w-full rounded-lg bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200">Join the waitlist</button>
+    </div>
+
+    <div class="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <p class="text-sm font-medium text-slate-300">Household</p>
+      <p class="mt-3 text-3xl font-semibold tracking-tight text-white">$49<span class="text-sm font-normal text-slate-400"> one-time</span></p>
+      <p class="mt-1 text-xs text-slate-500">Unlimited TVs</p>
+      <ul class="mt-5 flex-1 space-y-2.5 text-sm text-slate-400">
+        <li class="flex gap-2"><span class="text-slate-600">·</span>Everything in Pro</li>
+        <li class="flex gap-2"><span class="text-slate-600">·</span>Saved profiles per TV</li>
+        <li class="flex gap-2"><span class="text-slate-600">·</span>Resale restore kit</li>
+        <li class="flex gap-2"><span class="text-slate-600">·</span>Priority email support</li>
+      </ul>
+      <button data-waitlist class="mt-6 w-full rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10">Join the waitlist</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-white/5 py-10">
+  <div class="mx-auto max-w-6xl px-5">
+    <div class="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+      <div class="flex items-center gap-2.5">
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-sm">🧼</span>
+        <span class="text-sm font-semibold tracking-tight">TidyTV</span>
+      </div>
+      <p class="text-xs text-slate-500">A product concept for a cleaner living room.</p>
+    </div>
+    <p class="mt-6 text-center text-xs leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/Gathin23/cleanyourtv" class="text-slate-300 underline decoration-slate-600 underline-offset-2 transition hover:text-white">Gathin23/cleanyourtv</a>
+      (NOASSERTION), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 translate-y-2 rounded-full border border-white/10 bg-slate-900/95 px-5 py-2.5 text-center text-sm text-white opacity-0 shadow-2xl transition-all duration-300"></div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var phase = 'idle';
+
+  /* ---------- toast ---------- */
+  var toastEl = $('toast');
+  var toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.remove('opacity-0', 'translate-y-2');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.add('opacity-0', 'translate-y-2');
+    }, 3000);
+  }
+
+  /* ---------- TV screen ---------- */
+  function setScreen(which) {
+    var after = which === 'after';
+    $('layerBefore').classList.toggle('out', after);
+    $('layerAfter').classList.toggle('out', !after);
+    $('screenBadge').textContent = after ? 'After' : 'Before';
+  }
+
+  /* ---------- helper: append lines one by one ---------- */
+  function runLines(container, lines, delay, done) {
+    container.innerHTML = '';
+    var i = 0;
+    function next() {
+      if (i >= lines.length) { if (done) done(); return; }
+      var row = document.createElement('div');
+      row.className = 'line-in flex items-start gap-2 text-slate-300';
+      var dot = document.createElement('span');
+      dot.className = 'mt-1 h-1.5 w-1.5 shrink-0 rounded-full ' + (i === lines.length - 1 ? 'bg-emerald-400' : 'bg-indigo-400');
+      var txt = document.createElement('span');
+      txt.className = 'flex-1';
+      txt.textContent = lines[i];
+      row.appendChild(dot);
+      row.appendChild(txt);
+      container.appendChild(row);
+      i++;
+      setTimeout(next, delay);
+    }
+    next();
+  }
+
+  /* ---------- scan ---------- */
+  $('btnScan').addEventListener('click', function () {
+    if (phase !== 'idle') return;
+    phase = 'scanning';
+
+    var btn = $('btnScan');
+    btn.disabled = true;
+
+    var ip = ($('ip').value || '192.168.1.42').trim();
+    var brand = $('brand').value;
+
+    $('scanStatus').classList.remove('hidden');
+    $('scanline').classList.remove('hidden');
+
+    var lines = [
+      'Pinging ' + ip + '…',
+      'ADB handshake — accept "Allow debugging?" on the TV',
+      'Found ' + brand + ' · 42 packages'
+    ];
+
+    runLines($('scanStatus'), lines, 780, function () {
+      $('scanline').classList.add('hidden');
+      $('deviceLine').textContent = 'Living Room TV · ' + ip + ' · ' + brand;
+      $('panelConnect').classList.add('hidden');
+      $('panelScanned').classList.remove('hidden');
+      phase = 'scanned';
+    });
+  });
+
+  /* ---------- clean ---------- */
+  $('btnClean').addEventListener('click', function () {
+    if (phase !== 'scanned') return;
+    phase = 'cleaning';
+
+    $('panelScanned').classList.add('hidden');
+    $('panelCleaning').classList.remove('hidden');
+    $('scanline').classList.remove('hidden');
+
+    var steps = [
+      'Backed up 42 packages → tidy-backup.json',
+      'Disabled 12 bloat packages (pm disable-user)',
+      'Blocked 6 ad & telemetry endpoints',
+      'Installed TidyLauncher → set as default home',
+      'Rebooted. Nothing uninstalled.'
+    ];
+
+    var box = $('cleanLog');
+    box.innerHTML = '';
+    var i = 0;
+
+    function tick() {
+      if (i >= steps.length) { finish(); return; }
+      var row = document.createElement('div');
+      row.className = 'line-in flex items-start gap-2 text-slate-300';
+      var check = document.createElement('span');
+      check.className = 'mt-0.5 shrink-0 text-emerald-400';
+      check.textContent = '✓';
+      var txt = document.createElement('span');
+      txt.className = 'flex-1';
+      txt.textContent = steps[i];
+      row.appendChild(check);
+      row.appendChild(txt);
+      box.appendChild(row);
+
+      if (i === 3) { setScreen('after'); }
+
+      i++;
+      setTimeout(tick, 720);
+    }
+    tick();
+
+    function finish() {
+      setTimeout(function () {
+        $('scanline').classList.add('hidden');
+        $('panelCleaning').classList.add('hidden');
+        $('panelDone').classList.remove('hidden');
+        phase = 'done';
+      }, 500);
+    }
+  });
+
+  /* ---------- restore ---------- */
+  $('btnRestore').addEventListener('click', function () {
+    setScreen('before');
+    $('panelDone').classList.add('hidden');
+    $('panelConnect').classList.remove('hidden');
+
+    var status = $('scanStatus');
+    status.classList.add('hidden');
+    status.innerHTML = '';
+
+    var btn = $('btnScan');
+    btn.disabled = false;
+
+    phase = 'idle';
+    toast('Restored — every step is reversible (demo).');
+  });
+
+  /* ---------- waitlist buttons ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-waitlist]'), function (b) {
+    b.addEventListener('click', function () {
+      toast('You are on the list — this is a demo, nothing was submitted.');
+    });
+  });
+
+  /* ---------- init ---------- */
+  setScreen('before');
+})();
+</script>
+</body>
+</html>

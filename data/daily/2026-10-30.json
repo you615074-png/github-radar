@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-30",
+ "headline": "一键把安卓电视刷成 Apple TV 风",
+ "summary_md": "Gathin23/cleanyourtv 是一个用 Wi-Fi 给 Android TV / Google TV 去臃肿的开源项目。原理不复杂：电视打开 USB 调试后，电脑通过 ADB 连上去，先备份已装应用列表，再用 `pm disable-user` 把厂商的广告服务、遥测和预装垃圾禁用（不是卸载，随时能一键还原），最后装一个轻量第三方启动器设为默认桌面，得到接近 Apple TV 的干净首页。不用 root、不用插线，README 里还提供了一个给 AI 编码助手用的提示词，让它自动识别你的电视型号和可清理项。它最近火起来，一是演示效果直观——清理前后对比截图传播力很强，二是正撞上大家对智能电视广告和卡顿的长期不满，三是 Product Hunt 和官网已经铺好，社区还做了一个只用安卓手机的配套 App。产品化机会在「把这三步做成 Mac/Windows 双击即用的桌面 App」：自动发现同一 Wi-Fi 下的电视、扫描可清理项、备份、清理、装启动器，全程图形化。难点是各品牌电视的开发者选项路径和包名都不一样，支持成本高；而且项目自己已经有官网和发布渠道，单纯套壳包装的空间不大，更适合做跨品牌适配层或面向家庭用户的托管式服务。",
+ "pick": {
+  "full_name": "Gathin23/cleanyourtv",
+  "url": "https://github.com/Gathin23/cleanyourtv",
+  "description": "Debloat any Android or Google TV over Wi-Fi and get an Apple TV-style home.",
+  "license": "NOASSERTION",
+  "stars": 45401,
+  "daily_rate": 3783.4,
+  "category": "效率工具",
+  "one_liner": "用 Wi-Fi 一键去除安卓电视臃肿应用并换成 Apple TV 风桌面",
+  "reason": "话题热度极高、演示性强，痛点真实且客群明确；但许可证不明、品牌适配复杂，商业化易被官方产品截胡。",
+  "content": 8.33,
+  "startup": 6.2,
+  "final": 7.53,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-30-gathin23-cleanyourtv",
+ "top": [
+  {
+   "full_name": "Gathin23/cleanyourtv",
+   "url": "https://github.com/Gathin23/cleanyourtv",
+   "one_liner": "用 Wi-Fi 一键去除安卓电视臃肿应用并换成 Apple TV 风桌面",
+   "reason": "话题热度极高、演示性强，痛点真实且客群明确；但许可证不明、品牌适配复杂，商业化易被官方产品截胡。",
+   "content": 8.33,
+   "startup": 6.2,
+   "final": 7.53,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "tangency-labs/solidcraft",
+   "url": "https://github.com/tangency-labs/solidcraft",
+   "one_liner": "纯 Rust 写的开源参数化 3D CAD，桌面、浏览器和 AI 代理都能建模。",
+   "reason": "技术硬核、话题性强、Apache 许可友好，演示直观；但项目本身已很成熟，产品化空间和付费转化需谨慎。",
+   "content": 7.33,
+   "startup": 7.15,
+   "final": 7.43,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/gridcraft",
+   "url": "https://github.com/storytold/gridcraft",
+   "one_liner": "纯 Rust 写的开源 Excel 替代品，能直接打开和保存 xlsx 文件",
+   "reason": "开源热度高、许可证干净、演示直观，适合做内容；但 Excel 替代品商业化极难，包装空间有限，赚钱路径不清晰。",
+   "content": 8.0,
+   "startup": 6.6,
+   "final": 7.31,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/effectcraft",
+   "url": "https://github.com/storytold/effectcraft",
+   "one_liner": "用纯 Rust 写的开源版 Ae，能做动效、合成和特效",
+   "reason": "开源版 Ae，话题性和可演示性都很强，但本身已是成熟产品、包装空间小，且要和 Adobe 正面竞争，商业化更难。",
+   "content": 7.67,
+   "startup": 6.15,
+   "final": 7.02,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "hugohe3/ppt-master",
+   "url": "https://github.com/hugohe3/ppt-master",
+   "one_liner": "AI把文档或主题变成可编辑的原生PowerPoint幻灯片",
+   "reason": "话题性强、痛点真实、原生可编辑是差异化亮点，MIT许可安全；但竞品众多、依赖API Key、赞助与中文生态削弱海外包装空间。",
+   "content": 8.0,
+   "startup": 7.45,
+   "final": 7.0,
+   "category_penalty": 0.8
+  }
+ ]
+}
