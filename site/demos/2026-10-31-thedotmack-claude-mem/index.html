@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mnemo — long-term memory for your coding agent</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .fade { animation: fadeUp .28s ease-out both; }
+  .thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+  .thin::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-30 bg-white/85 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2">
+      <span class="w-7 h-7 rounded-lg bg-slate-900 text-white grid place-items-center text-[13px] font-bold">◈</span>
+      <span class="font-semibold tracking-tight">Mnemo</span>
+      <span class="hidden sm:inline text-[9.5px] uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-100 rounded px-1.5 py-0.5 ml-1">concept</span>
+    </a>
+    <nav class="flex items-center gap-1 sm:gap-5 text-sm">
+      <a href="#demo" class="hidden sm:inline text-slate-600 hover:text-slate-900">Demo</a>
+      <a href="#use-cases" class="hidden sm:inline text-slate-600 hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="hidden sm:inline text-slate-600 hover:text-slate-900">Pricing</a>
+      <a href="#waitlist" class="ml-1 rounded-lg bg-slate-900 text-white px-3 py-1.5 text-[13px] font-medium hover:bg-slate-800 transition">Join waitlist</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="top" class="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-20 pb-6">
+  <div class="max-w-3xl">
+    <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11.5px] text-slate-600 mb-5">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      Works with Claude Code · Codex · Cursor · Gemini CLI · Copilot
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08]">
+      Your coding agent forgets everything.<br class="hidden sm:block" />
+      <span class="text-indigo-600">Mnemo</span> doesn't.
+    </h1>
+    <p class="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed">
+      Mnemo watches what your agent does in every session, compresses it into a searchable memory, and injects only the relevant parts back into the next session — across every IDE you use.
+    </p>
+  </div>
+</section>
+
+<!-- How it works -->
+<div class="max-w-6xl mx-auto px-4 sm:px-6 pb-2">
+  <div class="grid sm:grid-cols-3 gap-3">
+    <div class="rounded-xl bg-white border border-slate-200 p-4">
+      <div class="text-[10px] font-semibold tracking-[0.14em] text-slate-400">01</div>
+      <div class="mt-1 font-semibold text-[14px]">Capture</div>
+      <p class="mt-1 text-[12.5px] text-slate-500 leading-snug">Every tool call, edit, decision and bugfix, recorded automatically as an observation.</p>
+    </div>
+    <div class="rounded-xl bg-white border border-slate-200 p-4">
+      <div class="text-[10px] font-semibold tracking-[0.14em] text-slate-400">02</div>
+      <div class="mt-1 font-semibold text-[14px]">Compress</div>
+      <p class="mt-1 text-[12.5px] text-slate-500 leading-snug">A model distills thousands of tokens into dated, tagged, searchable notes.</p>
+    </div>
+    <div class="rounded-xl bg-white border border-slate-200 p-4">
+      <div class="text-[10px] font-semibold tracking-[0.14em] text-slate-400">03</div>
+      <div class="mt-1 font-semibold text-[14px]">Inject</div>
+      <p class="mt-1 text-[12.5px] text-slate-500 leading-snug">The next session starts with the right context — not the whole history.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Demo -->
+<section id="demo" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+  <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-5">
+    <div>
+      <div class="text-[11px] font-semibold tracking-[0.14em] text-indigo-600 uppercase">Interactive demo · sample data</div>
+      <h2 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight">Two sessions. One project. Zero re-explaining.</h2>
+      <p class="mt-2 text-slate-600 text-sm max-w-xl leading-relaxed">Yesterday's session fixed a payment bug. What follows is a brand-new agent session with an empty context window. Ask it something and watch what Mnemo hands over.</p>
+    </div>
+    <div id="projectTabs" class="flex flex-wrap gap-2"></div>
+  </div>
+
+  <div class="grid lg:grid-cols-5 gap-5">
+
+    <!-- Chat -->
+    <div class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+      <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-2 text-[12.5px]">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="font-semibold">new session</span>
+          <span class="text-slate-300">·</span>
+          <span class="text-slate-500">empty context window</span>
+        </div>
+        <div id="modeSwitch" class="inline-flex rounded-lg bg-slate-100 p-0.5">
+          <button data-mode="warm" class="px-3 py-1.5 rounded-md text-[11.5px] font-semibold transition">With Mnemo</button>
+          <button data-mode="cold" class="px-3 py-1.5 rounded-md text-[11.5px] font-semibold transition">Cold start</button>
+        </div>
+      </div>
+
+      <div id="chat" class="thin p-4 sm:p-5 space-y-3 flex-1 min-h-[340px] max-h-[440px] overflow-y-auto"></div>
+
+      <div class="border-t border-slate-100 p-3 sm:p-4 bg-slate-50/60">
+        <div class="flex gap-2">
+          <input id="question" type="text" autocomplete="off"
+                 class="flex-1 min-w-0 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13.5px] outline-none focus:ring-2 focus:ring-indigo-500/25 focus:border-indigo-300 transition"
+                 placeholder="Ask the agent something…" />
+          <button id="askBtn" class="rounded-xl bg-indigo-600 text-white px-4 py-2.5 text-[13.5px] font-semibold hover:bg-indigo-500 active:scale-[0.98] transition disabled:opacity-60">Ask</button>
+        </div>
+        <div id="suggestions" class="mt-3 flex flex-wrap gap-2"></div>
+      </div>
+    </div>
+
+    <!-- Memory store -->
+    <aside class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-5 flex flex-col">
+      <div class="flex items-start justify-between gap-2">
+        <div>
+          <h3 class="font-semibold text-[15px]">Memory store</h3>
+          <p class="text-[11.5px] text-slate-500 mt-0.5" id="memSub">acme-api</p>
+        </div>
+        <span class="text-[9.5px] uppercase tracking-wider text-slate-500 bg-slate-100 rounded px-1.5 py-0.5 whitespace-nowrap">sample data</span>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 mt-4">
+        <div class="rounded-xl bg-slate-50 border border-slate-100 py-2 text-center">
+          <div class="text-[15px] font-bold leading-tight" id="statSessions">0</div>
+          <div class="text-[9.5px] uppercase tracking-wide text-slate-500 mt-0.5">sessions</div>
+        </div>
+        <div class="rounded-xl bg-slate-50 border border-slate-100 py-2 text-center">
+          <div class="text-[15px] font-bold leading-tight" id="statNotes">0</div>
+          <div class="text-[9.5px] uppercase tracking-wide text-slate-500 mt-0.5">notes</div>
+        </div>
+        <div class="rounded-xl bg-slate-50 border border-slate-100 py-2 text-center">
+          <div class="text-[15px] font-bold leading-tight" id="statHours">0h</div>
+          <div class="text-[9.5px] uppercase tracking-wide text-slate-500 mt-0.5">saved</div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex items-center justify-between text-[11px]">
+        <span class="font-semibold text-slate-700">Observations</span>
+        <span class="text-slate-400" id="injCount">0 injected</span>
+      </div>
+      <ul id="obsList" class="thin mt-2 space-y-2 overflow-y-auto max-h-[300px] pr-1 flex-1"></ul>
+
+      <p class="mt-3 text-[11px] text-slate-400 leading-snug">Highlighted notes are the ones actually injected into this session — not the whole history.</p>
+    </aside>
+
+  </div>
+</section>
+
+<!-- Use cases -->
+<section id="use-cases" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+  <div class="text-[11px] font-semibold tracking-[0.14em] text-indigo-600 uppercase">Use cases</div>
+  <h2 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight">The three ways people hit the wall</h2>
+  <div class="mt-6 grid sm:grid-cols-3 gap-4">
+    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="text-2xl">🧷</div>
+      <h3 class="mt-3 font-semibold text-[15px]">Pick up Monday where Friday ended</h3>
+      <p class="mt-2 text-[13px] text-slate-600 leading-relaxed">New session, same repo. Your agent already knows the migration you half-finished, the flag you flipped, and the reason the last fix worked.</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="text-2xl">🔀</div>
+      <h3 class="mt-3 font-semibold text-[15px]">Switch tools without losing the thread</h3>
+      <p class="mt-2 text-[13px] text-slate-600 leading-relaxed">Start in Claude Code, debug in Codex, review in Cursor. One memory layer behind all of them, so context never resets when you change editors.</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="text-2xl">👥</div>
+      <h3 class="mt-3 font-semibold text-[15px]">Your team's decisions, inherited</h3>
+      <p class="mt-2 text-[13px] text-slate-600 leading-relaxed">A new hire's agent knows why you chose pg-boss over Redis — with the date, the file, and the reasoning attached. No archaeology in Slack.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+  <div class="text-[11px] font-semibold tracking-[0.14em] text-indigo-600 uppercase">Pricing</div>
+  <h2 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight">Cheaper than re-explaining yourself</h2>
+  <p class="mt-2 text-slate-600 text-sm">USD, billed monthly. Cancel anytime.</p>
+
+  <div class="mt-6 grid md:grid-cols-3 gap-4">
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col">
+      <div class="font-semibold text-[15px]">Hobby</div>
+      <div class="mt-3 flex items-baseline gap-1">
+        <span class="text-3xl font-bold tracking-tight">$0</span>
+        <span class="text-[13px] text-slate-500">/ forever</span>
+      </div>
+      <ul class="mt-4 space-y-2 text-[13px] text-slate-600 flex-1">
+        <li>1 project</li>
+        <li>30-day memory window</li>
+        <li>Local index, CLI only</li>
+      </ul>
+      <button data-plan="Hobby" class="mt-5 rounded-xl border border-slate-300 px-4 py-2.5 text-[13px] font-semibold hover:bg-slate-50 transition">Start free</button>
+    </div>
+
+    <div class="bg-slate-900 text-white rounded-2xl border border-slate-900 p-6 flex flex-col relative shadow-lg">
+      <span class="absolute -top-2.5 left-6 rounded-full bg-indigo-500 text-white text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5">Most popular</span>
+      <div class="font-semibold text-[15px]">Pro</div>
+      <div class="mt-3 flex items-baseline gap-1">
+        <span class="text-3xl font-bold tracking-tight">$19</span>
+        <span class="text-[13px] text-slate-400">/ month</span>
+      </div>
+      <ul class="mt-4 space-y-2 text-[13px] text-slate-300 flex-1">
+        <li>Unlimited projects</li>
+        <li>12-month memory window</li>
+        <li>All IDEs: Claude Code, Codex, Cursor, Gemini CLI</li>
+        <li>Semantic search across sessions</li>
+      </ul>
+      <button data-plan="Pro" class="mt-5 rounded-xl bg-white text-slate-900 px-4 py-2.5 text-[13px] font-semibold hover:bg-slate-100 transition">Join waitlist</button>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col">
+      <div class="font-semibold text-[15px]">Team</div>
+      <div class="mt-3 flex items-baseline gap-1">
+        <span class="text-3xl font-bold tracking-tight">$49</span>
+        <span class="text-[13px] text-slate-500">/ user / mo</span>
+      </div>
+      <ul class="mt-4 space-y-2 text-[13px] text-slate-600 flex-1">
+        <li>Shared memory across teammates</li>
+        <li>SSO + audit log</li>
+        <li>Self-host or VPC option</li>
+        <li>Priority support</li>
+      </ul>
+      <button data-plan="Team" class="mt-5 rounded-xl border border-slate-300 px-4 py-2.5 text-[13px] font-semibold hover:bg-slate-50 transition">Talk to us</button>
+    </div>
+  </div>
+
+  <!-- Waitlist -->
+  <div id="waitlist" class="mt-10 rounded-2xl bg-slate-900 text-white p-6 sm:p-8">
+    <div class="grid sm:grid-cols-2 gap-6 items-center">
+      <div>
+        <h3 class="text-xl font-semibold tracking-tight">Get early access</h3>
+        <p class="text-slate-400 text-[13.5px] mt-2 leading-relaxed">We're onboarding teams in waves. Drop your email and we'll ping you when your workspace is ready.</p>
+      </div>
+      <div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="email" type="email" value="you@company.com" autocomplete="off"
+                 class="flex-1 min-w-0 rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-[13.5px] text-white outline-none focus:border-indigo-400 transition" />
+          <button id="wlBtn" class="rounded-xl bg-white text-slate-900 px-4 py-2.5 text-[13px] font-semibold hover:bg-slate-100 transition whitespace-nowrap">Join waitlist</button>
+        </div>
+        <p id="wlMsg" class="mt-2 text-[12px] text-emerald-400 hidden">🎉 You're on the list — this is a demo, nothing was sent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 text-center">
+    <div class="flex items-center justify-center gap-2 mb-3">
+      <span class="w-6 h-6 rounded-md bg-slate-900 text-white grid place-items-center text-[11px] font-bold">◈</span>
+      <span class="font-semibold text-sm">Mnemo</span>
+    </div>
+    <p class="text-[11.5px] text-slate-500 leading-relaxed">
+      Concept demo, based on the open-source project <a href="https://github.com/thedotmack/claude-mem" class="text-indigo-600 hover:underline">thedotmack/claude-mem</a> (Apache-2.0), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden rounded-xl bg-slate-900 text-white text-[13px] px-4 py-2.5 shadow-xl"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var TYPE_STYLE = {
+    bugfix: "bg-amber-100 text-amber-700",
+    decision: "bg-indigo-100 text-indigo-700",
+    security_alert: "bg-rose-100 text-rose-700",
+    note: "bg-slate-100 text-slate-600"
+  };
+
+  var DB = {
+    "acme-api": {
+      label: "acme-api",
+      sub: "Node · Postgres · Stripe",
+      divider: "previous session · Jun 11 · 47 observations captured",
+      stats: { sessions: 214, notes: 1842, hours: 38 },
+      observations: [
+        { date: "Jun 11", type: "bugfix", file: "src/payments/retry.ts", text: "Double charge traced to a single Stripe idempotency key reused across retries. Key is now regenerated per attempt; retry cap lowered to 2." },
+        { date: "Jun 09", type: "decision", file: "src/auth/session.ts", text: "Moved off JWT-in-localStorage to httpOnly cookie sessions; refresh tokens rotate every 24h." },
+        { date: "Jun 05", type: "security_alert", file: ".env.local", text: "Live Stripe secret key found in a copied config block. Rotated and replaced with a test key." },
+        { date: "May 30", type: "decision", file: "docs/adr/0007-queue.md", text: "Chose Postgres + pg-boss over Redis/SQS for the job queue to keep the ops surface small at current scale." },
+        { date: "May 28", type: "bugfix", file: "src/api/webhooks.ts", text: "Webhook handler must verify the signature against the raw body — never register express.json() above it." }
+      ],
+      qa: [
+        {
+          q: "Why does /checkout sometimes double-charge?",
+          keys: ["double", "charge", "checkout", "retry", "payment", "stripe"],
+          inject: [0],
+          tokens: "12.4k → 412",
+          warm: "Traced on Jun 11 — it lives in {{src/payments/retry.ts}}. The retry wrapper reused one Stripe idempotency key across attempts, so when the first attempt timed out client-side, the retry was charged as a brand new payment.\n\nThe shipped fix generates a fresh key per attempt ({{orderId-attempt}}) and caps retries at 2 instead of 3. If you're not changing the retry count, there's nothing to redo here.",
+          cold: "I don't have any context from previous sessions on this project. Could you point me at the checkout and payments code? I'd also want to see how retries are configured and whether idempotency keys are used at all. Once you share those files I can start investigating from scratch — expect a few turns of re-orientation."
+        },
+        {
+          q: "What auth approach did we settle on?",
+          keys: ["auth", "login", "session", "token", "jwt", "cookie", "signin"],
+          inject: [1, 4],
+          tokens: "9.8k → 356",
+          warm: "On Jun 9 you moved off JWT-in-localStorage to httpOnly cookie sessions, with refresh tokens rotating every 24h ({{src/auth/session.ts}}).\n\nOne adjacent constraint from May 28: the webhook route needs the raw request body for signature verification, so middleware order matters if you touch anything auth-adjacent.",
+          cold: "There's no prior auth context in this session. What's the current setup — JWT, session cookies, something else? Share the relevant files and I'll go from there."
+        },
+        {
+          q: "Where should the new billing webhook go?",
+          keys: ["webhook", "billing", "route", "endpoint", "handler"],
+          inject: [4, 3],
+          tokens: "11.1k → 389",
+          warm: "Extend {{src/api/webhooks.ts}} rather than adding a new route file — signature verification against the raw body already lives there.\n\nTwo rules from earlier sessions apply: never register {{express.json()}} above that handler (May 28), and dispatch follow-up work through the pg-boss queue instead of adding Redis (May 30 decision).",
+          cold: "I don't have the project layout in this session. Where do routes live, and is there an existing webhook handler I should extend rather than duplicate?"
+        }
+      ]
+    },
+
+    "web-dashboard": {
+      label: "web-dashboard",
+      sub: "Next.js 14 · tRPC · Tailwind",
+      divider: "previous session · Jun 12 · 31 observations captured",
+      stats: { sessions: 96, notes: 731, hours: 15 },
+      observations: [
+        { date: "Jun 12", type: "decision", file: "app/(dash)/charts/Chart.tsx", text: "All chart components must be client-only — recharts breaks SSR. Import with next/dynamic and ssr:false." },
+        { date: "Jun 10", type: "bugfix", file: "lib/trpc/react.tsx", text: "Hydration mismatch fixed by passing the superjson transformer on both the client and the server." },
+        { date: "Jun 08", type: "decision", file: "tailwind.config.ts", text: "Design tokens live in tailwind.config.ts; no ad-hoc hex colors inside components." },
+        { date: "Jun 02", type: "bugfix", file: "app/api/revalidate/route.ts", text: "Cache invalidation must revalidate tags, not paths — path revalidation misses ISR pages." },
+        { date: "May 29", type: "decision", file: "docs/state.md", text: "Server state via tRPC + React Query only. No Redux, no Zustand for server data." }
+      ],
+      qa: [
+        {
+          q: "Why does the chart page crash on load?",
+          keys: ["chart", "crash", "ssr", "render", "recharts", "load"],
+          inject: [0],
+          tokens: "8.6k → 298",
+          warm: "Known issue, and it isn't you. Recharts isn't SSR-safe in this app, so {{app/(dash)/charts/Chart.tsx}} has to be pulled in with next/dynamic and ssr:false (decision, Jun 12).\n\nIf it started crashing again, check whether someone converted it back to a static import — that's what reintroduced it last time.",
+          cold: "No prior context here. Can you paste the error and the chart component? I'd need to know whether it's failing on the server render or the client."
+        },
+        {
+          q: "How should I add a new API call?",
+          keys: ["api", "trpc", "data", "fetch", "call", "query"],
+          inject: [1, 4],
+          tokens: "7.9k → 271",
+          warm: "Follow the existing convention: add a tRPC procedure and consume it with React Query ({{docs/state.md}}, May 29 — server state stays in tRPC + React Query, no Redux or Zustand).\n\nKeep the superjson transformer configured on both client and server ({{lib/trpc/react.tsx}}) — that mismatch caused the hydration bug fixed on Jun 10.",
+          cold: "I don't have the project conventions in this session. Is there an existing API layer I should follow, or are we starting from raw fetch calls?"
+        },
+        {
+          q: "Where do colors come from?",
+          keys: ["color", "colour", "design", "token", "style", "css", "theme"],
+          inject: [2],
+          tokens: "6.2k → 184",
+          warm: "Design tokens only. Colors live in {{tailwind.config.ts}} (Jun 8 decision) and ad-hoc hex values inside components aren't allowed — if a shade is missing, add a token first, then use it.",
+          cold: "I don't know your styling setup in this session. Tailwind, CSS modules, styled-components?"
+        }
+      ]
+    },
+
+    "ml-pipeline": {
+      label: "ml-pipeline",
+      sub: "Python · Ray · S3",
+      divider: "previous session · Jun 13 · 26 observations captured",
+      stats: { sessions: 58, notes: 402, hours: 9 },
+      observations: [
+        { date: "Jun 13", type: "bugfix", file: "training/data.py", text: "Shuffling happened before the train/val split and leaked labels. Split first, then shuffle inside each split." },
+        { date: "Jun 07", type: "decision", file: "config/ray.yaml", text: "Ray workers capped at 8 on the m5.4xlarge pool — more workers thrash S3 throughput." },
+        { date: "Jun 03", type: "security_alert", file: "notebooks/explore.ipynb", text: "AWS keys were pasted into a notebook cell. Moved to env vars and rotated." },
+        { date: "May 31", type: "decision", file: "training/eval.py", text: "Eval uses fixed seed 1337 and the frozen holdout s3://ml-holdout/v3 — never regenerate it." },
+        { date: "May 24", type: "bugfix", file: "serving/model.py", text: "Model must load with map_location cpu in serving — GPU checkpoints fail on CPU inference nodes." }
+      ],
+      qa: [
+        {
+          q: "Why is validation accuracy suspiciously high?",
+          keys: ["accuracy", "val", "validation", "high", "leak", "shuffle", "split"],
+          inject: [0, 3],
+          tokens: "10.2k → 334",
+          warm: "Most likely the Jun 13 leak resurfacing: shuffling happened before the train/val split, which leaks labels across the boundary ({{training/data.py}}). Split first, then shuffle inside each split.\n\nAlso confirm eval still points at the frozen holdout {{s3://ml-holdout/v3}} with seed 1337 (May 31 decision) — regenerating the holdout was explicitly ruled out, so a fresh split would explain a jump in accuracy.",
+          cold: "No session context. Which split logic are you using, and how is the holdout defined?"
+        },
+        {
+          q: "How many Ray workers should I use?",
+          keys: ["ray", "worker", "parallel", "scale", "cluster"],
+          inject: [1],
+          tokens: "5.4k → 162",
+          warm: "Cap it at 8 workers on the m5.4xlarge pool. That limit is deliberate ({{config/ray.yaml}}, Jun 7 decision) — past 8 you saturate S3 throughput and wall-clock time gets worse, not better.",
+          cold: "I don't have the infra context in this session. What instance type and dataset size are we talking about?"
+        },
+        {
+          q: "Inference fails on the CPU node",
+          keys: ["inference", "cpu", "serving", "gpu", "deploy", "map_location", "fails"],
+          inject: [4],
+          tokens: "6.8k → 201",
+          warm: "Load the checkpoint with map_location set to cpu in {{serving/model.py}} (May 24 fix). GPU checkpoints otherwise fail to deserialize on CPU inference nodes.\n\nRelated: don't regenerate the eval holdout while you're in there — it's frozen at {{s3://ml-holdout/v3}} (May 31).",
+          cold: "No context on this one. Can you share the traceback and how the model is loaded at startup?"
+        }
+      ]
+    }
+  };
+
+  var state = { project: "acme-api", mode: "warm", busy: false, injected: [], last: null };
+  var messages = [];
+  var toastTimer = null;
+
+  var els = {
+    tabs: document.getElementById("projectTabs"),
+    chat: document.getElementById("chat"),
+    input: document.getElementById("question"),
+    ask: document.getElementById("askBtn"),
+    sugg: document.getElementById("suggestions"),
+    modeSwitch: document.getElementById("modeSwitch"),
+    obsList: document.getElementById("obsList"),
+    injCount: document.getElementById("injCount"),
+    statSessions: document.getElementById("statSessions"),
+    statNotes: document.getElementById("statNotes"),
+    statHours: document.getElementById("statHours"),
+    memSub: document.getElementById("memSub"),
+    email: document.getElementById("email"),
+    wlBtn: document.getElementById("wlBtn"),
+    wlMsg: document.getElementById("wlMsg"),
+    toast: document.getElementById("toast")
+  };
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function fmt(s) {
+    return esc(s).replace(/\{\{([\s\S]+?)\}\}/g, function (m, p1) {
+      return '<code class="px-1 py-0.5 rounded bg-slate-200/80 font-mono text-[11.5px] text-slate-800">' + p1 + "</code>";
+    });
+  }
+
+  function paras(s) {
+    return String(s).split("\n\n").map(function (p) {
+      return '<p class="mb-2 last:mb-0">' + fmt(p) + "</p>";
+    }).join("");
+  }
+
+  function notify(msg) {
+    els.toast.textContent = msg;
+    els.toast.classList.remove("hidden");
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      els.toast.classList.add("hidden");
+    }, 3400);
+  }
+
+  function renderTabs() {
+    els.tabs.innerHTML = Object.keys(DB).map(function (k) {
+      var on = k === state.project;
+      var cls = on
+        ? "bg-slate-900 text-white border-slate-900"
+        : "bg-white text-slate-600 border-slate-200 hover:border-slate-400";
+      return '<button data-p="' + esc(k) + '" class="px-3 py-1.5 rounded-full border text-[11.5px] font-semibold transition ' + cls + '">' + esc(DB[k].label) + "</button>";
+    }).join("");
+  }
+
+  function renderMode() {
+    Array.prototype.forEach.call(els.modeSwitch.children, function (b) {
+      var on = b.getAttribute("data-mode") === state.mode;
+      b.className = "px-3 py-1.5 rounded-md text-[11.5px] font-semibold transition " +
+        (on ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700");
+    });
+  }
+
+  function renderSugg() {
+    var p = DB[state.project];
+    els.sugg.innerHTML = p.qa.map(function (item) {
+      return '<button data-q="' + esc(item.q) + '" class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11.5px] text-slate-600 hover:border-indigo-300 hover:text-indigo-700 transition text-left">' + esc(item.q) + "</button>";
+    }).join("");
+  }
+
+  function renderObs() {
+    var p = DB[state.project];
+    var inj = state.injected || [];
+    els.obsList.innerHTML = p.observations.map(function (o, i) {
+      var on = inj.indexOf(i) !== -1;
+      var badge = TYPE_STYLE[o.type] || TYPE_STYLE.note;
+      return '<li class="rounded-lg border p-2.5 transition ' +
+        (on ? "border-indigo-300 bg-indigo-50/70 ring-1 ring-indigo-200" : "border-slate-200 bg-white opacity-70") + '">' +
+        '<div class="flex items-center gap-1.5">' +
+        '<span class="rounded px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider ' + badge + '">' + esc(o.type.replace("_", " ")) + "</span>" +
+        '<span class="text-[10px] text-slate-400">' + esc(o.date) + "</span>" +
+        (on ? '<span class="ml-auto text-[9.5px] font-semibold uppercase tracking-wider text-indigo-600">injected</span>' : "") +
+        "</div>" +
+        '<p class="text-[12px] text-slate-700 mt-1.5 leading-snug">' + fmt(o.text) + "</p>" +
+        '<p class="text-[10.5px] text-slate-400 font-mono mt-1 truncate">' + esc(o.file) + "</p>" +
+        "</li>";
+    }).join("");
+    els.injCount.textContent = inj.length + " of " + p.observations.length + " injected";
+  }
+
+  function agentBubble(m) {
+    var strip;
+    if (m.cold) {
+      strip = '<span class="rounded bg-rose-50 text-rose-600 px-1.5 py-0.5 font-semibold">No memory · empty context</span>';
+    } else {
+      var n = m.inj.length;
+      strip = '<span class="rounded bg-indigo-100 text-indigo-700 px-1.5 py-0.5 font-semibold">🧠 ' + n + (n === 1 ? " memory" : " memories") + ' injected</span>' +
+              '<span class="rounded bg-slate-200 text-slate-600 px-1.5 py-0.5 font-mono">' + esc(m.tokens || "—") + " tokens</span>";
+    }
+    return '<div class="flex gap-2.5 fade">' +
+      '<div class="w-7 h-7 shrink-0 rounded-lg bg-slate-900 text-white grid place-items-center text-[12px]">◈</div>' +
+      '<div class="min-w-0 max-w-[88%]">' +
+        '<div class="text-[9.5px] uppercase tracking-wider text-slate-400 mb-1">agent</div>' +
+        '<div class="rounded-2xl rounded-tl-md bg-slate-100 px-3.5 py-2.5 text-[13.5px] leading-relaxed text-slate-800">' +
+          '<div class="mb-2 flex flex-wrap items-center gap-1.5 text-[10.5px]">' + strip + "</div>" +
+          paras(m.text) +
+        "</div>" +
+      "</div>" +
+    "</div>";
+  }
+
+  function render() {
+    els.chat.innerHTML = messages.map(function (m) {
+      if (m.role === "divider") {
+        return '<div class="flex items-center gap-3 my-1">' +
+          '<span class="h-px flex-1 bg-slate-200"></span>' +
+          '<span class="text-[9.5px] uppercase tracking-wider text-slate-400 whitespace-nowrap">' + esc(m.text) + "</span>" +
+          '<span class="h-px flex-1 bg-slate-200"></span>' +
+        "</div>";
+      }
+      if (m.role === "user") {
+        return '<div class="flex justify-end fade"><div class="max-w-[85%] rounded-2xl rounded-br-md bg-indigo-600 text-white px-3.5 py-2.5 text-[13.5px] leading-relaxed">' + esc(m.text) + "</div></div>";
+      }
+      if (m.role === "typing") {
+        return '<div class="flex gap-2.5 items-start fade">' +
+          '<div class="w-7 h-7 shrink-0 rounded-lg bg-slate-900"></div>' +
+          '<div class="rounded-2xl rounded-tl-md bg-slate-100 px-3.5 py-3 flex gap-1.5 items-center">' +
+            '<span class="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"></span>' +
+            '<span class="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style="animation-delay:.12s"></span>' +
+            '<span class="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style="animation-delay:.24s"></span>' +
+          "</div>" +
+        "</div>";
+      }
+      return agentBubble(m);
+    }).join("");
+    els.chat.scrollTop = els.chat.scrollHeight;
+    renderObs();
+  }
+
+  function ask(text) {
+    var q = String(text || "").trim();
+    if (!q || state.busy) return;
+    var p = DB[state.project];
+    state.last = q;
+    state.busy = true;
+    els.input.value = q;
+    messages.push({ role: "user", text: q });
+    messages.push({ role: "typing" });
+    render();
+
+    var match = null;
+    var low = q.toLowerCase();
+    for (var i = 0; i < p.qa.length; i++) {
+      var item = p.qa[i];
+      for (var j = 0; j < item.keys.length; j++) {
+        if (low.indexOf(item.keys[j]) !== -1) { match = item; break; }
+      }
+      if (match) break;
+    }
+
+    window.setTimeout(function () {
+      messages = messages.filter(function (m) { return m.role !== "typing"; });
+
+      if (match) {
+        if (state.mode === "warm") {
+          messages.push({ role: "agent", text: match.warm, inj: match.inject.slice(), tokens: match.tokens });
+          state.injected = match.inject.slice();
+        } else {
+          messages.push({ role: "agent", text: match.cold, cold: true, inj: [] });
+          state.injected = [];
+        }
+      } else if (state.mode === "warm") {
+        var inj = [0, 1, 2];
+        var bullets = p.observations.slice(0, 3).map(function (o) {
+          return "• " + o.date + " — " + o.text + " (" + o.file + ")";
+        }).join("\n\n");
+        messages.push({
+          role: "agent",
+          text: "Nothing in the compressed index matched that question exactly, so here are the closest notes Mnemo would inject for " + p.label + ":\n\n" + bullets,
+          inj: inj,
+          tokens: "8.1k → 296"
+        });
+        state.injected = inj;
+      } else {
+        messages.push({
+          role: "agent",
+          cold: true,
+          inj: [],
+          text: "This session started with an empty context window, so I can't see anything from previous sessions in " + p.label + ". Please re-explain the project layout, the conventions, and any recent fixes before I start — otherwise I'll be guessing."
+        });
+        state.injected = [];
+      }
+
+      state.busy = false;
+      render();
+    }, 700);
+  }
+
+  function setProject(key) {
+    if (!DB[key]) return;
+    state.project = key;
+    state.injected = [];
+    state.busy = false;
+    var p = DB[key];
+
+    els.memSub.textContent = p.label + " · " + p.sub;
+    els.statSessions.textContent = String(p.stats.sessions);
+    els.statNotes.textContent = p.stats.notes.toLocaleString("en-US");
+    els.statHours.textContent = p.stats.hours + "h";
+    els.input.value = p.qa[0].q;
+
+    messages = [{ role: "divider", text: p.divider }];
+    state.last = p.qa[0].q;
+
+    renderTabs();
+    renderSugg();
+    renderObs();
+    ask(p.qa[0].q);
+  }
+
+  /* ---- events ---- */
+
+  els.tabs.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("button[data-p]") : null;
+    if (b) setProject(b.getAttribute("data-p"));
+  });
+
+  els.sugg.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("button[data-q]") : null;
+    if (b) ask(b.getAttribute("data-q"));
+  });
+
+  els.ask.addEventListener("click", function () {
+    ask(els.input.value);
+  });
+
+  els.input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      ask(els.input.value);
+    }
+  });
+
+  els.modeSwitch.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("button[data-mode]") : null;
+    if (!b) return;
+    var m = b.getAttribute("data-mode");
+    if (m === state.mode || state.busy) return;
+    state.mode = m;
+    renderMode();
+    var p = DB[state.project];
+    messages = [{ role: "divider", text: p.divider }];
+    state.injected = [];
+    renderObs();
+    if (state.last) ask(state.last);
+  });
+
+  els.wlBtn.addEventListener("click", function () {
+    var v = String(els.email.value || "").trim();
+    els.wlMsg.classList.remove("hidden");
+    if (v) {
+      els.wlMsg.textContent = "🎉 You're on the list, " + v + " — this is a demo, nothing was sent.";
+    } else {
+      els.wlMsg.textContent = "🎉 You're on the list — this is a demo, nothing was sent.";
+    }
+    notify("Demo only — no data was submitted.");
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll("button[data-plan]"), function (b) {
+    b.addEventListener("click", function () {
+      var plan = b.getAttribute("data-plan");
+      notify(plan + " plan — demo only, nothing was submitted.");
+      document.getElementById("waitlist").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+
+  /* ---- init ---- */
+  renderMode();
+  setProject("acme-api");
+})();
+</script>
+</body>
+</html>

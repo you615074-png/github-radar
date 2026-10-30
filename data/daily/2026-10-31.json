@@ -1,0 +1,73 @@
+{
+ "date": "2026-10-31",
+ "headline": "claude-mem：给AI编程助手装长期记忆",
+ "summary_md": "**thedotmack/claude-mem** 是一个给 AI 编程助手做“长期记忆”的开源项目。按 README 的说法，它在会话中捕获 agent 的工具调用和观察，用 AI 压缩成语义摘要，并在后续会话里把相关上下文注入回去，让 Claude 不再每次都“失忆”。它自称支持 Claude Code、OpenCode、Codex、Gemini、Copilot 等多个工具，License 是 Apache-2.0。\n\n它最近火得有点夸张：约 10 万星，近期每天涨约 1400 星。原因是“跨会话记忆”确实是重度 AI 编程用户的高频痛点——每次重开终端都要重新解释项目背景，谁用谁烦。\n\n但如果做成产品，机会要谨慎看。作者已经在做官方商业化（claude-mem.ai、CMEM Pro 托管、30 天免费试用），安装器会引导邮箱登录、默认走托管记忆。也就是说，最顺的“托管记忆层 + 订阅”路径已经被原作者占了。第三方能做的差异点不多：要么做跨工具的统一记忆层并主打本地/私有部署，要么做记忆的审计、清理和合规（代码和会话数据上云在美国市场是实打实的隐私问题）。从 README 看，它的信息密度高但质量参差、语言列表和注释不太规范，说明工程细节还有缝，但不足以支撑一个独立产品。\n\n一句话：适合写进日报让读者了解趋势，不太适合拿来二次包装创业。",
+ "pick": {
+  "full_name": "thedotmack/claude-mem",
+  "url": "https://github.com/thedotmack/claude-mem",
+  "description": "Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More",
+  "license": "Apache-2.0",
+  "stars": 106116,
+  "daily_rate": 1406.0,
+  "category": "AI基础设施",
+  "one_liner": "给 AI 编程助手装上长期记忆，跨会话记住你的项目",
+  "reason": "赛道正热、痛点真实，但项目已自带商业产品和大厂生态依赖，包装空间与差异化有限，适合做内容不适合再包装。",
+  "content": 7.67,
+  "startup": 7.0,
+  "final": 7.5,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-10-31-thedotmack-claude-mem",
+ "top": [
+  {
+   "full_name": "thedotmack/claude-mem",
+   "url": "https://github.com/thedotmack/claude-mem",
+   "one_liner": "给 AI 编程助手装上长期记忆，跨会话记住你的项目",
+   "reason": "赛道正热、痛点真实，但项目已自带商业产品和大厂生态依赖，包装空间与差异化有限，适合做内容不适合再包装。",
+   "content": 7.67,
+   "startup": 7.0,
+   "final": 7.5,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "heydamir/unslop",
+   "url": "https://github.com/heydamir/unslop",
+   "one_liner": "让 Claude 帮你把 AI 味十足的页面改成有设计感的界面",
+   "reason": "话题正向，容易理解，也很容易演示，但本质是一组提示词文件加一个设计顾问服务，没有护城河，商业价值主要来自代做设计服务，而不是产品。",
+   "content": 8.0,
+   "startup": 6.7,
+   "final": 7.43,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "jhaizhou-ops/d2r-mobile",
+   "url": "https://github.com/jhaizhou-ops/d2r-mobile",
+   "one_liner": "把你在 Switch 上买的《暗黑破坏神 II：狱火重生》原生跑在 iPhone、iPad、Mac 和安卓手机上",
+   "reason": "话题性和惊喜感都很强，演示效果极好，很适合做内容；但商业模型几乎不成立，存在法律下架风险，只适合当流量选题，不适合包装成产品。",
+   "content": 8.67,
+   "startup": 6.4,
+   "final": 7.25,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "qybaihe/bla",
+   "url": "https://github.com/qybaihe/bla",
+   "one_liner": "给软件加一层防护，让AI逆向分析工具浪费算力和钱",
+   "reason": "概念时髦、demo有反差感、MIT宽松，但痛点偏niche且防护效果绑定特定工具，适合做爆款内容，商业化需绑定构建流水线。",
+   "content": 7.67,
+   "startup": 6.5,
+   "final": 7.01,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "affaan-m/ECC",
+   "url": "https://github.com/affaan-m/ECC",
+   "one_liner": "给 AI 编程助手装上工程化流程、记忆和技能库的系统",
+   "reason": "话题热、痛点真实、MIT 干净，但作者已自行商业化并绑死特定 coding agent，外部做产品差异化极难，更适合做内容解析而非包装。",
+   "content": 7.0,
+   "startup": 7.15,
+   "final": 6.99,
+   "category_penalty": 0
+  }
+ ]
+}
