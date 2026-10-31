@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sparkframe — pixel effects you can drop into your game</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .pixelated{image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;}
+  .checker{
+    background-color:#0e1118;
+    background-image:
+      linear-gradient(45deg,#171b24 25%,transparent 25%),
+      linear-gradient(-45deg,#171b24 25%,transparent 25%),
+      linear-gradient(45deg,transparent 75%,#171b24 75%),
+      linear-gradient(-45deg,transparent 75%,#171b24 75%);
+    background-size:16px 16px;
+    background-position:0 0,0 8px,8px -8px,-8px 0;
+  }
+  input[type=range]{accent-color:#5b4bff;height:20px;}
+  .livedot{animation:pulse 1.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  ::selection{background:#5b4bff;color:#fff;}
+</style>
+</head>
+<body class="bg-[#f6f6f4] text-[#101014] antialiased">
+
+<!-- NAV -->
+<header class="sticky top-0 z-30 border-b border-black/5 bg-[#f6f6f4]/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="grid grid-cols-2 gap-[3px]">
+        <span class="h-2 w-2 bg-[#5b4bff]"></span>
+        <span class="h-2 w-2 bg-[#101014]"></span>
+        <span class="h-2 w-2 bg-[#101014]"></span>
+        <span class="h-2 w-2 bg-[#5b4bff]/40"></span>
+      </span>
+      <span class="font-semibold tracking-tight">Sparkframe</span>
+      <span class="ml-1 hidden rounded-full bg-black/5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-black/45 sm:inline">beta</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm text-black/60 md:flex">
+      <a class="hover:text-black" href="#editor">Editor</a>
+      <a class="hover:text-black" href="#use-cases">Use cases</a>
+      <a class="hover:text-black" href="#pricing">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-full bg-[#101014] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90">Join waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="mx-auto max-w-6xl px-5 pb-10 pt-14 md:pb-14 md:pt-20">
+    <span class="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1 text-xs font-medium text-black/60">
+      <span class="livedot h-1.5 w-1.5 rounded-full bg-[#5b4bff]"></span>
+      244 effects · MIT core · no dependencies
+    </span>
+    <h1 class="mt-5 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
+      Pixel effects you can <span class="text-[#5b4bff]">drop into your game</span> today.
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-black/60">
+      Fire, explosions, frost, lightning, pickups — every effect is a small piece of code, not a video.
+      Preview it, recolor it, mirror it, and export a sprite sheet for any engine. Right here in the browser.
+    </p>
+    <div class="mt-7 flex flex-wrap items-center gap-3">
+      <a href="#editor" class="rounded-full bg-[#5b4bff] px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90">Try the editor</a>
+      <span class="text-xs text-black/40">No signup · runs entirely in this tab</span>
+    </div>
+  </section>
+
+  <!-- EDITOR -->
+  <section id="editor" class="mx-auto max-w-6xl px-5 pb-16">
+    <div class="overflow-hidden rounded-3xl border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.03)]">
+      <div class="grid lg:grid-cols-[minmax(0,1fr)_370px]">
+
+        <!-- STAGE -->
+        <div class="bg-[#0d0f14] p-4 sm:p-6">
+          <div class="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-white/40">
+            <span class="flex items-center gap-2"><span class="livedot h-1.5 w-1.5 rounded-full bg-[#5b4bff]"></span>live preview · 64×64</span>
+            <span>Sample data</span>
+          </div>
+
+          <div class="relative mx-auto w-full max-w-[340px]">
+            <div class="checker aspect-square overflow-hidden rounded-xl ring-1 ring-white/10">
+              <canvas id="stage" width="64" height="64" class="pixelated block h-full w-full"></canvas>
+            </div>
+          </div>
+
+          <div class="mx-auto mt-4 flex max-w-[340px] items-center justify-between font-mono text-[11px] text-white/40">
+            <span id="fx-label">fire / brazier</span>
+            <span>loop · 24fps</span>
+          </div>
+
+          <button id="export-btn" class="mx-auto mt-5 flex w-full max-w-[340px] items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-[#101014] transition hover:bg-white/90">
+            <span>⬇</span> Export sprite sheet
+          </button>
+          <p class="mx-auto mt-2 max-w-[340px] text-center text-[10px] text-white/30">Generates a real PNG grid in your browser</p>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="border-t border-black/10 p-5 sm:p-6 lg:border-l lg:border-t-0">
+
+          <div class="flex items-baseline justify-between">
+            <h2 class="text-sm font-semibold">Effect library</h2>
+            <span class="text-[11px] text-black/40">6 of 244 · sample</span>
+          </div>
+          <div id="fx-picker" class="mt-3 grid grid-cols-3 gap-2"></div>
+
+          <div class="mt-7 flex items-baseline justify-between">
+            <h2 class="text-sm font-semibold">Palette</h2>
+            <span class="text-[11px] text-black/40">dark → bright ramp</span>
+          </div>
+          <div id="swatches" class="mt-3 flex items-center gap-1.5"></div>
+
+          <div id="presets" class="mt-3 flex flex-wrap gap-2"></div>
+
+          <label class="mt-4 flex items-center justify-between text-xs text-black/50">
+            <span>Hue</span><span id="hue-val" class="font-mono text-black/70">20°</span>
+          </label>
+          <input id="hue" type="range" min="0" max="360" step="1" value="20" class="mt-1 w-full">
+
+          <div class="mt-5 space-y-3">
+            <button id="mirror" class="flex w-full items-center justify-between rounded-xl border border-black/10 px-3 py-2.5 text-sm transition hover:bg-black/[0.03]">
+              <span class="flex items-center gap-2"><span class="text-black/40">↔</span> Mirror horizontally</span>
+              <span id="mirror-pill" class="rounded-full bg-black/5 px-2 py-0.5 font-mono text-[11px] text-black/50">off</span>
+            </button>
+
+            <div class="rounded-xl border border-black/10 px-3 py-2.5">
+              <div class="flex items-center justify-between text-sm">
+                <span class="flex items-center gap-2"><span class="text-black/40">⏱</span> Playback</span>
+                <span id="speed-val" class="font-mono text-[11px] text-black/50">1.0×</span>
+              </div>
+              <input id="speed" type="range" min="40" max="200" step="10" value="100" class="mt-2 w-full">
+            </div>
+          </div>
+
+          <p class="mt-5 text-[11px] leading-relaxed text-black/40">
+            Every effect takes a palette, a mirror flag, an angle and a seed. This preview runs the same
+            simulation loop the library ships with — just rendered at 64×64.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="use-cases" class="mx-auto max-w-6xl px-5 pb-20">
+    <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Where it slots in</h2>
+    <p class="mt-2 max-w-xl text-black/55">Made for people who would rather ship the fight than hand-draw the fire.</p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-black/10 bg-white p-6">
+        <div class="text-2xl">🕹️</div>
+        <h3 class="mt-3 font-semibold">A jam prototype by tonight</h3>
+        <p class="mt-2 text-sm leading-relaxed text-black/55">
+          Paste the module, call <span class="rounded bg-black/5 px-1 font-mono text-[12px]">createFx()</span>, draw back and front
+          of your characters. Phaser, Pixi, Kaplay or plain canvas — there is nothing to import but the file.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-black/10 bg-white p-6">
+        <div class="text-2xl">🎨</div>
+        <h3 class="mt-3 font-semibold">One palette, a whole new element</h3>
+        <p class="mt-2 text-sm leading-relaxed text-black/55">
+          Drag the hue and the brazier burns blue. Frost, poison and holy versions of the same effect cost you
+          one line of config instead of a second art pass.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-black/10 bg-white p-6">
+        <div class="text-2xl">📦</div>
+        <h3 class="mt-3 font-semibold">Sheets for any engine</h3>
+        <p class="mt-2 text-sm leading-relaxed text-black/55">
+          Export a transparent PNG grid with frame rects, durations and pivot in Aseprite-style JSON. Godot,
+          Unity and GameMaker importers read it as-is.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="mx-auto max-w-6xl px-5 pb-20">
+    <h2 class="text-2xl font-semibold tracking-tight md:text-3xl">Pricing</h2>
+    <p class="mt-2 max-w-xl text-black/55">The library stays MIT and free forever. Studio adds the generator.</p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+
+      <div class="rounded-2xl border border-black/10 bg-white p-6">
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-semibold">Free</h3>
+          <span class="text-2xl font-semibold tracking-tight">$0</span>
+        </div>
+        <p class="mt-1 text-xs text-black/45">Open source, MIT, forever</p>
+        <ul class="mt-5 space-y-2.5 text-sm text-black/65">
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> All 244 effects, source included</li>
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> Palette, mirror and speed controls</li>
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> PNG sprite sheets + JSON metadata</li>
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> Browser-game runtime, no dependencies</li>
+        </ul>
+        <a href="#editor" class="mt-6 block rounded-full border border-black/15 px-4 py-2.5 text-center text-sm font-medium transition hover:bg-black/5">Browse the library</a>
+      </div>
+
+      <div class="relative overflow-hidden rounded-2xl border border-[#5b4bff]/30 bg-white p-6">
+        <span class="absolute right-5 top-5 rounded-full bg-[#5b4bff]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-[#5b4bff]">Waitlist</span>
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-semibold">Studio</h3>
+          <span class="text-2xl font-semibold tracking-tight">$12<span class="text-sm font-normal text-black/40">/mo</span></span>
+        </div>
+        <p class="mt-1 text-xs text-black/45">For teams shipping a whole art direction</p>
+        <ul class="mt-5 space-y-2.5 text-sm text-black/65">
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> AI effect generator — draft, render, refine</li>
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> Saved palettes and shared style guides</li>
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> Private effect library for your project</li>
+          <li class="flex gap-2"><span class="text-[#5b4bff]">✓</span> 2× export sizes and batch sheets</li>
+        </ul>
+        <a href="#waitlist" class="mt-6 block rounded-full bg-[#5b4bff] px-4 py-2.5 text-center text-sm font-medium text-white transition hover:opacity-90">Join the waitlist</a>
+      </div>
+    </div>
+
+    <!-- WAITLIST -->
+    <div id="waitlist" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-8">
+      <div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+        <div>
+          <h3 class="text-lg font-semibold tracking-tight">Get early access to Studio</h3>
+          <p class="mt-1 text-sm text-black/55">Drop your email and we'll ping you when the generator opens up. Demo only — nothing leaves this page.</p>
+        </div>
+        <div class="flex w-full flex-col gap-2 sm:flex-row md:w-auto">
+          <input id="email" type="email" value="dev@indiestudio.com" aria-label="Email address"
+                 class="w-full rounded-full border border-black/15 bg-[#f6f6f4] px-4 py-2.5 text-sm outline-none focus:border-[#5b4bff] sm:w-64">
+          <button id="waitlist-btn" class="rounded-full bg-[#101014] px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90">Join waitlist</button>
+        </div>
+      </div>
+      <p id="waitlist-msg" class="mt-3 hidden text-sm font-medium text-[#5b4bff]"></p>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-black/10">
+  <div class="mx-auto max-w-6xl px-5 py-8">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="grid grid-cols-2 gap-[3px]">
+          <span class="h-2 w-2 bg-[#5b4bff]"></span>
+          <span class="h-2 w-2 bg-[#101014]"></span>
+          <span class="h-2 w-2 bg-[#101014]"></span>
+          <span class="h-2 w-2 bg-[#5b4bff]/40"></span>
+        </span>
+        <span class="text-sm font-semibold">Sparkframe</span>
+      </div>
+      <p class="text-xs text-black/40">
+        Concept demo, based on the open-source project
+        <a class="underline decoration-black/20 underline-offset-2 hover:text-black" href="https://github.com/patch-gg/pixelfx">patch-gg/pixelfx</a>
+        (MIT), unofficial, all data is sample data
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- EXPORT MODAL -->
+<div id="export-modal" style="display:none" class="fixed inset-0 z-50 items-center justify-center bg-black/55 p-4 backdrop-blur-sm">
+  <div class="w-full max-w-lg rounded-2xl bg-white p-5 shadow-2xl sm:p-6">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h3 class="font-semibold tracking-tight">Sprite sheet ready</h3>
+        <p id="sheet-meta" class="mt-1 font-mono text-[11px] text-black/45"></p>
+      </div>
+      <button id="close-modal" aria-label="Close" class="px-1 text-xl leading-none text-black/40 transition hover:text-black">✕</button>
+    </div>
+    <div class="checker mt-4 overflow-hidden rounded-xl p-3 ring-1 ring-black/10">
+      <img id="sheet-img" alt="Generated sprite sheet preview" class="pixelated block w-full">
+    </div>
+    <p class="mt-3 text-[11px] leading-relaxed text-black/40">
+      Sample data — this PNG is generated live from the preview above, with your current palette and mirror setting.
+    </p>
+    <div class="mt-4 flex gap-2">
+      <a id="dl" download="sparkframe-sheet.png" class="flex-1 rounded-full bg-[#101014] px-4 py-2.5 text-center text-sm font-medium text-white transition hover:opacity-90">Download PNG</a>
+      <button id="close-modal-2" class="rounded-full border border-black/15 px-4 py-2.5 text-sm font-medium transition hover:bg-black/5">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------ *
+   * Canvas setup
+   * ------------------------------------------------------------------ */
+  var W = 64, H = 64;
+  var stage = document.getElementById("stage");
+  var ctx = stage.getContext("2d");
+
+  var off = document.createElement("canvas");
+  off.width = W; off.height = H;
+  var octx = off.getContext("2d");
+
+  var particles = [];
+  var rings = [];
+  var bolts = [];
+
+  var hue = 20;
+  var mirror = false;
+  var speed = 1;
+  var current = "fire";
+
+  /* ------------------------------------------------------------------ *
+   * Color
+   * ------------------------------------------------------------------ */
+  function palette() {
+    var out = [];
+    for (var i = 0; i < 5; i++) {
+      var l = 16 + i * 17;
+      var s = 92 - i * 11;
+      out.push("hsl(" + hue + " " + s + "% " + l + "%)");
+    }
+    return out;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Pixel drawing helpers
+   * ------------------------------------------------------------------ */
+  function px(c, x, y, size, color) {
+    c.fillStyle = color;
+    c.fillRect(Math.round(x), Math.round(y), size || 1, size || 1);
+  }
+
+  function line(c, x0, y0, x1, y1, size, color) {
+    var dx = x1 - x0, dy = y1 - y0;
+    var steps = Math.max(1, Math.round(Math.max(Math.abs(dx), Math.abs(dy))));
+    c.fillStyle = color;
+    for (var i = 0; i <= steps; i++) {
+      var t = i / steps;
+      c.fillRect(Math.round(x0 + dx * t), Math.round(y0 + dy * t), size, size);
+    }
+  }
+
+  function circleOutline(c, cx, cy, r, color) {
+    c.fillStyle = color;
+    var steps = Math.max(10, Math.round(r * 9));
+    for (var i = 0; i < steps; i++) {
+      var a = (i / steps) * Math.PI * 2;
+      c.fillRect(Math.round(cx + Math.cos(a) * r), Math.round(cy + Math.sin(a) * r), 1, 1);
+    }
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Particle spawn
+   * ------------------------------------------------------------------ */
+  function spawn(o) {
+    o.life = o.max;
+    particles.push(o);
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Effects
+   * ------------------------------------------------------------------ */
+  var FX = {
+
+    fire: {
+      name: "Brazier", cat: "fire", emoji: "\uD83D\uDD25",
+      init: function () { this.acc = 0; },
+      tick: function (dt, sp) {
+        this.acc += dt * 80;
+        while (this.acc >= 1) {
+          this.acc -= 1;
+          sp({
+            x: 32 + (Math.random() - 0.5) * 13,
+            y: 52 - Math.random() * 5,
+            vx: (Math.random() - 0.5) * 8,
+            vy: -(26 + Math.random() * 34),
+            max: 0.45 + Math.random() * 0.5,
+            size: Math.random() < 0.22 ? 2 : 1,
+            grav: -6, drag: 1.2
+          });
+        }
+        if (Math.random() < dt * 4) {
+          sp({
+            x: 32 + (Math.random() - 0.5) * 16, y: 48,
+            vx: (Math.random() - 0.5) * 22, vy: -(55 + Math.random() * 35),
+            max: 1.1 + Math.random() * 0.6, size: 1, grav: 18, drag: 0.5
+          });
+        }
+      }
+    },
+
+    explosion: {
+      name: "Barrel Burst", cat: "explosions", emoji: "\uD83D\uDCA5",
+      init: function () { this.t = 1.4; },
+      tick: function (dt, sp) {
+        this.t += dt;
+        if (this.t >= 1.5) { this.t = 0; this.burst(sp); }
+      },
+      burst: function (sp) {
+        rings.push({ x: 32, y: 36, r: 2, maxR: 26, life: 0.45, maxLife: 0.45 });
+        for (var i = 0; i < 52; i++) {
+          var a = Math.random() * Math.PI * 2;
+          var s = 18 + Math.random() * 72;
+          sp({
+            x: 32, y: 36,
+            vx: Math.cos(a) * s, vy: Math.sin(a) * s * 0.85 - 8,
+            max: 0.35 + Math.random() * 0.55,
+            size: Math.random() < 0.28 ? 2 : 1,
+            grav: 55, drag: 2.8
+          });
+        }
+      }
+    },
+
+    frost: {
+      name: "Frost Nova", cat: "ice", emoji: "\u2744\uFE0F",
+      init: function () { this.t = 1.9; },
+      tick: function (dt, sp) {
+        this.t += dt;
+        if (this.t >= 2.0) { this.t = 0; this.burst(sp); }
+      },
+      burst: function (sp) {
+        rings.push({ x: 32, y: 42, r: 2, maxR: 27, life: 0.75, maxLife: 0.75 });
+        for (var i = 0; i < 44; i++) {
+          var a = (i / 44) * Math.PI * 2 + Math.random() * 0.08;
+          var s = 26 + Math.random() * 24;
+          sp({
+            x: 32 + Math.cos(a) * 2, y: 42 + Math.sin(a) * 1.5,
+            vx: Math.cos(a) * s, vy: Math.sin(a) * s * 0.5,
+            max: 0.7 + Math.random() * 0.5,
+            size: Math.random() < 0.3 ? 2 : 1,
+            grav: -3, drag: 2.0
+          });
+        }
+      }
+    },
+
+    lightning: {
+      name: "Lightning Strike", cat: "lightning", emoji: "\u26A1",
+      init: function () { this.t = 1.2; },
+      tick: function (dt, sp) {
+        this.t += dt;
+        if (this.t >= 1.25) { this.t = 0; this.strike(sp); }
+      },
+      strike: function (sp) {
+        var x0 = 32 + (Math.random() - 0.5) * 20;
+        var pts = [];
+        for (var i = 0; i <= 14; i++) {
+          var t = i / 14;
+          var bx = x0 + (32 - x0) * t;
+          var jx = (i === 0 || i === 14) ? 0 : (Math.random() - 0.5) * 11;
+          pts.push({ x: Math.max(3, Math.min(61, bx + jx)), y: t * 48 });
+        }
+        bolts.push({ pts: pts, life: 0.18, maxLife: 0.18 });
+        for (var k = 0; k < 26; k++) {
+          var a = Math.random() * Math.PI * 2;
+          var s = 15 + Math.random() * 55;
+          sp({
+            x: 32, y: 48,
+            vx: Math.cos(a) * s, vy: Math.sin(a) * s * 0.5 - 22,
+            max: 0.3 + Math.random() * 0.35, size: 1, grav: 70, drag: 3.2
+          });
+        }
+      }
+    },
+
+    coin: {
+      name: "Coin Pickup", cat: "pickups", emoji: "\uD83E\uDE99",
+      init: function () { this.t = 0.4; this.coin = null; },
+      tick: function (dt, sp) {
+        this.t += dt;
+        if (!this.coin && this.t > 0.5) {
+          this.coin = { x: 32, y: 44, vy: -95, phase: 0 };
+          this.t = 0;
+        }
+        var c = this.coin;
+        if (c) {
+          c.vy += 210 * dt;
+          c.y += c.vy * dt;
+          c.phase += dt * 9;
+          if (c.y > 46 && c.vy > 0) {
+            for (var i = 0; i < 10; i++) {
+              var a = Math.random() * Math.PI * 2;
+              sp({
+                x: c.x, y: 46,
+                vx: Math.cos(a) * (15 + Math.random() * 35),
+                vy: -Math.random() * 30 - 8,
+                max: 0.3 + Math.random() * 0.3, size: 1, grav: 90, drag: 3
+              });
+            }
+            this.coin = null;
+            this.t = 0;
+          }
+        }
+      },
+      extra: function (c, pal) {
+        var co = this.coin;
+        if (!co) return;
+        var cx = Math.round(co.x), cy = Math.round(co.y);
+        var wob = Math.abs(Math.cos(co.phase));
+        for (var dy = -3; dy <= 3; dy++) {
+          var k = 1 - Math.abs(dy) / 3.6;
+          var hw = Math.round(wob * 3.2 * Math.sqrt(Math.max(0, k)));
+          c.fillStyle = pal[3];
+          c.fillRect(cx - hw, cy + dy, hw * 2 + 1, 1);
+        }
+        if (wob > 0.55) {
+          c.fillStyle = pal[4];
+          c.fillRect(cx - Math.round(wob * 3) + 1, cy - 2, 1, 2);
+        }
+      }
+    },
+
+    arcane: {
+      name: "Arcane Sigil", cat: "arcane", emoji: "\uD83D\uDD2E",
+      init: function () { this.a = 0; this.acc = 0; },
+      tick: function (dt, sp) {
+        this.a += dt * 1.1;
+        this.acc += dt * 34;
+        while (this.acc >= 1) {
+          this.acc -= 1;
+          var ang = Math.random() * Math.PI * 2;
+          var r = 3 + Math.random() * 13;
+          sp({
+            x: 32 + Math.cos(ang) * r,
+            y: 40 + Math.sin(ang) * r * 0.4,
+            vx: (Math.random() - 0.5) * 4,
+            vy: -(12 + Math.random() * 22),
+            max: 0.8 + Math.random() * 0.7, size: 1, grav: -5, drag: 1.0
+          });
+        }
+      },
+      extra: function (c, pal) {
+        var a = this.a;
+        for (var i = 0; i < 16; i++) {
+          var ang = a + (i / 16) * Math.PI * 2;
+          var r = 16 + (i % 2 ? 1.5 : -1.5);
+          c.fillStyle = pal[i % 2 ? 3 : 4];
+          c.fillRect(Math.round(32 + Math.cos(ang) * r), Math.round(40 + Math.sin(ang) * r * 0.42), 1, 1);
+        }
+        for (var j = 0; j < 3; j++) {
+          var a1 = -a * 1.4 + (j / 3) * Math.PI * 2;
+          var a2 = -a * 1.4 + ((j + 1) / 3) * Math.PI * 2;
+          line(c,
+            32 + Math.cos(a1) * 9, 40 + Math.sin(a1) * 9 * 0.42,
+            32 + Math.cos(a2) * 9, 40 + Math.sin(a2) * 9 * 0.42,
+            1, pal[2]);
+        }
+      }
+    }
+  };
+
+  var FX_ORDER = ["fire", "explosion", "frost", "lightning", "coin", "arcane"];
+
+  /* ------------------------------------------------------------------ *
+   * Simulation
+   * ------------------------------------------------------------------ */
+  function step(dt) {
+    var fx = FX[current];
+    if (fx && fx.tick) fx.tick(dt, spawn);
+
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.life -= dt;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      p.vy += (p.grav || 0) * dt;
+      var f = Math.max(0, 1 - (p.drag || 0) * dt);
+      p.vx *= f;
+      p.vy *= f;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+    }
+
+    for (var r = rings.length - 1; r >= 0; r--) {
+      rings[r].life -= dt;
+      if (rings[r].life <= 0) rings.splice(r, 1);
+    }
+
+    for (var b = bolts.length - 1; b >= 0; b--) {
+      bolts[b].life -= dt;
+      if (bolts[b].life <= 0) bolts.splice(b, 1);
+    }
+  }
+
+  function resetSim() {
+    particles.length = 0;
+    rings.length = 0;
+    bolts.length = 0;
+    var fx = FX[current];
+    if (fx && fx.init) fx.init();
+  }
+
+  function drawScene(c) {
+    var pal = palette();
+    var i;
+
+    for (i = 0; i < rings.length; i++) {
+      var ring = rings[i];
+      var t = 1 - ring.life / ring.maxLife;
+      c.globalAlpha = Math.max(0, 1 - t) * 0.9;
+      circleOutline(c, ring.x, ring.y, ring.r + (ring.maxR - ring.r) * t, pal[3]);
+    }
+
+    for (i = 0; i < bolts.length; i++) {
+      var bolt = bolts[i];
+      var alpha = Math.max(0, bolt.life / bolt.maxLife);
+      c.globalAlpha = alpha;
+      for (var s = 0; s < bolt.pts.length - 1; s++) {
+        line(c, bolt.pts[s].x, bolt.pts[s].y, bolt.pts[s + 1].x, bolt.pts[s + 1].y, 1, pal[4]);
+      }
+      c.globalAlpha = alpha * 0.35;
+      for (var s2 = 0; s2 < bolt.pts.length - 1; s2++) {
+        line(c, bolt.pts[s2].x + 1, bolt.pts[s2].y, bolt.pts[s2 + 1].x + 1, bolt.pts[s2 + 1].y, 1, pal[3]);
+      }
+    }
+
+    for (i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      var age = 1 - p.life / p.max;
+      var idx = Math.round(4 - age * 4.4);
+      if (idx < 0) idx = 0; else if (idx > 4) idx = 4;
+      c.globalAlpha = Math.min(1, (p.life / p.max) * 2.2);
+      px(c, p.x, p.y, p.size, pal[idx]);
+    }
+
+    c.globalAlpha = 1;
+    var fx = FX[current];
+    if (fx && fx.extra) fx.extra(c, pal);
+    c.globalAlpha = 1;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Main loop
+   * ------------------------------------------------------------------ */
+  var last = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+
+  function loop(now) {
+    var dt = (now - last) / 1000;
+    last = now;
+    if (!isFinite(dt) || dt < 0) dt = 0.016;
+    dt = Math.min(dt, 0.05) * speed;
+
+    step(dt);
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    if (mirror) { ctx.translate(W, 0); ctx.scale(-1, 1); }
+    drawScene(ctx);
+    ctx.restore();
+
+    requestAnimationFrame(loop);
+  }
+
+  /* ------------------------------------------------------------------ *
+   * UI — effect picker
+   * ------------------------------------------------------------------ */
+  var pickerEl = document.getElementById("fx-picker");
+  var labelEl = document.getElementById("fx-label");
+
+  function renderPicker() {
+    var html = "";
+    for (var i = 0; i < FX_ORDER.length; i++) {
+      var k = FX_ORDER[i];
+      var f = FX[k];
+      var active = (k === current);
+      var st = active
+        ? "border-color:#5b4bff;background:rgba(91,75,255,0.06);box-shadow:inset 0 0 0 1px rgba(91,75,255,0.35);"
+        : "border-color:rgba(0,0,0,0.1);background:#ffffff;";
+      html += '<button type="button" data-fx="' + k + '" style="' + st + '" ' +
+        'class="w-full rounded-xl border px-2.5 py-2 text-left transition hover:border-black/25">' +
+        '<div class="text-base leading-none">' + f.emoji + '</div>' +
+        '<div class="mt-1.5 truncate text-[11px] font-medium leading-tight">' + f.name + '</div>' +
+        '<div class="truncate text-[10px] text-black/40">' + f.cat + '</div>' +
+        '</button>';
+    }
+    pickerEl.innerHTML = html;
+    var btns = pickerEl.querySelectorAll("[data-fx]");
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].addEventListener("click", function () {
+        setEffect(this.getAttribute("data-fx"));
+      });
+    }
+  }
+
+  function setEffect(id) {
+    if (!FX[id]) return;
+    current = id;
+    resetSim();
+    labelEl.textContent = FX[id].cat + " / " + FX[id].name.toLowerCase().replace(/\s+/g, "-");
+    renderPicker();
+  }
+
+  /* ------------------------------------------------------------------ *
+   * UI — palette
+   * ------------------------------------------------------------------ */
+  var swatchEl = document.getElementById("swatches");
+  var presetsEl = document.getElementById("presets");
+  var hueInput = document.getElementById("hue");
+  var hueVal = document.getElementById("hue-val");
+
+  var PRESETS = [
+    { name: "Ember", hue: 20, color: "#ff6b2c" },
+    { name: "Azure", hue: 212, color: "#3b82f6" },
+    { name: "Toxic", hue: 96, color: "#84cc16" },
+    { name: "Void", hue: 275, color: "#a855f7" },
+    { name: "Gold", hue: 45, color: "#f59e0b" }
+  ];
+
+  function renderSwatches() {
+    var pal = palette();
+    var html = "";
+    for (var i = 0; i < pal.length; i++) {
+      html += '<span class="h-7 w-7 rounded-md ring-1 ring-black/10" style="background:' + pal[i] + '"></span>';
+    }
+    swatchEl.innerHTML = html;
+  }
+
+  function renderPresets() {
+    var html = "";
+    for (var i = 0; i < PRESETS.length; i++) {
+      var p = PRESETS[i];
+      var active = (Math.round(hue) === p.hue);
+      var st = active
+        ? "border-color:#101014;background:#101014;color:#fff;"
+        : "border-color:rgba(0,0,0,0.12);background:#fff;color:#101014;";
+      html += '<button type="button" data-hue="' + p.hue + '" style="' + st + '" ' +
+        'class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium transition hover:opacity-80">' +
+        '<span class="h-2 w-2 rounded-full" style="background:' + p.color + '"></span>' + p.name +
+        '</button>';
+    }
+    presetsEl.innerHTML = html;
+    var btns = presetsEl.querySelectorAll("[data-hue]");
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].addEventListener("click", function () {
+        hue = parseInt(this.getAttribute("data-hue"), 10);
+        hueInput.value = hue;
+        hueVal.textContent = hue + "\u00B0";
+        renderSwatches();
+        renderPresets();
+      });
+    }
+  }
+
+  hueInput.addEventListener("input", function () {
+    hue = parseInt(this.value, 10) || 0;
+    hueVal.textContent = hue + "\u00B0";
+    renderSwatches();
+    renderPresets();
+  });
+
+  /* ------------------------------------------------------------------ *
+   * UI — mirror + speed
+   * ------------------------------------------------------------------ */
+  var mirrorBtn = document.getElementById("mirror");
+  var mirrorPill = document.getElementById("mirror-pill");
+  var speedInput = document.getElementById("speed");
+  var speedVal = document.getElementById("speed-val");
+
+  mirrorBtn.addEventListener("click", function () {
+    mirror = !mirror;
+    mirrorPill.textContent = mirror ? "on" : "off";
+    if (mirror) {
+      mirrorPill.style.background = "#5b4bff";
+      mirrorPill.style.color = "#fff";
+    } else {
+      mirrorPill.style.background = "rgba(0,0,0,0.05)";
+      mirrorPill.style.color = "rgba(0,0,0,0.5)";
+    }
+  });
+
+  speedInput.addEventListener("input", function () {
+    speed = Math.max(0.2, (parseInt(this.value, 10) || 100) / 100);
+    speedVal.textContent = speed.toFixed(1) + "\u00D7";
+  });
+
+  /* ------------------------------------------------------------------ *
+   * Sprite sheet export
+   * ------------------------------------------------------------------ */
+  var COLS = 8, ROWS = 3, FRAMES = COLS * ROWS;
+
+  function buildSheet() {
+    var sheet = document.createElement("canvas");
+    sheet.width = W * COLS;
+    sheet.height = H * ROWS;
+    var sc = sheet.getContext("2d");
+    var dt = 1 / 16;
+
+    resetSim();
+
+    for (var f = 0; f < FRAMES; f++) {
+      step(dt);
+      sc.save();
+      sc.translate((f % COLS) * W, Math.floor(f / COLS) * H);
+      if (mirror) { sc.translate(W, 0); sc.scale(-1, 1); }
+      drawScene(sc);
+      sc.restore();
+    }
+
+    resetSim();
+    return sheet;
+  }
+
+  var modal = document.getElementById("export-modal");
+  var sheetImg = document.getElementById("sheet-img");
+  var sheetMeta = document.getElementById("sheet-meta");
+  var dlLink = document.getElementById("dl");
+
+  function openExport() {
+    var sheet;
+    try {
+      sheet = buildSheet();
+      var url = sheet.toDataURL("image/png");
+      sheetImg.src = url;
+      dlLink.href = url;
+      sheetMeta.textContent = FRAMES + " frames \u00B7 " + COLS + "\u00D7" + ROWS + " grid \u00B7 64\u00D764 px \u00B7 transparent";
+    } catch (e) {
+      sheetMeta.textContent = "24 frames \u00B7 8\u00D73 grid \u00B7 64\u00D764 px";
+    }
+    modal.style.display = "flex";
+  }
+
+  function closeExport() {
+    modal.style.display = "none";
+  }
+
+  document.getElementById("export-btn").addEventListener("click", openExport);
+  document.getElementById("close-modal").addEventListener("click", closeExport);
+  document.getElementById("close-modal-2").addEventListener("click", closeExport);
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) closeExport();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && modal.style.display === "flex") closeExport();
+  });
+
+  /* ------------------------------------------------------------------ *
+   * Waitlist
+   * ------------------------------------------------------------------ */
+  var waitlistBtn = document.getElementById("waitlist-btn");
+  var waitlistMsg = document.getElementById("waitlist-msg");
+  var emailInput = document.getElementById("email");
+
+  waitlistBtn.addEventListener("click", function () {
+    var v = (emailInput.value || "").trim();
+    if (!v || v.indexOf("@") < 1) {
+      waitlistMsg.textContent = "Add an email address to join the list (demo only).";
+    } else {
+      waitlistMsg.textContent = "You're on the list for Studio \u2014 demo only, nothing was sent.";
+    }
+    waitlistMsg.classList.remove("hidden");
+  });
+
+  /* ------------------------------------------------------------------ *
+   * Boot
+   * ------------------------------------------------------------------ */
+  renderPicker();
+  renderSwatches();
+  renderPresets();
+  setEffect("fire");
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

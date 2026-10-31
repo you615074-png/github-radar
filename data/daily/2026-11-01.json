@@ -1,0 +1,73 @@
+{
+ "date": "2026-11-01",
+ "headline": "像素特效代码库，拖进游戏就能用",
+ "summary_md": "patch-gg/pixelfx 是一个像素风特效代码库，里面有 244 个特效，每个都是一个独立的 JS 文件，包含火焰、爆炸、魔法、天气、UI、拾取物等类别。每个特效都可以在浏览器里实时预览、改色、镜像，也可以导出成 sprite sheet 给 Godot、Unity、GameMaker 等引擎用。它最近在 X 和 Reddit 上传播得挺快，从 README 看，作者借鉴了 Hugo Duprez 在 Sprite Fusion 上的开放特效，并把它扩展到了库的规模。它还附带一个 Claude Code skill，能按像素美术师的工作流生成新特效：先画草稿，再渲染，然后检查，最后修改。\n\n如果做成产品，机会在于把“代码库”变成“可视化编辑器 + 订阅生成”。普通用户不想碰 npm 和命令行，他们想要的是在浏览器里拖拖拽拽，调色、改参数、实时预览，然后一键导出引擎文件。订阅可以解锁 AI 生成新特效，或者导出高分辨率 sprite sheet。由于 MIT 许可，代码本身可以被复制，所以付费点应该放在编辑体验和持续生成上，而不是卖素材包。",
+ "pick": {
+  "full_name": "patch-gg/pixelfx",
+  "url": "https://github.com/patch-gg/pixelfx",
+  "description": "232 pixel art effects, every one a small piece of code. Plus a Claude Code skill to make your own.",
+  "license": "MIT",
+  "stars": 1328,
+  "daily_rate": 1328.0,
+  "category": "多媒体创作",
+  "one_liner": "244个像素风特效代码库，游戏里拖进就能用",
+  "reason": "MIT许可、效果直观、游戏开发者刚需，图库本身即演示；但可复制性高，需靠编辑器与AI生成做差异化收费。",
+  "content": 7.67,
+  "startup": 7.35,
+  "final": 7.93,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-01-patch-gg-pixelfx",
+ "top": [
+  {
+   "full_name": "patch-gg/pixelfx",
+   "url": "https://github.com/patch-gg/pixelfx",
+   "one_liner": "244个像素风特效代码库，游戏里拖进就能用",
+   "reason": "MIT许可、效果直观、游戏开发者刚需，图库本身即演示；但可复制性高，需靠编辑器与AI生成做差异化收费。",
+   "content": 7.67,
+   "startup": 7.35,
+   "final": 7.93,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "elvarofficial/teardown",
+   "url": "https://github.com/elvarofficial/teardown",
+   "one_liner": "用一句话让 Claude 生成可拆解的三维机械模拟器",
+   "reason": "演示效果惊艳、包装空间大，适合教育科普内容；但本地依赖重、商业化路径尚不清晰，需产品化补足。",
+   "content": 8.0,
+   "startup": 6.8,
+   "final": 7.42,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "wangzan101/Mika",
+   "url": "https://github.com/wangzan101/Mika",
+   "one_liner": "手机上的AI助理，一句话替你操作App和网页把事办成",
+   "reason": "方向热门、演示效果惊艳、Apache许可友好；但安装门槛高、变现靠自带Key难收费，需靠代管模型额度订阅破局。",
+   "content": 8.67,
+   "startup": 6.9,
+   "final": 6.97,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "LNPANDY/NX2Apple",
+   "url": "https://github.com/LNPANDY/NX2Apple",
+   "one_liner": "把你自己备份的 Switch 游戏一键装进 iPhone 里玩",
+   "reason": "话题性和惊喜感强，包装成免命令行工具确有空间，但版权灰区、付费意愿弱和分发合规限制压低了商业化天花板。",
+   "content": 7.67,
+   "startup": 6.35,
+   "final": 6.81,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "pingdotgg/t3code",
+   "url": "https://github.com/pingdotgg/t3code",
+   "one_liner": "用手机远程操控电脑上的 AI 编程代理的客户端",
+   "reason": "话题热度极高但项目本身已是成熟免费全平台产品，个人几无包装与收费空间，只能做内容不能做产品。",
+   "content": 7.33,
+   "startup": 5.6,
+   "final": 6.8,
+   "category_penalty": 0
+  }
+ ]
+}

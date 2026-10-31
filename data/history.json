@@ -77,6 +77,12 @@
    "full_name": "thedotmack/claude-mem",
    "category": "AI基础设施",
    "final": 7.5
+  },
+  {
+   "date": "2026-11-01",
+   "full_name": "patch-gg/pixelfx",
+   "category": "多媒体创作",
+   "final": 7.93
   }
  ],
  "top": {
@@ -140,7 +146,12 @@
   "heydamir/unslop": "2026-10-31",
   "jhaizhou-ops/d2r-mobile": "2026-10-31",
   "qybaihe/bla": "2026-10-31",
-  "affaan-m/ECC": "2026-10-31"
+  "affaan-m/ECC": "2026-10-31",
+  "patch-gg/pixelfx": "2026-11-01",
+  "elvarofficial/teardown": "2026-11-01",
+  "wangzan101/Mika": "2026-11-01",
+  "LNPANDY/NX2Apple": "2026-11-01",
+  "pingdotgg/t3code": "2026-11-01"
  },
  "scores": {
   "wheresryan22/anatomy": {
@@ -667,150 +678,6 @@
     "reason": "话题性和包装空间不错，房扫转可编辑 3D 是清晰卖点，但资产许可受限、硬件门槛高、工作流仍偏极客，商业化路径需自建云管线"
    }
   },
-  "NVIDIA/OpenShell": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "给AI智能体做安全沙箱，限制它能碰的文件和网络",
-    "target_user": "部署AI智能体的企业平台团队和安全负责人",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 5,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 3,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "面向中小团队的托管版智能体沙箱，可视化策略审批+访问日志",
-    "demo_idea": "网页模拟智能体请求读取密钥和访问外网，策略拦截并弹人工审批",
-    "attack_tool": false,
-    "red_flags": [
-     "英伟达官方基础设施项目，个人难做差异化产品",
-     "依赖Linux内核隔离与Docker，安装门槛高",
-     "定位是底层runtime，包装空间有限"
-    ],
-    "reason": "话题性强、许可证友好，智能体安全是真痛点；但大厂基础设施属性重，个人难在其上做产品，做内容比创业更合适。"
-   }
-  },
-  "Snapintosh/Snapintosh": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "其他",
-    "one_liner": "在骁龙笔记本上跑苹果macOS的虚拟化工具链",
-    "target_user": "极客爱好者、ARM逆向工程师、跨平台虚拟化团队",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 5,
-     "wow": 9,
-     "pain": 3,
-     "packaging_room": 5,
-     "monetization": 2,
-     "license_safety": 2,
-     "demoability": 4
-    },
-    "product_idea": "把引导流程和兼容层打包成一键部署工具包，面向特定笔记本型号提供支持",
-    "demo_idea": "视频展示骁龙笔记本开机进macOS桌面、拖动窗口和触控板手势",
-    "attack_tool": false,
-    "red_flags": [
-     "NOASSERTION 自定义许可证，且涉嫌违反苹果 EULA",
-     "仅支持单一机型加特定 Mac 主机，普适性极低",
-     "依赖苹果闭源内核与固件，法律和分发风险高",
-     "硬件限制导致几乎无法商业化"
-    ],
-    "reason": "话题性与惊喜感极强，但仅适配单一机型、许可证模糊且触碰苹果法律红线，只适合做内容不适合做产品。"
-   }
-  },
-  "xevrion/hatchzip": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "边解压边释放原压缩包空间，硬盘不够也能解大压缩包",
-    "target_user": "下载大型游戏/数据集、硬盘紧张的普通玩家与小团队",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 7,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "带安全校验、断点续解、一键右键菜单的桌面解压工具，可出Pro版支持服务器/批量解压。",
-    "demo_idea": "网页模拟一个快满的磁盘，对比普通解压爆盘与HatchZip逐步腾出空间完成解压的进度动画。",
-    "attack_tool": false,
-    "red_flags": [
-     "真实付费需求偏窄，多数人可临时清盘解决",
-     "未签名安装包有信任门槛",
-     "WinRAR/7-Zip免费且已普及，替代意愿有限"
-    ],
-    "reason": "痛点具体、演示直观、传播性强且有桌面成品，但商业化天花板低，免费替代品强势。"
-   }
-  },
-  "seedds/nxnative": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "其他",
-    "one_liner": "把 Switch 游戏转成能在 iPhone 上原生运行的 IPA",
-    "target_user": "想同时玩到 Switch 游戏和手机游戏的玩家",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做成一个图形界面工具，一键完成转换，并内置游戏兼容性数据库和性能调优预设",
-    "demo_idea": "在网页 demo 中用转换前后的对比视频展示效果，再配上兼容游戏列表和帧率对比",
-    "attack_tool": false,
-    "red_flags": [
-     "项目需要用户自带 prod.keys 和 NSP 游戏文件，涉及破解 Switch 和分发盗版游戏，法律与平台风险极高",
-     "依赖任天堂游戏的版权内容，无法进行商业化",
-     "仅支持 iPhone 15 Pro 及以上机型，门槛偏高",
-     "转换流程包含多个命令行步骤和签名环节"
-    ],
-    "reason": "技术上非常惊艳，传播潜力强，但项目本质上是绕过 DRM 的破解工具，并且需要用户自带受版权保护的游戏，商业化路径几乎不存在，合规风险也高。可以拿来做内容，不宜投入产品化。"
-   }
-  },
-  "Revivedx/SavageWindRecomp": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "用AI把《塞尔达：旷野之息》重编译成可在电脑上原生运行的游戏",
-    "target_user": "想用模拟器或原生重制方式玩塞尔达的PC游戏玩家、想尝试AI生成代码的开发者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 9,
-     "pain": 5,
-     "packaging_room": 5,
-     "monetization": 2,
-     "license_safety": 1,
-     "demoability": 5
-    },
-    "product_idea": "一键把用户自备的游戏dump重编译成PC原生应用，附带图形选项和键鼠支持",
-    "demo_idea": "网页播放同一场景在Switch与原PC版中的60fps对比视频，叠加AI生成代码占比统计",
-    "attack_tool": false,
-    "red_flags": [
-     "需要用户自备游戏dump与密钥，涉及任天堂版权与法律风险极高",
-     "许可证为NOASSERTION，权属不明，商业化不可行",
-     "项目几乎全部由AI生成，长期可维护性存疑",
-     "官方明确仅支持序章与初始台地，后续流程未验证",
-     "任天堂法务历来强硬，这类项目极易被下架"
-    ],
-    "reason": "AI重编译塞尔达话题爆炸、演示震撼，但法律与许可风险使其只能做内容，无法产品化收费。"
-   }
-  },
   "anthropics/knowledge-work-plugins": {
    "date": "2026-10-29",
    "v": 3,
@@ -841,117 +708,32 @@
    }
   },
   "Renhuai123/ziwei-doushu": {
-   "date": "2026-10-24",
-   "v": 2,
+   "date": "2026-11-01",
+   "v": 3,
    "eval": {
     "category": "生活娱乐",
-    "one_liner": "输入生日就能生成紫微斗数命盘和详细解读",
-    "target_user": "对命理感兴趣的25-45岁中文用户，尤其女性、情感/事业困惑期人群",
+    "one_liner": "开源的紫微斗数排盘引擎，输入生日即可生成命盘与多维解读",
+    "target_user": "对占星/命理感兴趣的海外华人及英文玄学爱好者，订阅制命盘解读的重度用户",
     "scores": {
      "topicality": 7,
-     "accessibility": 9,
-     "wow": 6,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 7,
-     "license_safety": 8,
-     "demoability": 9
-    },
-    "product_idea": "网页/小程序输入生辰，一键出命盘+13维AI解读，付费解锁深度报告",
-    "demo_idea": "输入生日30秒生成命盘图与性格事业感情三档解读卡片，滑动查看",
-    "attack_tool": false,
-    "red_flags": [
-     "核心断语库不开源，开源的是引擎+数据集，差异化需自建内容",
-     "已有自家商业网站metisziwei.com，排盘工具同类竞品极多",
-     "数据集为确定性模板生成，'204亿字'实为重复拼接，营销味重",
-     "倪师原话部分为CC BY-NC-SA非商用，商用需注意"
-    ],
-    "reason": "传播和演示极强、门槛低，命理赛道付费意愿高，但内容壁垒与同质化竞争是主要风险，开源版偏数据而非产品。"
-   }
-  },
-  "Fei2411/DeepSeek-Bot": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "在自己电脑上养一队有记忆、能互相协作的AI机器人团队",
-    "target_user": "重度使用AI助手、想让多个Agent协作干活的个人开发者和效率玩家",
-    "scores": {
-     "topicality": 8,
      "accessibility": 7,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 4,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 6,
      "monetization": 5,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "本地多Agent团队工作台：一键建机器人小队，记忆、群聊分工、MCP能力共享，开箱即用",
-    "demo_idea": "网页模拟群聊：主Bot自动分派任务给子Bot，子Bot实时播报进度并回帖结果",
-    "attack_tool": false,
-    "red_flags": [
-     "强依赖DeepSeek Harness生态，脱离DSH无法独立使用",
-     "桌面客户端已自带DSH，安装体验较完整，包装空间有限",
-     "多Bot群聊token消耗高，推广时易被吐槽成本"
-    ],
-    "reason": "定位清晰、演示感强、Apache协议友好，但深度绑定DSH生态且已有桌面版，独立产品化空间受限，更适合做内容选题。"
-   }
-  },
-  "rossark0/rossark-motion-skill": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "让AI把任何SVG手绘变成自然的60帧动画",
-    "target_user": "做App插画动效的独立开发者和设计师",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 5,
-     "license_safety": 10,
+     "license_safety": 8,
      "demoability": 8
     },
-    "product_idea": "在线把SVG或角色图一键生成有呼吸感和表情的循环动效，导出Lottie、GIF或SwiftUI代码",
-    "demo_idea": "上传一张简笔小人，左右对比AI默认僵硬动画与本工具的呼吸眨眼摆头效果",
+    "product_idea": "做个英文版紫微斗数排盘App，输入出生信息秒出命盘+AI解读，订阅解锁深度报告",
+    "demo_idea": "网页输入生日，30秒渲染十二宫命盘并高亮三处性格断语，滑动查看各维度解读",
     "attack_tool": false,
     "red_flags": [
-     "本质是给Claude Code用的技能提示词包，不是可独立运行的产品",
-     "依赖Claude Code生态，平台风险高",
-     "Swift为主，跨平台普适性弱"
+     "解读数据引用的倪师原话为 CC BY-NC-SA 非商用，商用需谨慎",
+     "命理属娱乐/信仰类，App Store 审核及美国消费者保护存在不确定性",
+     "英文市场认知度低，需大量教育成本",
+     "核心断语库不开源，开源部分仅排盘，差异化有限"
     ],
-    "reason": "点子新颖、演示视频抓人，MIT许可友好；但它是现有Agent的技能包，独立产品化需要重做交互层，商业化路径偏窄。"
-   }
-  },
-  "rehan-remade/universal-modder": {
-   "date": "2026-10-24",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让 AI 代理自动给你的 PC 游戏做模组",
-    "target_user": "想给游戏加 Mod 的玩家、小型游戏工作室与 Mod 作者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 8,
-     "monetization": 7,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "一键托管平台：上传游戏，AI 自动生成并安装 Mod，附带素材与试玩视频",
-    "demo_idea": "网页输入“给 Terraria 加追踪导弹”，展示 AI 从逆向到生成精灵图再到游戏内试玩的完整流程",
-    "attack_tool": false,
-    "red_flags": [
-     "涉及游戏逆向工程，可能触碰部分游戏 EULA 与反作弊条款",
-     "依赖 fal 等第三方付费 API，成本会转嫁给用户",
-     "效果高度依赖具体游戏，并非所有游戏都能成功",
-     "目前为面向代理的技能包与 CLI，实际使用需要自己配置环境"
-    ],
-    "reason": "切入点新颖、传播力强，MIT 协议友好，适合做成产品平台；主要风险在于各游戏的合规边界和实际效果的稳定性。"
+    "reason": "排盘算法开源质量好、易演示，适合做内容引流；但英文命理市场教育成本高，商业变现偏娱乐订阅，天花板有限。"
    }
   },
   "JustAResearcher/gpu-unlock-ada": {
@@ -3497,6 +3279,390 @@
      "git提交日期1970年前的都压成1970年，时间语义上依赖trailer，做产品要另外处理"
     ],
     "reason": "概念清晰、话题性强，MCP已经能接入AI查询，很适合做内容和法律科技产品；但数据覆盖和授权还需要核实。"
+   }
+  },
+  "patch-gg/pixelfx": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "244个像素风特效代码库，游戏里拖进就能用",
+    "target_user": "独立游戏开发者、像素风游戏美术、用AI做游戏原型的开发者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 9
+    },
+    "product_idea": "像素特效可视化编辑器：浏览器里调色、镜像、导出sprite sheet，订阅解锁AI生成新特效",
+    "demo_idea": "网页打开图库，点火焰特效实时播放，拖动调色板变成蓝色火焰，一键导出gif",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖Claude Code skill生成特效，普通用户门槛高",
+     "单纯素材库易被免费复制，付费墙弱",
+     "Sprite Fusion等已有同类免费方案竞争"
+    ],
+    "reason": "MIT许可、效果直观、游戏开发者刚需，图库本身即演示；但可复制性高，需靠编辑器与AI生成做差异化收费。"
+   }
+  },
+  "deepseek-ai/dsh-superagent-prototype": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "能自己接 GitHub 任务、开分支、提 PR 的主动型编程智能体",
+    "target_user": "美国/全球的中小工程团队与独立开发者、开源项目维护者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "托管版：授权仓库后自动认领 issue、跑任务、开 PR，网页面板统一审查",
+    "demo_idea": "网页模拟 GitHub issue 触发智能体自动改代码并生成 PR 的可视化流程",
+    "attack_tool": false,
+    "red_flags": [
+     "DeepSeek 官方研究原型，作者自己声明非生产可用、有 bug",
+     "依赖 DeepSeek Harness 与飞书，国际可用性和生态受限",
+     "setup 步骤繁多，需智能体陪装，上手门槛高",
+     "功能尚未完整实现，仅为论文方向的原型"
+    ],
+    "reason": "大厂热点智能体项目传播性强、MIT 友好，但官方原型不成熟、商业化空间弱，适合做内容而非直接产品化。"
+   }
+  },
+  "Arjun-Ingole/hop": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "不用U盘，一键在Windows电脑上安装Linux双系统",
+    "target_user": "想尝试Linux的Windows开发者、学生和技术爱好者（美国/全球）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "做一个图形化向导式双系统安装器，提供自动备份和回滚，并免费分发给普通用户",
+    "demo_idea": "网页模拟安装流程：选择Linux发行版、拖动滑块分配磁盘空间、点击安装，展示分区变化动画",
+    "attack_tool": false,
+    "red_flags": [
+     "分区和引导操作风险高，可能损坏用户数据",
+     "Windows Defender SmartScreen 会对未签名程序发出警告，影响信任和转化",
+     "开源免费项目缺少清晰的付费点，商业化路径不明确",
+     "核心价值依赖真实磁盘操作，纯前端30秒演示难以直观呈现"
+    ],
+    "reason": "痛点真实，包装空间中等，但商业化困难，演示受限，属于很好的内容选题，不太适合做成商业产品。"
+   }
+  },
+  "vorssaint/vorssaint-utils": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "一个菜单栏图标集合十几种 Mac 小工具，替代一堆付费软件",
+    "target_user": "美国/全球的 Mac 重度用户、开发者、设计师、追求效率和隐私的付费用户",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 3,
+     "monetization": 4,
+     "license_safety": 4,
+     "demoability": 7
+    },
+    "product_idea": "把单一明星功能（如音量混音器）拆成独立轻量 Mac App，做出付费版",
+    "demo_idea": "网页动态演示菜单栏图标拖拽调节每个 App 音量、窗口对齐布局、Dock 预览的交互过程",
+    "attack_tool": false,
+    "red_flags": [
+     "项目本身已是成熟免费产品（网站、Discord、Sponsor 体系），包装空间很小",
+     "功能大杂烩，与 Bartender、Magnet、Rectangle 等成熟竞品正面竞争",
+     "GPL-3.0 许可证，商业化衍生需要开源，限制闭源付费",
+     "Fan Control、麦克风静音等涉及系统权限，审核与隐私合规风险"
+    ],
+    "reason": "功能实用且易懂，话题性强，但已是完整免费产品，拆分空间有限，GPL 授权和红海竞争拖累商业化。"
+   }
+  },
+  "ramenvr/autopilot": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "让 AI 自动帮你通关并测试电子游戏的插件",
+    "target_user": "美国及全球的中小游戏工作室的 QA 和独立开发者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "面向独立游戏团队的 AI 自动试玩 QA，一键生成 bug 报告和通关录像",
+    "demo_idea": "网页播放 AI 自动试玩片段，对比人工试玩时间，并即时生成 bug 清单",
+    "attack_tool": false,
+    "red_flags": [
+     "需要登录 Aura 账号，闭源后端，开源部分只有插件外壳",
+     "依赖 LLM 和云端服务，成本与延迟不确定",
+     "301 stars 一天涨完，疑似发布初期刷量或媒体曝光，热度可持续性存疑",
+     "已有 Aura 商业产品，开源版更像获客渠道而非独立项目",
+     "游戏 QA 市场已有大型自动化测试厂商，差异化需验证"
+    ],
+    "reason": "演示效果强、传播性高，切中游戏 QA 痛点；但核心闭源、依赖云服务，开源版包装空间有限，适合做内容而非独立产品。"
+   }
+  },
+  "Orkas-AI/Orkas": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "桌面上的开源AI小团队，一句话自动拆任务并干活",
+    "target_user": "美国/全球的独立创业者、小团队运营者、内容与电商从业者，以及想用自带API key跑多agent的知识工作者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 7,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "把16个agent包装成按项目订阅的'AI员工'，按行业预置模板+托管算力赚订阅费",
+    "demo_idea": "网页上输入'做一份竞品市场报告'，看Commander拆待办、分工、产出报告和PPT",
+    "attack_tool": false,
+    "red_flags": [
+     "官方已有商业版orkas.ai并内置付费credit，开源版更像获客渠道，第三方做产品空间被官方挤压",
+     "16个agent能力广泛但实际交付质量难验证，营销味重",
+     "桌面端依赖重，纯前端30秒演示需大量模拟",
+     "集成的Claude Code/Codex等第三方agent涉及各自条款与key合规",
+     "同类开源项目多（OpenHands、AutoGen等）竞争激烈"
+    ],
+    "reason": "话题热、MIT干净、演示有看点，痛点真实；但官方自带商业闭环，包装差异化空间和变现天花板受限。"
+   }
+  },
+  "YuJunZhiXue/dsh-purge": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "一键解除 DeepSeek 等大模型安全限制的越狱插件",
+    "target_user": "想绕过模型限制、测试红队能力的 AI 爱好者（灰色地带，付费意愿低）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 4,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 3,
+     "demoability": 4
+    },
+    "product_idea": "面向企业的合规红队测试平台，用授权的提示注入评估自家模型安全边界",
+    "demo_idea": "对比同一提示在开启与关闭插件时模型的回答差异（用虚构无害话题）",
+    "attack_tool": false,
+    "red_flags": [
+     "核心用途是绕过模型安全对齐（jailbreak），存在违反模型服务条款、被平台封禁和法律责任风险",
+     "作者自述被约谈、禁止转载与转售，授权状况混乱",
+     "Apache-2.0 附加自定义限制（禁止转售、强制署名），严格说不是标准开源许可",
+     "依赖 DeepSeek 特定版本，每天增长快但生命周期极短，易被官方封堵",
+     "README 明确禁用作弊、限本地 IP，但整体定位擦边，商业化和平台合规风险极高",
+     "默认提示面向国产模型「小码酱」，且社区渠道在 Telegram，主要面向中文用户，与全球英文市场错位"
+    ],
+    "reason": "话题性强、增长猛，但本质是越狱工具，法律与平台合规风险高，商业价值低，不适合作为产品化选题。"
+   }
+  },
+  "xiaoyang111222/cn-math-taxonomy": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "教育学习",
+    "one_liner": "中式课标数学英语知识图谱，答错一题能追溯到你小学哪个知识点没学扎实",
+    "target_user": "美国 K12 华裔家庭与中文沉浸学校家长、海外中文数学教辅创业者",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 7,
+     "monetization": 3,
+     "license_safety": 3,
+     "demoability": 7
+    },
+    "product_idea": "面向海外华裔家庭的中文数学诊断 App：答错一题自动回溯到小学先修知识点并生成补漏路径",
+    "demo_idea": "网页选一道配方法题，答错后动画沿先修边一路回溯到小学完全平方知识点，展示补漏清单",
+    "attack_tool": false,
+    "red_flags": [
+     "全部对齐中国教育部课标和人教版教材，美国/全球英文市场几乎无受众，商业化严重受限",
+     "License 为 NOASSERTION，商用授权不明确",
+     "作者自述 AI 生成初稿、未经任何教师审核，高中与英语题无盲解复核，质量存疑",
+     "本质是数据集/知识图谱，不是可直接使用的产品",
+     "K12 教育面向未成年用户需注意 COPPA 与内容准确性责任"
+    ],
+    "reason": "图谱规模与先修回溯设计有亮点，演示性强；但绑定中国课标，对目标市场几乎无商业价值，授权与数据质量也有风险，更适合做内容而非产品。"
+   }
+  },
+  "elvarofficial/teardown": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "用一句话让 Claude 生成可拆解的三维机械模拟器",
+    "target_user": "美国/全球的 STEM 教育内容创作者、工程教师、YouTube 科普博主、产品演示制作者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 9,
+     "pain": 5,
+     "packaging_room": 8,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "网页版一键生成可交互拆解动画的机械科普平台，导出视频和课件",
+    "demo_idea": "网页输入'四冲程发动机'，30秒生成可拖拽拆解、自动巡览的3D机械动画",
+    "attack_tool": false,
+    "red_flags": [
+     "项目仅1天即357星，需警惕刷星或热度虚高",
+     "依赖 Claude Code 与 Playwright/ffmpeg 本地环境，普通用户门槛高",
+     "生成质量强依赖模型，稳定性与版权（机械外观）有风险",
+     "本质是 skill/工具链，缺少独立产品闭环"
+    ],
+    "reason": "演示效果惊艳、包装空间大，适合教育科普内容；但本地依赖重、商业化路径尚不清晰，需产品化补足。"
+   }
+  },
+  "N1nEmAn/sapper-v2": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "AI 智能体军团自主打渗透测试比赛，指挥官带兵分工协作",
+    "target_user": "美国/全球的安全咨询公司、渗透测试团队、CTF 战队和 AI agent 研究者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 5,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 3
+    },
+    "product_idea": "把多智能体自主渗透测试框架做成企业授权测试的托管平台，订阅制收费",
+    "demo_idea": "网页模拟靶场，展示 AI 指挥官分派侦察兵与士兵并行拿 flag 的实时面板",
+    "attack_tool": true,
+    "red_flags": [
+     "本质是自主渗透测试/攻击框架，用途是攻入授权靶场，产品化面临滥用与被禁风险",
+     "依赖 tmux 驱动 Claude Code 和多款国内模型（GLM、DeepSeek），海外可用性和合规存疑",
+     "比赛成绩与'女娲测试'哲学包装偏营销，可复现性未经第三方验证",
+     "核心是竞品成绩和 token 效率，付费场景偏窄，安全团队更愿自建",
+     "README 大量哲学叙事，工程可复用性弱"
+    ],
+    "reason": "话题性和 wow 强，但攻击工具属性、国内模型依赖与窄付费场景使包装和商业化空间有限，更适合做内容而非产品。"
+   }
+  },
+  "AstrBotDevs/AstrBot": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "开源的一站式 AI 聊天机器人平台，可以接入 Telegram、Slack、Discord 等聊天软件",
+    "target_user": "在 Telegram、Slack、Discord 上运营社群的独立开发者和小团队；想做 AI 客服的小商家",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 4,
+     "monetization": 5,
+     "license_safety": 2,
+     "demoability": 6
+    },
+    "product_idea": "做托管版：一键接入 Slack、Discord 和 Telegram 的 AI 客服机器人，按月订阅",
+    "demo_idea": "网页里模拟一个 Slack 频道，机器人自动回答提问、查知识库、调用插件",
+    "attack_tool": false,
+    "red_flags": [
+     "AGPL-3.0 许可证，做闭源 SaaS 有传染风险，商用需谨慎",
+     "项目本身已是成熟平台，有官方云市场和 WebUI，自建差异化空间小",
+     "45k star、每天涨 300 的大项目，内容角度难有新意",
+     "大量适配 QQ、企业微信、飞书等国内平台，对欧美市场是负担"
+    ],
+    "reason": "成熟度很高，话题热度也高，但 AGPL 限制商业包装，自建产品空间小，适合做内容而非创业项目。"
+   }
+  },
+  "alchaincyf/huashu-bird-sticker": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "11064 种鸟各一张白边贴纸，附 43 种语言名称与分类数据",
+    "target_user": "美国/全球的观鸟爱好者、鸟类教育工作者、设计素材买家和自然类 App 开发者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 2,
+     "demoability": 8
+    },
+    "product_idea": "把贴纸库做成可搜索的多语言鸟类贴纸素材站与 API，按月订阅或按包购买",
+    "demo_idea": "网页输入鸟名或筛选科属，网格展示贴纸、多语言名与保护等级，一键下载",
+    "attack_tool": false,
+    "red_flags": [
+     "PolyForm Shield 1.0.0 禁止用于竞品（观鸟/识鸟/图鉴类 App），商用受限且非标准开源许可",
+     "本质是数据集/素材库而非软件工具，直接扣分信号",
+     "AI 生成插画，参考照片来自 Wikimedia，存在版权与风格一致性风险",
+     "作者自家「鸣迹」App 是潜在竞品，与使用者利益冲突",
+     "英文市场规模大但付费意愿分散，素材买家与观鸟用户不是同一群人"
+    ],
+    "reason": "素材量大、演示直观、定位清晰，但许可证封闭、商业空间被作者自家 App 挤压，更适合做内容而非独立产品。"
+   }
+  },
+  "LNPANDY/NX2Apple": {
+   "date": "2026-11-01",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "把你自己备份的 Switch 游戏一键装进 iPhone 里玩",
+    "target_user": "美国/全球持有 Switch 卡带、Apple silicon Mac 和 iPhone 的玩家，愿意为免命令行的一键工具付费",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "付费打包版 Mac 启动器：一键构建、签名并安装到自己 iPhone 的游戏库，含云存档同步",
+    "demo_idea": "网页模拟器里展示从选游戏到 iPhone 上开玩的五步向导动画，并对比终端命令",
+    "attack_tool": false,
+    "red_flags": [
+     "核心用途是运行任天堂游戏，DMCA/版权风险高，苹果审核基本不可能过 App Store",
+     "需要用户自备 prod.keys 和游戏 dump，法律灰区，内容账号推广有品牌风险",
+     "依赖未签名 macOS 应用右键打开，新手转化有摩擦",
+     "本质是 nxnative 的启动器 fork，核心引擎非自研，上游一改就断",
+     "不能在 App Store 变现，只能走官网 + Stripe 卖工具，收款和分发都要自建"
+    ],
+    "reason": "话题性和惊喜感强，包装成免命令行工具确有空间，但版权灰区、付费意愿弱和分发合规限制压低了商业化天花板。"
    }
   }
  }
