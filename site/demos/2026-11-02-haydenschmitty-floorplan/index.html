@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Floorplan — See how your app actually fits together</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  .grid-bg {
+    background-color: #fbfbfa;
+    background-image:
+      linear-gradient(to right, rgba(15,23,42,.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15,23,42,.05) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+  .fade-in { animation: fadeIn .28s ease-out both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>
+</head>
+<body class="bg-stone-50 text-slate-900 antialiased">
+
+<header class="sticky top-0 z-30 border-b border-stone-200/80 bg-stone-50/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
+    <div class="flex items-center gap-2">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-white">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="8" height="8" rx="1.5"></rect>
+          <rect x="13" y="3" width="8" height="5" rx="1.5"></rect>
+          <rect x="13" y="10" width="8" height="11" rx="1.5"></rect>
+          <rect x="3" y="13" width="8" height="8" rx="1.5"></rect>
+        </svg>
+      </span>
+      <span class="text-[15px] font-semibold tracking-tight">Floorplan</span>
+    </div>
+    <span class="hidden rounded-full bg-slate-900/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500 sm:inline">Concept demo</span>
+    <nav class="ml-auto hidden items-center gap-5 text-[13px] text-slate-600 sm:flex">
+      <a href="#map" class="hover:text-slate-900">Demo map</a>
+      <a href="#use-cases" class="hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#pricing" class="ml-auto rounded-lg bg-slate-900 px-3 py-1.5 text-[13px] font-medium text-white transition hover:bg-slate-700 sm:ml-0">Join waitlist</a>
+  </div>
+</header>
+
+<section class="mx-auto max-w-6xl px-4 pt-12 pb-8 sm:px-6 sm:pt-16">
+  <div class="max-w-2xl">
+    <h1 class="text-[30px] font-semibold leading-[1.12] tracking-tight sm:text-[44px]">
+      See how your app<br class="hidden sm:block" /> actually fits together.
+    </h1>
+    <p class="mt-4 text-[15px] leading-relaxed text-slate-600 sm:text-base">
+      Point Floorplan at a repo. A minute later you get a clickable map of every screen, endpoint and table — in plain English — plus a health check for the mistakes AI-built apps tend to make.
+    </p>
+  </div>
+
+  <div class="mt-7 rounded-2xl border border-stone-200 bg-white p-3 shadow-sm sm:p-4">
+    <div class="flex flex-col gap-2 sm:flex-row">
+      <div class="flex flex-1 items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5">
+        <span class="text-slate-400" aria-hidden="true">🐙</span>
+        <input id="repoInput" type="text" spellcheck="false" aria-label="Repository"
+               class="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
+               value="github.com/brewline/brewline-web" />
+      </div>
+      <select id="modelSelect" aria-label="Model"
+              class="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm text-slate-700 outline-none">
+        <option>Claude</option>
+        <option>Codex</option>
+      </select>
+      <button id="drawBtn" type="button"
+              class="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60">
+        Draw the map
+      </button>
+    </div>
+    <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 px-1">
+      <span id="drawStatus" class="text-[11.5px] text-slate-500">Ready — the Brewline demo map is already open below.</span>
+      <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700">Sample data</span>
+    </div>
+  </div>
+</section>
+
+<section id="map" class="mx-auto max-w-6xl px-4 sm:px-6">
+  <div class="mb-3 flex flex-wrap items-end justify-between gap-2">
+    <div>
+      <h2 class="text-[17px] font-semibold tracking-tight">The demo: Brewline, a coffee subscription app</h2>
+      <p class="mt-1 text-[12.5px] text-slate-500">Four repos stitched into one map. Little red dots are things the health check flags.</p>
+    </div>
+    <span class="rounded-full bg-slate-900/5 px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wide text-slate-500">Sample data</span>
+  </div>
+
+  <div class="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+    <div class="flex flex-wrap items-center gap-3 border-b border-stone-200 px-4 py-3 sm:px-5">
+      <div class="flex items-center gap-2">
+        <span class="grid h-7 w-7 place-items-center rounded-md bg-indigo-600 text-[11px] font-bold text-white">B</span>
+        <div>
+          <p id="mapRepo" class="text-[13.5px] font-semibold leading-none text-slate-800">brewline-web</p>
+          <p class="mt-1 text-[11px] leading-none text-slate-500">coffee subscription app · <span id="mapStats">42 files · 12 parts · 14 connections</span></p>
+        </div>
+      </div>
+      <div class="ml-auto flex flex-wrap items-center gap-2">
+        <button id="viewToggle" type="button" aria-pressed="false"
+                class="rounded-lg border border-stone-200 px-2.5 py-1.5 text-[12px] text-slate-600 transition hover:border-slate-400">💬 Plain English</button>
+        <button id="healthBtn" type="button"
+                class="rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-[12px] font-medium text-rose-700 transition hover:bg-rose-100">🩺 Health check</button>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-[1fr_320px]">
+      <div id="canvas" class="grid-bg grid grid-cols-2 gap-x-3 gap-y-5 p-4 sm:p-5 lg:grid-cols-4"></div>
+      <aside id="detail" class="border-t border-stone-200 p-4 sm:p-5 lg:border-l lg:border-t-0"></aside>
+    </div>
+  </div>
+  <p class="mt-2 px-1 text-[11.5px] text-slate-400">Tip: click a card, then follow its “Talks to” chips — that's the same walk the map does for you.</p>
+</section>
+
+<section id="healthPanel" class="mx-auto mt-4 hidden max-w-6xl px-4 sm:px-6">
+  <div class="rounded-2xl border border-rose-200 bg-white p-4 shadow-sm sm:p-5">
+    <div class="flex flex-wrap items-start gap-2">
+      <div>
+        <h3 class="text-[15px] font-semibold tracking-tight text-slate-900">🩺 Health check — 5 findings</h3>
+        <p class="mt-1 text-[12.5px] text-slate-500">The classic mistakes from AI-built apps. Each one comes with a fix you can paste into your AI editor.</p>
+      </div>
+      <div class="ml-auto flex items-center gap-2">
+        <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700">Sample data</span>
+        <button id="healthClose" type="button" class="rounded-lg border border-stone-200 px-2 py-1 text-[11.5px] text-slate-500 hover:border-slate-400">Close</button>
+      </div>
+    </div>
+    <div id="healthList" class="mt-4 space-y-2"></div>
+  </div>
+</section>
+
+<section class="mx-auto mt-6 max-w-6xl px-4 sm:px-6">
+  <div class="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-[14px] font-semibold tracking-tight">💬 Ask the map</span>
+      <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700">Sample data</span>
+    </div>
+    <div id="questionChips" class="mt-3 flex flex-wrap gap-2"></div>
+    <div id="answer" class="mt-3 rounded-xl border border-stone-200 bg-stone-50 p-3 sm:p-4">
+      <p class="text-[13px] leading-relaxed text-slate-500">Pick a question above. Answers come back with a mini-map of just the parts involved.</p>
+    </div>
+  </div>
+</section>
+
+<section id="use-cases" class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+  <h2 class="text-2xl font-semibold tracking-tight sm:text-[28px]">Three ways people actually use it</h2>
+  <p class="mt-2 max-w-xl text-[14px] leading-relaxed text-slate-600">Same map, different questions.</p>
+  <div class="mt-6 grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+      <span class="text-xl" aria-hidden="true">🚀</span>
+      <h3 class="mt-3 text-[15px] font-semibold tracking-tight">You shipped it with AI and you're not sure what's inside</h3>
+      <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Start at the screen you know — checkout — then walk backwards through the request, the server code and the tables. No code reading required, and every label is in plain English.</p>
+    </div>
+    <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+      <span class="text-xl" aria-hidden="true">🧭</span>
+      <h3 class="mt-3 text-[15px] font-semibold tracking-tight">Onboard someone in ten minutes</h3>
+      <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Send the map link before day one. They click from the big picture down to the exact file, then ask it things like “what breaks if I change this table?”</p>
+    </div>
+    <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+      <span class="text-xl" aria-hidden="true">🩺</span>
+      <h3 class="mt-3 text-[15px] font-semibold tracking-tight">A shipping check before launch</h3>
+      <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Keys in the browser, tables anyone can read, webhooks nobody verifies, debug endpoints still open. Each finding points at a file and tells you what to change.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+  <h2 class="text-2xl font-semibold tracking-tight sm:text-[28px]">Simple pricing</h2>
+  <p class="mt-2 max-w-xl text-[14px] leading-relaxed text-slate-600">The map is free forever. Pay only if you want it hosted and shared.</p>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <div class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-6">
+      <p class="text-[12px] font-semibold uppercase tracking-wide text-slate-400">Local</p>
+      <p class="mt-2 text-3xl font-semibold tracking-tight">$0</p>
+      <p class="mt-1 text-[13px] text-slate-500">Open source, MIT. Bring your own Claude or Codex.</p>
+      <ul class="mt-4 space-y-2 text-[13.5px] text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Unlimied maps of your own repos</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Plain-English labels and the full zoom ladder</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Health check and recent-work summary</li>
+      </ul>
+      <a href="#map" class="mt-5 inline-flex w-full items-center justify-center rounded-xl border border-stone-300 px-4 py-2.5 text-[13.5px] font-semibold text-slate-800 transition hover:border-slate-500">Try the demo map</a>
+    </div>
+
+    <div class="rounded-2xl border-2 border-indigo-500 bg-white p-5 shadow-sm sm:p-6">
+      <div class="flex items-center justify-between">
+        <p class="text-[12px] font-semibold uppercase tracking-wide text-indigo-600">Hosted</p>
+        <span class="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-indigo-600">Waitlist</span>
+      </div>
+      <p class="mt-2 text-3xl font-semibold tracking-tight">$15<span class="text-base font-normal text-slate-500">/mo</span></p>
+      <p class="mt-1 text-[13px] text-slate-500">Connect a repo, get a shareable read-only map that re-draws after every merge.</p>
+      <ul class="mt-4 space-y-2 text-[13.5px] text-slate-600">
+        <li class="flex gap-2"><span class="text-indigo-600">✓</span> Hosted maps with stable links for the team</li>
+        <li class="flex gap-2"><span class="text-indigo-600">✓</span> Re-draw on every merge, with a “what changed” diff</li>
+        <li class="flex gap-2"><span class="text-indigo-600">✓</span> Health check history and shareable reports</li>
+      </ul>
+      <div class="mt-5 flex flex-col gap-2 sm:flex-row">
+        <input id="waitlistEmail" type="email" aria-label="Email"
+               class="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm outline-none placeholder:text-slate-400"
+               value="you@studio.dev" />
+        <button id="waitlistBtn" type="button"
+                class="shrink-0 rounded-xl bg-indigo-600 px-4 py-2.5 text-[13.5px] font-semibold text-white transition hover:bg-indigo-500">Join waitlist</button>
+      </div>
+      <p id="waitlistMsg" class="mt-2 hidden rounded-lg bg-emerald-50 px-2.5 py-2 text-[11.5px] text-emerald-800"></p>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-stone-200 bg-white">
+  <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <p class="text-[11.5px] leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project <a href="https://github.com/haydenschmitty/floorplan" class="underline hover:text-slate-800">haydenschmitty/floorplan</a> (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var nodes = [
+    { id: "home", col: "screens", label: "Home page", dev: "app/page.tsx",
+      plain: "The page where someone picks a coffee plan and starts a subscription.",
+      uses: ["plans"], files: ["app/page.tsx", "components/PlanCard.tsx"] },
+    { id: "checkout", col: "screens", label: "Checkout page", dev: "app/checkout/page.tsx", risk: true,
+      plain: "Where someone types a card and pays for their coffee subscription. Right now this page also loads your Stripe secret key.",
+      uses: ["checkoutApi"], files: ["app/checkout/page.tsx", "app/checkout/StripeCardForm.tsx"] },
+    { id: "account", col: "screens", label: "Account page", dev: "app/account/page.tsx",
+      plain: "Where a customer sees their subscription, next delivery and past orders.",
+      uses: ["subs", "auth"], files: ["app/account/page.tsx"] },
+
+    { id: "plans", col: "server", label: "List coffee plans", dev: "GET /api/plans",
+      plain: "Hands the home page the list of plans and prices.",
+      uses: ["customers"], files: ["app/api/plans/route.ts"] },
+    { id: "checkoutApi", col: "server", label: "Start a checkout", dev: "POST /api/checkout",
+      plain: "Opens a Stripe payment and saves a pending subscription row before the money moves.",
+      uses: ["subscriptions", "stripe"], files: ["app/api/checkout/route.ts"] },
+    { id: "webhook", col: "server", label: "Stripe webhook", dev: "POST /api/stripe/webhook", risk: true,
+      plain: "When Stripe confirms a payment, this marks the subscription active and asks Resend to send the welcome email. It currently trusts anyone who calls it.",
+      uses: ["subscriptions", "stripe", "resend"], files: ["app/api/stripe/webhook/route.ts"] },
+    { id: "subs", col: "server", label: "List my subscriptions", dev: "GET /api/subscriptions",
+      plain: "Looks up the signed-in customer's subscriptions for the account page.",
+      uses: ["subscriptions", "auth"], files: ["app/api/subscriptions/route.ts"] },
+
+    { id: "customers", col: "data", label: "Customers table", dev: "public.customers · Supabase", risk: true,
+      plain: "Stores who signed up: name, email, plan. Row-level security is off, so anyone with the public key can read every row.",
+      uses: [], files: ["supabase/migrations/001_init.sql"] },
+    { id: "subscriptions", col: "data", label: "Subscriptions table", dev: "public.subscriptions · Supabase",
+      plain: "One row per subscription: plan, status, renewal date. Checkout writes here, the webhook updates it, the account page reads it.",
+      uses: [], files: ["supabase/migrations/001_init.sql"] },
+
+    { id: "stripe", col: "outside", label: "Stripe", dev: "Stripe Payments API",
+      plain: "Takes the card payment and tells your app when it actually went through.",
+      uses: [], files: [] },
+    { id: "resend", col: "outside", label: "Resend", dev: "Resend email API",
+      plain: "Sends the “your coffee is on the way” email.",
+      uses: [], files: [] },
+    { id: "auth", col: "outside", label: "Supabase Auth", dev: "Supabase Auth",
+      plain: "Knows who is signed in, so pages can show the right person's data.",
+      uses: [], files: [] }
+  ];
+
+  var cols = [
+    { key: "screens", title: "Screens", hint: "What people see" },
+    { key: "server", title: "Server", hint: "What answers the request" },
+    { key: "data", title: "Data", hint: "What gets stored" },
+    { key: "outside", title: "Outside", hint: "What you didn't build" }
+  ];
+
+  var issues = [
+    { severity: "High", title: "Your Stripe secret key is shipped to the browser",
+      where: "app/checkout/StripeCardForm.tsx · line 12",
+      why: "The key ends up in the JavaScript bundle, so anyone can open dev tools, copy it and charge cards on your account. This is the single most common mistake AI-built apps make.",
+      fix: "Move the Stripe call into POST /api/checkout and keep only the publishable key in the browser." },
+    { severity: "High", title: "Anyone can read the Customers table",
+      where: "supabase/migrations/001_init.sql · public.customers",
+      why: "Row-level security is off, and the public anon key ships in your frontend. Any visitor can select every customer name and email.",
+      fix: "Turn on RLS and add a policy so a row is only readable when auth.uid() = owner_id." },
+    { severity: "Medium", title: "The Stripe webhook trusts whoever calls it",
+      where: "app/api/stripe/webhook/route.ts · line 8",
+      why: "Without a signature check, anyone can POST to this endpoint and mark subscriptions active for free.",
+      fix: "Verify the stripe-signature header with STRIPE_WEBHOOK_SECRET before handling the event." },
+    { severity: "Medium", title: "A leftover debug endpoint lists every user",
+      where: "app/api/debug/users/route.ts · GET /api/debug/users",
+      why: "It was handy while building, but it is still publicly reachable and returns all rows with no check.",
+      fix: "Delete the route, or require an admin session before returning anything." },
+    { severity: "Low", title: "Live keys sit in a .env committed to the repo",
+      where: ".env · line 4",
+      why: "The file is in git history, so rotating a key later means cleaning history too.",
+      fix: "Move values to your host's environment settings, add .env to .gitignore, and rotate the keys." }
+  ];
+
+  var questions = [
+    { q: "How does a payment actually reach us?",
+      a: "Someone on the Checkout page posts to “Start a checkout”. That route opens a Stripe payment and writes a pending row in Subscriptions. Stripe then calls your webhook, which flips the row to active and asks Resend to send the welcome email. Four stops — and only one of them is yours to verify.",
+      path: ["Checkout page", "POST /api/checkout", "Stripe", "POST /api/stripe/webhook", "Subscriptions", "Resend"] },
+    { q: "What breaks if I change the Subscriptions table?",
+      a: "Three things: “Start a checkout” writes to it, the Stripe webhook updates it, and “List my subscriptions” reads it — so the Account page goes blank too. Change the schema once and all three paths need the same migration.",
+      path: ["POST /api/checkout", "POST /api/stripe/webhook", "GET /api/subscriptions", "Account page"] },
+    { q: "Can a stranger read my customers' emails?",
+      a: "Yes, today. Row-level security is off on the Customers table, and the public Supabase key ships in your frontend bundle. Anyone who opens dev tools can select every row. The health check flags the same table.",
+      path: ["Customers table", "Supabase Auth", "Health check"] }
+  ];
+
+  var state = { selected: "checkout", dev: false };
+
+  function byId(id) {
+    for (var i = 0; i < nodes.length; i++) { if (nodes[i].id === id) { return nodes[i]; } }
+    return null;
+  }
+
+  function relatedSet(id) {
+    var set = {};
+    var n = byId(id);
+    if (!n) { return set; }
+    n.uses.forEach(function (u) { set[u] = true; });
+    nodes.forEach(function (x) { if (x.uses.indexOf(id) !== -1) { set[x.id] = true; } });
+    delete set[id];
+    return set;
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function cardHtml(n, related) {
+    var cls = "group w-full rounded-xl border bg-white px-3 py-2.5 text-left transition ";
+    if (state.selected === n.id) {
+      cls += "border-indigo-500 ring-2 ring-indigo-200 shadow-sm";
+    } else if (state.selected && related[n.id]) {
+      cls += "border-indigo-300 bg-indigo-50/70";
+    } else if (state.selected) {
+      cls += "border-stone-200 opacity-55 hover:opacity-100";
+    } else {
+      cls += "border-stone-200 hover:border-slate-400";
+    }
+    var main = state.dev ? n.dev : n.label;
+    var sub = state.dev ? n.label : n.dev;
+    return '<button type="button" data-node="' + n.id + '" class="' + cls + '">' +
+      '<span class="flex items-start gap-1.5">' +
+        '<span class="flex-1 text-[13px] font-medium leading-snug text-slate-800">' + esc(main) + '</span>' +
+        (n.risk ? '<span title="Flagged by the health check" class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>' : '') +
+      '</span>' +
+      '<span class="mt-0.5 block truncate font-mono text-[10.5px] text-slate-400">' + esc(sub) + '</span>' +
+      '</button>';
+  }
+
+  function renderCanvas() {
+    var canvas = document.getElementById("canvas");
+    if (!canvas) { return; }
+    var related = relatedSet(state.selected);
+    canvas.innerHTML = cols.map(function (c) {
+      var items = nodes.filter(function (n) { return n.col === c.key; });
+      return '<div>' +
+        '<p class="text-[10.5px] font-semibold uppercase tracking-wide text-slate-400">' + c.title + '</p>' +
+        '<p class="mb-2 text-[10px] text-slate-400/80">' + c.hint + '</p>' +
+        '<div class="space-y-2">' + items.map(function (n) { return cardHtml(n, related); }).join("") + '</div>' +
+        '</div>';
+    }).join("");
+  }
+
+  function chip(id) {
+    var n = byId(id);
+    return '<button type="button" data-node="' + id + '" class="rounded-md border border-indigo-200 bg-indigo-50 px-2 py-1 text-[11px] font-medium text-indigo-700 transition hover:bg-indigo-100">' +
+      esc(n ? (state.dev ? n.dev : n.label) : id) + '</button>';
+  }
+
+  function renderDetail() {
+    var el = document.getElementById("detail");
+    if (!el) { return; }
+    var n = state.selected ? byId(state.selected) : null;
+
+    if (!n) {
+      el.innerHTML =
+        '<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pick a part</p>' +
+        '<p class="mt-2 text-[13px] leading-relaxed text-slate-500">Click any card on the map — a screen, an endpoint, a table or an outside service — and this panel explains it in plain English, what it talks to, and which files it lives in.</p>' +
+        '<p class="mt-3 rounded-lg bg-amber-50 px-2.5 py-2 text-[11px] leading-relaxed text-amber-800">Sample data from the Brewline demo app.</p>';
+      return;
+    }
+
+    var usedBy = nodes.filter(function (x) { return x.uses.indexOf(n.id) !== -1; });
+
+    var html = '<div class="flex items-center justify-between">' +
+      '<p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Selected part</p>' +
+      '<button type="button" data-clear class="text-[11px] text-slate-400 transition hover:text-slate-700">Clear</button>' +
+      '</div>' +
+      '<h3 class="mt-2 text-[15px] font-semibold leading-snug text-slate-900">' + esc(state.dev ? n.dev : n.label) + '</h3>' +
+      '<p class="mt-0.5 font-mono text-[11px] text-slate-400">' + esc(state.dev ? n.label : n.dev) + '</p>' +
+      '<p class="mt-2.5 text-[13px] leading-relaxed text-slate-600">' + esc(n.plain) + '</p>';
+
+    if (n.risk) {
+      html += '<p class="mt-2.5 rounded-lg bg-rose-50 px-2.5 py-2 text-[11.5px] leading-relaxed text-rose-700">🩺 Flagged in the health check — open it below to see the fix.</p>';
+    }
+
+    html += '<p class="mt-4 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Talks to</p>' +
+      '<div class="mt-1.5 flex flex-wrap gap-1.5">' +
+      (n.uses.length ? n.uses.map(chip).join("") : '<span class="text-[12px] text-slate-400">Nothing — it sits at the edge.</span>') +
+      '</div>';
+
+    html += '<p class="mt-3.5 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Used by</p>' +
+      '<div class="mt-1.5 flex flex-wrap gap-1.5">' +
+      (usedBy.length ? usedBy.map(function (x) { return chip(x.id); }).join("") : '<span class="text-[12px] text-slate-400">Nothing calls it directly.</span>') +
+      '</div>';
+
+    if (n.files && n.files.length) {
+      html += '<p class="mt-3.5 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Files</p>' +
+        '<ul class="mt-1.5 space-y-1">' +
+        n.files.map(function (f) {
+          return '<li class="truncate rounded-md bg-stone-100 px-2 py-1 font-mono text-[11px] text-slate-600">' + esc(f) + '</li>';
+        }).join("") + '</ul>';
+    }
+
+    el.innerHTML = html;
+  }
+
+  function render() {
+    renderCanvas();
+    renderDetail();
+  }
+
+  function sevClass(s) {
+    if (s === "High") { return "bg-rose-100 text-rose-700"; }
+    if (s === "Medium") { return "bg-amber-100 text-amber-700"; }
+    return "bg-slate-200 text-slate-600";
+  }
+
+  function renderHealth() {
+    var list = document.getElementById("healthList");
+    if (!list) { return; }
+    list.innerHTML = issues.map(function (it, i) {
+      return '<details class="rounded-xl border border-stone-200 bg-stone-50/70 p-3"' + (i === 0 ? " open" : "") + '>' +
+        '<summary class="flex items-start gap-2">' +
+          '<span class="mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ' + sevClass(it.severity) + '">' + it.severity + '</span>' +
+          '<span class="flex-1 text-[13px] font-semibold leading-snug text-slate-800">' + esc(it.title) + '</span>' +
+          '<span class="mt-0.5 shrink-0 text-[10px] text-slate-400">▾</span>' +
+        '</summary>' +
+        '<div class="mt-2 border-t border-stone-200 pt-2">' +
+          '<p class="font-mono text-[11px] text-slate-400">' + esc(it.where) + '</p>' +
+          '<p class="mt-1.5 text-[12.5px] leading-relaxed text-slate-600">' + esc(it.why) + '</p>' +
+          '<p class="mt-2 rounded-lg bg-emerald-50 px-2.5 py-2 text-[12px] leading-relaxed text-emerald-800"><span class="font-semibold">Fix:</span> ' + esc(it.fix) + '</p>' +
+        '</div>' +
+        '</details>';
+    }).join("");
+  }
+
+  function renderQuestions() {
+    var wrap = document.getElementById("questionChips");
+    if (!wrap) { return; }
+    wrap.innerHTML = questions.map(function (q, i) {
+      return '<button type="button" data-q="' + i + '" class="rounded-full border border-stone-300 bg-white px-3 py-1.5 text-[12.5px] text-slate-700 transition hover:border-indigo-400 hover:text-indigo-700">' + esc(q.q) + '</button>';
+    }).join("");
+  }
+
+  function showAnswer(i) {
+    var box = document.getElementById("answer");
+    var q = questions[i];
+    if (!box || !q) { return; }
+    box.innerHTML = '<p class="text-[13px] leading-relaxed text-slate-700">' + esc(q.a) + '</p>' +
+      '<div class="mt-3 flex flex-wrap items-center gap-1.5">' +
+      q.path.map(function (p, idx) {
+        var item = '<span class="rounded-md border border-stone-200 bg-white px-2 py-1 font-mono text-[11px] text-slate-600">' + esc(p) + '</span>';
+        return idx === 0 ? item : '<span class="text-[11px] text-slate-300">→</span>' + item;
+      }).join("") +
+      '</div>' +
+      '<p class="mt-3 text-[10.5px] uppercase tracking-wide text-slate-400">Sample data · mini-map of the parts involved</p>';
+    box.classList.remove("fade-in");
+    void box.offsetWidth;
+    box.classList.add("fade-in");
+  }
+
+  /* ---- events ---- */
+
+  document.addEventListener("click", function (e) {
+    var target = e.target;
+    if (!target || typeof target.closest !== "function") { return; }
+
+    var nodeBtn = target.closest("[data-node]");
+    if (nodeBtn) {
+      state.selected = nodeBtn.getAttribute("data-node");
+      render();
+      return;
+    }
+
+    var clearBtn = target.closest("[data-clear]");
+    if (clearBtn) {
+      state.selected = null;
+      render();
+      return;
+    }
+
+    var qBtn = target.closest("[data-q]");
+    if (qBtn) {
+      showAnswer(parseInt(qBtn.getAttribute("data-q"), 10));
+      return;
+    }
+  });
+
+  var viewToggle = document.getElementById("viewToggle");
+  if (viewToggle) {
+    viewToggle.addEventListener("click", function () {
+      state.dev = !state.dev;
+      viewToggle.setAttribute("aria-pressed", state.dev ? "true" : "false");
+      viewToggle.textContent = state.dev ? "🧑‍💻 Developer view" : "💬 Plain English";
+      render();
+    });
+  }
+
+  var healthBtn = document.getElementById("healthBtn");
+  var healthPanel = document.getElementById("healthPanel");
+  if (healthBtn && healthPanel) {
+    healthBtn.addEventListener("click", function () {
+      healthPanel.classList.remove("hidden");
+      healthPanel.classList.add("fade-in");
+      renderHealth();
+      healthPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  var healthClose = document.getElementById("healthClose");
+  if (healthClose && healthPanel) {
+    healthClose.addEventListener("click", function () {
+      healthPanel.classList.add("hidden");
+    });
+  }
+
+  var drawBtn = document.getElementById("drawBtn");
+  var drawStatus = document.getElementById("drawStatus");
+  var repoInput = document.getElementById("repoInput");
+  var modelSelect = document.getElementById("modelSelect");
+
+  if (drawBtn && drawStatus) {
+    drawBtn.addEventListener("click", function () {
+      var repo = (repoInput && repoInput.value ? repoInput.value : "").trim() || "github.com/brewline/brewline-web";
+      var model = modelSelect ? modelSelect.value : "Claude";
+      var parts = repo.split("/").filter(function (p) { return p; });
+      var name = parts.length ? parts[parts.length - 1] : "your-app";
+      var steps = [
+        "Reading files…",
+        "Naming the parts in plain English…",
+        "Matching requests to endpoints…",
+        "Drawing the map…"
+      ];
+
+      drawBtn.disabled = true;
+      drawStatus.textContent = model + " is " + steps[0].toLowerCase();
+      var at = 0;
+
+      var timer = setInterval(function () {
+        at += 1;
+        if (at < steps.length) {
+          drawStatus.textContent = steps[at];
+          return;
+        }
+        clearInterval(timer);
+        drawBtn.disabled = false;
+        var repoEl = document.getElementById("mapRepo");
+        if (repoEl) { repoEl.textContent = name; }
+        drawStatus.textContent = "Map ready — " + name + ", drawn by " + model + ". " + (document.getElementById("mapStats") ? document.getElementById("mapStats").textContent : "42 files read") + ".";
+        var canvas = document.getElementById("canvas");
+        if (canvas) {
+          canvas.classList.remove("fade-in");
+          void canvas.offsetWidth;
+          canvas.classList.add("fade-in");
+        }
+        var mapEl = document.getElementById("map");
+        if (mapEl && mapEl.scrollIntoView) {
+          mapEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 520);
+    });
+  }
+
+  var waitlistBtn = document.getElementById("waitlistBtn");
+  if (waitlistBtn) {
+    waitlistBtn.addEventListener("click", function () {
+      var input = document.getElementById("waitlistEmail");
+      var msg = document.getElementById("waitlistMsg");
+      if (!msg) { return; }
+      var email = input && input.value ? input.value.trim() : "";
+      msg.textContent = email
+        ? "Thanks — " + email + " is on the list. This is a concept demo, nothing was sent."
+        : "Add an email first. This is a concept demo, nothing is sent.";
+      msg.classList.remove("hidden");
+      msg.classList.add("fade-in");
+    });
+  }
+
+  render();
+  renderQuestions();
+  renderHealth();
+})();
+</script>
+</body>
+</html>

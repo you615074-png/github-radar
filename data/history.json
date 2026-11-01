@@ -83,6 +83,12 @@
    "full_name": "patch-gg/pixelfx",
    "category": "多媒体创作",
    "final": 7.93
+  },
+  {
+   "date": "2026-11-02",
+   "full_name": "haydenschmitty/floorplan",
+   "category": "开发者工具",
+   "final": 7.76
   }
  ],
  "top": {
@@ -118,7 +124,7 @@
   "storytold/vectorcraft": "2026-10-24",
   "morluto/rea": "2026-10-25",
   "storytold/cadcraft": "2026-10-25",
-  "Nutlope/hallmark": "2026-10-25",
+  "Nutlope/hallmark": "2026-11-02",
   "ARahim3/DigUp": "2026-10-25",
   "pollen-robotics/microduck": "2026-10-25",
   "HeyPuter/everything": "2026-10-26",
@@ -151,7 +157,11 @@
   "elvarofficial/teardown": "2026-11-01",
   "wangzan101/Mika": "2026-11-01",
   "LNPANDY/NX2Apple": "2026-11-01",
-  "pingdotgg/t3code": "2026-11-01"
+  "pingdotgg/t3code": "2026-11-01",
+  "haydenschmitty/floorplan": "2026-11-02",
+  "lexifina/global-law": "2026-11-02",
+  "milind-soni/OpenMausBot": "2026-11-02",
+  "beenuar/AiSOC": "2026-11-02"
  },
  "scores": {
   "wheresryan22/anatomy": {
@@ -388,36 +398,6 @@
     "reason": "开源热度高、许可证干净、演示直观，适合做内容；但 Excel 替代品商业化极难，包装空间有限，赚钱路径不清晰。"
    }
   },
-  "Arekejoker/qwen21-nsfw-pose-skill": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "在本地电脑上用文字或3D人偶摆姿势，生成成人向性感/裸体图片",
-    "target_user": "有本地显卡、会折腾 ComfyUI 的成人向 AI 绘图的付费用户",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 7,
-     "monetization": 4,
-     "license_safety": 2,
-     "demoability": 4
-    },
-    "product_idea": "把 ComfyUI 配方包成桌面应用：一次安装，人偶拖姿势，一键出图",
-    "demo_idea": "网页里拖动3D人偶摆姿势，右侧用预生成图模拟姿势变化前后对比",
-    "attack_tool": false,
-    "red_flags": [
-     "核心内容为 NSFW 成人内容，主流平台/支付/应用商店基本不可用，传播和商业化都受限",
-     "本质是提示词配方 + 第三方 LoRA + 别人的姿势库和底模，自身原创代码薄，可替代性高",
-     "许可证实际存疑：仓库自称 Apache-2.0，但模型、LoRA、姿势素材权利归第三方且含成人内容，商用风险高",
-     "依赖 12-24GB 显存本地跑，门槛高但正是包装空间来源；同时意味着用户群窄",
-     "星数 11 天涨到 3700，热度可能靠成人话题驱动，留存和付费意愿难验证"
-    ],
-    "reason": "话题性和包装空间不错，但成人内容导致平台、支付、合规全面受限，商业化路径很窄，原创壁垒也低。"
-   }
-  },
   "ruvnet/ruflo": {
    "date": "2026-10-29",
    "v": 3,
@@ -446,34 +426,6 @@
      "目标用户是开发者，付费意愿集中在大团队，独立开发者变现难"
     ],
     "reason": "话题性强、工程量大、MIT 友好，但已是高知名度基础设施，包装空间和变现都受限于开发者付费天花板。"
-   }
-  },
-  "ARahim3/DigUp": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "用一句话描述内容，就能搜到电脑里的图片、PDF、录音和视频片段",
-    "target_user": "知识工作者、律师、研究人员、内容创作者等有大量本地文件的 Mac/Windows 用户",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 9,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 3,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 9
-    },
-    "product_idea": "本地文件语义搜索：自然语言检索照片、PDF 页面、播客时间点，一键跳转到具体位置",
-    "demo_idea": "网页放一组模拟文件，输入\"海滩上的狗\"或\"谈到睡眠的地方\"，30秒内展示命中照片和音频时间点",
-    "attack_tool": false,
-    "red_flags": [
-     "已自带 Mac 安装包、Homebrew、Windows/Linux 安装器，产品化程度已很高，包装空间有限",
-     "依赖 Google EmbeddingGemma 2 模型，模型行为受限",
-     "文件索引类工具面临系统自带 Spotlight 及大厂 AI 搜索的竞争"
-    ],
-    "reason": "话题性强、演示效果好、痛点真实，但项目本身已是成熟跨平台应用，留给二次包装做差异化的空间较小，商业化需与系统级搜索竞争。"
    }
   },
   "KnifeLemon/Filee": {
@@ -588,35 +540,6 @@
      "安全审计结论若被客户当作合规依据，可能带来责任与保险问题"
     ],
     "reason": "话题性强、痛点真实、许可证友好，但大厂官方项目且只是技能提示词集，包装与收费空间受限，更适合做内容而非独立产品。"
-   }
-  },
-  "HeyPuter/everything": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "开源重造全世界商业软件，Excel、Photoshop、Slack 全都有免费版",
-    "target_user": "预算敏感的团队与中小企业、不想付订阅费的个人用户",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "做全球软件开源平替(Excel/PS/Slack)的导航与一键在线试用站，按原软件分类索引",
-    "demo_idea": "网页左右分屏：左边原版 Excel/Slack 截图，右边开源版真实可操作界面，一键切换试用",
-    "attack_tool": false,
-    "red_flags": [
-     "属于超大型多应用合集、类基建项目，单点差异化难",
-     "由 HeyPuter 团队主导，个人在其上做产品空间小",
-     "多数子应用成熟度与稳定性未验证，宣传大于实际",
-     "真正的商业主题是‘替代商业软件’，但商业化路径依赖团队自身平台"
-    ],
-    "reason": "话题性与易懂度极强、MIT 安全，作为内容素材极佳；但为团队级基建合集，商业化与个人包装空间有限，适合做测评与导航而非独立产品。"
    }
   },
   "deepseek-ai/DeepInfer": {
@@ -825,120 +748,33 @@
     "reason": "话题性和wow都强，AI丑前端是真痛点且可秒懂演示；但开源已相当完整，付费点需靠托管报告和团队规则库撑起来。"
    }
   },
-  "luongnv89/claude-howto": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "教育学习",
-    "one_liner": "一本带图文的 Claude Code 速成教程，教你从新手变高手",
-    "target_user": "刚上手 Claude Code、想系统学会 hooks/MCP/子代理的中初级开发者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 4,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "把教程做成交互式学习平台：分关卡教学+模板一键注入项目+能力测评",
-    "demo_idea": "网页展示学习路线图，点开模块看 Mermaid 图与可复制的 slash command 模板",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是教程/文档集合，属于直接扣分信号",
-     "内容强依赖 Anthropic 官方产品迭代，生命周期受限于官方文档完善度",
-     "Star 数与创建 350 天/日增 442 的增长曲线可疑，真实性需核实",
-     "作为纯内容资产可防御性低，易被官方文档替代"
-    ],
-    "reason": "话题热、信任度高但本质是教程资源，难做差异化付费产品；适合做内容选题而非创业项目。"
-   }
-  },
-  "pollen-robotics/microduck": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "其他",
-    "one_liner": "一只会走路、打滚、捡东西、自己爬起来的小型双足机器鸭",
-    "target_user": "机器人与强化学习爱好者、STEM 教育机构和高校实验室",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 9,
-     "pain": 5,
-     "packaging_room": 3,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "在仿真里做的机器鸭控制模拟器或互动网页，用 WebRTC 远程操控真机演示",
-    "demo_idea": "网页里用 MuJoCo 仿真一只鸭，看着它被推倒、自己爬起来、捡东西，再配上遥控按钮和语音叫','quack'",
-    "attack_tool": false,
-    "red_flags": [
-     "硬件公司官方产品固件仓库，个人难以在此基础上做差异化",
-     "核心价值依赖真实机器人硬件，纯软件用户少",
-     "已有官方销售渠道，开源版包装空间小"
-    ],
-    "reason": "话题性和惊喜感强，机器鸭视频易传播，但本质是硬件固件，变现路径窄，更适合做内容而非产品化。"
-   }
-  },
   "Nutlope/hallmark": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让 AI 生成的网页彻底摆脱千篇一律的机器味",
-    "target_user": "用 Claude Code、Cursor 做原型的独立开发者、设计敏感型创业团队、接单的外包与设计工作室",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 9
-    },
-    "product_idea": "把 Hallmark 做成在线工具：输入一句话，输出三个可直接上线的网页设计方案，并提供 AI 生成页面的一键去味检查。",
-    "demo_idea": "左右分屏：左边是典型的 AI 生成模板页，右边是 Hallmark 改造后的同一内容页，点击切换主题实时对比。",
-    "attack_tool": false,
-    "red_flags": [
-     "项目由 Together AI 出品、已有官方网站，本质上是官方 skill，个人在上面做差异化的空间有限",
-     "核心形态是命令行 skill，依赖 Claude Code、Cursor 等特定环境，用户不容易直接上手体验",
-     "48 套主题加设计品味本质上是内容资产，护城河主要靠审美持续迭代，而不是靠技术壁垒",
-     "与 v0、Lovable、Framer 等自带设计系统的产品正面竞争，单纯的设计检查功能容易被平台内置"
-    ],
-    "reason": "话题性强、视觉冲击大，很适合拿来做内容，但它是大厂出品的 skill，变现只能靠主题定制和审计服务，做独立产品空间偏窄。"
-   }
-  },
-  "Folkbench/folkbench": {
-   "date": "2026-10-25",
-   "v": 2,
+   "date": "2026-11-02",
+   "v": 3,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "帮 AI 编程用户挑选并一键切换最稳、最便宜 API 线路的工具",
-    "target_user": "重度使用 Claude Code / Codex 的个人开发者与 AI 编程团队",
+    "one_liner": "给AI编程助手加一套设计规则，让它生成的网页不再像AI模板",
+    "target_user": "用 Claude Code / Cursor 做产品的独立开发者、创业公司前端、设计工作室",
     "scores": {
-     "topicality": 8,
+     "topicality": 9,
      "accessibility": 7,
-     "wow": 5,
+     "wow": 7,
      "pain": 7,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 4,
-     "demoability": 6
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 7
     },
-    "product_idea": "整合中转站实测榜单与一键切换客户端，做 AI 编程 API 线路的比价与自动选路工具",
-    "demo_idea": "网页展示榜单：多家中转站可用率与延迟实时跳动，一键切换后配置预览差异",
+    "product_idea": "做网页版AI设计体检器：粘贴URL或截图，按50套主题重做一版并标出所有AI味问题",
+    "demo_idea": "左右对比：AI默认生成的通用落地页 vs Hallmark规则重做的同一页面，逐条标出被修掉的AI痕迹",
     "attack_tool": false,
     "red_flags": [
-     "GitHub 仓库本质是商业站 folkbench.com 的引流客户端，榜单排名与赞助商绑定，中立性存疑",
-     "商业模式明面上是赞助商广告位，付费方与测评方利益冲突",
-     "LICENSE 为 NOASSERTION，仅 apps/switch 部分声明 Apache-2.0，品牌与内容受限",
-     "中转站本身游走在官方 API 合规灰区，依赖其生存的产品有政策风险",
-     "核心价值（实测数据）不在开源仓库内，做内容难复现"
+     "项目由 Together AI 的知名开发者打造，已有官网和商业化倾向，独立做产品差异化空间有限",
+     "本质是给 AI 编码工具用的 prompt/技能包，不是可独立部署的软件，用户可能直接免费用开源版",
+     "核心价值依赖 Claude Code、Cursor 等第三方工具的生态和接口变化",
+     "50套主题是审美资产，容易被复制成同类竞品，护城河弱"
     ],
-    "reason": "话题性和痛点都不错，榜单+一键切换是真实需求；但它更像自家商业站的引流壳，测评中立性与合规风险是硬伤，适合做内容而非独立创业。"
+    "reason": "话题性和时机极好，痛点真实但偏开发者小众；MIT许可证友好，可演示性强；大牌作者与已有官网压缩了包装和变现空间。"
    }
   },
   "storytold/effectcraft": {
@@ -967,62 +803,6 @@
      "桌面级渲染和编解码对浏览器端性能要求高，demo 可能吃力"
     ],
     "reason": "开源版 Ae，话题性和可演示性都很强，但本身已是成熟产品、包装空间小，且要和 Adobe 正面竞争，商业化更难。"
-   }
-  },
-  "assetnote/php2shell-scanner": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "安全",
-    "one_liner": "一键检测网站是否存在 PHP 内存耗尽崩溃漏洞的扫描器",
-    "target_user": "企业安全团队、渗透测试工程师、托管服务商运维",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 5,
-     "wow": 5,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 5
-    },
-    "product_idea": "做成面向企业的漏洞自查 SaaS：输入域名即出风险报告并给出修复建议",
-    "demo_idea": "网页模拟输入域名，动画展示探针发包过程与漏洞风险判定结果",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是漏洞检测工具，用于扫描非自有资产可能涉及授权边界问题",
-     "存在误报局限，结果依赖 PHP 版本判断",
-     "CVE 编号与创建时间显示为未来日期，信息可信度存疑"
-    ],
-    "reason": "热点安全工具，传播性强、许可证宽松，但属防守型扫描器，需围绕企业自查合规包装才有商业化空间。"
-   }
-  },
-  "KKKKhazix/AIHOT": {
-   "date": "2026-10-25",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "一个会自己找热点、写日报的行业资讯网站框架，换成你的行业就能用",
-    "target_user": "想做垂直行业资讯站的创业者、行业自媒体、行业分析师、企业市场部",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 7,
-     "pain": 7,
-     "packaging_room": 8,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 7
-    },
-    "product_idea": "做成SaaS：上传你的行业信源，AI自动聚合打分，生成行业日报站点和每日推送",
-    "demo_idea": "网页展示侧输入一批行业新闻，实时聚成事件、算出热度、生成日报首页",
-    "attack_tool": false,
-    "red_flags": [
-     "作者自述是设计师非专业开发者，代码为AI重写，工程质量与长期维护存疑",
-     "不含真实信源名单，行业KnowHow需用户自己填，开箱即用性弱",
-     "依赖LLM API，持续运行有模型调用成本"
-    ],
-    "reason": "痛点明确、包装空间大、MIT许可友好，开源即引擎售卖雏形；但强依赖用户行业KnowHow，商业化靠代做站或SaaS订阅，需自证工程质量。"
    }
   },
   "TauricResearch/TradingAgents": {
@@ -3663,6 +3443,390 @@
      "不能在 App Store 变现，只能走官网 + Stripe 卖工具，收款和分发都要自建"
     ],
     "reason": "话题性和惊喜感强，包装成免命令行工具确有空间，但版权灰区、付费意愿弱和分发合规限制压低了商业化天花板。"
+   }
+  },
+  "Centiplatrap/pc-game-fps-doctor": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "一键诊断并修复 PC 游戏卡顿、掉帧和无法启动的问题",
+    "target_user": "美国及全球的 PC 游戏玩家，尤其是玩 VALORANT 的年轻人",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "面向 VALORANT 玩家的免费诊断工具，用品牌联名或硬件厂商赞助变现",
+    "demo_idea": "网页模拟演示从报错代码到 BIOS 修复步骤，再展示测帧前后对比卡片",
+    "attack_tool": false,
+    "red_flags": [
+     "项目仅有一天、482 星增速可疑，可能刷星",
+     "未签名 exe 易触发 SmartScreen 拦截，用户信任成本高",
+     "仅支持 Windows 且深度绑定 VALORANT/Riot，范围窄",
+     "免费无账号模式难变现，无付费意愿证据",
+     "涉及修改 Windows 系统设置，存在安全与支持责任风险"
+    ],
+    "reason": "工具实用且演示清晰，但平台单一、免费无商业模式，包装空间小，更适合做内容而非产品"
+   }
+  },
+  "microsoft/TokenEconomizer": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "让AI编程助手在常用代码库里自动省下20-30%成本",
+    "target_user": "美国/全球的付费Claude Code、Cursor、Codex重度开发者与工程团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 5,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "做成本仪表盘插件，给团队看每周省了多少token费用并自动优化常用的仓库",
+    "demo_idea": "网页模拟同一个SWE任务两次运行的账单对比，展示省下28%费用和对话中的节省气泡提示",
+    "attack_tool": false,
+    "red_flags": [
+     "微软研究院加伯克利的论文项目，大公司与学术团队主导，个人在上面做出差异化的空间小",
+     "本质是插件与研究方法，本质上是插件，没有独立的产品界面",
+     "省钱的宣传依赖SWE-Bench等基准，真实用户仓库的节省效果未必一致"
+    ],
+    "reason": "话题性很强、痛点真实，但这是大厂研究项目，安装配置体验粗糙，个人做产品化需靠成本可视化和团队报表补齐。"
+   }
+  },
+  "storytold/craft-anything": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "用AI分析任意网站或应用，再照着做一个你自己的版本",
+    "target_user": "想复刻竞品界面的独立开发者、产品设计师和学编程的爱好者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "面向非技术创作者的网页版：输入URL，生成可运行的同款原型，支持导出代码",
+    "demo_idea": "输入一个公开网站URL，30秒生成布局神似的克隆页面，左右对比截图",
+    "attack_tool": false,
+    "red_flags": [
+     "核心功能是复刻他人网站/应用界面与行为，美国市场存在版权、商业外观（trade dress）和平台ToS风险，容易被下架",
+     "依赖用户本机安装Claude Code等编程代理，普通用户门槛高",
+     "仓库创建仅1天、无主页、星数暴涨异常，真实性存疑",
+     "'Deep模式'可反编译他人程序，法律风险高",
+     "商业模型不清，创作者付费意愿弱"
+    ],
+    "reason": "点子抢眼、话题性强，但复制他人产品边界模糊，法律与平台风险大，变现路径弱。"
+   }
+  },
+  "anomalyco/hex": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "按住快捷键说话，本地离线转成文字并自动粘贴到任意应用",
+    "target_user": "注重隐私的知识工作者、开发者、写作者和听写/无障碍需求用户（美国及全球英文市场）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做跨平台本地听写的团队版：自托管模型、词典热词、企业合规部署与集中管理",
+    "demo_idea": "网页里按住空格说话，实时出现转写文字并模拟粘贴进文本框，对比云端延迟与隐私",
+    "attack_tool": false,
+    "red_flags": [
+     "项目本身已是成熟完整产品，带下载渠道和官网，直接包装空间有限",
+     "明确声明不接受 PR，社区共建和二次开发受限",
+     "首次运行需下载语音模型，网页 demo 难以真实复现本地推理",
+     "听写涉及用户语音隐私，需注意各州录音同意法与数据留存声明"
+    ],
+    "reason": "定位清晰、跨平台开源 MIT 的本地听写，传播和刚需都不错；但它本身就是成品，个人做差异化空间小，更适合做内容而非直接包装。"
+   }
+  },
+  "joeblau/subvox": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "用AirPods Pro的头部运动数据，把无声口型识别成文字",
+    "target_user": "全球英文市场的无障碍辅助、静音输入和可穿戴交互研究者、极客及语音输入重度用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 4,
+     "packaging_room": 8,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做成AirPods的静音口型输入App，先给无障碍和嘈杂环境场景授权使用",
+    "demo_idea": "网页播放一段戴AirPods默念口型的动画，右侧实时出现识别出的词，并展示p值验证信号真实性",
+    "attack_tool": false,
+    "red_flags": [
+     "仅为原型：小词表模板匹配，无LM，词汇和精度都极有限",
+     "依赖AirPods Pro头部运动数据，仅约25Hz，重戴即漂移，信号稳定性存疑",
+     "无声输入商业化路径不清，付费意愿弱",
+     "竞品为Google/Apple等大厂的无声语音识别研究，个人难差异化"
+    ],
+    "reason": "概念惊艳、传播性强，MIT且可演示，但目前只是验证性原型：词表小、信号不稳、商业化薄弱，适合做内容而非立刻做产品。"
+   }
+  },
+  "shiyu-coder/Kronos": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "开源金融K线基础模型，预测股票和加密货币的下一步价格走势",
+    "target_user": "美国/全球量化交易爱好者、独立交易员、小型量化基金和金融科技开发者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "预测市场App：连接券商/交易所数据，用Kronos生成多资产未来走势图与置信区间，按订阅收费",
+    "demo_idea": "用真实BTC历史数据滚动预测下24根K线并叠加实际值回测，展示命中率对比随机基线",
+    "attack_tool": false,
+    "red_flags": [
+     "金融预测准确性无法保证，宣称可预测价格有宣传合规与投资建议监管风险（美国SEC/FINRA）",
+     "模型权重和数据集类项目，差异化空间有限，商业价值需靠回测与数据服务包装",
+     "Kronos-large未开源，最强能力不公开",
+     "金融预测类产品容易被视为投资建议，需加免责声明"
+    ],
+    "reason": "研究扎实、话题热、MIT友好，但金融预测准确性难验证、差异化有限，适合做内容与工具型订阅产品，商业化中等。"
+   }
+  },
+  "haydenschmitty/floorplan": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "AI 帮你把整个代码库画成能点开看的互动地图",
+    "target_user": "美国/全球的独立开发者、vibe coding 爱好者和想快速上手陌生代码库的小团队工程师",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 9
+    },
+    "product_idea": "做一个网页版代码库地图生成器，上传仓库或连接 GitHub，几秒生成可交互、可问答的架构图和健康检查报告",
+    "demo_idea": "打开现成的 Brewline 演示页，点开一个页面卡片，展开它的接口、后端和数据，再点一下健康检查，弹出带修复建议的问题列表",
+    "attack_tool": false,
+    "red_flags": [
+     "项目刚创建 5 天，Star 增速异常高，可能是短期热度，需观察留存",
+     "核心依赖 Claude Code / Codex 等外部 AI 编程环境，产品化后调用成本高、体验受第三方限制",
+     "健康检查只做表层的错误筛查，不是完整审计，容易被误认为安全审计",
+     "面向开发者工具赛道拥挤，同类的 Archify、Understand Anything 等竞品已存在",
+     "免费开源加本地运行，让收费点偏向团队协作和托管版本，个人付费意愿存疑"
+    ],
+    "reason": "把 AI 生成代码看不懂的痛点可视化成地图，演示效果强、传播性好；MIT 许可安全，产品化空间在网页托管版和团队协作，但商业化路径偏窄、竞品多，热度有短期泡沫风险。"
+   }
+  },
+  "physicsdolphin/nv-uefi-unlocker": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "用U盘启动解锁NVIDIA显卡被隐藏的Tensor算力",
+    "target_user": "全球AI开发者、本地跑LLM/图像生成的玩家、超频与硬件改装爱好者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 4,
+     "demoability": 4
+    },
+    "product_idea": "做成傻瓜式一键U盘解锁工具，带性能对比报告和售后支持",
+    "demo_idea": "网页并排对比解锁前后同一模型推理速度，配进度条和倍数标尺",
+    "attack_tool": false,
+    "red_flags": [
+     "修改GPU固件与驱动前状态，可能违反NVIDIA EULA并失去保修",
+     "部分受限算力卡来源敏感，存在法律与出口管制灰区",
+     "GPL-2.0传染性限制闭源商业包装",
+     "需关闭Secure Boot，每次冷启动重放，体验门槛高",
+     "与NVIDIA官方策略对抗，有被驱动/固件更新封堵风险",
+     "仅支持部分RTX系列，兼容性碎片化"
+    ],
+    "reason": "话题性和惊喜感强、需求小众但真实；许可证和厂商对抗风险高，变现空间有限，更适合做爆款内容而非独立产品。"
+   }
+  },
+  "arpanjot-coding/AVault": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "无需Root、硬件加密的安卓通话录音保险库",
+    "target_user": "美国注重隐私的记者、律师、商务人士和FOSS爱好者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 7,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 3,
+     "demoability": 4
+    },
+    "product_idea": "一键安装的加密通话录音App，自动加密存储并支持生物识别解锁",
+    "demo_idea": "网页模拟通话界面，展示录音后自动加密、需指纹解锁播放、到期自动删除",
+    "attack_tool": false,
+    "red_flags": [
+     "通话录音在美国部分州需双方同意，法律风险高",
+     "Shizuku依赖ADB授权，普通用户门槛高",
+     "License为NOASSERTION，实际条款不明，README声称MIT但未确认",
+     "仅Android平台，无iOS，市场覆盖有限",
+     "README含大量免责声明，暗示法律风险"
+    ],
+    "reason": "隐私痛点真实但法律风险大，包装空间有，商业化难，许可证不明确需谨慎。"
+   }
+  },
+  "cjpais/Handy": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "按住快捷键说话，文字自动出现在任意输入框的离线语音输入工具",
+    "target_user": "美国/全球注重隐私的知识工作者、写作者、程序员、无障碍用户；企业合规团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 5,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "做成团队版：本地转写+自定义词典+行业术语包+企业部署管理面板",
+    "demo_idea": "网页模拟麦克风输入，实时显示文字键入到文本框，并对比云端方案强调隐私",
+    "attack_tool": false,
+    "red_flags": [
+     "已有3.6万stars且官网+多平台安装包，接近成熟产品，包装空间有限",
+     "面对Wispr Flow、Superwhisper、macOS自带听写等强竞品",
+     "系统权限（辅助功能/麦克风）导致网页demo无法真机还原",
+     "桌面分发需代码签名与公证，运营成本高"
+    ],
+    "reason": "隐私本地语音输入痛点真实、易懂且传播性强，MIT许可友好；但项目已相当成熟且竞品密集，差异化空间小，更适合做内容而非从零包装。"
+   }
+  },
+  "jakubkrehel/skills": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给 AI 编程助手装上设计审美的提示词技能包",
+    "target_user": "美国的独立开发者、前端工程师和小型设计团队，他们使用 Claude Code 等 AI 编程工具，但觉得生成的 UI 很粗糙",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "做 AI 界面质量检测 SaaS：上传截图或 PR 链接，一键输出可访问性与设计评分以及修改建议",
+    "demo_idea": "上传一个粗糙页面截图，左侧原图、右侧实时标出对比度、间距、对齐问题，并给出修复代码",
+    "attack_tool": false,
+    "red_flags": [
+     "本质上是 Markdown 提示词与资源集合，容易被复制、被平台原生的内置功能取代",
+     "没有产品化的付费点，商业化路径模糊",
+     "依赖 Claude Code 等第三方生态，平台改动可能直接冲击它",
+     "作者个人 IP 型内容，克隆门槛低，竞争激烈"
+    ],
+    "reason": "话题热度高、许可证友好，但本质是提示词集合，产品化空间有限；要做成生意，需要一个独立的审查 SaaS 外壳，来提供评分引擎"
+   }
+  },
+  "ShineFinancialStrut/game-server-route-racer": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "免费给网游找最快线路降延迟，没救就直说",
+    "target_user": "美国/全球的PC在线游戏玩家（CS2、Valorant、Fortnite），愿意为低ping付费的硬核玩家",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "一键降ping桌面客户端，免费社区中继+付费专属低延迟节点订阅",
+    "demo_idea": "网页模拟两条线路赛跑，实时显示ping从74降到46、丢包尖峰消失",
+    "attack_tool": false,
+    "red_flags": [
+     "需Windows管理员权限+Wintun驱动，网页demo只能模拟无法真跑",
+     "非签名exe会触发SmartScreen，用户信任门槛高",
+     "依赖社区/自建中继，节点质量和可用性难保证",
+     "游戏厂商对路由工具政策不明，有封号疑虑",
+     "ExitLag等成熟竞品已占据市场，差异化靠免费+诚实诊断",
+     "创建仅1天的高星增长需警惕刷星"
+    ],
+    "reason": "痛点真实但赛道拥挤，包装空间中等；免费+诚实诊断是差异化点，商业化需靠专属节点订阅，演示受限。"
+   }
+  },
+  "beenuar/AiSOC": {
+   "date": "2026-11-02",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "开源自托管的AI安全运营中心，自动分诊安全告警并让AI调查取证，每步推理都可审计。",
+    "target_user": "美国及全球的中小企业安全团队、MSSP托管安全服务商、独立SOC分析师和个人安全顾问",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 7,
+     "monetization": 8,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "托管版AI SOC，预置连接器与模型，按事件量或分析师席位订阅，企业无需自建Docker",
+    "demo_idea": "网页里灌入一条真实告警，实时看AI按MITRE链路调查并给出可点击回放的决策记录",
+    "attack_tool": false,
+    "red_flags": [
+     "自托管需8GB内存和20GB磁盘并下载2GB本地模型，非技术用户门槛高",
+     "安全行业客户对数据外流极敏感，纯SaaS托管模式需强合规背书（SOC2等）",
+     "同类开源与商业AI SOC竞争激烈（如Microsoft Security Copilot生态）",
+     "AI自动分诊误报可能带来安全责任与信任风险"
+    ],
+    "reason": "话题热、痛点真、MIT许可干净，产品化空间在托管部署和连接器生态，但安装重、演示偏后台且竞争激烈。"
    }
   }
  }

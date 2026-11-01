@@ -1,0 +1,73 @@
+{
+ "date": "2026-11-02",
+ "headline": "AI 把你的代码库画成地图",
+ "summary_md": "**Floorplan** 是一个由 Claude 或 Codex 驱动的工具，它读取你的代码库，生成一张可交互的“平面图”——用大白话给每个模块、文件和网络请求起名，并画出它们之间的连接。作者是 haydenschmitty，MIT 许可，刚创建 5 天，Star 数已经 1600 多，日增约 900，传播势头很猛。\n\n它为什么最近火？README 里说得很直白：你（可能借助 AI）把应用做出来了，能跑，但被问“用户结账时发生了什么”或“改这里会影响什么”，你答不上来。Floorplan 就是那张没人画的图。它支持从屏幕出发、跨仓库匹配前后端请求、用自然语言提问（比如“退款怎么回到用户卡上”），还会生成健康检查报告，抓 AI 生成代码常见的坑，比如密钥写死在代码里、Supabase 表公开可读、Stripe webhook 可伪造等。\n\n如果做成产品，机会在于托管网页版：连上 GitHub 仓库，几秒出图，再加团队协作和定期健康扫描。免费开源本地运行是获客入口，收费点可以放在私有仓库、历史对比和多人共享地图上。不过这个赛道已经有 Archify、Understand Anything 等竞品，热度也可能有短期泡沫，适合快速验证而非重仓。",
+ "pick": {
+  "full_name": "haydenschmitty/floorplan",
+  "url": "https://github.com/haydenschmitty/floorplan",
+  "description": "See how your app actually fits together. An interactive, plain-English map of your codebase, drawn by Claude or Codex.",
+  "license": "MIT",
+  "stars": 1631,
+  "daily_rate": 922.0,
+  "category": "开发者工具",
+  "one_liner": "AI 帮你把整个代码库画成能点开看的互动地图",
+  "reason": "把 AI 生成代码看不懂的痛点可视化成地图，演示效果强、传播性好；MIT 许可安全，产品化空间在网页托管版和团队协作，但商业化路径偏窄、竞品多，热度有短期泡沫风险。",
+  "content": 7.67,
+  "startup": 7.1,
+  "final": 7.76,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-02-haydenschmitty-floorplan",
+ "top": [
+  {
+   "full_name": "haydenschmitty/floorplan",
+   "url": "https://github.com/haydenschmitty/floorplan",
+   "one_liner": "AI 帮你把整个代码库画成能点开看的互动地图",
+   "reason": "把 AI 生成代码看不懂的痛点可视化成地图，演示效果强、传播性好；MIT 许可安全，产品化空间在网页托管版和团队协作，但商业化路径偏窄、竞品多，热度有短期泡沫风险。",
+   "content": 7.67,
+   "startup": 7.1,
+   "final": 7.76,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Nutlope/hallmark",
+   "url": "https://github.com/Nutlope/hallmark",
+   "one_liner": "给AI编程助手加一套设计规则，让它生成的网页不再像AI模板",
+   "reason": "话题性和时机极好，痛点真实但偏开发者小众；MIT许可证友好，可演示性强；大牌作者与已有官网压缩了包装和变现空间。",
+   "content": 7.67,
+   "startup": 7.1,
+   "final": 7.58,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "lexifina/global-law",
+   "url": "https://github.com/lexifina/global-law",
+   "one_liner": "把各国法律做成一个 Git 仓库，能查任何一个法条在任何一天的原话",
+   "reason": "概念清晰、话题性强，MCP已经能接入AI查询，很适合做内容和法律科技产品；但数据覆盖和授权还需要核实。",
+   "content": 7.67,
+   "startup": 7.75,
+   "final": 7.56,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "milind-soni/OpenMausBot",
+   "url": "https://github.com/milind-soni/OpenMausBot",
+   "one_liner": "装在电脑里的AI机器人团队，每个都有名字和电脑",
+   "reason": "话题性极高、演示感强，但已相当成熟，改造空间小，商业化靠托管与额度订阅，需警惕本机控制安全与第三方模型依赖。",
+   "content": 8.0,
+   "startup": 6.65,
+   "final": 7.54,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "beenuar/AiSOC",
+   "url": "https://github.com/beenuar/AiSOC",
+   "one_liner": "开源自托管的AI安全运营中心，自动分诊安全告警并让AI调查取证，每步推理都可审计。",
+   "reason": "话题热、痛点真、MIT许可干净，产品化空间在托管部署和连接器生态，但安装重、演示偏后台且竞争激烈。",
+   "content": 7.33,
+   "startup": 8.15,
+   "final": 7.49,
+   "category_penalty": 0
+  }
+ ]
+}
