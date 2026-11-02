@@ -45,6 +45,7 @@
 {
   "category": "从以下选一个：AI应用、AI基础设施、开发者工具、效率工具、数据分析、多媒体创作、安全、运维部署、教育学习、生活娱乐、其他",
   "one_liner": "中文一句话产品定位，不超过 30 字，普通人能看懂",
+  "one_liner_en": "English one-line pitch, under 100 characters, plain words",
   "target_user": "美国 / 全球市场里最可能付费的具体人群",
   "scores": {"topicality": 0, "accessibility": 0, "wow": 0, "pain": 0, "packaging_room": 0, "monetization": 0, "license_safety": 0, "demoability": 0},
   "product_idea": "做成产品的最小可行形态，50 字以内",

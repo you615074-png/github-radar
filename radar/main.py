@@ -20,6 +20,7 @@ def public_pick(r: dict) -> dict:
         "full_name": r["full_name"], "url": r["url"], "description": r["description"],
         "license": r["license"], "stars": r["stars"], "daily_rate": r["daily_rate"],
         "category": ev.get("category", ""), "one_liner": ev.get("one_liner", ""),
+        "one_liner_en": ev.get("one_liner_en", ""),
         "reason": ev.get("reason", ""), **r["score"],
     }
 
@@ -91,9 +92,11 @@ def run(args) -> None:
     content = generate.write_content(pick, [t for t in top if t is not pick])
     daily = {
         "date": ts, "headline": content["headline"], "summary_md": content["summary_md"],
+        "title_en": content["title_en"], "tagline_en": content["tagline_en"],
         "pick": public_pick(pick), "demo_path": demo_path,
         "top": [{"full_name": t["full_name"], "url": t["url"],
                  "one_liner": t["eval"].get("one_liner", ""), "reason": t["eval"].get("reason", ""),
+                 "one_liner_en": t["eval"].get("one_liner_en", ""),
                  **t["score"]} for t in top],
     }
     (config.DATA / "daily").mkdir(parents=True, exist_ok=True)
@@ -107,7 +110,10 @@ def run(args) -> None:
     filters.save_history(history)
     site.build()
 
-    private = {"post": content["post"], "notes_md": content["notes_md"],
+    link = f"{config.SITE_URL}/daily/{ts}.html"
+    tweet = content["tweet"]
+    tweet = tweet.replace("{LINK}", link) if "{LINK}" in tweet else (f"{tweet}\n\n{link}" if tweet else "")
+    private = {"tweet": tweet, "thread": content["thread"], "link": link, "notes_md": content["notes_md"],
                "product_idea": pick["eval"].get("product_idea", ""),
                "red_flags": pick["eval"].get("red_flags") or []}
     stats = {"collected": len(repos), "filtered": filtered, "scored": len(ranked),

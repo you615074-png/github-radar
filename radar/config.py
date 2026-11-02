@@ -33,6 +33,7 @@ SITE_URL = os.getenv("SITE_URL", "https://you615074-png.github.io/github-radar")
 GMAIL_ADDRESS = os.getenv("GMAIL_ADDRESS", "")
 GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "").replace(" ", "")
 MAIL_TO = os.getenv("MAIL_TO") or GMAIL_ADDRESS
+X_HANDLE = os.getenv("X_HANDLE", "").lstrip("@")  # 公开网站上显示的 X 账号，留空就不显示
 
 # ---- 漏斗参数 ----
 MAX_FOR_README = 80      # 规则过滤后按热度取前 N 个去读 README

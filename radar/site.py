@@ -21,8 +21,34 @@ table{border-collapse:collapse;width:100%;font-size:14px}td,th{border-bottom:1px
 """
 
 
+CATEGORY_EN = {"AI应用": "AI apps", "AI基础设施": "AI infra", "开发者工具": "Dev tools",
+               "效率工具": "Productivity", "数据分析": "Data", "多媒体创作": "Media & creative",
+               "安全": "Security", "运维部署": "DevOps", "教育学习": "Education",
+               "生活娱乐": "Lifestyle", "其他": "Other"}
+
+
+def cat(c: str) -> str:
+    return CATEGORY_EN.get(c, c)
+
+
+def title_of(d: dict) -> str:
+    return d.get("title_en") or d.get("headline") or d["pick"]["full_name"]
+
+
+def pitch(x: dict) -> str:
+    """英文一句话定位；旧数据只有中文就用中文。"""
+    return x.get("tagline_en") or x.get("one_liner_en") or x.get("one_liner", "")
+
+
+def byline() -> str:
+    if not config.X_HANDLE:
+        return ""
+    h = e(config.X_HANDLE)
+    return f' · by <a href="https://x.com/{h}">@{h}</a>'
+
+
 def page(title: str, body: str) -> str:
-    return (f'<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">'
+    return (f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{html.escape(title)}</title><style>{CSS}</style></head><body><main>{body}</main></body></html>')
 
@@ -39,26 +65,26 @@ def md(text: str) -> str:
 def top_table(top: list[dict]) -> str:
     rows = "".join(
         f'<tr><td>{i}</td><td><a href="{e(t["url"])}">{e(t["full_name"])}</a><br>'
-        f'<span class="meta">{e(t["one_liner"])}</span></td>'
+        f'<span class="meta">{e(pitch(t))}</span></td>'
         f'<td>{t["content"]}</td><td>{t["startup"]}</td><td>{t["final"]}</td></tr>'
         for i, t in enumerate(top, 1))
-    return f"<table><tr><th>#</th><th>项目</th><th>传播</th><th>创业</th><th>综合</th></tr>{rows}</table>"
+    return f"<table><tr><th>#</th><th>Repo</th><th>Buzz</th><th>Startup</th><th>Overall</th></tr>{rows}</table>"
 
 
 def daily_page(d: dict) -> str:
     p = d["pick"]
     demo = ""
     if d.get("demo_path"):
-        demo = (f'<p><a href="../{e(d["demo_path"])}/">👉 打开在线 demo</a></p>'
-                f'<a href="../{e(d["demo_path"])}/"><img class="shot" src="../{e(d["demo_path"])}/screenshot.png" alt="demo 截图"></a>')
-    body = (f'<p class="meta"><a href="../">← GitHub 雷达</a> · {e(d["date"])}</p>'
-            f'<h1>{e(d["headline"] or p["full_name"])}</h1>'
+        demo = (f'<p><a href="../{e(d["demo_path"])}/">👉 Try the concept demo</a></p>'
+                f'<a href="../{e(d["demo_path"])}/"><img class="shot" src="../{e(d["demo_path"])}/screenshot.png" alt="demo screenshot"></a>')
+    body = (f'<p class="meta"><a href="../">← GitHub Radar</a> · {e(d["date"])}{byline()}</p>'
+            f'<h1>{e(title_of(d))}</h1>'
             f'<p class="sub"><a href="{e(p["url"])}">{e(p["full_name"])}</a> · '
-            f'<span class="tag">{e(p["category"])}</span><span class="tag">{e(p["license"])}</span>'
+            f'<span class="tag">{e(cat(p["category"]))}</span><span class="tag">{e(p["license"])}</span>'
             f'⭐ {p["stars"]:,}</p>'
             f'{demo}<div class="card">{md(d.get("summary_md", ""))}</div>'
-            f'<h2>今日 Top {len(d["top"])}</h2>{top_table(d["top"])}')
-    return page(f'{d["date"]} {p["full_name"]} · GitHub 雷达', body)
+            f'<h2>Today\'s top {len(d["top"])}</h2>{top_table(d["top"])}')
+    return page(f'{title_of(d)} · GitHub Radar', body)
 
 
 def build():
@@ -69,23 +95,27 @@ def build():
         d = json.loads(f.read_text())
         (config.SITE / "daily" / f"{d['date']}.html").write_text(daily_page(d))
         p = d["pick"]
-        demo = f' · <a href="{e(d["demo_path"])}/">在线 demo</a>' if d.get("demo_path") else ""
+        demo = f' · <a href="{e(d["demo_path"])}/">demo</a>' if d.get("demo_path") else ""
         cards.append(
-            f'<div class="card"><div class="meta">{e(d["date"])} · <span class="tag">{e(p["category"])}</span></div>'
-            f'<h3><a href="daily/{e(d["date"])}.html">{e(d["headline"] or p["full_name"])}</a></h3>'
-            f'<div>{e(p["one_liner"])}</div>'
-            f'<div class="meta"><a href="{e(p["url"])}">{e(p["full_name"])}</a> · 综合 {p["final"]}{demo}</div></div>')
+            f'<div class="card"><div class="meta">{e(d["date"])} · <span class="tag">{e(cat(p["category"]))}</span></div>'
+            f'<h3><a href="daily/{e(d["date"])}.html">{e(title_of(d))}</a></h3>'
+            f'<div>{e(pitch({**p, "tagline_en": d.get("tagline_en")}))}</div>'
+            f'<div class="meta"><a href="{e(p["url"])}">{e(p["full_name"])}</a> · score {p["final"]}{demo}</div></div>')
 
     deep_file = config.DATA / "deep.json"
     deep = json.loads(deep_file.read_text()) if deep_file.exists() else []
     deep_html = "".join(
         f'<div class="card"><div class="meta">{e(x["date"])}</div>'
         f'<h3><a href="deep/{e(x["slug"])}/">{e(x["full_name"])}</a></h3>'
-        f'<div class="meta"><a href="{e(x["url"])}">原仓库</a></div></div>' for x in reversed(deep))
+        f'<div class="meta"><a href="{e(x["url"])}">original repo</a></div></div>' for x in reversed(deep))
 
-    body = ('<h1>📡 GitHub 雷达</h1><p class="sub">每天从 GitHub 热门项目里挑一个最值得产品化的，'
-            '并自动做一个概念 demo。所有 demo 均为非官方概念演示。</p>'
-            + (f"<h2>深度 demo</h2>{deep_html}" if deep_html else "")
-            + "<h2>每日精选</h2>" + ("".join(cards) or '<p class="meta">还没有数据</p>'))
-    (config.SITE / "index.html").write_text(page("GitHub 雷达", body))
+    follow = (f' Follow along on X: <a href="https://x.com/{e(config.X_HANDLE)}">@{e(config.X_HANDLE)}</a>.'
+              if config.X_HANDLE else "")
+    body = ('<h1>📡 GitHub Radar</h1><p class="sub">One open-source project a day that could become a product, '
+            'picked from trending GitHub repos by an automated pipeline, with a concept demo built for it. '
+            f'Demos are unofficial concepts, not the authors\' products.{follow}</p>'
+            + (f"<h2>Deep dives</h2>{deep_html}" if deep_html else "")
+            + "<h2>Daily picks</h2>" + ("".join(cards) or '<p class="meta">Nothing yet</p>')
+            + '<p class="meta">Older entries are in Chinese.</p>')
+    (config.SITE / "index.html").write_text(page("GitHub Radar", body))
     (config.SITE / ".nojekyll").write_text("")

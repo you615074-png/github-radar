@@ -36,11 +36,14 @@ def write_content(pick: dict, others: list[dict]) -> dict:
     else:  # 三次都失败：用打分结果拼一个简版，保证日报照常发出
         e = pick["eval"]
         data = {"headline": e.get("one_liner", "")[:20],
-                "summary_md": f"{e.get('one_liner', '')}\n\n{e.get('reason', '')}",
-                "post": "（今天的文案生成失败，没有草稿）",
+                "title_en": pick["full_name"], "tagline_en": e.get("one_liner_en", ""),
+                "summary_md": pick["description"] or "",
+                "tweet": "", "thread": [],
                 "notes_md": f"（今天的创业笔记生成失败）\n\n**产品设想：**{e.get('product_idea', '')}"}
-    for k in ("headline", "summary_md", "post", "notes_md"):
-        data[k] = data.get(k) or ""
+    for k in ("headline", "title_en", "tagline_en", "summary_md", "tweet", "notes_md"):
+        data[k] = str(data.get(k) or "")
+    thread = data.get("thread") or []
+    data["thread"] = [str(t) for t in thread] if isinstance(thread, list) else [str(thread)]
     return data
 
 

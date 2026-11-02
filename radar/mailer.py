@@ -12,6 +12,11 @@ STYLE = ("font-family:-apple-system,'PingFang SC',sans-serif;line-height:1.7;col
 BOX = "border:1px solid #e7e5e4;border-radius:10px;padding:14px 18px;margin:14px 0"
 
 
+def tweet_len(tweet: str, link: str) -> int:
+    """X 把每个链接都按 23 个字符计。"""
+    return len(tweet.replace(link, "x" * 23)) if link else len(tweet)
+
+
 def build_email(d: dict, private: dict, stats: dict) -> tuple[str, str]:
     p = d["pick"]
     subject = f"[GitHub 雷达] {d['date'][5:]} 今日精选：{d['headline'] or p['full_name']}"
@@ -27,6 +32,12 @@ def build_email(d: dict, private: dict, stats: dict) -> tuple[str, str]:
         f'<br><small>传播 {t["content"]} · 创业 {t["startup"]} · 综合 {t["final"]} · {e(t["reason"])}</small></li>'
         for t in d["top"])
     flags = "；".join(private["red_flags"]) or "无"
+    thread = ""
+    if private["thread"]:
+        items = "".join(f'<li style="margin-bottom:8px;white-space:pre-wrap">{e(t)}'
+                        f' <small style="color:#78716c">({len(t)})</small></li>' for t in private["thread"])
+        thread = f'<h4>🧵 Thread 草稿</h4><ol style="{BOX};padding-left:36px">{items}</ol>'
+
     body = f"""<div style="{STYLE}">
 <h2 style="margin-bottom:4px">📡 {e(d['headline'] or p['full_name'])}</h2>
 <p style="color:#78716c;margin-top:0"><a href="{e(p['url'])}">{e(p['full_name'])}</a> · {e(p['category'])} ·
@@ -35,8 +46,10 @@ def build_email(d: dict, private: dict, stats: dict) -> tuple[str, str]:
 {demo}
 <div style="{BOX}">{md(d['summary_md'])}</div>
 <h3>今日 Top {len(d['top'])}</h3><ol>{top}</ol>
-<h3>✍️ 社交媒体文案草稿</h3>
-<div style="{BOX};white-space:pre-wrap">{e(private['post'])}</div>
+<h3>✍️ X 推文草稿</h3>
+<div style="{BOX};white-space:pre-wrap">{e(private['tweet']) or '（今天没有生成推文）'}</div>
+<p style="color:#78716c;font-size:13px">约 {tweet_len(private['tweet'], private['link'])}/280 字符（链接按 23 计）</p>
+{thread}
 <h3>🔒 创业笔记（只在邮件里，不公开）</h3>
 <div style="{BOX};background:#fafaf9">
 <p><b>产品设想：</b>{e(private['product_idea'])}<br><b>风险点：</b>{e(flags)}</p>
