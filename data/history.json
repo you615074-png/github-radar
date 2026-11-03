@@ -89,6 +89,12 @@
    "full_name": "haydenschmitty/floorplan",
    "category": "开发者工具",
    "final": 7.76
+  },
+  {
+   "date": "2026-11-04",
+   "full_name": "TauricResearch/TradingAgents",
+   "category": "AI应用",
+   "final": 7.57
   }
  ],
  "top": {
@@ -108,7 +114,7 @@
   "cloudflare/security-audit-skill": "2026-10-21",
   "Graphify-Labs/graphify": "2026-10-21",
   "pengchujin/aerial-tv": "2026-10-22",
-  "simbasjungles/free-my-tv": "2026-10-22",
+  "simbasjungles/free-my-tv": "2026-11-04",
   "Gathin23/cleanyourtv": "2026-10-30",
   "tangency-labs/solidcraft": "2026-10-30",
   "ikow/php2shell-poc": "2026-10-22",
@@ -129,9 +135,9 @@
   "pollen-robotics/microduck": "2026-10-25",
   "HeyPuter/everything": "2026-10-26",
   "rddmwmddr/android-ad-cleaner": "2026-10-26",
-  "designfuchen/word-atlas": "2026-10-26",
+  "designfuchen/word-atlas": "2026-11-04",
   "seedds/nxnative": "2026-10-26",
-  "TauricResearch/TradingAgents": "2026-10-26",
+  "TauricResearch/TradingAgents": "2026-11-04",
   "Panniantong/Agent-Reach": "2026-10-27",
   "storytold/lightcraft": "2026-10-27",
   "storytold/filmcraft": "2026-10-27",
@@ -161,37 +167,11 @@
   "haydenschmitty/floorplan": "2026-11-02",
   "lexifina/global-law": "2026-11-02",
   "milind-soni/OpenMausBot": "2026-11-02",
-  "beenuar/AiSOC": "2026-11-02"
+  "beenuar/AiSOC": "2026-11-02",
+  "Donchitos/Claude-Code-Game-Studios": "2026-11-04",
+  "JustVugg/colibri": "2026-11-04"
  },
  "scores": {
-  "wheresryan22/anatomy": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "让AI把抽象技术概念画成可交互的等轴测机械图",
-    "target_user": "写技术博客/做技术教学的内容创作者、开发者布道师、产品演示设计者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 9,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "把概念解释图做成在线生成器：输入一段技术概念，输出可交互SVG动画图并支持导出嵌入。",
-    "demo_idea": "网页左右分栏：左边输入'令牌桶限流'，右边实时生成可拖动的等轴测机械图，点击部件高亮解说。",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是Agent Skill提示词+组件库，依赖Claude等宿主，独立价值有限",
-     "生成质量高度依赖底层模型，难以稳定",
-     "SVG/WebGL精品图更偏审美展示，实用性需验证"
-    ],
-    "reason": "视觉惊艳、话题性强、MIT友好，但核心是技能包而非产品，商业化需靠托管生成平台与团队模板库，Packaging有空间但护城河弱。"
-   }
-  },
   "openai/math": {
    "date": "2026-10-29",
    "v": 3,
@@ -806,205 +786,65 @@
    }
   },
   "TauricResearch/TradingAgents": {
-   "date": "2026-10-26",
-   "v": 2,
+   "date": "2026-11-04",
+   "v": 3,
    "eval": {
     "category": "AI应用",
-    "one_liner": "让多个AI分析师像真实交易团队一样开会讨论，给出买卖建议",
-    "target_user": "散户投资者、量化爱好者、金融内容创作者",
+    "one_liner": "用多个AI分析师角色开会讨论，替你给股票出投资建议",
+    "one_liner_en": "A team of AI analyst agents that debate and produce stock trade recommendations",
+    "target_user": "美国散户投资者、金融内容创作者、量化交易爱好者",
     "scores": {
      "topicality": 9,
      "accessibility": 8,
      "wow": 8,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "把多智能体投研讨论做成网页版：输入股票代码，实时生成多角色辩论与结论报告",
-    "demo_idea": "输入一只热门股票，展示分析师、看空派、交易员、风控几方你一言我一语辩论并给出结论",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是论文配套的研究框架，README明确仅供研究用途",
-     "交易建议合规风险高，容易滑向荐股",
-     "金融类AI产品需承担误导用户的责任"
-    ],
-    "reason": "多智能体金融投研话题性强、演示效果好、许可证安全，包装空间足；但产品合规风险与付费意愿需验证，适合做成内容与投研工具而非荐股产品。"
-   }
-  },
-  "routerhubSI/glm-5.3-abliterated": {
-   "date": "2026-10-26",
-   "v": 2,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "提供无审核大模型的API中转服务",
-    "target_user": "需要绕过内容审核的开发者、灰色应用开发者",
-    "scores": {
-     "topicality": 5,
-     "accessibility": 4,
-     "wow": 3,
-     "pain": 3,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 2
-    },
-    "product_idea": "无审核模型API的聚合充值中转，按token计费",
-    "demo_idea": "网页里对比同一敏感提示，普通模型拒答而无审核版回答",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是带推广链接的jailbreak提示词清单，仓库内容多为营销导流",
-     "核心业务是无审核API中转，涉及绕过模型安全机制，合规风险高",
-     "README以推广注册链接为主，不是真正开源产品",
-     "创建仅1天，star增长可疑，可能是刷星营销"
-    ],
-    "reason": "营销导流仓库，靠jailbreak提示词吸引流量，卖无审核API。合规和平台风险高，不适合做内容或产品。"
-   }
-  },
-  "mirkobrombin/raven": {
-   "date": "2026-10-26",
-   "v": 2,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "让 Linux 直接安装并运行 Windows 软件，无需虚拟机",
-    "target_user": "Linux 桌面用户、游戏玩家、需要特定 Windows 软件的专业用户",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 8,
-     "monetization": 6,
-     "license_safety": 3,
-     "demoability": 7
-    },
-    "product_idea": "打造一键安装版 Linux 上的 Windows 兼容层，图形化管理各应用的独立环境与备份回滚",
-    "demo_idea": "网页动画对比：传统虚拟机卡顿启动 vs Raven 直接运行 Notepad++ 秒开并编辑文件",
-    "attack_tool": false,
-    "red_flags": [
-     "许可证为 NOASSERTION，来源与授权不明，商用风险高",
-     "项目创建仅1天却已有373星，数据异常需警惕",
-     "与 Wine 生态正面竞争，技术壁垒高、维护成本极大",
-     "依赖 Skia/DXVK 等组件，构建安装门槛极高"
-    ],
-    "reason": "对标 Wine 的 Windows 兼容层，痛点真实、话题性强，包装成易用产品空间大，但许可证不明和极早期阶段是显著风险。"
-   }
-  },
-  "Jakeschincariol/day-trader-skill": {
-   "date": "2026-10-26",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "11个Claude技能，帮你选股择时、模拟交易结果再下手",
-    "target_user": "业余日内交易者、Claude深度用户、股票社群内容创作者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 7,
      "pain": 7,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "做个网页版交易陪练：先模拟盘推演胜率，再一键下单",
-    "demo_idea": "选一只股票，看它把当日行情重放一万次，实时显示止盈止损先后概率",
-    "attack_tool": false,
-    "red_flags": [
-     "金融建议合规风险，极易被用户当投资信号",
-     "5天1539星增长异常，有刷星或营销炒作嫌疑",
-     "数据源依赖免费公开接口，稳定性和延迟无保障",
-     "README含大量具体收益示例，有过度承诺倾向"
-    ],
-    "reason": "话题热，易演示，制作门槛低，MIT可商用；但合规与数据依赖是硬伤，适合做内容，做交易产品需谨慎。"
-   }
-  },
-  "mizorewww/gdirect": {
-   "date": "2026-10-26",
-   "v": 2,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "在终端里浏览、下载、上传和挂载 Google Drive 的极客工具",
-    "target_user": "需要管理 Google Drive 的开发者、运维人员，以及身处网络受限地区的用户",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 4,
-     "wow": 6,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 4,
-     "demoability": 5
-    },
-    "product_idea": "做成带图形界面的跨平台 Google Drive 客户端，内置加速与断点续传，让普通用户也能稳定访问。",
-    "demo_idea": "网页模拟终端 TUI 界面，演示用多连接下载大文件的速度对比和断点续传效果。",
-    "attack_tool": false,
-    "red_flags": [
-     "主要卖点是通过 IP 扫描并伪造 SNI 来绕过网络封锁，合法性存疑",
-     "需要用户自建 Google Cloud OAuth 客户端，使用门槛高",
-     "GPL-2.0 许可证对商业封装限制较大",
-     "项目过于小众，目前只在开发者圈层传播",
-     "依赖第三方网络环境，难以标准化为商业服务"
-    ],
-    "reason": "技术实现出色，TUI 体验好，但核心价值依赖绕过网络限制，合规风险高，商业化路径不清晰；更适合做技术内容，而不是做产品。"
-   }
-  },
-  "songjianyang/xss-audit": {
-   "date": "2026-10-26",
-   "v": 2,
-   "eval": {
-    "category": "安全",
-    "one_liner": "给前端代码做XSS安全体检的AI审计工具",
-    "target_user": "前端团队负责人、安全工程师、做漏洞赏金的独立研究者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 5,
-     "pain": 6,
      "packaging_room": 6,
      "monetization": 5,
-     "license_safety": 10,
-     "demoability": 6
+     "license_safety": 9,
+     "demoability": 8
     },
-    "product_idea": "上传代码仓库或粘贴组件代码，一键生成带修复建议的XSS审计报告",
-    "demo_idea": "左侧贴一段含dangerouslySetInnerHTML和svg注入的React代码，右侧实时高亮风险点并生成修复diff",
+    "product_idea": "网页版多AI分析师股票研判面板，输入代码即出多空辩论与操作建议",
+    "demo_idea": "选一只热门股，动画展示四个AI分析师各自发言、互相辩论，最后给出买入评级",
     "attack_tool": false,
     "red_flags": [
-     "本质是一份Agent技能提示词(SKILL.md)，不是可执行的扫描引擎，Star增长异常可疑",
-     "仅静态模式匹配，误报高，交付价值依赖调用它的模型能力",
-     "作者个人声誉背书，产品化护城河薄"
+     "金融投资建议涉及SEC投顾监管与免责风险，需强合规声明",
+     "回测易有过拟合与look-ahead质疑，效果真实性难验证",
+     "大厂与同类AI投研产品众多，差异化空间有限",
+     "需用户自备LLM API Key，普通用户门槛高"
     ],
-    "reason": "防守型静态审计、MIT许可、有真实赏金战绩做话题，但形态是提示词技能而非工具，包装成SaaS审计平台有空间，商业化偏弱。"
+    "reason": "话题性和演示性都很强，但本质是研究框架，商业化受监管与信任限制，适合做内容爆款而非重仓产品。"
    }
   },
   "rddmwmddr/android-ad-cleaner": {
-   "date": "2026-10-26",
-   "v": 2,
+   "date": "2026-11-04",
+   "v": 3,
    "eval": {
     "category": "效率工具",
-    "one_liner": "插上电脑点几下，关掉国产安卓手机系统里的广告和营销推送",
-    "target_user": "被国产安卓系统广告困扰的普通手机用户、数码爱好者、给家人朋友代劳的技术型用户",
+    "one_liner": "连电脑点几下，关掉国产安卓系统里的广告和营销推送",
+    "one_liner_en": "Plug your phone into a computer and turn off built-in Android ads and marketing pushes",
+    "target_user": "海外华人及全球使用国产安卓手机（小米、OPPO、vivo、荣耀）的用户，以及给家人远程处理手机的科技爱好者",
     "scores": {
-     "topicality": 8,
-     "accessibility": 9,
+     "topicality": 7,
+     "accessibility": 8,
      "wow": 7,
      "pain": 8,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 10,
-     "demoability": 5
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
     },
-    "product_idea": "面向普通用户的一键去广告桌面客户端，按机型自动适配，提供备份与一键还原",
-    "demo_idea": "前后对比：分屏展示设置前后的应用商店首页和通知栏，广告位、热搜、营销推送消失",
+    "product_idea": "面向海外华人的手机去广告桌面客户端，提供机型脚本和还原备份，支持订阅更新",
+    "demo_idea": "网页并排展示清理前后手机界面，广告全消失、功能保留，并演示一键还原",
     "attack_tool": false,
     "red_flags": [
-     "仅靠 adb 连接，需要开发者模式和 USB 调试，普通用户门槛不低",
-     "机型与系统版本强耦合，长尾适配成本极高，且系统更新会让脚本失效",
-     "需求虽真实但几乎没有人愿意付费，商业化路径很弱",
-     "诞生仅 1 天即 700+ star，增长异常，需警惕刷星"
+     "目标机型全是国内版国产安卓系统，美国/全球主流 iPhone、三星、Pixel 用户几乎用不上，市场天花板低",
+     "依赖 adb 和 USB 调试，普通用户上手门槛高，包装空间被官方客户端占掉大半",
+     "作者已有官方桌面客户端，第三方二次包装空间小",
+     "机型脚本强依赖具体系统版本，维护成本高、易失效",
+     "变现路径弱：一次性小工具付费意愿低，订阅理由不足",
+     "README 提到 DeepSeek、豆包等国内 AI 工具，叙事偏中国语境"
     ],
-    "reason": "痛点真实、话题性强、许可证宽松，但强依赖 adb 与机型适配、无付费意愿，适合做爆款内容而非创业项目。"
+    "reason": "痛点真实、话题有趣，但重度依赖国内机型场景，与目标美国市场错位，变现和包装空间都有限，适合做内容而非产品。"
    }
   },
   "DenisSergeevitch/ex-ussr-kinship-research": {
@@ -1035,119 +875,36 @@
     "reason": "定位独特且证据链设计扎实，能降低专业家谱研究门槛，但受众窄、商业化路径偏弱，更适合做内容引流而非独立大生意。"
    }
   },
-  "routerhubSI/uncensored-ai-api": {
-   "date": "2026-10-26",
-   "v": 2,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "一个 API 密钥调用所有主流大模型的聚合网关",
-    "target_user": "需要多模型切换的开发者、AI 应用团队",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 4,
-     "wow": 3,
-     "pain": 4,
-     "packaging_room": 3,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "多模型 API 聚合网关，统一计费和密钥管理，按量收费",
-    "demo_idea": "网页里同一个输入分别调用 GPT、Claude、Gemini，展示统一返回",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是商业 API 转售服务，GitHub 仓库只是营销落地页",
-     "主打 uncensored/abliterated 变体，属灰色地带，可能违反上游厂商条款",
-     "创建仅 1 天即 360 星，增长异常，疑似买量",
-     "无实际开源代码，只是资源引流页"
-    ],
-    "reason": "这是商业 API 转售的营销仓库，非真实开源项目；无技术资产可包装，uncensored 定位有合规风险，不建议做内容或产品。"
-   }
-  },
   "designfuchen/word-atlas": {
-   "date": "2026-10-26",
-   "v": 2,
+   "date": "2026-11-04",
+   "v": 3,
    "eval": {
     "category": "教育学习",
-    "one_liner": "7298个雅思词，每个配一幅原创插画和英美发音的背词网站",
-    "target_user": "备考雅思/托福的中国学生与英语自学者",
+    "one_liner": "带插画和发音的雅思背单词应用，会按遗忘曲线自动安排复习",
+    "one_liner_en": "Illustrated IELTS vocabulary app with audio and smart spaced-repetition review",
+    "target_user": "备考雅思/托福的考生（中国大陆及全球英语学习者）、英语自学者、ESL 教师",
     "scores": {
-     "topicality": 6,
+     "topicality": 7,
      "accessibility": 9,
-     "wow": 8,
+     "wow": 7,
      "pain": 7,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 5,
-     "demoability": 9
-    },
-    "product_idea": "雅思背词App：插画记忆+FSRS复习+词汇星图，卖订阅和词库授权",
-    "demo_idea": "网页随机抽词，展示插画+双例句+发音，再切到WebGL星图点亮一颗星",
-    "attack_tool": false,
-    "red_flags": [
-     "许可证为NOASSERTION且媒体资源CC BY 4.0，商用条款需核实",
-     "项目仅创建1天即345星，数据异常需警惕",
-     "作者个人项目，插画/录音AI生成，后续维护与版权存疑",
-     "本人已免费开源并提供完整词库，第三方难做差异化包装"
-    ],
-    "reason": "内容体验和演示性极强，插画加星图很有传播力；但已免费开源、变现空间窄，包装余地有限，适合做内容而非产品。"
-   }
-  },
-  "wangrongding/tv-fresh": {
-   "date": "2026-10-26",
-   "v": 2,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "免root给小米电视去广告、换开源桌面、装应用的AI助手技能包",
-    "target_user": "有小米电视、讨厌开机广告、愿意折腾的技术型用户和小白家庭用户",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 8,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "把电视改造流程做成手机或网页向导，扫码连ADB，自动去广告换桌面，全程可逆",
-    "demo_idea": "网页模拟小米电视界面：点一下，广告和瀑布流消失、Projectivy桌面出现、HOME键回到它，还能一键回滚",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是教程+脚本集合，无核心代码，产品化需自研ADB自动化",
-     "依赖具体机型和固件版本，通用性受限",
-     "面向国内智能电视，政策与厂商封堵风险",
-     "变现路径不清晰，用户多为一次性改造"
-    ],
-    "reason": "痛点真实、可逆设计贴心、话题性强；但交付物是攻略和agent技能而非软件，需二次包装为向导产品，商业化偏弱。"
-   }
-  },
-  "morganlinton/BeautifulRust": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "让 AI 编程助手写出规范地道 Rust 代码的技能包",
-    "target_user": "使用 AI 编程助手的 Rust 团队与后端工程师",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 5,
-     "wow": 5,
-     "pain": 6,
      "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 6
+     "monetization": 6,
+     "license_safety": 8,
+     "demoability": 8
     },
-    "product_idea": "多语言代码规范技能市场，附带团队规则托管与 CI 校验",
-    "demo_idea": "同一段需求，对比开启前后 AI 生成的 Rust 代码质量与 clippy 通过率",
+    "product_idea": "做美区 iOS/Web 版雅思词汇 App：订阅解锁星图与 FSRS 复习，词库 CC BY 授权给 Anki 和学校使用",
+    "demo_idea": "网页里拖动旋转 3D 词汇星图，点一颗星弹出插画词卡并播放英美音，再演示一次复习排期",
     "attack_tool": false,
     "red_flags": [
-     "本质是提示词与配置集合，技术壁垒低易被复制",
-     "仅覆盖 Rust 单一语言，受众偏窄",
-     "内容与主流风格指南高度重合，差异化有限"
+     "README 全是中文，示例和例句翻译均为中文，面向美国/全球英文市场的重构成本高",
+     "内容由 AI 生成、未人工审校，存在释义/插图/发音错误风险，教育类产品需承担内容准确性责任",
+     "代码许可声明为 NOASSERTION，README 称 MIT、内容 CC BY 4.0，需核实 LICENSE 文件实际条款",
+     "已有 iOS 测试版和付费渠道（微信/支付宝），产品化空间被作者自己占用",
+     "主打雅思，美区用户更认 TOEFL/GRE/SAT，需求匹配度下降",
+     "星图是核心亮点也是重工程，移植到美区产品需重做"
     ],
-    "reason": "踩中 Agent Skills 热点，痛点真实但受众窄、易复制；作为内容素材好，独立产品化空间有限。"
+    "reason": "素材资产（7298 词条+插画+2.3 万段音频）质量高、传播性好；但项目中文向、作者已自建产品，英文市场可包装的增量有限。"
    }
   },
   "JetBrains/thinkrail": {
@@ -1177,64 +934,6 @@
      "README信息密度高、概念多，普通用户理解门槛偏高"
     ],
     "reason": "话题性强、痛点真实，但大厂官方IDE、竞品密集，包装与商业化空间有限，更适合做内容而非创业切口。"
-   }
-  },
-  "Panniantong/Agent-Reach": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "给AI助手装上眼睛，一条命令读取小红书、B站、X等平台的真实内容",
-    "target_user": "AI应用开发者、Agent产品团队、自动化内容运营者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 7,
-     "pain": 8,
-     "packaging_room": 6,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "托管版数据网关：统一API让Agent读取各平台内容，按调用量或渠道订阅收费",
-    "demo_idea": "网页输入小红书关键词，30秒内展示Agent抓回的真实笔记与评论，对比通用搜索空白",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖登录态复用与爬虫抓取，违反平台条款、封号与法律风险高",
-     "第三方平台反爬随时失效，维护成本随渠道增加",
-     "README大量Sponsor代理/爬虫服务，存在利益绑定",
-     "PyPI同名包非本项目，供应链混淆风险"
-    ],
-    "reason": "痛点真实、话题热，但核心是合规爬虫封装，产品化需绕开登录与封禁难题，商业化受平台条款压制。"
-   }
-  },
-  "andyhuo520/digital-human-koubo": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "一张照片一句话，AI帮你生成带精美包装的数字人口播视频",
-    "target_user": "自媒体创作者、跨境带货主播、课程营销团队",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 7
-    },
-    "product_idea": "上传照片+脚本，一键产出带字幕包装的多语言数字人口播短视频，按条付费",
-    "demo_idea": "网页上传自拍照片和一句话，展示30秒数字人口播成片与包装组件切换效果",
-    "attack_tool": false,
-    "red_flags": [
-     "强依赖Renoise MCP第三方付费服务，留存与成本不可控",
-     "仅创建1天暴涨650星，热度真实性存疑",
-     "仓库实为Agent Skill+脚本编排，核心生成能力不在本项目",
-     "口播视频赛道已有HeyGen/剪映等成熟商业产品竞争"
-    ],
-    "reason": "话题性强、演示直观、MIT合规，但核心依赖外部付费模型，独立护城河弱，热度真实性需观察。"
    }
   },
   "t3dotgg/tstack": {
@@ -1324,64 +1023,6 @@
     "reason": "话题热、痛点真实、MIT 干净，但作者已自行商业化并绑死特定 coding agent，外部做产品差异化极难，更适合做内容解析而非包装。"
    }
   },
-  "enesozturk/dimensional-drawing": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "给AI一个界面组件，自动生成苹果风格的单页工程尺寸图",
-    "target_user": "需要做设计交付和规范的UI/UX设计师与前端团队",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 8,
-     "pain": 5,
-     "packaging_room": 7,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "一个网页工具，上传组件截图或代码，一键导出带尺寸标注的工程图和短视频",
-    "demo_idea": "左侧贴一个卡片截图，右侧实时逐笔画出标注齐全的尺寸图并播放运镜动画",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是Claude Skill提示词包而非完整产品，依赖AI代理执行",
-     "无独立引擎，输出质量受模型能力波动",
-     "刚发布3天星数暴涨，热度可能虚高",
-     "真实付费场景偏窄"
-    ],
-    "reason": "概念新颖、视觉冲击强、MIT且易做网页演示；但核心是提示词技能包，产品化和付费路径需自己补足，痛点偏中低频。"
-   }
-  },
-  "misshexa66/OunceCake": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "其他",
-    "one_liner": "把Switch 2游戏卡带里的游戏文件导出到电脑上的工具",
-    "target_user": "主机破解玩家与游戏保存爱好者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 7,
-     "monetization": 2,
-     "license_safety": 4,
-     "demoability": 4
-    },
-    "product_idea": "一键导出Switch 2游戏文件并自动整理成本地游戏库的桌面工具",
-    "demo_idea": "网页模拟运行流程：选游戏→进度条→FTP地址弹出→文件列表生成",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖ns2jb漏洞利用链，用途是绕过主机DRM导出受版权保护内容，法律风险极高",
-     "GPL-2.0且借用Atmosphere代码，商用受限",
-     "目标用户是小众破解圈，付费意愿低",
-     "纯命令行+FTP手动操作，但做成产品即触碰盗版红线"
-    ],
-    "reason": "技术话题性强、传播潜力不错，但本质是主机破解/盗版导出工具，商业化与合规空间几乎为零，只适合做内容不适合做产品。"
-   }
-  },
   "pingdotgg/t3code": {
    "date": "2026-10-31",
    "v": 3,
@@ -1409,35 +1050,6 @@
      "本质是大厂生态周边的成熟项目，独立商业化空间小"
     ],
     "reason": "话题热度极高但项目本身已是成熟免费全平台产品，个人几无包装与收费空间，只能做内容不能做产品。"
-   }
-  },
-  "ludovic111/horizon": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "生活娱乐",
-    "one_liner": "用 Rust 重写的《我的世界》，可以直接打开原版存档，还更快",
-    "target_user": "Minecraft 玩家（尤其是对性能、超大视野、服务器托管有要求的核心玩家）",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "做成启动器加托管服务器订阅：一键安装、超大视距渲染、好友联机；按服务器、云存档或高级渲染付费。",
-    "demo_idea": "网页播放同一存档在原版与 Horizon 中的对比：帧率、1024 区块视距、加载时间同时呈现。",
-    "attack_tool": false,
-    "red_flags": [
-     "法律风险：非官方 Minecraft 重实现，需玩家自备正版，Mojang 和微软随时可能发函",
-     "依赖上游版本格式，原版更新即需追赶，维护成本高",
-     "已有成熟启动器生态，开源版本身已带 launcher，包装空间有限",
-     "游戏本体难以收费，变现只能靠服务器、周边服务"
-    ],
-    "reason": "话题性和惊喜感极强，技术含量高、演示直观；但法律风险大、付费点弱、原版已有成熟渠道，更适合做内容而非创业。"
    }
   },
   "JoasASantos/REA-Prompts": {
@@ -1468,96 +1080,6 @@
      "9天暴涨3000星，疑似营销驱动，热度可持续性存疑"
     ],
     "reason": "话题性和惊喜感强，但只是提示词资源列表，依赖外部工具、受众付费意愿低，包装和商业化空间有限，内容价值大于产品价值。"
-   }
-  },
-  "impacifist/Windows-GPU-UNLOCK": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "运维部署",
-    "one_liner": "绕过显卡驱动限制，让Windows直接调用GPU",
-    "target_user": "AI研究者、显卡极客、二手矿卡玩家",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 3,
-     "wow": 7,
-     "pain": 4,
-     "packaging_room": 7,
-     "monetization": 3,
-     "license_safety": 4,
-     "demoability": 3
-    },
-    "product_idea": "做成一键U盘工具，自动检测主板与显卡组合并完成解锁配置",
-    "demo_idea": "网页模拟F8启动流程：解锁前后显卡算力对比曲线与黑屏风险提示",
-    "attack_tool": false,
-    "red_flags": [
-     "仅源码预发布，需自备固件、Python与LLVM环境，普通用户无法上手",
-     "仅支持极少数主板+显卡组合，兼容性极窄",
-     "操作涉及BitLocker关闭与分区修改，有变砖和数据丢失风险",
-     "GPL-2.0许可证限制商业闭源包装",
-     "来源为社区自述成功报告，缺乏独立验证",
-     "被用于绕过厂商/驱动限制，存在合规与保修风险"
-    ],
-    "reason": "硬核极客项目，话题性和惊喜感强，但门槛极高、适用范围窄、合规风险大，适合做内容选题而非直接产品化。"
-   }
-  },
-  "alchaincyf/huashu-design": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "在AI助手里说一句话，就能拿到可交付的网页、原型或PPT设计",
-    "target_user": "独立开发者、产品经理、不擅长设计的小团队与内容创作者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "把设计skill包装成网页版生成器，上传品牌资产、选风格、一键导出原型和PPTX",
-    "demo_idea": "网页输入一句话需求，实时弹出三个风格缩略图，选一版生成可点击原型并当场导出PPTX",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是给agent用的prompt和skill包，不是独立软件，依赖Claude Code或Cursor等外部agent",
-     "设计质量难以稳定，存在生成结果同质化和AI slop的风险",
-     "同类agent设计skill竞争激烈且门槛低，容易被复制",
-     "作者个人IP属性强，与特定风格和方法论绑定"
-    ],
-    "reason": "话题性强且star增长迅速，痛点真实，MIT协议友好；但它是依赖外部agent的skill包，产品化需自己搭建生成UI，付费意愿有限。"
-   }
-  },
-  "DrWhax/unfairplay": {
-   "date": "2026-10-27",
-   "v": 2,
-   "eval": {
-    "category": "安全",
-    "one_liner": "在 Mac 上解密你自己合法购买的 iOS 应用包，用于研究分析",
-    "target_user": "iOS 安全研究员、逆向工程学习者、应用兼容性测试团队",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 5,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "面向安全研究员的图形化 IPA 解密与完整性校验工具，内置授权声明与模型管理",
-    "demo_idea": "网页模拟命令行流程：选择 IPA→校验许可→一键解密→展示 Mach-O 节区对比",
-    "attack_tool": true,
-    "red_flags": [
-     "核心功能是绕过 FairPlay DRM 解密 IPA，易被用于盗版分发，法律风险高",
-     "依赖 SIDB/SINF/硬件身份等私密数据，产品化极易触碰平台规则与 DMCA",
-     "仅支持特定 macOS 构建版本，维护成本随苹果更新持续上升",
-     "README 自述的合法用途无法在技术上约束实际使用",
-     "商业销售几乎不可能，付款方难以界定"
-    ],
-    "reason": "技术上精巧、话题性不低，但本质是 DRM 绕过工具，法律与平台风险使其既难做内容也难做合规产品。"
    }
   },
   "yaojingang/GEOInflow": {
@@ -3827,6 +3349,464 @@
      "AI自动分诊误报可能带来安全责任与信任风险"
     ],
     "reason": "话题热、痛点真、MIT许可干净，产品化空间在托管部署和连接器生态，但安装重、演示偏后台且竞争激烈。"
+   }
+  },
+  "p-e-w/heretic": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "在自家电脑上几分钟内给任何开源大模型去掉审查、减少废话",
+    "one_liner_en": "Strip censorship and fix annoying behaviors from any local LLM in minutes, no training needed",
+    "target_user": "全球本地大模型玩家、开源模型发布者、AI 研究者与 Reddit r/LocalLLaMA 社区的开发者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 6
+    },
+    "product_idea": "做成有图形界面的本地桌面应用，可一键去除审查、调整模型风格并导出到 Hugging Face",
+    "demo_idea": "在网页上展示两个模型对同一敏感问题的回答对比，包括被拒绝和流畅回答，并配一条进度条动画",
+    "attack_tool": false,
+    "red_flags": [
+     "AGPL-3.0 许可证，商用和闭源衍生有很大限制",
+     "核心卖点是去除模型审查，容易触发 Hugging Face、OpenAI 等平台条款与版权争议",
+     "主要用户是免费开源的本地模型爱好者，付费意愿低",
+     "需要较强的 GPU 和专业环境，纯网页 demo 只能做模拟",
+     "已有大量同类 abliteration 工具竞争"
+    ],
+    "reason": "话题性和传播度极强，解决本地模型玩家真实痛点，但 AGPL 许可、去审查的争议性和薄弱的付费场景压缩了商业化空间。"
+   }
+  },
+  "JustVugg/colibri": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "让普通电脑用硬盘流式跑上百亿参数的大模型",
+    "one_liner_en": "Run huge MoE models on your own PC by streaming experts from disk",
+    "target_user": "想本地跑大模型的开发者、隐私敏感的企业、买不起大显存的 AI 爱好者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 9,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "做成一键本地大模型运行器，自动检测硬件、推荐模型、托管本地 OpenAI 兼容 API",
+    "demo_idea": "网页演示低配笔记本上秒回对话，对比同时显示显存为 0、模型从硬盘流式加载",
+    "attack_tool": false,
+    "red_flags": [
+     "项目本身已有完整安装脚本和图形面板，包装空间有限",
+     "需要下载几十 GB 模型，网页 demo 无法真实演示",
+     "运行依赖用户本地硬件，云端无法托管体验",
+     "在 OpenAI/Anthropic 兼容接口上转售需注意模型许可证与商用条款",
+     "Star 增长极快但创建仅 125 天，长期维护与模型适配持续性存疑"
+    ],
+    "reason": "话题性和惊喜感强，痛点真实；但已高度产品化，可包装与变现空间中等，适合做内容而非直接包装"
+   }
+  },
+  "vercel-labs/agent-desktop": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "让 AI 智能体直接读取并操作电脑桌面应用的命令行工具",
+    "one_liner_en": "Give AI agents eyes and hands on desktop apps, via the OS accessibility tree",
+    "target_user": "做 computer-use 智能体的开发者、RPA/自动化团队、AI 工具创业公司",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 3,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "面向企业的桌面智能体托管平台：可视化录制、权限管控与审计日志，替代脚本化 CLI",
+    "demo_idea": "网页里播放分屏视频：一句指令让智能体在 Slack 里找到消息并整理成表，全程无鼠标移动",
+    "attack_tool": false,
+    "red_flags": [
+     "Vercel Labs 官方项目，个人难以在其上做差异化产品",
+     "本质是 CLI 与库，已是成熟大厂基础设施，包装空间小",
+     "快照、剪贴板、截图会采集隐私内容，面向企业需额外合规与审计",
+     "核心价值需真实桌面环境演示，纯前端网页只能模拟"
+    ],
+    "reason": "话题性强、技术扎实，但属大厂官方 CLI 基础设施，内容价值高、包装成产品空间与付费路径均有限。"
+   }
+  },
+  "Verlintas/NOIR": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "用电脑连接手机，查出哪些 App 在偷偷收集你的数据",
+    "one_liner_en": "Audit your Android phone via USB: see what apps can leak and fix it safely",
+    "target_user": "注重隐私的 Android 用户、科技媒体、隐私顾问、企业 IT 负责员工设备合规",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成一键式桌面 App：插线出隐私报告，可视化数据流向，支持安全处置与回滚",
+    "demo_idea": "网页模拟扫描流程，展示某 App 权限与上报域名连线图，点一下出风险分和回滚按钮",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖 adb 和 USB 连线，普通用户门槛偏高",
+     "高风险处置涉及卸载类操作，误操作和法律责任需谨慎",
+     "同类免费工具（Exodus Privacy、TrackerControl、RethinkDNS）已有用户基础",
+     "README 强调中文环境和国内厂商，需重做英文市场定位"
+    ],
+    "reason": "话题性强、许可证干净、包装空间大，但使用门槛和免费竞品削弱付费意愿，适合做爆款内容而非大生意"
+   }
+  },
+  "D4Vinci/Scrapling": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "一个能绕过反爬、抓取任意网页数据的 Python 爬虫框架",
+    "one_liner_en": "A Python scraping framework that bypasses bot protection and crawls any site at scale.",
+    "target_user": "美国/全球的数据工程师、增长/销售情报团队、自建数据管道的 AI 应用开发者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 7,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做托管版无代码抓取：贴网址选字段，自动输出结构化数据或 Markdown，按量收费",
+    "demo_idea": "网页里输入一个反爬站点 URL，30 秒内出现绕过验证后的干净表格数据",
+    "attack_tool": false,
+    "red_flags": [
+     "内置 Cloudflare Turnstile 绕过与隐身浏览器，易被用于规避平台反爬条款，美国 CFAA/ToS 诉讼风险需提示",
+     "目标站点数据抓取的版权与隐私合规（如抓取含个人数据）需用户自担",
+     "开源版已相当成熟，产品差异化须靠托管、调度与合规托管而非功能"
+    ],
+    "reason": "痛点真实、增长猛、BSD 许可干净，包装成托管抓取服务空间大；但绕过反爬带来合规与平台对抗风险，需谨慎定位为数据管道工具。"
+   }
+  },
+  "caru-ini/stack-diagram": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "一句话描述技术栈，自动生成带官方 logo 的架构图",
+    "one_liner_en": "Describe your stack in one sentence, get an architecture diagram with official logos",
+    "target_user": "美国的独立开发者、初创团队 CTO、需要画架构图做方案/融资/文档的工程师",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "把 Agent skill 包装成网页版：输入一句话即可生成可分享的架构图，含官方 logo 模板库和导出/协作功能",
+    "demo_idea": "网页输入框填入'Next.js+Vercel+Neon+Stripe'，30 秒内生成明暗两版带官方 logo 的架构图并可下载",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖 Agent skill 生态（Claude Code/Codex/Cursor），平台变化会直接影响可用性",
+     "官方云厂商 logo 使用受商标约束，商业产品需谨慎处理授权",
+     "PNG 导出依赖 Playwright/Chromium 和 Python 环境，纯前端门槛高",
+     "绘画类需求低频，用户付费意愿有限，免费替代品（Excalidraw、Mermaid、draw.io）强"
+    ],
+    "reason": "话题性强、易演示、MIT 许可干净、包装空间大，但需求偏小众、付费意愿弱，需靠模板和分享社区做差异化"
+   }
+  },
+  "AssassinCreator/steam-stash-value-report-card": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "在终端里给 Steam 库存估个值，一键生成能发朋友圈的卡片",
+    "one_liner_en": "Value your Steam inventory in the terminal and turn it into a shareable card.",
+    "target_user": "美国及全球的 Steam 玩家、CS2/Dota2 饰品交易者和喜欢晒库存的游戏内容创作者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "网页版：贴 Steam 链接自动出估值报告卡，可分享，高级主题和对比收费",
+    "demo_idea": "输入一个公开 Steam ID，30 秒内渲染出估值红黑卡片并在页面上直接预览分享图",
+    "attack_tool": false,
+    "red_flags": [
+     "仅支持 Windows 便携版，且依赖本地 IP 抓 Steam，网页化会遭遇 429 限流",
+     "变现路径弱：玩家对库存估值工具付费意愿低，Steam 市场数据抓取有 ToS 风险",
+     "README 提到的 git 仓库名与仓库实际名不一致，可信度存疑",
+     "核心数据依赖 Steam 与第三方现金市场，价格口径与合规需自行承担",
+     "星标增长异常（1 天 692 星），需警惕刷星或短期病毒式传播，热度不可持续"
+    ],
+    "reason": "展示效果强、易懂易传播，但痛点偏娱乐而非刚需，变现和网页化受 Steam 限流与 ToS 制约，适合做内容而非重产品。"
+   }
+  },
+  "unclebob/ub-mode": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给 AI 编程助手装上工程纪律，自动卡住烂代码",
+    "one_liner_en": "A skill that forces AI coding agents to follow disciplined engineering rules",
+    "target_user": "用量产 AI 写代码的个人开发者、小团队 tech lead、以及想规范 AI 输出的工程经理",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "把 SKILL.md 做成可视化配置面板 + 质量门禁仪表盘，一键装进 Claude/Cursor",
+    "demo_idea": "网页里跑一段 AI 生成代码，实时显示 CRAP 分、重复率和变异存活数从红变绿",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是一份提示词/技能文档加多个依赖仓库，本身几乎无可保护的护城河",
+     "依赖 poteto 规则与作者自己的 crap 等配套工具，核心价值分散在多个仓库",
+     "免费开源且用户可自行复制 SKILL.md，付费意愿低",
+     "作者名气驱动热度，星标增长不稳定，内容生命周期可能很短",
+     "演示需真实代码库，纯前端 30 秒直观演示有难度"
+    ],
+    "reason": "话题性强、许可证干净、包装空间尚可，但本质是提示词文档，变现路径窄，适合做内容而非独立产品。"
+   }
+  },
+  "floci-io/floci": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "在自己电脑上免费模拟整套 AWS 云服务的工具",
+    "one_liner_en": "Run a free local AWS emulator for dev and CI, no account needed",
+    "target_user": "使用 AWS 的后端与 DevOps 工程师、平台团队、CI 流水线维护者，尤其是被 LocalStack 付费墙卡住的美国/欧洲中小团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 8,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "托管的团队版本地云模拟：共享测试环境、CI 集成与可视化控制台",
+    "demo_idea": "网页里跑一段命令行录像：启动模拟器、建 S3 桶、DynamoDB 建表，秒级返回",
+    "attack_tool": false,
+    "red_flags": [
+     "直接对标 LocalStack，后者已占据心智，差异化空间有限",
+     "把 LocalStack 免费替代作为卖点，商业化路径天然受限",
+     "Web 控制台需挂载 Docker socket，企业环境有安全顾虑",
+     "开发者工具付费意愿低，开源版已足够好用"
+    ],
+    "reason": "痛点真实、许可证友好、增长猛，但本质是免费替代 LocalStack 的基础设施类工具，包装与变现空间有限。"
+   }
+  },
+  "mromidev/claude-animated-shorts": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "用 Claude 自动生成 2D 角色 3D 场景的竖屏动画短片",
+    "one_liner_en": "A free Claude skill that renders viral 2D-in-3D animated vertical shorts locally.",
+    "target_user": "做 YouTube Shorts / TikTok 动画内容的独立创作者与社媒代运营团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做一个云端一键生成竖屏动画短片的托管工具，省去用户本地安装与渲染的麻烦",
+    "demo_idea": "网页输入一个故事主题，30 秒内播放从模板渲染出的 8 秒竖屏动画成片对比",
+    "attack_tool": false,
+    "red_flags": [
+     "模板资源约 1.3 GB，本地渲染依赖 Remotion、ffmpeg、Python，门槛高",
+     "依赖 Claude Code 与 REMOTION_TMP 本地环境，非普通用户可用",
+     "模板与参考帧仅用于风格学习，直接商用有版权与素材来源风险",
+     "纯代码渲染可演示性受限于真实渲染耗时，网页 demo 需预渲染",
+     "两天 1100 星热度可能来自视频推广，热度持续性待观察"
+    ],
+    "reason": "视频带火的技能包，效果有惊喜、传播强；但本地渲染重、依赖 Claude 环境，包装成云服务最有空间，商业化需自建托管与模板授权。"
+   }
+  },
+  "max-sixty/worktrunk": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让 Git worktree 像分支一样简单的命令行工具",
+    "one_liner_en": "A CLI that makes git worktrees as easy as branches, built for parallel AI agents",
+    "target_user": "重度使用 Claude Code / Codex 并行跑多个任务的美国独立开发者与小型工程团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 4,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 6,
+     "demoability": 5
+    },
+    "product_idea": "把它做成带图形界面的多 agent 任务面板：每个 worktree 一个卡片，显示 CI、diff 和运行状态。",
+    "demo_idea": "网页模拟终端：左右对比 wt 和原生 git 命令，一键创建 worktree 并弹出 agent 状态卡。",
+    "attack_tool": false,
+    "red_flags": [
+     "许可证为 NOASSERTION，需自行核实具体条款",
+     "作者本人在积极维护且已积累高星，第三方包装的差异化空间有限",
+     "Git CLI 类工具受众技术门槛高，普通用户难以理解",
+     "商业化路径模糊，开源免费工具付费意愿低"
+    ],
+    "reason": "项目增长快、痛点真实，但它是 CLI 工具且作者亲自运营，包装空间和变现都受限，更适合拿来做内容而不是做产品。"
+   }
+  },
+  "seedds/nxnative": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "把自己的 Switch 游戏文件变成 iPhone 原生可玩的 App",
+    "one_liner_en": "Turn your own Switch game files into a natively playable iPhone app",
+    "target_user": "美国/全球拥有 Switch 游戏和 iPhone、想随时玩 3A 大作的核心玩家",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 8,
+     "demoability": 5
+    },
+    "product_idea": "Mac 上的图形化转换工具：拖入游戏文件，一键生成侧载 IPA，并自带游戏库管理",
+    "demo_idea": "网页演示：拖入马里奥游戏文件，进度条走完，iPhone 直接开跑 60 帧实机画面",
+    "attack_tool": false,
+    "red_flags": [
+     "法律风险极高：需用户自备 prod.keys 和游戏 ROM，涉及绕过 Switch 加密与 DRM，美国 DMCA 1201 反规避条款可能认定侵权",
+     "任天堂法务风格强硬，Ryujinx、Yuzu 均被诉讼或关停，项目随时可能被下架",
+     "打包流程复杂：30-60 分钟构建、需要 macOS 26、Xcode 27、10GB+ 空闲磁盘及侧载工具，普通用户难以操作",
+     "核心流程严重依赖 Xcode/Metal 工具链，纯网页 Demo 无法真实演示，只能靠剪辑或视频展示",
+     "无法在美国市场公开推广，付费转化与正规渠道（如 App Store、Stripe）冲突，商业化空间受限"
+    ],
+    "reason": "话题性极强、增长快，Mac 端打包体验是明确的产品空白，但法律与合规风险会限制公开商业化，适合做内容而非严肃创业"
+   }
+  },
+  "Balanov/shim": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "一个7MB的终端AI助手，连上任意大模型和工具，纯本地运行",
+    "one_liner_en": "A tiny 7MB terminal AI agent that works with any model, local-first and zero deps",
+    "target_user": "美国/全球的独立开发者、后端工程师、喜欢终端的高级玩家（含隐私敏感的企业内小团队）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 5,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "面向个人开发者的桌面版AI agent管理器，GUI一行配置模型、MCP和技能，保留单二进制本地运行",
+    "demo_idea": "网页模拟终端：输入自然语言，界面把它翻译成白名单命令，再弹出确认，并展示调用本地模型的延迟与内存占用对比",
+    "attack_tool": false,
+    "red_flags": [
+     "这是面向终端用户的AI agent harness，同类开源项目（如各类CLI coding agent）很多且竞争激烈",
+     "做产品比开源版强不了多少：本身就是成品命令行工具，GUI化包装空间有限",
+     "427 stars 全部在1天内爆发，增速极不真实，需警惕刷星或短期炒作",
+     "商业化路径不清晰，个人开发者付费意愿低",
+     "依赖本机本地模型做路由，普通用户上手门槛高"
+    ],
+    "reason": "工程质量扎实、MIT许可友好、话题有热度，但赛道拥挤、变现弱、增长数据可疑，更适合作为内容选题而非创业方向。"
+   }
+  },
+  "wideeyededi/uncensored-nsfw-ai-video-api": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "成人向AI视频生成API的接入文档，可生成文生/图生视频",
+    "one_liner_en": "Developer docs for an 18+ uncensored AI text/image-to-video API",
+    "target_user": "做 AI 陪伴/成人内容站的海外独立开发者与小团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 6,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 2
+    },
+    "product_idea": "把多个成人向视频模型聚合为一个统一异步API，并附计费与webhook封装",
+    "demo_idea": "网页输入提示词或上传图，30秒看到生成视频前后对比，展示异步排队进度",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库只是文档和截图，无生产代码，README 主体是SEO关键词堆砌",
+     "成人NSFW内容，支付渠道(Stripe)与App Store普遍封禁",
+     "依赖第三方站点123vips.com的私有API，模型、价格、端点不公开",
+     "仅1天就获417星，疑似刷星或营销仓库",
+     "美国市场面临FOSTA/SESTA、各州年龄验证法规与平台分发风险"
+    ],
+    "reason": "本质是成人视频站的外链SEO文档，非独立产品；商业化与渠道受支付和应用商店限制，仅适合小圈子内容"
+   }
+  },
+  "l0ng-ai/openidea": {
+   "date": "2026-11-04",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "用 Rust 重写的轻量 IDEA，启动快一百倍、内存占用极低的分秒钟就能讲明白的卖点",
+    "one_liner_en": "A Rust-built IDE that feels like IntelliJ but opens in under a second",
+    "target_user": "厌倦了 IntelliJ 和 VS Code 启动慢的欧美专业开发者，包括独立开发者、创业公司工程师以及大企业里被分配了性能不佳电脑的员工",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 5,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "做成开箱即用、有品牌感的桌面 IDE，内置 JetBrains 风格按键映射的迁移功能和性能对比工具，并按个人或团队授权收费",
+    "demo_idea": "在网页上并排演示同一项目在 IDEA 和本产品中的启动时间与内存曲线，30 秒内让数据直观呈现",
+    "attack_tool": false,
+    "red_flags": [
+     "项目自建仅 13 天，星标数已达 5535，且每天新增约 425 星，增速异常，真实性或营销操作存疑",
+     "与 JetBrains、VS Code 正面竞争，产品成熟度和插件生态差距巨大，个人很难差异化",
+     "README 自称 60+ 语言，但 Rust 核心加 Tauri 的完整 IDE 在短短 13 天内不可能真正完成，需核实是否为包装或早期原型",
+     "IDE 属于工具层基础设施，用户切换成本极高，变现依赖口碑和长期维护，个人难以兑现",
+     "IntelliJ IDEA 是 JetBrains 商标，品牌和按键映射设计存在商标与版权风险"
+    ],
+    "reason": "性能对比故事极具传播性，但项目年龄与星标增速都异常，且 IDE 赛道的商业化和个人包装空间都很有限，更适合做内容，不适合做产品"
    }
   }
  }
