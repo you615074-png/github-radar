@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-05",
+ "headline": "Agent Autoloop：让命令行 Agent 后台接活",
+ "summary_md": "Agent Autoloop is a lightweight, self-hosted automation hub for command-line coding agents like Claude Code and Codex. It lets an agent run in the background, handle events (cron jobs, GitHub issues, alerts), and only interrupt you when it needs a decision — via Slack, Discord, or desktop notifications. The core has zero external dependencies, runs on a single Mac or Linux machine, and uses pluggable sources, agents, and notification channels. Per the README, you can set up rules in a JSON file, and the agent communicates results in its final reply. The project is MIT-licensed and already has 2.3k stars, though its growth rate is unusually high for being only a day old. The product opportunity is a hosted version: a web UI to configure rules, Slack integration, managed execution, and cost/approval tracking. This could appeal to indie hackers and small teams who want reliable, always-on agent workflows without managing infrastructure. The main risks are unverified maturity (Windows support pending, examples not fully tested in real services) and the need to adapt China-centric examples (Feishu, DingTalk) to US/global channels like Slack and Discord. With a clear pain point and permissive license, it's a solid base for a lightweight hosted service, but validation and localization are essential before investing heavily.",
+ "title_en": "Agent Autoloop: Background CLI Agents That Ask Before Risky Moves",
+ "tagline_en": "Let your CLI agent pick up tasks and follow through in the background, pinging you only when it's unsure.",
+ "pick": {
+  "full_name": "KKKKhazix/agent-autoloop",
+  "url": "https://github.com/KKKKhazix/agent-autoloop",
+  "description": "让你的命令行 Agent 在后台自己接活、自己跟进到底；平时不烦你，遇到拿不准的事才发卡片找你拍板。",
+  "license": "MIT",
+  "stars": 2353,
+  "daily_rate": 2353.0,
+  "category": "AI基础设施",
+  "one_liner": "让你的命令行 Agent 在后台自己接活干，拿不准时推卡片问你再继续",
+  "one_liner_en": "Run your CLI coding agent in the background; it only pings you when it needs a decision",
+  "reason": "痛点真实、定位清晰、MIT 可放心改写；但生态偏国内、成熟度待验证，适合先做内容再做轻托管版。",
+  "content": 7.0,
+  "startup": 7.15,
+  "final": 7.45,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-05-kkkkhazix-agent-autoloop",
+ "top": [
+  {
+   "full_name": "KKKKhazix/agent-autoloop",
+   "url": "https://github.com/KKKKhazix/agent-autoloop",
+   "one_liner": "让你的命令行 Agent 在后台自己接活干，拿不准时推卡片问你再继续",
+   "reason": "痛点真实、定位清晰、MIT 可放心改写；但生态偏国内、成熟度待验证，适合先做内容再做轻托管版。",
+   "one_liner_en": "Run your CLI coding agent in the background; it only pings you when it needs a decision",
+   "content": 7.0,
+   "startup": 7.15,
+   "final": 7.45,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "brightsongwrath/personal-data-deletor-osint",
+   "url": "https://github.com/brightsongwrath/personal-data-deletor-osint",
+   "one_liner": "一键向 970 家数据经纪人发信，要求删除你的个人信息",
+   "reason": "痛点真实、易懂且传播性强，但免费开源与隐私定位限制了付费空间，手动表单和邮箱配置也削弱了省心体验。",
+   "one_liner_en": "Send 970 data brokers a request to delete your personal data, locally.",
+   "content": 8.0,
+   "startup": 6.95,
+   "final": 7.25,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "mromidev/claude-animated-shorts",
+   "url": "https://github.com/mromidev/claude-animated-shorts",
+   "one_liner": "用 Claude 自动生成 2D 角色 3D 场景的竖屏动画短片",
+   "reason": "视频带火的技能包，效果有惊喜、传播强；但本地渲染重、依赖 Claude 环境，包装成云服务最有空间，商业化需自建托管与模板授权。",
+   "one_liner_en": "A free Claude skill that renders viral 2D-in-3D animated vertical shorts locally.",
+   "content": 7.67,
+   "startup": 7.15,
+   "final": 7.21,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "harry0703/MoneyPrinterTurbo",
+   "url": "https://github.com/harry0703/MoneyPrinterTurbo",
+   "one_liner": "输入一个关键词，自动生成带字幕和配乐的短视频",
+   "reason": "话题性和上手门槛都好，但已成红海产品，开源版成熟、国内绑定多，做内容优于做产品。",
+   "one_liner_en": "Turn a keyword into a finished short video with captions and music",
+   "content": 8.0,
+   "startup": 6.15,
+   "final": 7.11,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/wordcraft",
+   "url": "https://github.com/storytold/wordcraft",
+   "one_liner": "用 Rust 写的开源版 Word，能打开和保存 docx 文档",
+   "reason": "项目热度高、许可证宽松、演示直观，也适合做内容；但官方已产品化，商业化空间有限，包装成产品时更像集成插件，或提供 AI 代理接口、离线隐私功能，而非重做编辑器。",
+   "one_liner_en": "",
+   "content": 8.33,
+   "startup": 5.85,
+   "final": 7.09,
+   "category_penalty": 0
+  }
+ ]
+}

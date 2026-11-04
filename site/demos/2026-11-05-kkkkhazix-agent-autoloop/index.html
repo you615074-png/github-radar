@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Loopdeck — your terminal agent, working the night shift</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .fade-up { animation: fadeUp .3s ease both; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+<!-- NAV -->
+<header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+    <a href="#top" class="flex items-center gap-2">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-sm font-bold text-white">⟳</span>
+      <span class="text-[15px] font-semibold tracking-tight">Loopdeck</span>
+    </a>
+    <nav class="hidden items-center gap-6 text-sm text-slate-600 md:flex">
+      <a href="#demo" class="transition hover:text-slate-900">Demo</a>
+      <a href="#uses" class="transition hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="transition hover:text-slate-900">Pricing</a>
+      <a href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener" class="transition hover:text-slate-900">GitHub ↗</a>
+    </nav>
+    <a href="#pricing" class="rounded-lg bg-slate-900 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:pt-20">
+  <div class="mx-auto max-w-3xl text-center">
+    <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+      Hosted agent ops · private beta
+    </span>
+    <h1 class="mt-6 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl md:text-[54px] md:leading-[1.06]">
+      Your terminal agent,<br class="hidden sm:block" /> working the night shift.
+    </h1>
+    <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+      Loopdeck picks up work from GitHub, a cron rule, or an alert, runs your Claude Code or Codex agent on it,
+      and stays completely quiet — until something actually needs a human.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="#demo" class="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800">Run the demo</a>
+      <a href="#pricing" class="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-400">Join the waitlist</a>
+    </div>
+    <p class="mt-4 text-xs text-slate-400">No sign-up. Everything below runs on sample data, right in your browser.</p>
+  </div>
+
+  <div class="mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-2.5 sm:grid-cols-4">
+    <div class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+      <span class="text-base">🔌</span><span class="text-[13px] font-medium text-slate-700">Any agent</span>
+    </div>
+    <div class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+      <span class="text-base">📡</span><span class="text-[13px] font-medium text-slate-700">Any source</span>
+    </div>
+    <div class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+      <span class="text-base">🃏</span><span class="text-[13px] font-medium text-slate-700">Ask-first cards</span>
+    </div>
+    <div class="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+      <span class="text-base">🧾</span><span class="text-[13px] font-medium text-slate-700">Token &amp; cost log</span>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo" class="mx-auto max-w-6xl px-5 pb-16">
+  <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+    <div>
+      <h2 class="text-xl font-semibold tracking-tight">Try a loop</h2>
+      <p class="mt-1 text-sm text-slate-500">
+        A GitHub issue comes in. The agent fixes it. One approval card on the way.
+        <span class="font-medium text-slate-700">Sample data.</span>
+      </p>
+    </div>
+    <span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-500">simulated · no network calls</span>
+  </div>
+
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <!-- window bar -->
+    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-3 sm:px-5">
+      <div class="flex items-center gap-2 text-sm font-medium text-slate-700">
+        <span id="dot" class="h-2 w-2 rounded-full bg-slate-300"></span>
+        Loop #482
+      </div>
+      <div id="statusPill" class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">idle</div>
+    </div>
+
+    <div class="grid md:grid-cols-[minmax(0,360px)_1fr]">
+      <!-- CONTROLS -->
+      <div class="border-b border-slate-200 p-4 sm:p-5 md:border-b-0 md:border-r">
+        <label for="issueTitle" class="block text-[11px] font-semibold uppercase tracking-wide text-slate-500">Incoming issue</label>
+        <input id="issueTitle" type="text" value="Invoice totals are off by one cent for team plans"
+          class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900" />
+
+        <label for="agentSelect" class="mt-4 block text-[11px] font-semibold uppercase tracking-wide text-slate-500">Hand off to</label>
+        <select id="agentSelect"
+          class="mt-2 w-full appearance-none rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 transition focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900">
+          <option>Claude Code</option>
+          <option>Codex</option>
+          <option>ACP agent</option>
+        </select>
+
+        <div class="mt-4">
+          <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Matching rule</div>
+          <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-900 p-3 text-[11.5px] leading-relaxed text-slate-200"><code id="rulePreview"></code></pre>
+        </div>
+
+        <div class="mt-5 flex flex-wrap items-center gap-2">
+          <button id="runBtn"
+            class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:opacity-70">▶ Run agent</button>
+          <button id="resetBtn"
+            class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400">Reset</button>
+        </div>
+        <p class="mt-3 text-[11px] text-slate-400">Simulated run. Nothing leaves this page.</p>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="bg-slate-50 p-4 sm:p-5">
+        <div id="timeline" class="max-h-[520px] space-y-3 overflow-y-auto pr-1"></div>
+
+        <div id="summary" class="mt-4 hidden rounded-xl border border-slate-200 bg-white p-4">
+          <div class="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Loop closed</div>
+          <div class="mt-2 grid grid-cols-3 gap-2 text-center">
+            <div>
+              <div class="text-lg font-semibold text-slate-900">18.4k</div>
+              <div class="text-[11px] text-slate-500">tokens</div>
+            </div>
+            <div>
+              <div class="text-lg font-semibold text-slate-900">$0.41</div>
+              <div class="text-[11px] text-slate-500">est. cost</div>
+            </div>
+            <div>
+              <div class="text-lg font-semibold text-slate-900" id="touchCount">1</div>
+              <div class="text-[11px] text-slate-500">human touch</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="uses" class="border-y border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-5 py-16">
+    <div class="max-w-2xl">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Three loops people actually run</h2>
+      <p class="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+        Same core, different rules. Sources, agents and notification channels are all pluggable — no glue code, no SDK.
+      </p>
+    </div>
+
+    <div class="mt-9 grid gap-4 md:grid-cols-3">
+      <div class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+        <div class="grid h-9 w-9 place-items-center rounded-lg bg-white text-lg shadow-sm">🌙</div>
+        <h3 class="mt-4 text-base font-semibold">Overnight issue triage</h3>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-slate-600">
+          A bug lands at 2am. By 9am there is a patch, a green test run and a PR ready for review.
+          Nobody sat watching a terminal.
+        </p>
+        <pre class="mt-4 overflow-x-auto rounded-lg bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-300"><code>{ "when": { "source": "github", "types": ["issues.opened"] },
+  "to": "codex", "cwd": "~/code/billing" }</code></pre>
+      </div>
+
+      <div class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+        <div class="grid h-9 w-9 place-items-center rounded-lg bg-white text-lg shadow-sm">🚨</div>
+        <h3 class="mt-4 text-base font-semibold">Alerts with a human gate</h3>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-slate-600">
+          Your error tracker fires. The agent traces the stack and finds the bad deploy — then stops before
+          restarting production, because you said ask first. One tap on your phone and it finishes.
+        </p>
+        <pre class="mt-4 overflow-x-auto rounded-lg bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-300"><code>{ "when": { "source": "http" },
+  "ask_first": ["restart", "delete", "deploy"] }</code></pre>
+      </div>
+
+      <div class="flex flex-col rounded-2xl border border-slate-200 bg-slate-50/60 p-5">
+        <div class="grid h-9 w-9 place-items-center rounded-lg bg-white text-lg shadow-sm">🧹</div>
+        <h3 class="mt-4 text-base font-semibold">Sunday cleanup</h3>
+        <p class="mt-2 flex-1 text-[13px] leading-relaxed text-slate-600">
+          Every week the loop wakes up, strips dead code, opens a review branch, and logs exactly what it touched
+          and what it cost. You read the summary over coffee.
+        </p>
+        <pre class="mt-4 overflow-x-auto rounded-lg bg-slate-900 p-3 text-[11px] leading-relaxed text-slate-300"><code>{ "when": { "cron": "0 18 * * 0" },
+  "to": "claude-code", "cwd": "~/code/app" }</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="mx-auto max-w-6xl px-5 py-16">
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Pay for the runs you don't watch</h2>
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+      The core is MIT and self-hostable, forever. Hosted runs are optional — that's the only thing we charge for.
+    </p>
+  </div>
+
+  <div class="mt-10 grid gap-5 md:grid-cols-3">
+    <!-- self hosted -->
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="text-sm font-semibold text-slate-900">Self-hosted</div>
+      <p class="mt-1 text-[13px] text-slate-500">On your own Mac or Linux box.</p>
+      <div class="mt-5 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold tracking-tight">$0</span>
+        <span class="text-[13px] text-slate-500">forever</span>
+      </div>
+      <ul class="mt-5 flex-1 space-y-2.5 text-[13px] text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Unlimited local loops</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Bring your own agent CLI</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Desktop notification cards</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>MIT license, no account</li>
+      </ul>
+      <a href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener"
+         class="mt-6 block rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-medium text-slate-700 transition hover:border-slate-400">Read the README</a>
+    </div>
+
+    <!-- hosted -->
+    <div class="relative flex flex-col rounded-2xl border-2 border-slate-900 bg-white p-6 shadow-sm">
+      <span class="absolute -top-3 left-6 rounded-full bg-slate-900 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">Most popular</span>
+      <div class="text-sm font-semibold text-slate-900">Hosted</div>
+      <p class="mt-1 text-[13px] text-slate-500">We run the loop. You get the cards.</p>
+      <div class="mt-5 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold tracking-tight">$19</span>
+        <span class="text-[13px] text-slate-500">/ month</span>
+      </div>
+      <ul class="mt-5 flex-1 space-y-2.5 text-[13px] text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Runs while your laptop sleeps</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Approval cards in Slack or Feishu</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Per-run token &amp; cost log</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>3 parallel agents</li>
+      </ul>
+      <button data-waitlist
+        class="mt-6 block w-full rounded-lg bg-slate-900 px-4 py-2.5 text-center text-sm font-medium text-white transition hover:bg-slate-800">Join waitlist</button>
+    </div>
+
+    <!-- team -->
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="text-sm font-semibold text-slate-900">Team</div>
+      <p class="mt-1 text-[13px] text-slate-500">Shared rules, shared history.</p>
+      <div class="mt-5 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold tracking-tight">$49</span>
+        <span class="text-[13px] text-slate-500">/ month</span>
+      </div>
+      <ul class="mt-5 flex-1 space-y-2.5 text-[13px] text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Up to 5 members</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Per-person rules and routing</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Team-wide run history</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>SSO &amp; audit log</li>
+      </ul>
+      <button data-waitlist
+        class="mt-6 block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-medium text-slate-700 transition hover:border-slate-400">Join waitlist</button>
+    </div>
+  </div>
+
+  <!-- waitlist -->
+  <div id="waitlist" class="mt-10 overflow-hidden rounded-2xl bg-slate-900 px-6 py-9 text-center sm:px-10">
+    <h3 class="text-xl font-semibold text-white sm:text-2xl">Get a hosted loop in your inbox</h3>
+    <p class="mx-auto mt-2 max-w-md text-sm text-slate-400">Private beta. We'll send one email when it's ready — nothing else.</p>
+    <form id="waitlistForm" class="mx-auto mt-5 flex max-w-md flex-col gap-2 sm:flex-row">
+      <input id="emailInput" type="email" required placeholder="you@company.com"
+        class="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2.5 text-sm text-white placeholder-slate-500 transition focus:border-slate-500 focus:outline-none" />
+      <button type="submit"
+        class="shrink-0 rounded-lg bg-white px-4 py-2.5 text-sm font-medium text-slate-900 transition hover:bg-slate-100">Join waitlist</button>
+    </form>
+    <p id="waitlistMsg" class="mt-3 hidden text-sm font-medium text-emerald-400"></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-5 py-8">
+    <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+      <div class="flex items-center gap-2">
+        <span class="grid h-7 w-7 place-items-center rounded-md bg-slate-900 text-xs font-bold text-white">⟳</span>
+        <span class="text-sm font-semibold text-slate-800">Loopdeck</span>
+      </div>
+      <nav class="flex flex-wrap items-center justify-center gap-5 text-xs text-slate-500">
+        <a href="#demo" class="transition hover:text-slate-900">Demo</a>
+        <a href="#uses" class="transition hover:text-slate-900">Use cases</a>
+        <a href="#pricing" class="transition hover:text-slate-900">Pricing</a>
+        <a href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener" class="transition hover:text-slate-900">GitHub ↗</a>
+      </nav>
+    </div>
+    <p class="mt-6 border-t border-slate-100 pt-5 text-center text-xs leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/KKKKhazix/agent-autoloop" class="font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 transition hover:text-slate-900">KKKKhazix/agent-autoloop</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var timeline = document.getElementById('timeline');
+  var statusPill = document.getElementById('statusPill');
+  var dot = document.getElementById('dot');
+  var runBtn = document.getElementById('runBtn');
+  var resetBtn = document.getElementById('resetBtn');
+  var issueInput = document.getElementById('issueTitle');
+  var agentSelect = document.getElementById('agentSelect');
+  var rulePreview = document.getElementById('rulePreview');
+  var summary = document.getElementById('summary');
+  var touchCount = document.getElementById('touchCount');
+
+  var runToken = 0;
+  var busy = false;
+
+  function wait(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  var AGENT_IDS = { 'Claude Code': 'claude-code', 'Codex': 'codex', 'ACP agent': 'acp' };
+
+  function renderRule() {
+    var id = AGENT_IDS[agentSelect.value] || 'claude-code';
+    rulePreview.textContent =
+      '{\n' +
+      '  "when": { "source": "github", "types": ["issues.opened"] },\n' +
+      '  "to": "' + id + '",\n' +
+      '  "cwd": "~/code/billing",\n' +
+      '  "skill": "handle-issue"\n' +
+      '}';
+  }
+
+  function setStatus(kind) {
+    var map = {
+      idle:    { label: 'idle',           cls: 'bg-slate-100 text-slate-500',     dot: 'bg-slate-300' },
+      running: { label: 'running',        cls: 'bg-indigo-50 text-indigo-700',    dot: 'bg-indigo-500 animate-pulse' },
+      waiting: { label: 'waiting on you', cls: 'bg-amber-100 text-amber-800',     dot: 'bg-amber-500 animate-pulse' },
+      done:    { label: 'closed',         cls: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-500' }
+    };
+    var s = map[kind] || map.idle;
+    statusPill.textContent = s.label;
+    statusPill.className = 'rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ' + s.cls;
+    dot.className = 'h-2 w-2 rounded-full ' + s.dot;
+  }
+
+  function scrollTimeline() {
+    timeline.scrollTop = timeline.scrollHeight;
+  }
+
+  function addEntry(icon, text, meta) {
+    var row = document.createElement('div');
+    row.className = 'fade-up flex items-start gap-3';
+
+    var chip = document.createElement('div');
+    chip.className = 'mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-slate-200 bg-white text-[13px]';
+    chip.textContent = icon;
+
+    var body = document.createElement('div');
+    body.className = 'min-w-0 flex-1';
+    var p = document.createElement('p');
+    p.className = 'text-sm leading-relaxed text-slate-700';
+    p.textContent = text;
+    body.appendChild(p);
+
+    var time = document.createElement('div');
+    time.className = 'shrink-0 pt-1 text-[11px] tabular-nums text-slate-400';
+    time.textContent = meta || '';
+
+    row.appendChild(chip);
+    row.appendChild(body);
+    row.appendChild(time);
+    timeline.appendChild(row);
+    scrollTimeline();
+  }
+
+  function askApproval() {
+    return new Promise(function (resolve) {
+      var card = document.createElement('div');
+      card.className = 'fade-up rounded-xl border border-amber-300 bg-amber-50 p-4';
+      card.innerHTML =
+        '<div class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-amber-800">' +
+          '<span>⚠️</span> Approval needed · 1 of 1' +
+        '</div>' +
+        '<p class="mt-2 text-sm font-semibold text-slate-900">Archive 1,238 stale invoice drafts?</p>' +
+        '<p class="mt-1 text-[13px] leading-relaxed text-slate-600">' +
+          'Deleting data is on your rule\'s ask-first list. The loop is paused — no process, no tokens — until you answer.' +
+        '</p>' +
+        '<pre class="mt-3 overflow-x-auto rounded-lg bg-slate-900 px-3 py-2 text-[11.5px] leading-relaxed text-slate-200">' +
+          '<code>psql -c "DELETE FROM invoices WHERE status = \'draft\' AND created_at &lt; now() - interval \'90 days\'"</code>' +
+        '</pre>' +
+        '<div class="mt-3 flex flex-wrap gap-2">' +
+          '<button type="button" data-a="yes" class="rounded-lg bg-slate-900 px-3.5 py-2 text-[13px] font-medium text-white transition hover:bg-slate-800">Approve</button>' +
+          '<button type="button" data-a="no" class="rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-[13px] font-medium text-slate-700 transition hover:border-slate-400">Reject</button>' +
+        '</div>';
+
+      card.addEventListener('click', function (e) {
+        var btn = e.target.closest ? e.target.closest('button[data-a]') : null;
+        if (!btn || btn.disabled) return;
+        var yes = btn.getAttribute('data-a') === 'yes';
+
+        var btns = card.querySelectorAll('button[data-a]');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].disabled = true;
+          btns[i].classList.add('opacity-40', 'cursor-not-allowed');
+        }
+
+        var tag = document.createElement('div');
+        tag.className = 'mt-3 text-[12px] font-semibold ' + (yes ? 'text-emerald-700' : 'text-rose-700');
+        tag.textContent = yes ? '✓ Approved — the loop is resuming.' : '✕ Rejected — the agent will work around it.';
+        card.appendChild(tag);
+
+        resolve(yes);
+      });
+
+      timeline.appendChild(card);
+      scrollTimeline();
+    });
+  }
+
+  function resetAll() {
+    runToken++;
+    busy = false;
+    timeline.innerHTML = '';
+    summary.classList.add('hidden');
+    setStatus('idle');
+    runBtn.disabled = false;
+    runBtn.textContent = '▶ Run agent';
+    runBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+    touchCount.textContent = '1';
+  }
+
+  async function runLoop() {
+    if (busy) return;
+    busy = true;
+
+    var id = ++runToken;
+    var title = issueInput.value.trim() || 'Untitled issue';
+    var agent = agentSelect.value;
+
+    timeline.innerHTML = '';
+    summary.classList.add('hidden');
+    touchCount.textContent = '1';
+    runBtn.disabled = true;
+    runBtn.textContent = 'Running…';
+    runBtn.classList.add('opacity-70', 'cursor-not-allowed');
+    setStatus('running');
+
+    var t0 = Date.now();
+    function stamp() {
+      return ((Date.now() - t0) / 1000).toFixed(1) + 's';
+    }
+
+    var steps = [
+      ['📥', 'github · issues.opened — "' + title + '"'],
+      ['🧭', 'rule "handle-issue" matched → ' + agent + ' in ~/code/billing'],
+      ['🔍', 'read 14 files · found a rounding error in invoiceTotals.ts'],
+      ['🛠️', 'patch written — 3 files changed, +18 / −9'],
+      ['✅', 'npm test — 42 passed, 0 failed']
+    ];
+
+    for (var i = 0; i < steps.length; i++) {
+      if (id !== runToken) return;
+      addEntry(steps[i][0], steps[i][1], stamp());
+      await wait(520 + Math.random() * 320);
+    }
+    if (id !== runToken) return;
+
+    setStatus('waiting');
+    var approved = await askApproval();
+    if (id !== runToken) return;
+
+    setStatus('running');
+
+    if (approved) {
+      addEntry('⚠️', 'migration 0042 applied — 1,238 stale draft rows archived', stamp());
+    } else {
+      addEntry('🛑', 'migration skipped — left a note on PR #517 for you', stamp());
+    }
+    await wait(650);
+    if (id !== runToken) return;
+
+    addEntry('📮', 'opened PR #517 · "fix: round invoice totals to cents"', stamp());
+    await wait(650);
+    if (id !== runToken) return;
+
+    addEntry('🏁', 'loop closed — 3m 12s elapsed', stamp());
+    setStatus('done');
+
+    summary.classList.remove('hidden');
+    summary.classList.remove('fade-up');
+    void summary.offsetWidth;
+    summary.classList.add('fade-up');
+
+    runBtn.disabled = false;
+    runBtn.textContent = '▶ Run again';
+    runBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+    busy = false;
+  }
+
+  runBtn.addEventListener('click', runLoop);
+  resetBtn.addEventListener('click', resetAll);
+  agentSelect.addEventListener('change', renderRule);
+
+  issueInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      runLoop();
+    }
+  });
+
+  renderRule();
+  setStatus('idle');
+
+  /* ---------- waitlist ---------- */
+  var waitlistForm = document.getElementById('waitlistForm');
+  var waitlistMsg = document.getElementById('waitlistMsg');
+  var emailInput = document.getElementById('emailInput');
+
+  waitlistForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var value = (emailInput.value || '').trim();
+    if (!value) return;
+    waitlistMsg.textContent = "You're on the list — this is a sample, nothing was sent.";
+    waitlistMsg.classList.remove('hidden');
+    emailInput.disabled = true;
+    var btn = waitlistForm.querySelector('button[type="submit"]');
+    if (btn) {
+      btn.disabled = true;
+      btn.classList.add('opacity-60', 'cursor-not-allowed');
+      btn.textContent = 'On the list ✓';
+    }
+  });
+
+  var planButtons = document.querySelectorAll('[data-waitlist]');
+  for (var j = 0; j < planButtons.length; j++) {
+    planButtons[j].addEventListener('click', function () {
+      document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (!waitlistMsg.classList.contains('hidden')) return;
+      waitlistMsg.textContent = 'Pick a plan below and drop your email — sample only, nothing is sent.';
+      waitlistMsg.classList.remove('hidden');
+      setTimeout(function () {
+        emailInput.focus();
+      }, 450);
+    });
+  }
+})();
+</script>
+</body>
+</html>
