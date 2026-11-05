@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShotLens — Reverse-engineer any video, shot by shot</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { color-scheme: light; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .lbl { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: #94a3b8; }
+  .chip {
+    display: inline-flex; align-items: center; gap: .3rem;
+    border-radius: 9999px; padding: .14rem .55rem;
+    font-size: 11px; font-weight: 600; line-height: 1.5; white-space: nowrap;
+  }
+  .chip-live   { background:#ecfdf5; color:#047857; box-shadow: inset 0 0 0 1px #a7f3d0; }
+  .chip-ai     { background:#f5f3ff; color:#6d28d9; box-shadow: inset 0 0 0 1px #ddd6fe; }
+  .chip-code   { background:#f0f9ff; color:#0369a1; box-shadow: inset 0 0 0 1px #bae6fd; }
+  .chip-three  { background:#fffbeb; color:#b45309; box-shadow: inset 0 0 0 1px #fde68a; }
+  .chip-avatar { background:#fff1f2; color:#be123c; box-shadow: inset 0 0 0 1px #fecdd3; }
+  .chip-screen { background:#f0fdfa; color:#0f766e; box-shadow: inset 0 0 0 1px #99f6e4; }
+
+  .bar-live{background:#10b981} .bar-ai{background:#8b5cf6} .bar-code{background:#0ea5e9}
+  .bar-three{background:#f59e0b} .bar-avatar{background:#f43f5e} .bar-screen{background:#14b8a6}
+
+  .seg { position: relative; border-radius: 6px; border: 0; padding: 0; cursor: pointer; transition: filter .15s ease; }
+  .seg:hover { filter: brightness(1.08); }
+  .seg.is-active { outline: 2px solid #0f172a; outline-offset: 2px; }
+
+  .sample { transition: border-color .15s ease, box-shadow .15s ease; }
+  .sample[aria-pressed="true"] { border-color: #0f172a; box-shadow: 0 0 0 2px rgba(15,23,42,.14); }
+
+  .shot-item { transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease; }
+  .shot-item:hover { border-color: #cbd5e1; }
+  .shot-item.is-active { border-color: #0f172a; background: #f8fafc; box-shadow: 0 0 0 2px rgba(15,23,42,.12); }
+
+  .fade-in { animation: fadeUp .32s ease-out both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .thin-scroll { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+  .thin-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+  .thin-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body class="bg-[#fbfbfd] text-slate-900">
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
+    <div class="flex items-center gap-2.5">
+      <div class="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-white">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2.5" y="5" width="11" height="14" rx="2"></rect>
+          <path d="M13.5 9.5H19a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-5.5"></path>
+          <circle cx="8" cy="12" r="2.4" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </div>
+      <span class="text-[15px] font-semibold tracking-tight">ShotLens</span>
+      <span class="ml-1 hidden rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500 sm:inline">Concept</span>
+    </div>
+    <nav class="hidden items-center gap-6 text-sm text-slate-600 md:flex">
+      <a href="#analyzer" class="hover:text-slate-900">Demo</a>
+      <a href="#usecases" class="hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="mx-auto max-w-6xl px-5 pt-12 pb-4 sm:pt-16">
+  <div class="max-w-3xl">
+    <span class="chip" style="background:#eef2ff;color:#4338ca;box-shadow:inset 0 0 0 1px #c7d2fe">Reverse-engineering for video</span>
+    <h1 class="mt-5 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
+      Reverse-engineer any video,<br class="hidden sm:block">
+      <span class="text-indigo-600">shot by shot.</span>
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed text-slate-600">
+      Drop in a competitor's ad. ShotLens tells you which shots were filmed, which were AI-generated and which were coded —
+      then hands you the prompts, camera notes and edit map to remake it for your own product.
+    </p>
+    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500">
+      <span class="flex items-center gap-1.5"><span class="text-emerald-500">✓</span> Per-shot verdict with evidence</span>
+      <span class="flex items-center gap-1.5"><span class="text-emerald-500">✓</span> Reverse-engineered prompts</span>
+      <span class="flex items-center gap-1.5"><span class="text-emerald-500">✓</span> Exportable remake plan</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANALYZER ============ -->
+<section id="analyzer" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-8">
+  <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,.04)] sm:p-7">
+
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <div class="lbl">Step 1 · Sample data</div>
+        <h2 class="mt-1 text-lg font-semibold tracking-tight">Pick a video to reverse-engineer</h2>
+      </div>
+      <p class="text-xs text-slate-500">No upload in this demo — 3 pre-analyzed samples</p>
+    </div>
+
+    <div id="sampleList" class="mt-4 grid gap-3 sm:grid-cols-3"></div>
+
+    <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <button id="analyzeBtn" type="button" class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+        <span id="analyzeLabel">Reverse-engineer this video</span>
+      </button>
+      <p class="text-xs leading-relaxed text-slate-500">Simulated run, ~30s in the real CLI. It writes a full <span class="mono">report.html</span>.</p>
+    </div>
+
+    <div id="progress" class="mt-4 hidden" aria-live="polite">
+      <div class="flex items-center justify-between text-xs">
+        <span id="progressStep" class="font-medium text-slate-700">Extracting key frames</span>
+        <span class="text-slate-400">working…</span>
+      </div>
+      <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+        <div id="progressBar" class="h-full w-0 rounded-full bg-slate-900 transition-all duration-300"></div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="results" class="mt-7 hidden">
+
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex min-w-0 items-center gap-2">
+          <span class="chip" style="background:#eef2ff;color:#4338ca;box-shadow:inset 0 0 0 1px #c7d2fe">Sample data</span>
+          <span id="resultTitle" class="truncate text-sm font-medium text-slate-700"></span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" data-toast="Report export is simulated — nothing was downloaded" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:text-slate-900">Export report.html</button>
+          <button type="button" data-toast="Prompts copied — sample data, nothing left your browser" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:text-slate-900">Copy all prompts</button>
+        </div>
+      </div>
+
+      <div id="verdict" class="mt-3"></div>
+
+      <div class="mt-6">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="lbl">Timeline · click a shot</span>
+          <span class="text-[11px] text-slate-400">segment width = real shot duration</span>
+        </div>
+        <div id="timeline" class="mt-2 flex h-9 gap-1"></div>
+        <div id="ruler" class="mt-1.5 flex justify-between text-[10px] font-medium text-slate-400"></div>
+        <div id="legend" class="mt-3 flex flex-wrap gap-2"></div>
+      </div>
+
+      <div class="mt-6 grid gap-4 lg:grid-cols-[minmax(0,290px)_minmax(0,1fr)]">
+        <div id="shotList" class="thin-scroll flex flex-col gap-2 lg:max-h-[680px] lg:overflow-y-auto lg:pr-1"></div>
+        <div id="detail"></div>
+      </div>
+
+      <div id="plan" class="mt-8"></div>
+
+      <p class="mt-6 text-center text-[11px] leading-relaxed text-slate-400">
+        Everything above is pre-baked sample data rendered in your browser. No video is uploaded and no network request is made.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ USE CASES ============ -->
+<section id="usecases" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
+  <div class="max-w-2xl">
+    <div class="lbl">Use cases</div>
+    <h2 class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Built for the people who have to ship the ad by Friday</h2>
+  </div>
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-lg">🎯</div>
+      <h3 class="mt-4 font-semibold tracking-tight">Paid social teams</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">
+        A competitor is scaling a winning ad and you have 48 hours to answer it. Get every shot classified — then know
+        which three you can film this afternoon and which two you can generate tonight.
+      </p>
+      <p class="mt-3 text-xs font-medium text-slate-400">Typical: 15s TikTok ad → 7 shots → 2 shoot days cut to 1</p>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-violet-50 text-lg">✂️</div>
+      <h3 class="mt-4 font-semibold tracking-tight">Content &amp; brand marketing</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">
+        Decide whether a reference is filmable in-house, worth paying a model for, or cheaper to build in code — before
+        the budget is locked. The remake plan splits work into film / generate / code.
+      </p>
+      <p class="mt-3 text-xs font-medium text-slate-400">Typical: 70s product film → 12 shots → 83% code-built</p>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-sky-50 text-lg">⚡</div>
+      <h3 class="mt-4 font-semibold tracking-tight">Creators &amp; small agencies</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">
+        Turn a viral reference into a shot list you can hand to a one-person crew: camera positions, lighting notes,
+        caption timing and a prompt for every AI shot.
+      </p>
+      <p class="mt-3 text-xs font-medium text-slate-400">Typical: 19s mixed clip → 10 shots → 3 generations, 1 shoot</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="mx-auto max-w-6xl scroll-mt-20 px-5 pb-16">
+  <div class="max-w-2xl">
+    <div class="lbl">Pricing</div>
+    <h2 class="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Start with one video. Scale to a content engine.</h2>
+    <p class="mt-3 text-sm text-slate-600">Prices are placeholders for this concept demo. Nothing is charged and nothing is submitted.</p>
+  </div>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+      <h3 class="font-semibold tracking-tight">Free</h3>
+      <p class="mt-1 text-sm text-slate-500">To try one reference.</p>
+      <div class="mt-4 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold tracking-tight">$0</span>
+        <span class="text-sm text-slate-500">/mo</span>
+      </div>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>3 breakdowns per month</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>Shot-by-shot verdict with evidence</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>Captions and audio map</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>HTML report export</li>
+      </ul>
+      <button type="button" data-toast="Concept demo — no account was created" class="mt-6 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-slate-300 hover:bg-slate-50">Start free</button>
+    </div>
+
+    <div class="relative flex flex-col rounded-2xl border-2 border-slate-900 bg-white p-6 shadow-[0_8px_30px_rgba(15,23,42,.06)]">
+      <span class="absolute -top-3 left-6 rounded-full bg-slate-900 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">Most popular</span>
+      <h3 class="font-semibold tracking-tight">Studio</h3>
+      <p class="mt-1 text-sm text-slate-500">For creators shipping weekly.</p>
+      <div class="mt-4 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold tracking-tight">$29</span>
+        <span class="text-sm text-slate-500">/mo</span>
+      </div>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>30 breakdowns per month</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>A prompt per AI shot</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>SRT / ASS caption export</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>Code build specs for coded shots</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>Priority queue</li>
+      </ul>
+      <button type="button" data-toast="You joined the Studio waitlist — sample data only, nothing was sent" class="mt-6 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">Join waitlist</button>
+    </div>
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+      <h3 class="font-semibold tracking-tight">Agency</h3>
+      <p class="mt-1 text-sm text-slate-500">For teams running tests.</p>
+      <div class="mt-4 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold tracking-tight">$99</span>
+        <span class="text-sm text-slate-500">/mo</span>
+      </div>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>Unlimited breakdowns</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>5 seats + shared prompt library</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>White-label reports for clients</li>
+        <li class="flex gap-2"><span class="text-emerald-500">✓</span>API access</li>
+      </ul>
+      <button type="button" data-toast="Thanks — sample data only, nothing was submitted" class="mt-6 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-slate-300 hover:bg-slate-50">Talk to us</button>
+    </div>
+
+  </div>
+
+  <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+    <div class="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
+      <div>
+        <h3 class="text-lg font-semibold tracking-tight">Get early access</h3>
+        <p class="mt-1 text-sm text-slate-600">We're opening 50 seats for ad teams this quarter. Leave an email and we'll ping you — in the real product, not in this demo.</p>
+      </div>
+      <form id="waitlistForm" class="flex w-full flex-col gap-2 sm:flex-row lg:w-auto" novalidate>
+        <input id="email" type="email" value="you@agency.com" aria-label="Email address"
+               class="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm text-slate-800 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-900/10 lg:w-64">
+        <button type="submit" class="shrink-0 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">Join waitlist</button>
+      </form>
+    </div>
+    <p id="waitlistNote" class="mt-3 hidden text-sm font-medium text-emerald-600">✅ You're on the list — sample data only, nothing was sent anywhere.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-5 py-8">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <div class="grid h-7 w-7 place-items-center rounded-md bg-slate-900 text-white">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2.5" y="5" width="11" height="14" rx="2"></rect>
+            <path d="M13.5 9.5H19a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-5.5"></path>
+          </svg>
+        </div>
+        <span class="text-sm font-semibold tracking-tight">ShotLens</span>
+      </div>
+      <p class="text-xs text-slate-500">English (US) · USD · Built as a concept, not a product.</p>
+    </div>
+    <p class="mt-5 border-t border-slate-100 pt-5 text-xs leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project <a href="https://github.com/JuneYaooo/rea-video" class="font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 hover:decoration-slate-500">JuneYaooo/rea-video</a> (Apache-2.0), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<!-- ============ TOAST ============ -->
+<div id="toast" class="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4 opacity-0 transition-opacity duration-200">
+  <div id="toastText" class="max-w-md rounded-full bg-slate-900 px-4 py-2 text-center text-xs font-medium text-white shadow-lg">Toast</div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- type metadata ---------------- */
+  var TYPE = {
+    live:   { label: "Live footage",   chip: "chip-live",   bar: "bar-live",   g: ["#a7f3d0", "#34d399"] },
+    ai:     { label: "AI generated",   chip: "chip-ai",     bar: "bar-ai",     g: ["#ddd6fe", "#a78bfa"] },
+    code:   { label: "Code / motion",  chip: "chip-code",   bar: "bar-code",   g: ["#bae6fd", "#38bdf8"] },
+    three:  { label: "3D render",      chip: "chip-three",  bar: "bar-three",  g: ["#fde68a", "#fbbf24"] },
+    avatar: { label: "AI avatar",      chip: "chip-avatar", bar: "bar-avatar", g: ["#fecdd3", "#fb7185"] },
+    screen: { label: "Screen capture", chip: "chip-screen", bar: "bar-screen", g: ["#99f6e4", "#2dd4bf"] }
+  };
+
+  /* ---------------- sample data ---------------- */
+  var VIDEOS = [
+    {
+      id: "serum",
+      name: "Glow Serum — 15s TikTok ad",
+      meta: "9:16 · paid social · 15.0s · 7 shots",
+      thumb: "linear-gradient(135deg,#fde68a,#fbcfe8 45%,#c7d2fe)",
+      verdict: "62% live footage · 24% AI video · 14% code type",
+      summary: "One set, two camera positions, all live capture except a 1.7s skin macro and a 2.4s hero B-roll that were AI-generated. 122 BPM library track; five of six cuts land on the beat.",
+      supply: "the product bottle, before/after stills shot on the same tripod mark, one page of offer copy",
+      shots: [
+        {
+          k: "live", start: 0, end: 2.1,
+          title: "Hook: creator holds the bottle to camera",
+          onscreen: "Creator at a bright window, bottle in hand. Handheld push-in from half-body to a tight chest-up frame.",
+          evidence: [
+            "Skin texture, flyaway hairs and fabric folds stay consistent frame to frame",
+            "Window reflection shifts with real camera parallax — no liquid warping",
+            "Hand-to-bottle contact holds up across the whole push-in"
+          ],
+          camera: "Handheld, ~35mm equiv., window key camera-left, white bounce fill on the right, 5600K, slightly cool grade.",
+          captions: "“Is your serum even absorbing?” — 700 weight white, 3px black outline, word-by-word pop-in on beat 1.",
+          audio: "Live room tone; bottle cap click SFX at 0.8s.",
+          remake: [
+            "Shoot 9:16 on a phone at 1/60s, window light camera-left",
+            "White tee against a warm grey wall — one set for the whole ad",
+            "Push in about 20cm over 2s and land the cut on the first beat"
+          ]
+        },
+        {
+          k: "live", start: 2.1, end: 4.2,
+          title: "Application: two drops on the cheek",
+          onscreen: "Tighter close-up of the creator tapping serum into the cheek — clearly a second camera position on the same set.",
+          evidence: [
+            "Same set, tighter framing — a classic B-camera setup",
+            "Product sheen and finger indents deform naturally",
+            "Color grade matches shot 1 exactly"
+          ],
+          camera: "Same window key, 60–85mm equiv., 1/60s at f/2.2, slight handheld drift.",
+          captions: "“Two drops. That's it.” — centered, 2s on screen.",
+          audio: "Library music enters at 122 BPM; soft skin-tap SFX at 2.6s.",
+          remake: [
+            "Keep the same light — change lens or crop instead of moving the set",
+            "Keep the hand movement under 1.5s so it cuts cleanly"
+          ]
+        },
+        {
+          k: "ai", start: 4.2, end: 5.9,
+          title: "Skin macro: droplet spreading, slow motion",
+          onscreen: "Extreme close-up of a serum droplet spreading across skin, 120fps look. The beat drops here.",
+          evidence: [
+            "Pore pattern is smoother than the live shots on either side",
+            "The droplet edge re-forms in a way real liquid does not",
+            "No parallax during a move that should have some",
+            "Grain signature differs from the surrounding live footage"
+          ],
+          spec: {
+            label: "Reverse-engineered prompt",
+            body: "Extreme macro of a single serum droplet spreading across hydrated human cheek skin, shallow depth of field, soft window light from the left, 120fps slow motion, natural skin texture and pores, no text, vertical 9:16, 4s."
+          },
+          captions: "No caption — the shot is 1.7s and carries the beat drop.",
+          audio: "Beat drop at 4.2s, subtle water SFX.",
+          remake: [
+            "Generate from a still of your own bottle so branding stays correct",
+            "Batch 8 takes and keep the one where the droplet stays off-center",
+            "Match grain to the live shots or it will read as fake"
+          ]
+        },
+        {
+          k: "live", start: 5.9, end: 8.4,
+          title: "Before / after split screen, same set",
+          onscreen: "Static split screen: day 1 and day 14 headshots side by side, small labels in the lower third.",
+          evidence: [
+            "Both halves share identical framing, backdrop wrinkles and light falloff",
+            "Compression blocks match in both halves — one export, not two clips",
+            "No AI smoothing on either cheek at 200% zoom"
+          ],
+          camera: "Locked-off tripod, same window key, 35mm equiv., identical distance on both days.",
+          captions: "“Day 1” / “Day 14” labels, 2.5s, lower third.",
+          audio: "Music continues; whoosh into the split at 5.9s.",
+          remake: [
+            "Shoot both days with the same tripod mark and the same time of day",
+            "Match white balance before you compare the two halves"
+          ]
+        },
+        {
+          k: "code", start: 8.4, end: 10.2,
+          title: "Kinetic type: “3 drops. 14 days.”",
+          onscreen: "Solid cream background; three words stamp in on the beat and blur out.",
+          evidence: [
+            "Type rasterizes perfectly — vector, not filmed or generated",
+            "Easing curves repeat exactly on every word",
+            "No camera movement, no grain, no temporal noise"
+          ],
+          spec: {
+            label: "Build spec",
+            body: "Composition at 1080x1920, background #F7F1EA, heavy sans (Inter 900), word-by-word scale 0.86 to 1 with a 12px blur-out, 6 frames per word, locked to 122 BPM. Reuse the same easing for the whole campaign."
+          },
+          captions: "The on-screen type is the caption for this shot.",
+          audio: "Three UI-style thumps on 122 BPM beats.",
+          remake: [
+            "Build it as a 3-word sequence at the track BPM",
+            "Reuse the exact easing for every ad in the campaign"
+          ]
+        },
+        {
+          k: "ai", start: 10.2, end: 12.6,
+          title: "Hero B-roll: bottle on silk, golden light",
+          onscreen: "Slow dolly past the bottle lying on ivory silk, warm backlight, dust motes in the air.",
+          evidence: [
+            "Label text on the bottle is misspelled in 3 of 24 sampled frames",
+            "Silk folds change topology between frames",
+            "The key light has no plausible off-screen origin"
+          ],
+          spec: {
+            label: "Reverse-engineered prompt",
+            body: "Product hero shot of a frosted glass serum bottle resting on ivory silk, warm golden backlight from behind right, dust motes in the air, slow 15-degree dolly left, shallow depth of field, 35mm, filmic grade, vertical 9:16, 4s. Keep the label blank — composite your own in post."
+          },
+          captions: "No caption. The bottom-left price sticker is added in the edit, not generated.",
+          audio: "Music bed only.",
+          remake: [
+            "Generate with a blank label and composite real packaging in post",
+            "Ask for 8s so you can pick the cleanest 2.4s",
+            "Check every sampled frame for text artifacts"
+          ]
+        },
+        {
+          k: "live", start: 12.6, end: 15.0,
+          title: "CTA: creator points down to the caption",
+          onscreen: "Back to the opening framing; the creator smiles and points toward the caption area so the ad can loop.",
+          evidence: [
+            "Same framing and lighting as shot 1 — reshot or reverse-cut",
+            "The hand gesture occludes correctly against the background",
+            "Small lens flare matches the window position throughout"
+          ],
+          camera: "Handheld, 35mm equiv., identical to shot 1 so the loop is seamless.",
+          captions: "“Link in bio — 20% off this week” — bottom center, on screen 2.4s.",
+          audio: "Final beat plus a soft UI pop at 14.6s.",
+          remake: [
+            "Match shot 1 exactly so the loop has no seam",
+            "Keep the CTA text inside the safe zone for TikTok and Reels"
+          ]
+        }
+      ],
+      plan: {
+        film: [
+          "One set: window light camera-left, warm grey wall",
+          "Shots 1, 2, 4, 7 — hook, application, before/after, CTA",
+          "Both before/after stills on the same tripod mark"
+        ],
+        generate: [
+          "Shot 3: 1.7s skin macro, image-to-video from a skin still",
+          "Shot 6: 2.4s hero B-roll on silk — blank label, composite in post"
+        ],
+        code: [
+          "Shot 5: 3-word kinetic type locked to 122 BPM",
+          "Burn-in captions and a 1080x1920 H.264 export"
+        ]
+      }
+    },
+
+    {
+      id: "sneaker",
+      name: "Nimbus Sneaker — 22s AI product film",
+      meta: "9:16 · brand launch · 22.0s · 7 shots",
+      thumb: "linear-gradient(135deg,#c7d2fe,#a5b4fc 40%,#fbcfe8)",
+      verdict: "74% AI video · 12% 3D render · 14% code",
+      summary: "No camera involved. Five of seven shots come from one text-to-video model sharing a single style block, the exploded sole is 3D-rendered and the price card is code. Batchable into 3 generations.",
+      supply: "product photos on white, a mesh/CAD file if you have one, the price and promo code",
+      shots: [
+        {
+          k: "ai", start: 0, end: 3.2,
+          title: "Hero: sneaker floating in liquid chrome",
+          onscreen: "A single sneaker hangs in a pool of mercury that ripples around it, then cuts on a beat.",
+          evidence: [
+            "The tread pattern re-draws itself between frames",
+            "Chrome reflections match no real environment",
+            "Logo stitching smears for 3 frames around 1.9s"
+          ],
+          spec: {
+            label: "Reverse-engineered prompt",
+            body: "A single running sneaker suspended in a pool of liquid chrome, slow ripple across the surface, studio lighting from above with one hard specular highlight, hyperreal product photography, 50mm, shallow depth of field, no text or logos, vertical 9:16, 5s."
+          },
+          captions: "None — clean opening. The brand name appears at 2.8s as a code overlay.",
+          audio: "Deep sub hit at 0.0s; track starts at 0.2s at 100 BPM.",
+          remake: [
+            "Generate 4 takes; keep the one where the tread reads at 0.5x",
+            "Keep the silhouette matching your real shoe",
+            "Composite your logo in post — never ask the model for text"
+          ]
+        },
+        {
+          k: "ai", start: 3.2, end: 6.8,
+          title: "Runner mid-air over a wet street",
+          onscreen: "Low-angle shot of a runner frozen mid-stride above a rain-soaked street, tail-light bokeh behind.",
+          evidence: [
+            "Legs pass through each other for 2 frames around 5.1s",
+            "Rain streaks fall in two directions at once",
+            "The water splash has no contact point with the ground"
+          ],
+          spec: {
+            label: "Reverse-engineered prompt",
+            body: "Low-angle slow-motion shot of a runner frozen mid-air above a rain-soaked city street at night, red tail-light bokeh behind, water droplets hanging in the air, cinematic teal and orange grade, 24mm anamorphic, vertical 9:16, 4s."
+          },
+          captions: "“Built for the 5am run” — two words at a time, bottom third.",
+          audio: "Whoosh-in at 3.2s, low synth pulse throughout.",
+          remake: [
+            "Ask for the airborne pose explicitly — that is the whole shot",
+            "Generate 6 takes; running-leg anatomy fails often",
+            "Check hands and ankles before you commit"
+          ]
+        },
+        {
+          k: "three", start: 6.8, end: 9.4,
+          title: "Exploded view: sole layers separate",
+          onscreen: "The sneaker splits into five floating layers — knit upper, foam, plate, outsole, laces — each rotating slightly.",
+          evidence: [
+            "Geometry and edges are perfectly uniform — rendered, not generated",
+            "Layer spacing follows exact arithmetic and is identical on both sides",
+            "No grain or temporal noise at all"
+          ],
+          spec: {
+            label: "Build spec",
+            body: "Render, do not generate: 5 mesh layers from your real CAD, exploded 12cm apart, 24 fps turntable at 15 degrees/second, studio HDRI. A Three.js version works in-browser for a free tier."
+          },
+          captions: "Per-layer labels appear as a code overlay: “Knit / Foam / Plate / Outsole”.",
+          audio: "Mechanical clicks as each layer separates, on the beat.",
+          remake: [
+            "Split your actual product mesh into 5 parts",
+            "Render 2.6s at 60fps so the explode reads smoothly",
+            "Match the camera angle of shot 1 exactly"
+          ]
+        },
+        {
+          k: "ai", start: 9.4, end: 13.0,
+          title: "Rooftop at dawn, the runner stretches",
+          onscreen: "Wide shot of a runner on a rooftop at sunrise, skyline behind, lens flare crossing frame.",
+          evidence: [
+            "Skyline buildings repeat identically in the background",
+            "The flare moves independently of the camera",
+            "Shadow direction flips between 11.2s and 11.6s"
+          ],
+          spec: {
+            label: "Reverse-engineered prompt",
+            body: "Wide cinematic shot of a runner stretching on a rooftop at sunrise, dense city skyline behind, warm lens flare crossing the frame from the left, morning haze, 35mm, natural color grade, vertical 9:16, 5s."
+          },
+          captions: "“Made for city mornings” — appears at 10.2s, stays 2s.",
+          audio: "Music lifts into the chorus at 9.4s.",
+          remake: [
+            "Ask for an empty skyline or you will get repeated buildings",
+            "Generate a longer take so the flare can be timed to the beat"
+          ]
+        },
+        {
+          k: "code", start: 13.0, end: 16.2,
+          title: "Price card + kinetic type",
+          onscreen: "Black card slides up from the bottom: “Nimbus One — $148”, then the price flips to “$118 with code DAWN”.",
+          evidence: [
+            "Text stays vector-crisp at 4x zoom",
+            "The card easing repeats the same curve as shot 5's type",
+            "The price swaps in exactly 8 frames — a keyframe, not a model"
+          ],
+          spec: {
+            label: "Build spec",
+            body: "Card slides 0 to 1 in 8 frames, price flip is two 8-frame crossfades, 1080x1920, Inter 800, background #0B0B0F. Export with alpha so the card can be reused across cuts."
+          },
+          captions: "On-screen type doubles as the caption here.",
+          audio: "Cassette-style click on the price flip.",
+          remake: [
+            "Build the card once with props for price and code",
+            "Reuse it across every cut in the campaign"
+          ]
+        },
+        {
+          k: "ai", start: 16.2, end: 19.0,
+          title: "Macro: sole tread, water droplets",
+          onscreen: "Slow tracking macro across the outsole tread with water beading and dripping off.",
+          evidence: [
+            "Tread depth changes between the left and right side of frame",
+            "Droplets disappear rather than evaporating",
+            "Motion blur direction contradicts the camera move"
+          ],
+          spec: {
+            label: "Reverse-engineered prompt",
+            body: "Slow macro tracking shot across a rubber outsole tread pattern, water beading and dripping off, side light raking across the texture, extreme close-up, shallow depth of field, 100mm macro, vertical 9:16, 4s."
+          },
+          captions: "None.",
+          audio: "Water drips synced to the beat.",
+          remake: [
+            "Generate at 2x the length you need — the good 2.8s is rarely first",
+            "Do not ask for the logo in-prompt; it will always mangle"
+          ]
+        },
+        {
+          k: "ai", start: 19.0, end: 22.0,
+          title: "CTA: sneaker lands, wordmark fades in",
+          onscreen: "The sneaker drops into frame and settles; the wordmark fades up underneath.",
+          evidence: [
+            "The landing has no dust or ground interaction",
+            "Wordmark letterforms wobble on the first 4 frames — generated",
+            "Shadow under the shoe points the opposite way to the light"
+          ],
+          spec: {
+            label: "Reverse-engineered prompt",
+            body: "A running sneaker dropping into frame and settling on a matte black surface, soft top light, product photography, slow motion, no text, vertical 9:16, 3s. Add the wordmark as a code overlay, never in-prompt."
+          },
+          captions: "Wordmark + “Available Thursday” as a code overlay, 1.5s.",
+          audio: "Impact hit on landing, track resolves out.",
+          remake: [
+            "Generate the shoe alone and animate the wordmark in code",
+            "End on the same frame as shot 1 so the ad loops"
+          ]
+        }
+      ],
+      plan: {
+        film: [
+          "No live footage needed for this reference",
+          "Optional: one real photo of your shoe as an image-to-video source"
+        ],
+        generate: [
+          "Shots 1, 2, 4, 6, 7 in 3 batches sharing one style block",
+          "Feed your product photos in as image-to-video references"
+        ],
+        code: [
+          "Shot 3: exploded sole render from your mesh",
+          "Shot 5: price card and kinetic type"
+        ]
+      }
+    },
+
+    {
+      id: "saas",
+      name: "Loopdesk — 18s SaaS product demo",
+      meta: "16:9 · launch page · 18.0s · 6 shots",
+      thumb: "linear-gradient(135deg,#bae6fd,#a5b4fc 45%,#99f6e4)",
+      verdict: "46% screen recording · 32% code UI · 22% AI avatar",
+      summary: "Half of it is material you have to record yourself. The presenter is an AI avatar on a cloned voice, the zooms and the end card are code. Budget one afternoon of screen recording, not a shoot.",
+      supply: "two screen recordings of the product, a 30s talking-head portrait for the avatar, final UI copy",
+      shots: [
+        {
+          k: "avatar", start: 0, end: 2.6,
+          title: "AI avatar presenter opens the demo",
+          onscreen: "A presenter in a grey shirt, chest-up, plain wall behind, talking straight to camera.",
+          evidence: [
+            "Blink rate is roughly half of natural",
+            "Lip-sync drifts by about 2 frames on plosives",
+            "Hair edges are slightly soft against the wall"
+          ],
+          spec: {
+            label: "Avatar setup",
+            body: "Audio-driven avatar: 30s portrait clip on a plain wall, chest-up framing, natural window light. Voice is a clone of your own recording, not a stock TTS voice. Generate the full script in one take and cut on sentence boundaries."
+          },
+          captions: "“Ship product updates without a designer.” — bottom center, 2.6s.",
+          audio: "Cloned human voice; music bed at -22 LUFS underneath.",
+          remake: [
+            "Record 30s of yourself on a plain wall — that is all it needs",
+            "Clone your own voice so the brand stays recognisable",
+            "Cut on sentence boundaries so lip-sync drift never shows"
+          ]
+        },
+        {
+          k: "screen", start: 2.6, end: 7.2,
+          title: "Real screen recording: drag-and-drop board",
+          onscreen: "Actual product UI — a card is dragged between columns, then a progress bar animates.",
+          evidence: [
+            "System cursor is visible and moves with real acceleration",
+            "Font rendering matches the operating system, not a model",
+            "UI text is crisp in every frame with no hallucinated labels"
+          ],
+          camera: "Screen capture at 1080p, 60fps, cursor smoothing on. Recorded with the browser at 110% zoom so text reads on mobile.",
+          captions: "Callout: “Drag any card” with a leader line, added in the edit.",
+          audio: "UI click SFX on drop at 4.1s.",
+          remake: [
+            "Record at 60fps and 110% browser zoom so mobile reads it",
+            "Script the exact mouse path — do not improvise on camera",
+            "Hide notifications and the dock before recording"
+          ]
+        },
+        {
+          k: "code", start: 7.2, end: 9.8,
+          title: "UI mock zoom with cursor highlight",
+          onscreen: "A still of the UI pushes in slowly while a highlight ring pulses around one button.",
+          evidence: [
+            "The zoom is perfectly linear with no sub-pixel crawl",
+            "The highlight ring is a vector circle with zero anti-alias noise",
+            "Identical easing to the end card"
+          ],
+          spec: {
+            label: "Build spec",
+            body: "Take a 2x screenshot of the real UI, apply a 1.0 to 1.35 scale over 45 frames with a 4px highlight ring on the target button, 1080x1920. Reuse the same component for every feature callout."
+          },
+          captions: "“One click to publish” — 1.8s, above the highlighted button.",
+          audio: "Soft UI whoosh on the zoom.",
+          remake: [
+            "Screenshot the UI at 2x so the zoom never goes soft",
+            "Reuse the same zoom component across the whole page"
+          ]
+        },
+        {
+          k: "screen", start: 9.8, end: 13.4,
+          title: "Real screen recording: export flow",
+          onscreen: "The export dialog is opened, a format chosen, and a success toast appears.",
+          evidence: [
+            "Dialog shadows and scrollbars are OS-native",
+            "Typed text appears at real typing rhythm",
+            "The toast animation matches the shipped product, not a mock"
+          ],
+          camera: "Screen capture at 1080p, 60fps, cropped to the dialog. Same zoom level as the previous recording.",
+          captions: "“Export to Figma, PNG or code” — 2s, lower third.",
+          audio: "Keyboard taps, light and unsynced to the music.",
+          remake: [
+            "Record the flow twice and keep the take with no misclicks",
+            "Crop to the dialog so mobile viewers can read it"
+          ]
+        },
+        {
+          k: "code", start: 13.4, end: 15.6,
+          title: "Kinetic type: “Ship in a day”",
+          onscreen: "Indigo background, three words snap in on the beat.",
+          evidence: [
+            "Vector-crisp type with zero grain",
+            "Word timing repeats the same 6-frame stagger",
+            "No camera or motion blur from real footage"
+          ],
+          spec: {
+            label: "Build spec",
+            body: "1080x1920, background #4F46E5, Inter 900, words snap 0.9 to 1 in 6 frames with a 2-frame overshoot, locked to the track BPM. Same component as the other type cards."
+          },
+          captions: "On-screen type is the caption.",
+          audio: "Three synth stabs on the beat.",
+          remake: [
+            "Keep it under 2.2s or viewers scroll past it",
+            "Match the overshoot to the end card for consistency"
+          ]
+        },
+        {
+          k: "avatar", start: 15.6, end: 18.0,
+          title: "Avatar CTA",
+          onscreen: "The same avatar returns, points toward the CTA button, and the end card fades in.",
+          evidence: [
+            "Same portrait, same wall, same shirt — one generation reused",
+            "Gesture does not occlude the background correctly",
+            "Identical lighting to the opening shot"
+          ],
+          spec: {
+            label: "Avatar setup",
+            body: "Reuse the same avatar generation as shot 1 with a short CTA line. Ask for a hand gesture toward camera-right so the end card can fade in on that side."
+          },
+          captions: "“Start free — no card” as a code overlay, bottom center.",
+          audio: "Voice line plus a final UI pop.",
+          remake: [
+            "Reuse shot 1's avatar take so the two bookends match",
+            "Generate the gesture pointing at where your button actually sits"
+          ]
+        }
+      ],
+      plan: {
+        film: [
+          "No live footage — but 7.4s of real screen recording you must capture yourself"
+        ],
+        generate: [
+          "Shots 1 and 6: avatar presenter, one 30s portrait clip plus a cloned voice"
+        ],
+        code: [
+          "Shot 3: UI mock zoom built from 2x screenshots",
+          "Shot 5: kinetic type card",
+          "Burn-in captions and the end card"
+        ]
+      }
+    }
+  ];
+
+  /* ---------------- state & elements ---------------- */
+  var state = { vid: "serum", idx: 0, busy: false };
+  var analyzeTimer = null;
+  var toastTimer = null;
+
+  var sampleListEl = document.getElementById("sampleList");
+  var analyzeBtn = document.getElementById("analyzeBtn");
+  var analyzeLabel = document.getElementById("analyzeLabel");
+  var progressEl = document.getElementById("progress");
+  var progressStep = document.getElementById("progressStep");
+  var progressBar = document.getElementById("progressBar");
+  var resultsEl = document.getElementById("results");
+  var resultTitle = document.getElementById("resultTitle");
+  var verdictEl = document.getElementById("verdict");
+  var timelineEl = document.getElementById("timeline");
+  var rulerEl = document.getElementById("ruler");
+  var legendEl = document.getElementById("legend");
+  var shotListEl = document.getElementById("shotList");
+  var detailEl = document.getElementById("detail");
+  var planEl = document.getElementById("plan");
+  var toastEl = document.getElementById("toast");
+  var toastText = document.getElementById("toastText");
+
+  /* ---------------- helpers ---------------- */
+  function pad2(n) { return n < 10 ? "0" + n : String(n); }
+  function f1(n) { return n.toFixed(1); }
+
+  function currentVideo() {
+    for (var i = 0; i < VIDEOS.length; i++) {
+      if (VIDEOS[i].id === state.vid) return VIDEOS[i];
+    }
+    return VIDEOS[0];
+  }
+
+  function showToast(msg) {
+    toastText.textContent = msg;
+    toastEl.style.opacity = "1";
+    if (toastTimer) { clearTimeout(toastTimer); }
+    toastTimer = setTimeout(function () {
+      toastEl.style.opacity = "0";
+    }, 2400);
+  }
+
+  function mixOf(v) {
+    var totals = {};
+    var total = 0;
+    v.shots.forEach(function (s) {
+      var d = s.end - s.start;
+      totals[s.k] = (totals[s.k] || 0) + d;
+      total += d;
+    });
+    var list = Object.keys(totals).map(function (k) {
+      return { k: k, pct: Math.round((totals[k] / total) * 100) };
+    });
+    list.sort(function (a, b) { return b.pct - a.pct; });
+    return list;
+  }
+
+  /* ---------------- sample picker ---------------- */
+  function renderSamples() {
+    var html = "";
+    VIDEOS.forEach(function (v) {
+      var pressed = (v.id === state.vid) ? "true" : "false";
+      html += '<button type="button" data-video="' + v.id + '" aria-pressed="' + pressed + '" ' +
+        'class="sample w-full rounded-xl border border-slate-200 p-2.5 text-left hover:border-slate-300">' +
+          '<div class="h-16 w-full rounded-lg" style="background:' + v.thumb + '"></div>' +
+          '<div class="mt-2 px-0.5">' +
+            '<div class="truncate text-sm font-medium text-slate-800">' + v.name + '</div>' +
+            '<div class="mt-0.5 text-[11px] text-slate-500">' + v.meta + '</div>' +
+          '</div>' +
+        '</button>';
+    });
+    sampleListEl.innerHTML = html;
+  }
+
+  /* ---------------- verdict ---------------- */
+  function renderVerdict(v) {
+    var chips = "";
+    mixOf(v).forEach(function (m) {
+      chips += '<span class="chip ' + TYPE[m.k].chip + '">' + m.pct + '% ' + TYPE[m.k].label + '</span>';
+    });
+    var last = v.shots[v.shots.length - 1];
+    verdictEl.innerHTML =
+      '<div class="rounded-2xl bg-slate-900 p-5 text-white sm:p-6">' +
+        '<div class="flex flex-wrap items-center gap-2">' +
+          '<span class="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-slate-300">Verdict · sample data</span>' +
+          '<span class="rounded-full bg-emerald-400/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-emerald-300">' + f1(last.end) + 's · ' + v.shots.length + ' shots</span>' +
+        '</div>' +
+        '<h3 class="mt-3 text-xl font-semibold tracking-tight sm:text-2xl">' + v.verdict + '</h3>' +
+        '<p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-300">' + v.summary + '</p>' +
+        '<div class="mt-4 flex flex-wrap gap-2">' + chips + '</div>' +
+      '</div>';
+  }
+
+  /* ---------------- timeline ---------------- */
+  function renderTimeline(v) {
+    var segs = "";
+    v.shots.forEach(function (s, i) {
+      var m = TYPE[s.k];
+      var active = (i === state.idx) ? " is-active" : "";
+      segs += '<button type="button" data-shot="' + i + '" class="seg ' + m.bar + active + '" ' +
+        'style="flex:' + (s.end - s.start) + ' 1 0%;" ' +
+        'aria-label="Shot ' + pad2(i + 1) + ': ' + s.title + '" ' +
+        'title="' + pad2(i + 1) + ' · ' + f1(s.start) + '–' + f1(s.end) + 's · ' + m.label + '"></button>';
+    });
+    timelineEl.innerHTML = segs;
+
+    var total = v.shots[v.shots.length - 1].end;
+    var ruler = "";
+    for (var i = 0; i <= 4; i++) {
+      ruler += '<span>' + f1(total * i / 4) + 's</span>';
+    }
+    rulerEl.innerHTML = ruler;
+
+    var legend = "";
+    mixOf(v).forEach(function (m) {
+      legend += '<span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-500">' +
+        '<span class="inline-block h-2 w-2 rounded-full ' + TYPE[m.k].bar + '"></span>' + TYPE[m.k].label + '</span>';
+    });
+    legendEl.innerHTML = legend;
+  }
+
+  /* ---------------- shot list ---------------- */
+  function renderShotList(v) {
+    var html = "";
+    v.shots.forEach(function (s, i) {
+      var m = TYPE[s.k];
+      var active = (i === state.idx) ? " is-active" : "";
+      html += '<button type="button" data-shot="' + i + '" class="shot-item' + active + ' w-full rounded-xl border border-slate-200 bg-white p-3 text-left">' +
+        '<div class="flex items-center justify-between gap-2">' +
+          '<span class="mono text-[11px] font-semibold text-slate-400">' + pad2(i + 1) + '</span>' +
+          '<span class="mono text-[11px] text-slate-400">' + f1(s.start) + '–' + f1(s.end) + 's</span>' +
+        '</div>' +
+        '<div class="mt-1.5 text-sm font-medium leading-snug text-slate-800">' + s.title + '</div>' +
+        '<div class="mt-2"><span class="chip ' + m.chip + '">' + m.label + '</span></div>' +
+      '</button>';
+    });
+    shotListEl.innerHTML = html;
+  }
+
+  /* ---------------- detail ---------------- */
+  function renderDetail(v) {
+    var s = v.shots[state.idx];
+    var m = TYPE[s.k];
+    var grad = "linear-gradient(" + (115 + state.idx * 29) + "deg, " + m.g[0] + " 0%, " + m.g[1] + " 100%)";
+
+    var evidence = "";
+    s.evidence.forEach(function (e) {
+      evidence += '<li class="flex gap-2"><span class="mt-[3px] text-slate-400">•</span><span>' + e + '</span></li>';
+    });
+
+    var remake = "";
+    s.remake.forEach(function (r, i) {
+      remake += '<li class="flex gap-2.5">' +
+        '<span class="mono mt-[1px] text-[10px] font-bold text-slate-400">' + pad2(i + 1) + '</span>' +
+        '<span>' + r + '</span></li>';
+    });
+
+    var specBlock = "";
+    if (s.spec) {
+      specBlock = '<div class="mt-4 rounded-xl border border-slate-200 bg-slate-50/70 p-4">' +
+        '<div class="flex items-center justify-between gap-2">' +
+          '<span class="lbl">' + s.spec.label + '</span>' +
+          '<button type="button" data-toast="Copied — sample data, nothing left your browser" class="rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-600 transition hover:border-slate-300 hover:text-slate-900">Copy</button>' +
+        '</div>' +
+        '<p class="mono mt-2 text-[12.5px] leading-relaxed text-slate-700">' + s.spec.body + '</p>' +
+      '</div>';
+    }
+
+    var meta = "";
+    if (s.camera) {
+      meta += '<div><div class="lbl">Camera / capture</div><p class="mt-1 text-[13px] leading-relaxed text-slate-700">' + s.camera + '</p></div>';
+    }
+    meta += '<div><div class="lbl">Captions &amp; text</div><p class="mt-1 text-[13px] leading-relaxed text-slate-700">' + s.captions + '</p></div>';
+    meta += '<div><div class="lbl">Audio</div><p class="mt-1 text-[13px] leading-relaxed text-slate-700">' + s.audio + '</p></div>';
+
+    detailEl.innerHTML =
+      '<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">' +
+        '<div class="h-1.5 w-full" style="background:' + grad + '"></div>' +
+        '<div class="p-5 sm:p-6">' +
+          '<div class="flex flex-wrap items-center gap-2">' +
+            '<span class="mono rounded-md bg-slate-100 px-2 py-1 text-[11px] font-bold text-slate-500">SHOT ' + pad2(state.idx + 1) + '</span>' +
+            '<span class="chip ' + m.chip + '">' + m.label + '</span>' +
+            '<span class="mono text-[11px] text-slate-400">' + f1(s.start) + 's → ' + f1(s.end) + 's · ' + f1(s.end - s.start) + 's</span>' +
+          '</div>' +
+          '<h3 class="mt-2.5 text-lg font-semibold leading-snug tracking-tight sm:text-xl">' + s.title + '</h3>' +
+
+          '<div class="mt-4 grid gap-4 sm:grid-cols-[104px_minmax(0,1fr)]">' +
+            '<div class="grid h-[104px] w-[104px] place-items-center rounded-xl text-2xl font-bold text-white/90" style="background:' + grad + '">' + pad2(state.idx + 1) + '</div>' +
+            '<div>' +
+              '<div class="lbl">What is on screen</div>' +
+              '<p class="mt-1 text-[13px] leading-relaxed text-slate-700">' + s.onscreen + '</p>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="mt-5">' +
+            '<div class="lbl">Why we called it ' + m.label.toLowerCase() + '</div>' +
+            '<ul class="mt-1.5 space-y-1.5 text-[13px] leading-relaxed text-slate-700">' + evidence + '</ul>' +
+          '</div>' +
+
+          specBlock +
+
+          '<div class="mt-5 grid gap-4 sm:grid-cols-2">' + meta + '</div>' +
+
+          '<div class="mt-5 rounded-xl bg-emerald-50/60 p-4" style="box-shadow:inset 0 0 0 1px #a7f3d0">' +
+            '<div class="flex items-center gap-1.5">' +
+              '<span class="text-emerald-600">✂️</span>' +
+              '<span class="lbl" style="color:#047857">How to remake this shot</span>' +
+            '</div>' +
+            '<ul class="mt-2 space-y-1.5 text-[13px] leading-relaxed text-slate-700">' + remake + '</ul>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ---------------- plan ---------------- */
+  function renderPlan(v) {
+    function col(title, emoji, color, items) {
+      var lis = "";
+      items.forEach(function (t) {
+        lis += '<li class="flex gap-2"><span class="mt-[2px]" style="color:' + color + '">✓</span><span>' + t + '</span></li>';
+      });
+      return '<div class="rounded-xl border border-slate-200 bg-white p-4">' +
+        '<div class="flex items-center gap-1.5"><span>' + emoji + '</span><span class="lbl">' + title + '</span></div>' +
+        '<ul class="mt-2 space-y-1.5 text-[13px] leading-relaxed text-slate-700">' + lis + '</ul>' +
+      '</div>';
+    }
+    planEl.innerHTML =
+      '<div class="flex flex-wrap items-end justify-between gap-2">' +
+        '<div>' +
+          '<div class="lbl">Step 2 · Sample data</div>' +
+          '<h3 class="mt-1 text-lg font-semibold tracking-tight">Remake plan</h3>' +
+        '</div>' +
+        '<p class="text-xs text-slate-500">You supply: ' + v.supply + '</p>' +
+      '</div>' +
+      '<div class="mt-3 grid gap-3 md:grid-cols-3">' +
+        col("Film yourself", "🎬", "#059669", v.plan.film) +
+        col("Generate with AI", "✨", "#7c3aed", v.plan.generate) +
+        col("Build in code", "⌨️", "#0284c7", v.plan.code) +
+      '</div>' +
+      '<div class="mt-3 flex flex-wrap gap-2">' +
+        '<button type="button" data-toast="Shot list export is simulated — nothing was downloaded" class="rounded-lg bg-slate-900 px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-slate-800">Download shot list (CSV)</button>' +
+        '<button type="button" data-toast="Prompt pack export is simulated — nothing was downloaded" class="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50">Download prompt pack (.txt)</button>' +
+        '<button type="button" data-toast="Captions export (SRT) is simulated — nothing was downloaded" class="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50">Export captions (SRT)</button>' +
+      '</div>';
+  }
+
+  /* ---------------- full render ---------------- */
+  function renderResults() {
+    var v = currentVideo();
+    if (state.idx >= v.shots.length) { state.idx = 0; }
+    resultTitle.textContent = v.name;
+    renderVerdict(v);
+    renderTimeline(v);
+    renderShotList(v);
+    renderDetail(v);
+    renderPlan(v);
+  }
+
+  /* ---------------- analysis flow ---------------- */
+  var STEPS = [
+    "Extracting key frames (48 sampled)",
+    "Detecting cuts and shot boundaries",
+    "Classifying each shot: live / AI / code",
+    "Reading captions, cuts and audio",
+    "Writing reverse-engineered prompts"
+  ];
+
+  function runAnalysis() {
+    if (state.busy) { return; }
+    state.busy = true;
+    analyzeBtn.disabled = true;
+    analyzeLabel.textContent = "Analyzing…";
+    resultsEl.classList.add("hidden");
+    progressEl.classList.remove("hidden");
+    progressBar.style.width = "6%";
+    progressStep.textContent = STEPS[0];
+
+    var i = 1;
+    function tick() {
+      if (i < STEPS.length) {
+        progressStep.textContent = STEPS[i];
+        progressBar.style.width = Math.round(((i + 1) / STEPS.length) * 100) + "%";
+        i++;
+        analyzeTimer = setTimeout(tick, 430);
+      } else {
+        finishAnalysis();
+      }
+    }
+    analyzeTimer = setTimeout(tick, 430);
+  }
+
+  function finishAnalysis() {
+    state.busy = false;
+    analyzeBtn.disabled = false;
+    analyzeLabel.textContent = "Reverse-engineer again";
+    progressEl.classList.add("hidden");
+    progressBar.style.width = "0%";
+    state.idx = 0;
+    renderResults();
+    resultsEl.classList.remove("hidden");
+    resultsEl.classList.add("fade-in");
+    setTimeout(function () {
+      resultsEl.classList.remove("fade-in");
+    }, 420);
+  }
+
+  /* ---------------- events ---------------- */
+  sampleListEl.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-video]");
+    if (!btn) { return; }
+    var id = btn.getAttribute("data-video");
+    if (id === state.vid) { return; }
+    state.vid = id;
+    state.idx = 0;
+    renderSamples();
+    if (!resultsEl.classList.contains("hidden")) {
+      renderResults();
+    } else {
+      analyzeLabel.textContent = "Reverse-engineer this video";
+    }
+  });
+
+  analyzeBtn.addEventListener("click", runAnalysis);
+
+  document.addEventListener("click", function (e) {
+    var shotBtn = e.target.closest("[data-shot]");
+    if (shotBtn) {
+      var idx = parseInt(shotBtn.getAttribute("data-shot"), 10);
+      if (!isNaN(idx)) {
+        state.idx = idx;
+        renderResults();
+      }
+      return;
+    }
+    var toastBtn = e.target.closest("[data-toast]");
+    if (toastBtn) {
+      showToast(toastBtn.getAttribute("data-toast") || "Sample data only");
+    }
+  });
+
+  var waitlistForm = document.getElementById("waitlistForm");
+  var waitlistNote = document.getElementById("waitlistNote");
+  waitlistForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    waitlistNote.classList.remove("hidden");
+    showToast("Waitlist is simulated — nothing was submitted");
+  });
+
+  /* ---------------- boot ---------------- */
+  renderSamples();
+})();
+</script>
+</body>
+</html>

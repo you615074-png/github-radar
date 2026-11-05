@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-06",
+ "headline": "逐帧拆解爆款视频，转成可卖的产品",
+ "summary_md": "**What it is:** [JuneYaooo/rea-video](https://github.com/JuneYaooo/rea-video) is a CLI tool built for AI agents (Claude Code, Codex, etc.) that reverse-engineers any video, shot by shot. It tells you which shots were filmed, which were AI-generated, and which were coded. It also describes how the captions, cuts, stickers, and audio were made, and gives you a plan to remake it yourself. Per the README, it handles talking-head, tabletop, AI video, avatar, 3D/animation, code/template, screen recording, and mixed edits.\n\n**Why it's taking off:** It turns a vague \"how did they make this ad?\" into a structured report with per-shot frames, evidence, reverse-engineered prompts, camera and lighting notes, and an audio breakdown (voice, music BPM, sound effects). The output is a single `report.html` plus a one-line summary. Growth has been fast (about 1,230 stars/day), likely because it hits a real pain for anyone trying to reverse-engineer viral short videos for ads or content.\n\n**Where the product opportunity is:** The CLI is powerful but has a learning curve. A web app where you upload a video and get a ready-to-use shot list, prompts, and a remake checklist (with SRT/ASS export and maybe Remotion project scaffolding) would be much easier to adopt. The core is an agent workflow, so the productization barrier is moderate. The target users are short-video ad buyers, content marketing teams, and small agencies who want to clone what works. The main risks are dependency on external video models (Gemini/Doubao for cost and availability), Chinese-first docs, and the README's own note that about 35% of live footage is misclassified as AI.",
+ "title_en": "rea-video: Reverse-engineer any video, shot by shot",
+ "tagline_en": "Upload a video and get a shot-by-shot breakdown of how it was made, plus a remake plan.",
+ "pick": {
+  "full_name": "JuneYaooo/rea-video",
+  "url": "https://github.com/JuneYaooo/rea-video",
+  "description": "Reverse-engineer any video, shot by shot: tells whether each shot was filmed, AI-generated or coded, how the captions, cuts and audio were made, and how to remake it. 逆向一切视频，逐镜拆出制作方式并给出复刻方案。",
+  "license": "Apache-2.0",
+  "stars": 1928,
+  "daily_rate": 1230.0,
+  "category": "多媒体创作",
+  "one_liner": "逐镜头拆解任何视频：哪些是实拍、哪些是AI生成，并给出复刻方案",
+  "one_liner_en": "Break down any video shot by shot: what was filmed, what was AI-made, and how to remake it.",
+  "reason": "话题性强、演示效果直观，踩中AI视频爆发点；核心是智能体工作流，产品化门槛中等，付费意愿明确。",
+  "content": 8.67,
+  "startup": 7.95,
+  "final": 8.3,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-06-juneyaooo-rea-video",
+ "top": [
+  {
+   "full_name": "JuneYaooo/rea-video",
+   "url": "https://github.com/JuneYaooo/rea-video",
+   "one_liner": "逐镜头拆解任何视频：哪些是实拍、哪些是AI生成，并给出复刻方案",
+   "reason": "话题性强、演示效果直观，踩中AI视频爆发点；核心是智能体工作流，产品化门槛中等，付费意愿明确。",
+   "one_liner_en": "Break down any video shot by shot: what was filmed, what was AI-made, and how to remake it.",
+   "content": 8.67,
+   "startup": 7.95,
+   "final": 8.3,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "pbakaus/impeccable",
+   "url": "https://github.com/pbakaus/impeccable",
+   "one_liner": "给 AI 编程助手装上设计品味，帮它改好看并审出界面毛病",
+   "reason": "话题性与演示效果强，痛点真实，许可证宽松；但项目本身已是成熟开源爆款并自带官网，包装空间和独占商业价值有限，更适合做内容而非主打订阅产品。",
+   "one_liner_en": "Design vocabulary and AI-slop detector for your coding agent.",
+   "content": 8.0,
+   "startup": 7.4,
+   "final": 7.93,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "D4Vinci/Scrapling",
+   "url": "https://github.com/D4Vinci/Scrapling",
+   "one_liner": "一个能绕过反爬、抓取任意网页数据的 Python 爬虫框架",
+   "reason": "痛点真实、增长猛、BSD 许可干净，包装成托管抓取服务空间大；但绕过反爬带来合规与平台对抗风险，需谨慎定位为数据管道工具。",
+   "one_liner_en": "A Python scraping framework that bypasses bot protection and crawls any site at scale.",
+   "content": 7.0,
+   "startup": 7.7,
+   "final": 7.61,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "seedds/nxnative",
+   "url": "https://github.com/seedds/nxnative",
+   "one_liner": "把自己的 Switch 游戏文件变成 iPhone 原生可玩的 App",
+   "reason": "话题性极强、增长快，Mac 端打包体验是明确的产品空白，但法律与合规风险会限制公开商业化，适合做内容而非严肃创业",
+   "one_liner_en": "Turn your own Switch game files into a natively playable iPhone app",
+   "content": 8.67,
+   "startup": 6.4,
+   "final": 7.08,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Verlintas/NOIR",
+   "url": "https://github.com/Verlintas/NOIR",
+   "one_liner": "用电脑连接手机，查出哪些 App 在偷偷收集你的数据",
+   "reason": "话题性强、许可证干净、包装空间大，但使用门槛和免费竞品削弱付费意愿，适合做爆款内容而非大生意",
+   "one_liner_en": "Audit your Android phone via USB: see what apps can leak and fix it safely",
+   "content": 7.33,
+   "startup": 6.8,
+   "final": 7.01,
+   "category_penalty": 0
+  }
+ ]
+}
