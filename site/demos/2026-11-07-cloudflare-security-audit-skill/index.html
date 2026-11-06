@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sextant — AI security audits with findings you can verify</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: #0b1220;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+  .hero-bg {
+    background-image:
+      radial-gradient(60rem 28rem at 50% -18%, rgba(15, 23, 42, 0.07), transparent 70%),
+      linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+    background-size: auto, 44px 44px, 44px 44px;
+    background-position: center top, center top, center top;
+  }
+
+  .codebox { background: #0b1220; border-radius: 12px; overflow: hidden; }
+  .codebox pre { margin: 0; padding: 12px 0; overflow-x: auto; }
+  .code-line { display: flex; gap: 12px; padding: 1px 14px; font-size: 12px; line-height: 1.75; white-space: pre; }
+  .code-line .ln { color: #475569; min-width: 2.2ch; text-align: right; user-select: none; }
+  .code-line .ct { color: #cbd5e1; }
+  .code-line.hl-rose { background: rgba(244, 63, 94, .16); box-shadow: inset 2px 0 0 #fb7185; }
+  .code-line.hl-amber { background: rgba(251, 191, 36, .16); box-shadow: inset 2px 0 0 #fbbf24; }
+  .code-line.hl-slate { background: rgba(148, 163, 184, .16); box-shadow: inset 2px 0 0 #94a3b8; }
+  .code-line.hl-rose .ct, .code-line.hl-amber .ct, .code-line.hl-slate .ct { color: #f8fafc; }
+
+  .fade-in { animation: fadeIn .35s ease both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .phase-row { transition: background-color .18s ease; }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-30 bg-white/85 backdrop-blur border-b border-slate-200">
+  <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-2.5 shrink-0">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="#0b1220"/>
+        <path d="M16 6.5v4.2M16 21.3v4.2M6.5 16h4.2M21.3 16h4.2" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="16" cy="16" r="5.4" stroke="#34d399" stroke-width="1.8"/>
+        <circle cx="16" cy="16" r="1.6" fill="#34d399"/>
+      </svg>
+      <span class="font-semibold tracking-tight text-[17px]">Sextant</span>
+      <span class="hidden sm:inline text-[10px] uppercase tracking-widest text-slate-400 ring-1 ring-slate-200 rounded px-1.5 py-0.5">Concept</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm text-slate-600">
+      <a href="#how" class="hover:text-slate-900 transition">How it works</a>
+      <a href="#cases" class="hover:text-slate-900 transition">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900 transition">Pricing</a>
+    </nav>
+    <a href="#waitlist" class="text-sm font-medium bg-slate-900 text-white px-3.5 py-2 rounded-lg hover:bg-slate-800 transition whitespace-nowrap">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="hero-bg border-b border-slate-100">
+  <div class="mx-auto max-w-6xl px-5 pt-12 pb-8 sm:pt-16 sm:pb-10">
+    <div class="max-w-3xl">
+      <p class="inline-flex items-center gap-2 text-xs font-medium text-emerald-700 bg-emerald-50 ring-1 ring-emerald-200 rounded-full px-3 py-1">
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+        Six-phase audits · independently verified findings
+      </p>
+      <h1 class="mt-5 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.1]">
+        AI security audits that show their work.
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+        Paste a repo. Sextant runs the six-phase audit loop — reconnaissance, coverage-led hunting, candidate validation, structured output, independent record verification, then a machine-readable report. Every finding ships with the exact file, line, and the trace of who tried to disprove it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMO ============ -->
+<section class="mx-auto max-w-6xl px-5 -mt-2 sm:-mt-4 pb-4">
+  <div class="rounded-2xl bg-white ring-1 ring-slate-200 shadow-sm shadow-slate-200/50 overflow-hidden">
+
+    <!-- input bar -->
+    <div class="p-5 sm:p-6 border-b border-slate-100 bg-slate-50/70">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <label for="repoUrl" class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Repository to audit</label>
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-white ring-1 ring-slate-200 rounded px-2 py-0.5">Sample data</span>
+      </div>
+
+      <div class="mt-3 flex flex-col sm:flex-row gap-3">
+        <div class="relative flex-1">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+          </svg>
+          <input id="repoUrl" type="text" spellcheck="false" autocomplete="off"
+            value="https://github.com/acme-samples/checkout-api"
+            class="w-full pl-9 pr-3 py-3 rounded-xl bg-white ring-1 ring-slate-200 focus:ring-2 focus:ring-slate-900 focus:outline-none text-sm mono text-slate-800 placeholder-slate-400">
+        </div>
+        <button id="runBtn" type="button"
+          class="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition disabled:opacity-60 disabled:cursor-not-allowed">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.5 2.2a.75.75 0 0 1 1.14-.64l8 4.75a.75.75 0 0 1 0 1.28l-8 4.75a.75.75 0 0 1-1.14-.64V2.2Z"/></svg>
+          <span id="runBtnLabel">Run 6-phase audit</span>
+        </button>
+      </div>
+
+      <div class="mt-3 flex flex-wrap items-center gap-2 text-xs">
+        <span class="text-slate-500">Try a sample repo:</span>
+        <button type="button" data-preset="checkout" class="preset-chip mono text-[11px] px-2.5 py-1 rounded-full bg-white ring-1 ring-slate-300 text-slate-700 hover:bg-slate-900 hover:text-white hover:ring-slate-900 transition">acme-samples/checkout-api</button>
+        <button type="button" data-preset="photosync" class="preset-chip mono text-[11px] px-2.5 py-1 rounded-full bg-white ring-1 ring-slate-300 text-slate-700 hover:bg-slate-900 hover:text-white hover:ring-slate-900 transition">acme-samples/photo-sync</button>
+        <button type="button" data-preset="agenthub" class="preset-chip mono text-[11px] px-2.5 py-1 rounded-full bg-white ring-1 ring-slate-300 text-slate-700 hover:bg-slate-900 hover:text-white hover:ring-slate-900 transition">acme-samples/agent-hub</button>
+      </div>
+    </div>
+
+    <!-- phase console -->
+    <div class="border-b border-slate-100">
+      <div class="px-5 sm:px-6 pt-4 flex items-center justify-between">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Audit pipeline</p>
+        <p id="pipelineNote" class="text-[11px] text-slate-400">ready</p>
+      </div>
+      <div id="phaseList" class="p-3 sm:p-4 space-y-1"></div>
+    </div>
+
+    <!-- results -->
+    <div id="results" class="hidden scroll-mt-20"></div>
+  </div>
+
+  <p class="mt-3 text-xs text-slate-400 text-center sm:text-left">
+    Demo replay is compressed to a few seconds. A real run of the underlying skill takes minutes and writes
+    <span class="mono">findings.json</span>, <span class="mono">coverage-ledger.json</span> and <span class="mono">REPORT.md</span>.
+  </p>
+</section>
+
+<!-- ============ VERDICTS ============ -->
+<section id="how" class="scroll-mt-24 mx-auto max-w-6xl px-5 py-14 sm:py-20">
+  <div class="max-w-2xl">
+    <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Three verdicts. No vague "possible issues".</h2>
+    <p class="mt-3 text-slate-600 leading-relaxed">
+      Every candidate goes to a fresh verifier whose only job is to disprove it. What survives is classified, and the classification is what you act on — not a confidence score.
+    </p>
+  </div>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl bg-white ring-1 ring-slate-200 border-t-4 border-t-rose-500 p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-rose-600">Confirmed</p>
+      <p class="mt-2 font-semibold text-slate-900">Complete source trace + a bounded, observed result.</p>
+      <p class="mt-2 text-sm text-slate-600 leading-relaxed">You get the file, the line, the data flow, and a severity. This is a bug you should fix this sprint.</p>
+    </div>
+    <div class="rounded-2xl bg-white ring-1 ring-slate-200 border-t-4 border-t-amber-400 p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-amber-700">Needs validation</p>
+      <p class="mt-2 font-semibold text-slate-900">One exact unresolved fact. No severity assigned.</p>
+      <p class="mt-2 text-sm text-slate-600 leading-relaxed">The auditor tells you precisely what it could not determine, so a human resolves it in minutes instead of re-doing the whole hunt.</p>
+    </div>
+    <div class="rounded-2xl bg-white ring-1 ring-slate-200 border-t-4 border-t-slate-300 p-5">
+      <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Rejected</p>
+      <p class="mt-2 font-semibold text-slate-900">A disproved candidate, kept on the record.</p>
+      <p class="mt-2 text-sm text-slate-600 leading-relaxed">Recorded so the next run doesn't waste hunters on it — and so the finding count means something.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ USE CASES ============ -->
+<section id="cases" class="scroll-mt-24 border-y border-slate-200 bg-slate-50/60">
+  <div class="mx-auto max-w-6xl px-5 py-14 sm:py-20">
+    <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Where teams actually use it</h2>
+    <p class="mt-3 text-slate-600 max-w-2xl">Built on the same six-phase loop Cloudflare's own vulnerability harness grew out of — packaged for teams without a security org.</p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-5">
+        <div class="text-2xl">🚀</div>
+        <h3 class="mt-3 font-semibold">Pre-launch audit for a SaaS</h3>
+        <p class="mt-2 text-sm text-slate-600 leading-relaxed">Point Sextant at your app repo two weeks before a launch. Walk away with confirmed tenant-isolation and auth findings pinned to exact lines, ordered by severity.</p>
+        <p class="mt-3 text-xs text-slate-400 mono">confirmed · needs_validation · rejected</p>
+      </div>
+      <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-5">
+        <div class="text-2xl">📋</div>
+        <h3 class="mt-3 font-semibold">Evidence for a customer security review</h3>
+        <p class="mt-2 text-sm text-slate-600 leading-relaxed">Enterprise buyers ask what you checked. Hand over <span class="mono text-xs">findings.json</span> and the coverage ledger: every trust boundary mapped, every unit hunted, every rejection justified.</p>
+        <p class="mt-3 text-xs text-slate-400 mono">coverage-ledger.json</p>
+      </div>
+      <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-5">
+        <div class="text-2xl">🔁</div>
+        <h3 class="mt-3 font-semibold">Re-audits that build on the last one</h3>
+        <p class="mt-2 text-sm text-slate-600 leading-relaxed">Runs are additive. Prior ledgers target the gaps, changed source gets re-checked, and stale or unresolved work is never counted as covered.</p>
+        <p class="mt-3 text-xs text-slate-400 mono">run 1 → run 2 → run 3</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING + WAITLIST ============ -->
+<section id="pricing" class="scroll-mt-24 mx-auto max-w-6xl px-5 py-14 sm:py-20">
+  <div class="max-w-2xl">
+    <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Pricing</h2>
+    <p class="mt-3 text-slate-600">Pay per audit to start. Move to a plan when you're auditing on every release.</p>
+  </div>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-6 flex flex-col">
+      <p class="text-sm font-semibold text-slate-900">Single audit</p>
+      <p class="mt-2 flex items-baseline gap-1"><span class="text-3xl font-semibold tracking-tight">$149</span><span class="text-sm text-slate-500">/ audit</span></p>
+      <p class="mt-2 text-sm text-slate-600">One repo, all six phases, full report.</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600 flex-1">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>findings.json + REPORT.md</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Coverage ledger export</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>30-day report access</li>
+      </ul>
+      <a href="#waitlist" class="mt-6 text-center text-sm font-medium px-4 py-2.5 rounded-lg ring-1 ring-slate-300 hover:bg-slate-50 transition">Start with one audit</a>
+    </div>
+
+    <div class="rounded-2xl bg-slate-900 text-white ring-1 ring-slate-900 p-6 flex flex-col relative overflow-hidden">
+      <span class="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-widest bg-emerald-400 text-slate-900 rounded px-2 py-0.5">Popular</span>
+      <p class="text-sm font-semibold">Team</p>
+      <p class="mt-2 flex items-baseline gap-1"><span class="text-3xl font-semibold tracking-tight">$499</span><span class="text-sm text-slate-400">/ month</span></p>
+      <p class="mt-2 text-sm text-slate-300">Continuous re-audits across your repos.</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-300 flex-1">
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span>5 repos, unlimited runs</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span>Additive runs with prior ledgers</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span>Pull-request findings digest</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span>Needs-validation triage queue</li>
+      </ul>
+      <a href="#waitlist" class="mt-6 text-center text-sm font-semibold px-4 py-2.5 rounded-lg bg-white text-slate-900 hover:bg-slate-100 transition">Request early access</a>
+    </div>
+
+    <div class="rounded-2xl bg-white ring-1 ring-slate-200 p-6 flex flex-col">
+      <p class="text-sm font-semibold text-slate-900">Enterprise</p>
+      <p class="mt-2 flex items-baseline gap-1"><span class="text-3xl font-semibold tracking-tight">Custom</span></p>
+      <p class="mt-2 text-sm text-slate-600">For teams with a compliance deadline.</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600 flex-1">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Self-hosted audit runner</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Custom attack-class packs</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>SSO + audit history retention</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span>Security-review evidence package</li>
+      </ul>
+      <a href="#waitlist" class="mt-6 text-center text-sm font-medium px-4 py-2.5 rounded-lg ring-1 ring-slate-300 hover:bg-slate-50 transition">Talk to us</a>
+    </div>
+  </div>
+
+  <!-- waitlist -->
+  <div id="waitlist" class="scroll-mt-24 mt-6 rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-6 sm:p-8">
+    <div class="grid gap-6 md:grid-cols-2 md:items-center">
+      <div>
+        <h3 class="text-lg font-semibold tracking-tight">Join the waitlist</h3>
+        <p class="mt-2 text-sm text-slate-600 leading-relaxed">We're rolling out hosted audits to a small group of teams. Leave an email and we'll send a sample report on a public repo so you can read one end to end.</p>
+      </div>
+      <div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="wlEmail" type="email" placeholder="you@company.com" autocomplete="off"
+            class="flex-1 px-3.5 py-2.5 rounded-lg bg-white ring-1 ring-slate-300 focus:ring-2 focus:ring-slate-900 focus:outline-none text-sm text-slate-800 placeholder-slate-400">
+          <button id="wlBtn" type="button" class="shrink-0 px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition">Request access</button>
+        </div>
+        <p id="wlMsg" class="mt-3 text-sm hidden"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-5 py-10">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect x="1.5" y="1.5" width="29" height="29" rx="8" fill="#0b1220"/>
+          <circle cx="16" cy="16" r="5.4" stroke="#34d399" stroke-width="1.8"/>
+          <circle cx="16" cy="16" r="1.6" fill="#34d399"/>
+        </svg>
+        <span class="font-semibold text-slate-900 tracking-tight">Sextant</span>
+        <span class="text-xs text-slate-400">— six-phase, verified security audits</span>
+      </div>
+      <nav class="flex gap-5 text-sm text-slate-500">
+        <a href="#how" class="hover:text-slate-900 transition">How it works</a>
+        <a href="#cases" class="hover:text-slate-900 transition">Use cases</a>
+        <a href="#pricing" class="hover:text-slate-900 transition">Pricing</a>
+      </nav>
+    </div>
+    <div class="mt-8 pt-6 border-t border-slate-100">
+      <p class="text-xs text-slate-500 leading-relaxed text-center sm:text-left">
+        Concept demo, based on the open-source project <a class="underline decoration-slate-300 hover:decoration-slate-900 hover:text-slate-900 transition" href="https://github.com/cloudflare/security-audit-skill">cloudflare/security-audit-skill</a> (MIT), unofficial, all data is sample data
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------ */
+  /* Sample data                                                         */
+  /* ------------------------------------------------------------------ */
+
+  var DATASETS = {
+    checkout: {
+      repo: 'acme-samples/checkout-api',
+      url: 'https://github.com/acme-samples/checkout-api',
+      stack: 'Node 20 · Express · PostgreSQL',
+      coverage: '44 coverage units · 61 candidate checks',
+      phases: [
+        { name: 'Reconnaissance', detail: 'architecture.md · 3 trust boundaries · 22 input surfaces mapped' },
+        { name: 'Coverage-led hunting', detail: '6 isolated hunters · 44 ledger units · 2 coverage critics' },
+        { name: 'Candidate validation', detail: '19 candidates \u2192 12 disproved \u2192 7 survived' },
+        { name: 'Structured output', detail: 'findings.json validated against report-schema.json' },
+        { name: 'Independent verification', detail: '7 source claims re-read by fresh verifiers · 1 replaced' },
+        { name: 'Target-neutral reporting', detail: 'REPORT.md · FINDINGS-DETAIL.md · NEEDS-VALIDATION.md' }
+      ],
+      findings: [
+        {
+          id: 'TENANT-01',
+          verdict: 'confirmed',
+          severity: 'Critical',
+          file: 'src/routes/invoices.js',
+          line: 42,
+          title: 'Invoice lookup drops the tenant predicate — cross-tenant read',
+          summary: 'The handler scopes the query by invoice id only. Any authenticated tenant can read another tenant\'s invoice by requesting a numeric id.',
+          code: [
+            { n: 39, t: "router.get('/invoices/:id', requireAuth, async (req, res) => {" },
+            { n: 40, t: "  const sql = 'SELECT * FROM invoices WHERE id = $1';" },
+            { n: 41, t: "" },
+            { n: 42, t: "  const { rows } = await db.query(sql, [req.params.id]);", hl: true },
+            { n: 43, t: "  if (!rows.length) return res.status(404).end();" },
+            { n: 44, t: "  res.json(rows[0]);" },
+            { n: 45, t: "});" }
+          ],
+          trace: [
+            'Hunter — data-isolation/tenant-query, ledger unit 12 of 44',
+            'Verifier — attempted disproof via the shared read replica: failed, tenant_id never enters the plan',
+            'Independent verifier — re-read the source at commit 7ac1f2e and re-confirmed the claim'
+          ],
+          fix: 'Add AND tenant_id = $2 and pass req.tenant.id alongside the id. Add a regression test asserting a 404 when a foreign tenant\'s invoice id is requested.'
+        },
+        {
+          id: 'EGRESS-04',
+          verdict: 'confirmed',
+          severity: 'High',
+          file: 'src/services/webhook.js',
+          line: 17,
+          title: 'Webhook delivery calls any merchant-supplied URL',
+          summary: 'Callback URLs are requested without an egress allowlist, so the app\'s network identity can be pointed at internal metadata endpoints.',
+          code: [
+            { n: 15, t: "export async function deliver(url, payload) {" },
+            { n: 16, t: "  // merchant-configured callback URL, no allowlist" },
+            { n: 17, t: "  const res = await httpClient.post(url, payload);", hl: true },
+            { n: 18, t: "  return { status: res.status };" },
+            { n: 19, t: "}" }
+          ],
+          trace: [
+            'Hunter — cloud-and-deployment/egress-controls, ledger unit 27',
+            'Verifier — attempted disproof via a DNS-rebinding guard: none exists in the tree',
+            'Independent verifier — confirmed no egress policy is applied on this call path'
+          ],
+          fix: 'Resolve the hostname first, reject link-local and private ranges after resolution, and route outbound webhooks through a dedicated egress proxy with an allowlist.'
+        },
+        {
+          id: 'ERR-02',
+          verdict: 'confirmed',
+          severity: 'Medium',
+          file: 'src/middleware/errors.js',
+          line: 23,
+          title: 'Production error handler returns raw stack traces and SQL',
+          summary: 'When NODE_ENV is unset — the default in the shipped Dockerfile — the handler serializes the stack, the message and the failing SQL into the response.',
+          code: [
+            { n: 20, t: "app.use((err, req, res, next) => {" },
+            { n: 21, t: "  logger.error(err);" },
+            { n: 22, t: "  const detail = err.message;" },
+            { n: 23, t: "  res.status(500).json({ error: detail, stack: err.stack, sql: err.sql });", hl: true },
+            { n: 24, t: "});" }
+          ],
+          trace: [
+            'Hunter — cloud-and-deployment/runtime-configuration, ledger unit 39',
+            'Verifier — checked the Dockerfile: NODE_ENV is never set, so this branch is the default',
+            'Independent verifier — confirmed the same file is reached from the public router'
+          ],
+          fix: 'Default NODE_ENV=production in the image and only attach detail fields when NODE_ENV !== \'production\'.'
+        },
+        {
+          id: 'AUTH-07',
+          verdict: 'needs_validation',
+          severity: null,
+          file: 'src/auth/verify.js',
+          line: 12,
+          title: 'Possible algorithm-confusion in JWT verification',
+          summary: 'Verification reads the algorithm from the token header. Whether the pinned build checks it against the JWKS key type cannot be established from this source alone.',
+          question: 'Does the vendored @acme/jwt build pin the header "alg" against the JWKS key type? The build is minified and the dependency version is not locked in package-lock.json.',
+          code: [
+            { n: 10, t: "const header = decodeHeader(token);" },
+            { n: 11, t: "const key = jwks.get(header.kid);" },
+            { n: 12, t: "return jwt.verify(token, key, { algorithms: [header.alg] });", hl: true },
+            { n: 13, t: "}" }
+          ],
+          trace: [
+            'Hunter — web-protocol-and-auth/algorithm-confusion',
+            'Verifier — could not resolve the pinned build; recorded as needs_validation with no severity'
+          ],
+          fix: null
+        },
+        {
+          id: 'SEARCH-11',
+          verdict: 'rejected',
+          severity: null,
+          file: 'src/routes/search.js',
+          line: 31,
+          title: 'Reported SQL injection in catalog search',
+          summary: 'Disproved: the term is passed as a bound parameter and the sort column resolves through a fixed four-value enum.',
+          code: [
+            { n: 29, t: "const sortCol = sortColumn(order); // enum: name | price | created | stock" },
+            { n: 30, t: "" },
+            { n: 31, t: "const { rows } = await db.query('SELECT id, name FROM products WHERE name ILIKE $1 ORDER BY ' + sortCol, ['%' + q + '%']);", hl: true }
+          ],
+          trace: [
+            'Verifier — sortColumn() resolves through a closed enum; attacker input cannot reach the concatenation',
+            'Recorded as rejected so the next run does not re-hunt this path'
+          ],
+          fix: null
+        }
+      ]
+    },
+
+    photosync: {
+      repo: 'acme-samples/photo-sync',
+      url: 'https://github.com/acme-samples/photo-sync',
+      stack: 'Electron 30 · TypeScript · local helper daemon',
+      coverage: '28 coverage units · 37 candidate checks',
+      phases: [
+        { name: 'Reconnaissance', detail: 'architecture.md · 2 trust boundaries · 14 input surfaces mapped' },
+        { name: 'Coverage-led hunting', detail: '4 isolated hunters · 28 ledger units · 1 coverage critic' },
+        { name: 'Candidate validation', detail: '11 candidates \u2192 6 disproved \u2192 5 survived' },
+        { name: 'Structured output', detail: 'findings.json validated against report-schema.json' },
+        { name: 'Independent verification', detail: '5 source claims re-read by fresh verifiers' },
+        { name: 'Target-neutral reporting', detail: 'REPORT.md · FINDINGS-DETAIL.md derived from ledger' }
+      ],
+      findings: [
+        {
+          id: 'IPC-01',
+          verdict: 'confirmed',
+          severity: 'Critical',
+          file: 'app/main/window.ts',
+          line: 22,
+          title: 'Deep link opens a window with nodeIntegration enabled — remote code execution',
+          summary: 'The photosync:// handler forwards a caller-supplied URL into a BrowserWindow created with nodeIntegration on and context isolation off, so untrusted remote content runs with full Node privileges.',
+          code: [
+            { n: 18, t: "ipcMain.on('open-album', (_e, url) => {" },
+            { n: 19, t: "  const win = new BrowserWindow({" },
+            { n: 20, t: "    webPreferences: {" },
+            { n: 21, t: "      nodeIntegration: true," },
+            { n: 22, t: "      contextIsolation: false, preload: PRELOAD }", hl: true },
+            { n: 23, t: "  });" },
+            { n: 24, t: "  win.loadURL(url);", hl: true },
+            { n: 25, t: "});" }
+          ],
+          trace: [
+            'Hunter — desktop-mobile-and-local-ipc/deep-link-handling, ledger unit 4',
+            'Verifier — attempted disproof via a scheme allowlist: the handler accepts any scheme',
+            'Independent verifier — re-read the main-process source and confirmed both the webPreferences and the loadURL sink'
+          ],
+          fix: 'Set contextIsolation: true and nodeIntegration: false, validate the deep-link scheme against an allowlist, and expose only the required API through a contextBridge preload.'
+        },
+        {
+          id: 'UPD-03',
+          verdict: 'confirmed',
+          severity: 'High',
+          file: 'app/updater/install.ts',
+          line: 57,
+          title: 'Updater verifies the signature after unpacking and running the installer',
+          summary: 'The update archive is extracted and the installer executed before the signature check runs, so a tampered archive wins the race.',
+          code: [
+            { n: 54, t: "const buffer = await download(url);" },
+            { n: 55, t: "const pkg = await extract(buffer, tmpDir);   // unsigned archive" },
+            { n: 56, t: "await runInstaller(pkg);", hl: true },
+            { n: 57, t: "await verifySignature(buffer, pubkey);        // too late", hl: true }
+          ],
+          trace: [
+            'Hunter — supply-chain-and-release/update-integrity, ledger unit 11',
+            'Verifier — attempted disproof via an OS-level gatekeeper check: not present on the Linux build',
+            'Independent verifier — confirmed the ordering in the same function body'
+          ],
+          fix: 'Verify the signature against the downloaded buffer before extraction, and refuse to extract or execute anything that fails.'
+        },
+        {
+          id: 'HELPER-01',
+          verdict: 'confirmed',
+          severity: 'Medium',
+          file: 'app/helper/daemon.ts',
+          line: 31,
+          title: 'Local helper daemon accepts commands from any local process',
+          summary: 'The helper listens on a loopback port and executes whatever arrives on the socket. Any process running as the same user — including a compromised browser extension host — can drive it.',
+          code: [
+            { n: 29, t: "server.listen(4777, '127.0.0.1');" },
+            { n: 30, t: "server.on('connection', (sock) => {" },
+            { n: 31, t: "  sock.on('data', (cmd) => runCommand(cmd.toString()));", hl: true },
+            { n: 32, t: "});" }
+          ],
+          trace: [
+            'Hunter — desktop-mobile-and-local-ipc/local-helper, ledger unit 9',
+            'Verifier — checked for a handshake token: none',
+            'Independent verifier — confirmed no peer credential check on the socket'
+          ],
+          fix: 'Require a per-launch random token written to a 0600 file and check peer credentials (LOCAL_PEERCRED) on every connection.'
+        },
+        {
+          id: 'CACHE-02',
+          verdict: 'needs_validation',
+          severity: null,
+          file: 'app/renderer/cache.ts',
+          line: 44,
+          title: 'Thumbnail cache key omits the signed-in account',
+          summary: 'The cache key is built from the asset id alone. Whether the cache is cleared on account switch depends on a preload bridge that is not part of the audited tree.',
+          question: 'Is the on-disk thumbnail cache cleared or namespaced on account switch? The key omits an account identifier, and the switch path lives in a preload bridge outside this repo.',
+          code: [
+            { n: 42, t: "const key = `thumb:${assetId}`;" },
+            { n: 44, t: "await cache.set(key, await renderThumb(asset));", hl: true }
+          ],
+          trace: [
+            'Hunter — data-isolation-and-lifecycle/cache-isolation',
+            'Verifier — the account-switch hook is out of tree; recorded with an exact unresolved fact and no severity'
+          ],
+          fix: null
+        },
+        {
+          id: 'EXPORT-09',
+          verdict: 'rejected',
+          severity: null,
+          file: 'app/main/export.ts',
+          line: 70,
+          title: 'Reported path traversal in album export',
+          summary: 'Disproved: the destination is resolved against the user-selected root and rejected when the relative path escapes it.',
+          code: [
+            { n: 70, t: "if (path.relative(root, dest).startsWith('..')) throw new Error('path escape');", hl: true }
+          ],
+          trace: [
+            'Verifier — attempted traversal with ../ and encoded segments; the relative-path guard rejects both',
+            'Recorded as rejected with the disproof kept for the next run'
+          ],
+          fix: null
+        }
+      ]
+    },
+
+    agenthub: {
+      repo: 'acme-samples/agent-hub',
+      url: 'https://github.com/acme-samples/agent-hub',
+      stack: 'TypeScript · Vite · LLM tool-calling agent',
+      coverage: '33 coverage units · 48 candidate checks',
+      phases: [
+        { name: 'Reconnaissance', detail: 'architecture.md · 4 trust boundaries · 19 input surfaces mapped' },
+        { name: 'Coverage-led hunting', detail: '5 isolated hunters · 33 ledger units · 2 coverage critics' },
+        { name: 'Candidate validation', detail: '14 candidates \u2192 9 disproved \u2192 5 survived' },
+        { name: 'Structured output', detail: 'findings.json validated against report-schema.json' },
+        { name: 'Independent verification', detail: '5 source claims re-read by fresh verifiers' },
+        { name: 'Target-neutral reporting', detail: 'REPORT.md · NEEDS-VALIDATION.md derived from records' }
+      ],
+      findings: [
+        {
+          id: 'INJ-01',
+          verdict: 'confirmed',
+          severity: 'Critical',
+          file: 'server/agent/loop.ts',
+          line: 88,
+          title: 'Retrieved web content is concatenated into the system prompt — injection reaches tool calls',
+          summary: 'Search results from untrusted third-party pages are interpolated into the system prompt, and the model is then given a privileged refund tool. Text on such a page can steer a refund.',
+          code: [
+            { n: 84, t: "const context = await search(query);" },
+            { n: 86, t: "const system = `You are a support agent. Use this context:\\n${context.text}`;" },
+            { n: 88, t: "const plan = await model.run(system, { tools: [refundTool] });", hl: true }
+          ],
+          trace: [
+            'Hunter — ai-and-llm/prompt-injection, ledger unit 6',
+            'Verifier — attempted disproof via an input sanitizer: the sanitizer strips HTML, not instructions',
+            'Independent verifier — re-read the loop and confirmed refundTool is bound with no confirmation step'
+          ],
+          fix: 'Keep the system prompt static. Pass retrieved content as a user-role message with explicit untrusted labeling, and require human confirmation for privileged tools like refund.'
+        },
+        {
+          id: 'SEC-02',
+          verdict: 'confirmed',
+          severity: 'High',
+          file: 'web/src/lib/client.ts',
+          line: 12,
+          title: 'Service-role API key inlined into the browser bundle',
+          summary: 'A server-side secret is read through a client-side environment variable, so the bundler inlines it and it ships to every visitor.',
+          code: [
+            { n: 11, t: "const key = import.meta.env.VITE_SERVICE_ROLE_KEY;  // inlined at build" },
+            { n: 12, t: "await api.post('/api/refund', { headers: { Authorization: 'Bearer ' + key } });", hl: true }
+          ],
+          trace: [
+            'Hunter — supply-chain-and-release/build-secrets, ledger unit 14',
+            'Verifier — confirmed the VITE_ prefix by checking the bundler config in the tree',
+            'Independent verifier — reproduced the inlining rule from the shipped build config'
+          ],
+          fix: 'Move the privileged call behind a server route and rotate the leaked key. Any VITE_-prefixed variable should be treated as public.'
+        },
+        {
+          id: 'XSS-03',
+          verdict: 'confirmed',
+          severity: 'Medium',
+          file: 'web/src/components/Message.tsx',
+          line: 31,
+          title: 'Assistant output rendered as raw HTML — stored XSS in shared threads',
+          summary: 'Markdown output is rendered into the DOM as HTML with sanitization disabled, so model output containing markup executes for every thread participant.',
+          code: [
+            { n: 29, t: "// sanitization disabled for layout fidelity" },
+            { n: 30, t: "return (" },
+            { n: 31, t: "  <div dangerouslySetInnerHTML={{ __html: md.render(message.body) }} />", hl: true },
+            { n: 32, t: ");" }
+          ],
+          trace: [
+            'Hunter — client-side/dom-injection, ledger unit 21',
+            'Verifier — checked whether the markdown renderer escapes raw HTML: it does not',
+            'Independent verifier — confirmed the same component is used in the shared-thread view'
+          ],
+          fix: 'Render through a sanitizer allowlist, or convert markdown to React elements instead of an HTML string.'
+        },
+        {
+          id: 'RAG-05',
+          verdict: 'needs_validation',
+          severity: null,
+          file: 'server/rag/cache.ts',
+          line: 26,
+          title: 'Embedding cache appears shared across tenants',
+          summary: 'The cache key is a hash of the query with no tenant prefix. Whether a tenant wrapper is applied on this call path lives in middleware outside the audited tree.',
+          question: 'Is withTenant() applied around this cache read? The key omits the tenant id, and the middleware that would wrap it is not present in this repository.',
+          code: [
+            { n: 24, t: "const key = hash(query);" },
+            { n: 25, t: "const hit = await kv.get(key);" },
+            { n: 26, t: "if (hit) return JSON.parse(hit);   // no tenant prefix", hl: true }
+          ],
+          trace: [
+            'Hunter — data-isolation-and-lifecycle/tenant-cache',
+            'Verifier — the wrapping middleware is out of tree; recorded with one exact unresolved fact, no severity'
+          ],
+          fix: null
+        },
+        {
+          id: 'LOOP-07',
+          verdict: 'rejected',
+          severity: null,
+          file: 'server/agent/loop.ts',
+          line: 120,
+          title: 'Reported unbounded tool-call loop',
+          summary: 'Disproved: the agent loop is bounded at eight steps and returns a terminal message when the budget is exhausted.',
+          code: [
+            { n: 120, t: "if (++steps > MAX_STEPS) return { text: 'Stopped: step budget exhausted' };", hl: true }
+          ],
+          trace: [
+            'Verifier — traced both continuation branches; both increment the same counter and exit at the cap',
+            'Recorded as rejected'
+          ],
+          fix: null
+        }
+      ]
+    }
+  };
+
+  var VERDICT = {
+    confirmed: { label: 'Confirmed', cls: 'bg-rose-50 text-rose-700 ring-rose-200' },
+    needs_validation: { label: 'Needs validation', cls: 'bg-amber-50 text-amber-800 ring-amber-200' },
+    rejected: { label: 'Rejected', cls: 'bg-slate-100 text-slate-600 ring-slate-200' }
+  };
+
+  var SEVERITY = {
+    Critical: 'bg-rose-600 text-white',
+    High: 'bg-orange-500 text-white',
+    Medium: 'bg-amber-400 text-slate-900',
+    Low: 'bg-slate-200 text-slate-700'
+  };
+
+  /* ------------------------------------------------------------------ */
+  /* Helpers                                                             */
+  /* ------------------------------------------------------------------ */
+
+  var repoInput = document.getElementById('repoUrl');
+  var runBtn = document.getElementById('runBtn');
+  var runBtnLabel = document.getElementById('runBtnLabel');
+  var phaseList = document.getElementById('phaseList');
+  var resultsEl = document.getElementById('results');
+  var pipelineNote = document.getElementById('pipelineNote');
+
+  var activeFilter = 'all';
+  var running = false;
+  var currentKey = 'checkout';
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function resolveKeyFromInput() {
+    var v = (repoInput.value || '').toLowerCase();
+    if (v.indexOf('photo') !== -1) return 'photosync';
+    if (v.indexOf('agent') !== -1) return 'agenthub';
+    return 'checkout';
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Phase rendering                                                     */
+  /* ------------------------------------------------------------------ */
+
+  function renderPhases(ds) {
+    var html = '';
+    for (var i = 0; i < ds.phases.length; i++) {
+      var p = ds.phases[i];
+      html +=
+        '<div id="phase-' + i + '" class="phase-row flex gap-3 rounded-lg px-3 py-2.5">' +
+          '<div id="dot-' + i + '" class="mt-0.5 h-5 w-5 shrink-0 rounded-full ring-1 ring-slate-300 text-[10px] font-semibold text-slate-500 flex items-center justify-center">' + (i + 1) + '</div>' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex items-center justify-between gap-2">' +
+              '<p id="name-' + i + '" class="text-sm font-medium text-slate-500 truncate">' + escapeHtml(p.name) + '</p>' +
+              '<span id="stat-' + i + '" class="text-[10px] uppercase tracking-wider text-slate-400 shrink-0">queued</span>' +
+            '</div>' +
+            '<p id="detail-' + i + '" class="hidden text-xs text-slate-500 mt-0.5 mono break-words">' + escapeHtml(p.detail) + '</p>' +
+          '</div>' +
+        '</div>';
+    }
+    phaseList.innerHTML = html;
+  }
+
+  function setPhaseState(idx, state) {
+    var row = document.getElementById('phase-' + idx);
+    var dot = document.getElementById('dot-' + idx);
+    var name = document.getElementById('name-' + idx);
+    var stat = document.getElementById('stat-' + idx);
+    var detail = document.getElementById('detail-' + idx);
+    if (!row || !dot || !name || !stat || !detail) return;
+
+    if (state === 'running') {
+      row.className = 'phase-row flex gap-3 rounded-lg px-3 py-2.5 bg-slate-50 ring-1 ring-slate-200';
+      dot.className = 'mt-0.5 h-5 w-5 shrink-0 rounded-full bg-slate-900 text-white text-[10px] font-semibold flex items-center justify-center animate-pulse';
+      name.className = 'text-sm font-medium text-slate-900 truncate';
+      stat.textContent = 'running';
+      stat.className = 'text-[10px] uppercase tracking-wider font-semibold text-slate-900 shrink-0';
+      detail.classList.remove('hidden');
+    } else if (state === 'done') {
+      row.className = 'phase-row flex gap-3 rounded-lg px-3 py-2.5';
+      dot.className = 'mt-0.5 h-5 w-5 shrink-0 rounded-full bg-emerald-600 text-white text-[10px] font-semibold flex items-center justify-center';
+      dot.textContent = '\u2713';
+      name.className = 'text-sm font-medium text-slate-900 truncate';
+      stat.textContent = 'complete';
+      stat.className = 'text-[10px] uppercase tracking-wider font-semibold text-emerald-600 shrink-0';
+      detail.classList.remove('hidden');
+    }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Results rendering                                                   */
+  /* ------------------------------------------------------------------ */
+
+  function codeBlock(f) {
+    var hlClass = f.verdict === 'needs_validation' ? 'hl-amber' : (f.verdict === 'rejected' ? 'hl-slate' : 'hl-rose');
+    var out = '<div class="codebox mt-3"><pre>';
+    for (var i = 0; i < f.code.length; i++) {
+      var line = f.code[i];
+      var cls = line.hl ? 'code-line ' + hlClass : 'code-line';
+      out += '<div class="' + cls + '">' +
+               '<span class="ln">' + line.n + '</span>' +
+               '<span class="ct">' + escapeHtml(line.t) + '</span>' +
+             '</div>';
+    }
+    out += '</pre></div>';
+    return out;
+  }
+
+  function findingCard(f) {
+    var v = VERDICT[f.verdict];
+    var accent = f.verdict === 'confirmed'
+      ? 'border-l-rose-500'
+      : (f.verdict === 'needs_validation' ? 'border-l-amber-400' : 'border-l-slate-300');
+
+    var chips = '<span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ring-1 ' + v.cls + '">' + v.label + '</span>';
+    if (f.severity) {
+      chips += '<span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded ' + SEVERITY[f.severity] + '">' + f.severity + '</span>';
+    } else {
+      chips += '<span class="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded ring-1 ring-amber-200 bg-amber-50 text-amber-800">No severity assigned</span>';
+    }
+    chips += '<span class="mono text-[11px] text-slate-500 break-all">' + escapeHtml(f.file) + ':' + f.line + '</span>';
+
+    var traceLabel = f.verdict === 'needs_validation'
+      ? 'Unresolved fact'
+      : (f.verdict === 'rejected' ? 'Why it was rejected' : 'Verification trace');
+
+    var traceItems = f.verdict === 'needs_validation' ? [f.question] : f.trace;
+    var traceHtml = '';
+    for (var i = 0; i < traceItems.length; i++) {
+      traceHtml += '<li class="text-xs text-slate-600 flex gap-2 leading-relaxed">' +
+                     '<span class="text-slate-300 shrink-0">&rarr;</span>' +
+                     '<span class="min-w-0">' + escapeHtml(traceItems[i]) + '</span>' +
+                   '</li>';
+    }
+
+    var fixHtml = '';
+    if (f.fix) {
+      fixHtml = '<div class="mt-3 rounded-lg bg-slate-50 ring-1 ring-slate-200 p-3">' +
+                  '<p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Recommended fix</p>' +
+                  '<p class="mt-1 text-sm text-slate-700 leading-relaxed">' + escapeHtml(f.fix) + '</p>' +
+                '</div>';
+    }
+
+    return '<article class="rounded-xl bg-white ring-1 ring-slate-200 border-l-4 ' + accent + ' overflow-hidden fade-in">' +
+             '<div class="p-4 sm:p-5">' +
+               '<div class="flex flex-wrap items-center gap-2">' + chips +
+                 '<span class="ml-auto mono text-[11px] text-slate-400">' + escapeHtml(f.id) + '</span>' +
+               '</div>' +
+               '<h3 class="mt-2.5 font-semibold text-slate-900 leading-snug">' + escapeHtml(f.title) + '</h3>' +
+               '<p class="mt-1.5 text-sm text-slate-600 leading-relaxed">' + escapeHtml(f.summary) + '</p>' +
+               codeBlock(f) +
+               '<div class="mt-3">' +
+                 '<p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">' + traceLabel + '</p>' +
+                 '<ul class="mt-1.5 space-y-1">' + traceHtml + '</ul>' +
+               '</div>' +
+               fixHtml +
+             '</div>' +
+           '</article>';
+  }
+
+  function renderFindings(ds, filter) {
+    var list = document.getElementById('findingList');
+    if (!list) return;
+    var items = ds.findings.filter(function (f) {
+      return filter === 'all' || f.verdict === filter;
+    });
+    if (!items.length) {
+      list.innerHTML = '<p class="text-sm text-slate-500 py-6 text-center">No findings in this category for this sample repo.</p>';
+      return;
+    }
+    var html = '';
+    for (var i = 0; i < items.length; i++) html += findingCard(items[i]);
+    list.innerHTML = html;
+  }
+
+  function renderTabs(ds, counts) {
+    var tabsEl = document.getElementById('tabs');
+    if (!tabsEl) return;
+    var defs = [
+      ['all', 'All', ds.findings.length],
+      ['confirmed', 'Confirmed', counts.confirmed],
+      ['needs_validation', 'Needs validation', counts.needs_validation],
+      ['rejected', 'Rejected', counts.rejected]
+    ];
+    var html = '';
+    for (var i = 0; i < defs.length; i++) {
+      var key = defs[i][0];
+      var label = defs[i][1];
+      var count = defs[i][2];
+      var active = key === activeFilter;
+      var cls = active
+        ? 'bg-slate-900 text-white ring-slate-900'
+        : 'bg-white text-slate-600 ring-slate-200 hover:bg-slate-50';
+      html += '<button type="button" data-filter="' + key + '" class="text-xs font-medium px-3 py-1.5 rounded-full ring-1 transition ' + cls + '">' +
+                label + ' <span class="opacity-60">' + count + '</span>' +
+              '</button>';
+    }
+    tabsEl.innerHTML = html;
+
+    var buttons = tabsEl.querySelectorAll('button');
+    for (var j = 0; j < buttons.length; j++) {
+      buttons[j].addEventListener('click', function () {
+        activeFilter = this.getAttribute('data-filter');
+        renderTabs(ds, counts);
+        renderFindings(ds, activeFilter);
+      });
+    }
+  }
+
+  function statBlock(value, label, colorClass) {
+    return '<div class="text-center">' +
+             '<p class="text-2xl font-semibold leading-none ' + colorClass + '">' + value + '</p>' +
+             '<p class="mt-1 text-[10px] uppercase tracking-wider text-slate-400 whitespace-nowrap">' + label + '</p>' +
+           '</div>';
+  }
+
+  function renderResults(ds) {
+    var counts = { confirmed: 0, needs_validation: 0, rejected: 0 };
+    for (var i = 0; i < ds.findings.length; i++) {
+      var f = ds.findings[i];
+      counts[f.verdict] = (counts[f.verdict] || 0) + 1;
+    }
+    activeFilter = 'all';
+
+    resultsEl.innerHTML =
+      '<div class="bg-slate-900 text-white px-5 sm:px-6 py-5">' +
+        '<div class="flex flex-wrap items-start justify-between gap-5">' +
+          '<div class="min-w-0">' +
+            '<p class="text-[10px] uppercase tracking-widest text-slate-400">Audit complete · Sample data</p>' +
+            '<p class="mt-1 font-semibold truncate">' + escapeHtml(ds.repo) + '</p>' +
+            '<p class="mt-1 text-xs text-slate-400 mono break-words">' + escapeHtml(ds.stack) + '</p>' +
+            '<p class="mt-0.5 text-xs text-slate-500 mono break-words">' + escapeHtml(ds.coverage) + '</p>' +
+          '</div>' +
+          '<div class="flex gap-6 sm:gap-8">' +
+            statBlock(counts.confirmed, 'confirmed', 'text-rose-400') +
+            statBlock(counts.needs_validation, 'needs validation', 'text-amber-300') +
+            statBlock(counts.rejected, 'rejected', 'text-slate-400') +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div id="tabs" class="px-5 sm:px-6 pt-5 flex flex-wrap gap-2"></div>' +
+      '<div id="findingList" class="p-5 sm:p-6 space-y-4"></div>';
+
+    renderTabs(ds, counts);
+    renderFindings(ds, 'all');
+    resultsEl.classList.remove('hidden');
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Run the simulated audit                                             */
+  /* ------------------------------------------------------------------ */
+
+  function finishRun(ds) {
+    renderResults(ds);
+    running = false;
+    runBtn.disabled = false;
+    runBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+    runBtnLabel.textContent = 'Re-run audit';
+    pipelineNote.textContent = '6 of 6 phases complete';
+    pipelineNote.className = 'text-[11px] text-emerald-600 font-medium';
+    setTimeout(function () {
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  }
+
+  function startRun() {
+    if (running) return;
+    running = true;
+
+    currentKey = resolveKeyFromInput();
+    var ds = DATASETS[currentKey];
+
+    resultsEl.classList.add('hidden');
+    resultsEl.innerHTML = '';
+    renderPhases(ds);
+
+    runBtn.disabled = true;
+    runBtn.classList.add('opacity-60', 'cursor-not-allowed');
+    runBtnLabel.textContent = 'Auditing…';
+    pipelineNote.textContent = 'running phase 1 of 6';
+    pipelineNote.className = 'text-[11px] text-slate-900 font-medium';
+
+    var index = 0;
+    var total = ds.phases.length;
+
+    function step() {
+      if (index >= total) {
+        finishRun(ds);
+        return;
+      }
+      var i = index;
+      setPhaseState(i, 'running');
+      pipelineNote.textContent = 'running phase ' + (i + 1) + ' of ' + total;
+      setTimeout(function () {
+        setPhaseState(i, 'done');
+        index = i + 1;
+        step();
+      }, 520);
+    }
+
+    step();
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Events                                                              */
+  /* ------------------------------------------------------------------ */
+
+  runBtn.addEventListener('click', startRun);
+
+  var presetButtons = document.querySelectorAll('.preset-chip');
+  for (var p = 0; p < presetButtons.length; p++) {
+    presetButtons[p].addEventListener('click', function () {
+      var key = this.getAttribute('data-preset');
+      var ds = DATASETS[key];
+      if (!ds) return;
+      repoInput.value = ds.url;
+      currentKey = key;
+      resultsEl.classList.add('hidden');
+      resultsEl.innerHTML = '';
+      renderPhases(ds);
+      pipelineNote.textContent = 'ready';
+      pipelineNote.className = 'text-[11px] text-slate-400';
+      runBtnLabel.textContent = 'Run 6-phase audit';
+    });
+  }
+
+  /* Waitlist (demo only — nothing is submitted) */
+  var wlEmail = document.getElementById('wlEmail');
+  var wlBtn = document.getElementById('wlBtn');
+  var wlMsg = document.getElementById('wlMsg');
+
+  wlBtn.addEventListener('click', function () {
+    var value = (wlEmail.value || '').trim();
+    wlMsg.classList.remove('hidden');
+    if (value.indexOf('@') === -1 || value.length < 5) {
+      wlMsg.textContent = 'Enter a work email to continue. (Demo only — nothing is sent.)';
+      wlMsg.className = 'mt-3 text-sm text-amber-700';
+    } else {
+      wlMsg.textContent = 'Thanks — you are on the list. Demo only: no data was submitted or stored.';
+      wlMsg.className = 'mt-3 text-sm text-emerald-700';
+      wlEmail.value = '';
+    }
+  });
+
+  /* Boot */
+  renderPhases(DATASETS.checkout);
+})();
+</script>
+</body>
+</html>

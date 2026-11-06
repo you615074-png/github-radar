@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-07",
+ "headline": "Cloudflare 开源 AI 安全审计 skill，63k 星",
+ "summary_md": "`cloudflare/security-audit-skill` is a coding-agent skill that turns your existing assistant into a structured security auditor. Per the README, it seeds the vulnerability discovery harness Cloudflare described in its \"build your own vulnerability harness\" post, and it runs in six phases: reconnaissance (mapping architecture, trust boundaries, and input surfaces into `architecture.md` and `coverage-ledger.json`), coverage-led hunting with isolated hunter agents, candidate validation where a fresh verifier tries to disprove each finding, structured output into `findings.json`, independent record verification, and target-neutral reporting (`REPORT.md`, `FINDINGS-DETAIL.md`, `NEEDS-VALIDATION.md`).\n\nWhy it's taking off: it ships a large, opinionated attack-class library (web, client-side, supply chain, cloud/IaM, LLM prompt injection, memory safety), plus zero-dependency validators for the coverage ledger and findings, so output is machine-readable instead of prose. It follows the growing pattern of skills that ride on top of agents rather than replacing them — install with `npx skills add`, point your agent at a repo, ask for a security audit.\n\nThe product opportunity: most teams can't easily wire up parallel sub-agents and OS-level sandboxes. A hosted service that runs this skill against a repo, normalizes findings, dedupes across runs, and adds human review or a triage dashboard is a clear gap. Pricing by audit run or repo subscription. The hard part is trust: security claims carry liability, so \"confirmed\" vs \"needs_validation\" must be preserved honestly.",
+ "title_en": "Cloudflare's security-audit-skill turns your coding agent into an auditor",
+ "tagline_en": "A six-phase agent skill that audits a repo's code and writes verifiable vulnerability findings.",
+ "pick": {
+  "full_name": "cloudflare/security-audit-skill",
+  "url": "https://github.com/cloudflare/security-audit-skill",
+  "description": "A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings",
+  "license": "MIT",
+  "stars": 63364,
+  "daily_rate": 2524,
+  "category": "安全",
+  "one_liner": "让 AI 编程助手按六个阶段自动给你的代码做安全审计并输出可核查的漏洞报告",
+  "one_liner_en": "Turns your coding agent into a six-phase security auditor with verified, machine-readable findings.",
+  "reason": "话题性与许可证极佳，痛点真实，但大厂出品且依赖 agent+沙箱环境，包装空间和产品差异化受限，适合做内容爆款多于独立创业。",
+  "content": 7.67,
+  "startup": 6.85,
+  "final": 7.4,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-07-cloudflare-security-audit-skill",
+ "top": [
+  {
+   "full_name": "cloudflare/security-audit-skill",
+   "url": "https://github.com/cloudflare/security-audit-skill",
+   "one_liner": "让 AI 编程助手按六个阶段自动给你的代码做安全审计并输出可核查的漏洞报告",
+   "reason": "话题性与许可证极佳，痛点真实，但大厂出品且依赖 agent+沙箱环境，包装空间和产品差异化受限，适合做内容爆款多于独立创业。",
+   "one_liner_en": "Turns your coding agent into a six-phase security auditor with verified, machine-readable findings.",
+   "content": 7.67,
+   "startup": 6.85,
+   "final": 7.4,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "tangency-labs/solidcraft",
+   "url": "https://github.com/tangency-labs/solidcraft",
+   "one_liner": "开源参数化 3D CAD，改一个数字模型自动重建",
+   "reason": "技术硬核、话题性和可演示性都强，但产品已相当成熟，商业化被免费竞品和强敌夹击，适合做内容不适合包装。",
+   "one_liner_en": "Open-source parametric 3D CAD: change a dimension, the model rebuilds.",
+   "content": 7.67,
+   "startup": 6.4,
+   "final": 7.37,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "caru-ini/stack-diagram",
+   "url": "https://github.com/caru-ini/stack-diagram",
+   "one_liner": "一句话描述技术栈，自动生成带官方 logo 的架构图",
+   "reason": "话题性强、易演示、MIT 许可干净、包装空间大，但需求偏小众、付费意愿弱，需靠模板和分享社区做差异化",
+   "one_liner_en": "Describe your stack in one sentence, get an architecture diagram with official logos",
+   "content": 7.67,
+   "startup": 6.6,
+   "final": 7.1,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "ly05010419/MacNativeGames",
+   "url": "https://github.com/ly05010419/MacNativeGames",
+   "one_liner": "在自己苹果设备上原生运行 Switch 游戏的技术实验",
+   "reason": "话题性和惊喜感极强、易于传播，但法律雷区多、变现困难，适合做内容而非做产品；只能定位为免费技术实验。",
+   "one_liner_en": "Native ARM64 ports of Switch games running on Apple silicon (bring your own game)",
+   "content": 8.67,
+   "startup": 5.9,
+   "final": 6.97,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "livliv-dev/player",
+   "url": "https://github.com/livliv-dev/player",
+   "one_liner": "在网页里几行代码就能放入会眨眼对口型、跟摄像头动的虚拟角色",
+   "reason": "播放器轻量、接口干净、演示效果强、Apache 许可宽松，很适合做内容；但角色素材授权受限，变现要绕开官方角色池，商业壁垒一般。",
+   "one_liner_en": "Drop a lip-syncing, webcam-tracking 2.5D avatar into any web page with a few lines of code",
+   "content": 8.0,
+   "startup": 6.85,
+   "final": 6.83,
+   "category_penalty": 0.8
+  }
+ ]
+}
