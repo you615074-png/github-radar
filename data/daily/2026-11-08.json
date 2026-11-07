@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-08",
+ "headline": "DeepSeek 主动型编程智能体原型",
+ "summary_md": "**What it is**\n\ndsh-superagent, from deepseek-ai, is a proactive coding agent scoped to a single GitHub repository. It's packaged as a bundle for DeepSeek Harness: it listens to GitHub (and optionally Feishu), and when someone authorized asks for work, it opens a work item, runs it in its own agent session and directory, then replies in the original thread — often with a pull request. A web panel surfaces what still needs a human.\n\n**Why it's taking off**\n\nThe repo has crossed 20k stars in a short window, and the draw is the framing as much as the code. The team's stated principle is \"take as little human attention as possible, give as much value as possible\" — so the agent acts only when asked or when a team-written rule allows it, and speaks only when someone must act. That's a more disciplined take than the usual \"autonomous agent\" pitch, and it comes with numbered design docs (philosophy, domain model, authorization, execution, prompts, panel, deployment, architecture).\n\n**Where the product opportunity is**\n\nThe README is blunt: research prototype, not production-ready, may contain bugs, adapted for publication so it differs from the internal version. Setup has many steps and is designed to be done with an agent reading SETUP.md. Dependencies on DeepSeek Harness and Feishu limit international reach.\n\nSo the opportunity isn't reselling this. It's the shape: a hosted layer that takes a repo, scopes what the agent may touch, and gives a review queue over its PRs. The authorization model is the interesting part to study.",
+ "title_en": "dsh-superagent: A Proactive Coding Agent for GitHub Repos",
+ "tagline_en": "An agent that picks up GitHub work, opens a branch and files a PR on its own.",
+ "pick": {
+  "full_name": "deepseek-ai/dsh-superagent-prototype",
+  "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+  "description": "Towards a More Autonomous Agent System",
+  "license": "MIT",
+  "stars": 20702,
+  "daily_rate": 2957.4,
+  "category": "AI应用",
+  "one_liner": "能自己接 GitHub 任务、开分支、提 PR 的主动型编程智能体",
+  "one_liner_en": "",
+  "reason": "大厂热点智能体项目传播性强、MIT 友好，但官方原型不成熟、商业化空间弱，适合做内容而非直接产品化。",
+  "content": 8.0,
+  "startup": 6.55,
+  "final": 7.41,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-08-deepseek-ai-dsh-superagent-prototype",
+ "top": [
+  {
+   "full_name": "wheresryan22/anatomy",
+   "url": "https://github.com/wheresryan22/anatomy",
+   "one_liner": "让 Claude 把技术概念画成可交互的等轴测机械插图",
+   "reason": "演示效果惊艳、许可证干净、传播性强，但它是依附 agent 平台的技能，产品壁垒和付费理由都偏弱，适合做内容选题，包装成 SaaS 需往团队品牌化插图方向走。",
+   "one_liner_en": "A Claude skill that turns any tech idea into an interactive isometric machine.",
+   "content": 8.0,
+   "startup": 6.5,
+   "final": 7.46,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "deepseek-ai/dsh-superagent-prototype",
+   "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+   "one_liner": "能自己接 GitHub 任务、开分支、提 PR 的主动型编程智能体",
+   "reason": "大厂热点智能体项目传播性强、MIT 友好，但官方原型不成熟、商业化空间弱，适合做内容而非直接产品化。",
+   "one_liner_en": "",
+   "content": 8.0,
+   "startup": 6.55,
+   "final": 7.41,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "heydamir/unslop",
+   "url": "https://github.com/heydamir/unslop",
+   "one_liner": "把 AI 生成的千篇一律界面改成有设计感的界面",
+   "reason": "话题性和痛点都很强，赶上了 vibe coding 热潮，演示效果直接，但技术门槛低且授权非标准，变现要以订阅制检测和改版工具为主。",
+   "one_liner_en": "Turns AI-generated generic UI into a designed, distinctive interface",
+   "content": 8.0,
+   "startup": 6.15,
+   "final": 7.39,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "BryceYuuu/RUN",
+   "url": "https://github.com/BryceYuuu/RUN",
+   "one_liner": "中国护照持有人的海外移居路线手册，110 条路线附官方来源",
+   "reason": "中文移民手册，受众清晰、增长快、痛点真，但本质是文档而非可产品化代码，许可证与目标市场错配，商业化空间有限。",
+   "one_liner_en": "A country-by-country relocation playbook for Chinese passport holders, with 110 visa routes sourced from official pages.",
+   "content": 7.33,
+   "startup": 6.4,
+   "final": 6.95,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "sherlock-project/sherlock",
+   "url": "https://github.com/sherlock-project/sherlock",
+   "one_liner": "输入一个用户名，查出它在 400 多个社交平台的账号",
+   "reason": "传播性极强、易懂，但免费开源且社区维护；商业化空间主要在报告和团队协作，个人付费意愿弱，伦理风险需明确。",
+   "one_liner_en": "Find a username's accounts across 400+ social networks in seconds",
+   "content": 8.33,
+   "startup": 6.55,
+   "final": 6.92,
+   "category_penalty": 0.8
+  }
+ ]
+}

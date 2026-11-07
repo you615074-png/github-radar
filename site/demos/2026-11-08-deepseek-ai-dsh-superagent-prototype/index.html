@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relay — Issues in. Pull requests out.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  .chip {
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #475569;
+    padding: 4px 11px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all .15s ease;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip:hover { border-color: #cbd5e1; background: #f8fafc; color: #0f172a; }
+  .chip-on { background: #0f172a; border-color: #0f172a; color: #fff; }
+  .chip-on:hover { background: #1e293b; border-color: #1e293b; color: #fff; }
+
+  .mark {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    border-radius: 9999px;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: #94a3b8;
+    transition: all .2s ease;
+  }
+  .mark.run { border-color: #c7d2fe; background: #eef2ff; color: #4f46e5; }
+  .mark.done { border-color: #a7f3d0; background: #ecfdf5; color: #059669; }
+
+  .spin {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    border: 2px solid #c7d2fe;
+    border-top-color: #4f46e5;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .fade-in { animation: fadeIn .35s ease-out both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .logline {
+    padding: 2px 0;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+
+  .label {
+    display: inline-block;
+    border-radius: 9999px;
+    background: #eef2ff;
+    color: #4338ca;
+    padding: 1px 7px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-right: 3px;
+    vertical-align: 1px;
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="bg-white text-slate-900 font-sans">
+
+<!-- NAV -->
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-white">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[18px] w-[18px]">
+          <path d="M4.5 12a7.5 7.5 0 0 1 12.8-5.3"></path>
+          <path d="M19.5 12a7.5 7.5 0 0 1-12.8 5.3"></path>
+          <path d="M17.5 3.2v3.7h-3.7"></path>
+          <path d="M6.5 20.8v-3.7h3.7"></path>
+        </svg>
+      </span>
+      <span class="text-[15px] font-semibold tracking-tight">Relay</span>
+      <span class="ml-1 hidden rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500 sm:inline">Concept</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm text-slate-600 md:flex">
+      <a href="#demo" class="transition hover:text-slate-900">Live demo</a>
+      <a href="#usecases" class="transition hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="transition hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#waitlist" class="rounded-xl bg-slate-900 px-3.5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:pt-20">
+  <div class="max-w-3xl">
+    <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+      Hosted coding agent · private beta
+    </div>
+    <h1 class="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+      Issues in.<br class="hidden sm:block"> Pull requests out.
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
+      Relay is a proactive coding agent that watches one GitHub repository. Label an issue, and it claims the work,
+      opens a branch, writes the patch, runs your checks, and leaves you a reviewable pull request — asking for your
+      attention only when something actually needs it.
+    </p>
+    <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500">
+      <span class="flex items-center gap-1.5"><span class="text-emerald-600">✓</span> Works from issues, not prompts</span>
+      <span class="flex items-center gap-1.5"><span class="text-emerald-600">✓</span> Rules you write, nothing it invents</span>
+      <span class="flex items-center gap-1.5"><span class="text-emerald-600">✓</span> One review panel for the whole team</span>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo" class="mx-auto max-w-6xl scroll-mt-24 px-5 pb-16">
+  <div class="grid gap-5 lg:grid-cols-[380px_minmax(0,1fr)]">
+
+    <!-- Left: trigger -->
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-semibold tracking-tight">Trigger an agent run</h2>
+        <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-700">Sample data</span>
+      </div>
+
+      <div class="mt-4 flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5">
+        <svg viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 text-slate-400">
+          <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.25.25 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path>
+        </svg>
+        <span class="text-xs font-semibold text-slate-700">acme/checkout-api</span>
+        <span class="ml-auto flex items-center gap-1 text-[11px] text-emerald-600">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> connected
+        </span>
+      </div>
+
+      <div class="mt-4">
+        <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Pick an issue</span>
+        <div id="chips" class="mt-2 flex flex-wrap gap-2"></div>
+      </div>
+
+      <div class="mt-4">
+        <label for="issueTitle" class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Or type your own issue title</label>
+        <input id="issueTitle" type="text" autocomplete="off" spellcheck="false"
+          value="Race condition when two webhooks fire at once"
+          class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:ring-2 focus:ring-slate-900/10">
+      </div>
+
+      <div id="issueMeta" class="mt-4 rounded-xl border border-slate-200 bg-slate-50/70 p-3"></div>
+
+      <button id="runBtn" type="button"
+        class="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[.99] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:active:scale-100">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+          <path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path>
+        </svg>
+        <span id="runLabel">Dispatch agent</span>
+      </button>
+      <p class="mt-2.5 text-[11px] leading-relaxed text-slate-400">Everything below is simulated in your browser. No repositories are touched.</p>
+    </div>
+
+    <!-- Right: agent session -->
+    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div class="flex items-center gap-3 border-b border-slate-200 bg-slate-50/80 px-4 py-2.5">
+        <div class="flex gap-1.5">
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
+        </div>
+        <div class="truncate text-xs font-medium text-slate-500">agent session · acme/checkout-api</div>
+        <div class="ml-auto flex flex-none items-center gap-2">
+          <span id="status" class="rounded-full bg-slate-200/80 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-600">idle</span>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2">
+        <div id="steps" class="space-y-3.5 p-5 sm:p-6"></div>
+        <div id="log" class="min-h-[220px] max-h-[340px] overflow-auto border-t border-slate-200 bg-[#0b1220] p-4 font-mono text-[11px] leading-relaxed text-slate-300 lg:max-h-none lg:border-l lg:border-t-0"></div>
+      </div>
+
+      <div id="prWrap" class="hidden border-t border-slate-200 p-4 sm:p-5"></div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases" class="scroll-mt-24 border-t border-slate-200 bg-slate-50/60">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-20">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Where it earns its keep</h2>
+    <p class="mt-3 max-w-2xl text-slate-600">
+      Small teams don't have a spare engineer for the queue of twenty-minute fixes. Relay takes that queue — and only that queue.
+    </p>
+    <div class="mt-9 grid gap-5 md:grid-cols-3">
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid h-10 w-10 place-items-center rounded-xl bg-rose-50 text-lg">🐛</div>
+        <h3 class="mt-4 text-base font-semibold tracking-tight">Bug triage on autopilot</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Label an issue <code class="rounded bg-slate-100 px-1 py-0.5 text-[12px]">agent:ok</code>. Relay reproduces it,
+          adds a failing-then-passing test, and opens a PR with the fix explained in the description.
+        </p>
+        <p class="mt-3 text-xs text-slate-400">Median in sample runs: 6 min 40 s from label to PR.</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-lg">🌙</div>
+        <h3 class="mt-4 text-base font-semibold tracking-tight">Overnight dependency sweeps</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Write a scheduled rule — "every Monday, bump patch versions and drop dead lint suppressions." Wake up to a
+          stack of small PRs and one review queue.
+        </p>
+        <p class="mt-3 text-xs text-slate-400">Teams review batches in ~15 min instead of filing tickets.</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-lg">🌱</div>
+        <h3 class="mt-4 text-base font-semibold tracking-tight">Maintainer relief for OSS</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Point it at your open-source repo. Instead of answering "PRs welcome," it turns small, well-scoped
+          contributor requests into actual reviewable patches.
+        </p>
+        <p class="mt-3 text-xs text-slate-400">Opt-in per label, so drive-by requests never wake it up.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-16 sm:py-20">
+  <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Simple pricing, per repository</h2>
+  <p class="mt-3 max-w-2xl text-slate-600">You pay for the repositories Relay is allowed to work in — not for seats. Every plan includes the review panel.</p>
+
+  <div class="mt-9 grid gap-5 md:grid-cols-3">
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="text-sm font-semibold text-slate-900">Solo</div>
+      <div class="mt-2 flex items-baseline gap-1.5">
+        <span class="text-3xl font-semibold tracking-tight">$0</span>
+        <span class="text-sm text-slate-500">forever</span>
+      </div>
+      <p class="mt-2 text-sm text-slate-600">For your own side projects.</p>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> 1 repository</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> 30 agent runs / month</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Manual dispatch only</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Web review panel</li>
+      </ul>
+      <button type="button" data-plan="Solo" class="planBtn mt-6 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50">Start free</button>
+    </div>
+
+    <div class="relative flex flex-col rounded-2xl border border-slate-900 bg-white p-6 shadow-md ring-1 ring-slate-900">
+      <span class="absolute -top-3 left-6 rounded-full bg-slate-900 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">Most teams</span>
+      <div class="text-sm font-semibold text-slate-900">Team</div>
+      <div class="mt-2 flex items-baseline gap-1.5">
+        <span class="text-3xl font-semibold tracking-tight">$29</span>
+        <span class="text-sm text-slate-500">/ repo / month</span>
+      </div>
+      <p class="mt-2 text-sm text-slate-600">For a small engineering team that ships daily.</p>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Up to 3 repositories</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Unlimited agent runs</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Automatic claim rules + schedules</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Shared PR review queue</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Slack &amp; Feishu notifications</li>
+      </ul>
+      <a href="#waitlist" class="mt-6 rounded-xl bg-slate-900 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800">Join the beta</a>
+    </div>
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+      <div class="text-sm font-semibold text-slate-900">Studio</div>
+      <div class="mt-2 flex items-baseline gap-1.5">
+        <span class="text-3xl font-semibold tracking-tight">$99</span>
+        <span class="text-sm text-slate-500">/ month</span>
+      </div>
+      <p class="mt-2 text-sm text-slate-600">For agencies and multi-repo maintainers.</p>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Up to 10 repositories</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Cross-repo review queue</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> SSO &amp; audit log</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Priority run scheduling</li>
+      </ul>
+      <button type="button" data-plan="Studio" class="planBtn mt-6 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-50">Talk to us</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist" class="mx-auto max-w-6xl scroll-mt-24 px-5 pb-20">
+  <div class="rounded-3xl bg-slate-900 px-6 py-12 text-center sm:px-12 sm:py-16">
+    <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">The second shift isn't a human.</h2>
+    <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
+      Hosted Relay is in private beta with a handful of teams. Leave an email and we'll send one note when a slot opens.
+    </p>
+    <form id="waitlistForm" class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
+      <input id="waitEmail" type="email" required autocomplete="off" placeholder="you@company.com"
+        class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-white/40 focus:bg-white/10">
+      <button type="submit" class="flex-none rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[.99]">Join waitlist</button>
+    </form>
+    <p id="waitlistMsg" class="mt-3 min-h-[20px] text-sm font-medium text-emerald-400"></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-5 py-8 text-center text-xs leading-relaxed text-slate-500">
+    Concept demo, based on the open-source project <a class="font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 transition hover:text-slate-900" href="https://github.com/deepseek-ai/dsh-superagent-prototype">deepseek-ai/dsh-superagent-prototype</a> (MIT), unofficial, all data is sample data
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-50 -translate-x-1/2 translate-y-4 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-medium text-white opacity-0 shadow-lg transition-all duration-200"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------- Data ---------------- */
+
+  var TITLES = [
+    'Read the issue and rules',
+    'Claimed in the thread',
+    'Opened a branch',
+    'Read the code',
+    'Wrote a patch',
+    'Ran the checks',
+    'Opened a pull request'
+  ];
+
+  var PRESETS = [
+    {
+      id: '482',
+      repo: 'acme/checkout-api',
+      title: 'Race condition when two webhooks fire at once',
+      author: 'marcus-lee',
+      labels: ['bug', 'agent:ok'],
+      body: 'Two Stripe webhooks for the same account arrived 40ms apart and we created two invoice rows. Only reproduces under load.',
+      branch: 'agent/482-webhook-race',
+      sha: '4f1c9a2',
+      wi: '7c40',
+      inspect: 'Read 9 files. Two unguarded db.invoices.insert call sites in src/webhooks/handler.ts.',
+      files: '2 files changed',
+      plus: 38,
+      minus: 11,
+      checks: 'typecheck passed · 148 tests passed (2 new) · build passed in 41s',
+      pr: '491',
+      prTitle: 'fix(webhooks): serialize invoice writes per account',
+      checksBadges: ['typecheck', '148 tests', 'build'],
+      diff: [
+        { k: 'ctx', t: 'export async function handle(event: WebhookEvent) {' },
+        { k: 'del', t: '  const invoice = await db.invoices.insert(toInvoice(event));' },
+        { k: 'del', t: '  await notify(event.account, invoice);' },
+        { k: 'add', t: '  return withAccountLock(event.account, async () => {' },
+        { k: 'add', t: '    const invoice = await db.invoices.insert(toInvoice(event));' },
+        { k: 'add', t: '    await notify(event.account, invoice);' },
+        { k: 'add', t: '  });' },
+        { k: 'ctx', t: '}' }
+      ]
+    },
+    {
+      id: '503',
+      repo: 'acme/checkout-api',
+      title: 'Add a /healthz endpoint for the load balancer',
+      author: 'priya-r',
+      labels: ['enhancement', 'agent:ok', 'good first issue'],
+      body: 'Our new ALB needs a lightweight probe that does not hit the database. Right now /status does a full query.',
+      branch: 'agent/503-healthz-endpoint',
+      sha: '4f1c9a2',
+      wi: '8b12',
+      inspect: 'Read 6 files. Routes are registered in src/routes/index.ts; probe paths live in deploy/k8s.yaml.',
+      files: '3 files changed',
+      plus: 52,
+      minus: 3,
+      checks: 'typecheck passed · 151 tests passed (3 new) · build passed in 39s',
+      pr: '512',
+      prTitle: 'feat(routes): add a lightweight /healthz probe',
+      checksBadges: ['typecheck', '151 tests', 'build'],
+      diff: [
+        { k: 'ctx', t: 'router.get("/status", statusHandler);' },
+        { k: 'add', t: 'router.get("/healthz", (req, res) => {' },
+        { k: 'add', t: '  res.status(200).json({ ok: true });' },
+        { k: 'add', t: '});' }
+      ]
+    },
+    {
+      id: '517',
+      repo: 'acme/checkout-api',
+      title: 'Bump zod to 3.23 and drop the hand-rolled validators',
+      author: 'dependabot',
+      labels: ['chore', 'agent:ok', 'dependencies'],
+      body: 'We pin zod at 3.21 while the local validate() wrapper duplicates most of its API. Cleaning this up would remove ~180 lines.',
+      branch: 'agent/517-zod-3-23',
+      sha: '4f1c9a2',
+      wi: '9d05',
+      inspect: 'Read 14 files. Six call sites use the local validate() wrapper in src/lib/validate.ts.',
+      files: '7 files changed',
+      plus: 96,
+      minus: 180,
+      checks: 'typecheck passed · 148 tests passed · build passed in 44s',
+      pr: '520',
+      prTitle: 'chore(deps): upgrade zod to 3.23, remove local validators',
+      checksBadges: ['typecheck', '148 tests', 'build'],
+      diff: [
+        { k: 'del', t: 'import { validate } from "./lib/validate";' },
+        { k: 'add', t: 'import { z } from "zod";' },
+        { k: 'ctx', t: '' },
+        { k: 'del', t: 'const body = validate(schema, req.body);' },
+        { k: 'add', t: 'const body = schema.parse(req.body);' }
+      ]
+    }
+  ];
+
+  var selected = 0;
+  var running = false;
+  var runToken = 0;
+  var startedAt = 0;
+
+  /* ---------------- Helpers ---------------- */
+
+  function $(sel) { return document.querySelector(sel); }
+
+  function esc(value) {
+    return String(value).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function sleep(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  /* ---------------- Elements ---------------- */
+
+  var inputEl = $('#issueTitle');
+  var chipsEl = $('#chips');
+  var metaEl = $('#issueMeta');
+  var stepsEl = $('#steps');
+  var logEl = $('#log');
+  var statusEl = $('#status');
+  var prEl = $('#prWrap');
+  var runBtn = $('#runBtn');
+  var runLabel = $('#runLabel');
+  var toastEl = $('#toast');
+
+  var toastTimer = null;
+  function toast(message) {
+    toastEl.textContent = message;
+    toastEl.classList.remove('opacity-0', 'translate-y-4');
+    if (toastTimer) { clearTimeout(toastTimer); }
+    toastTimer = setTimeout(function () {
+      toastEl.classList.add('opacity-0', 'translate-y-4');
+    }, 2800);
+  }
+
+  /* ---------------- Small renderers ---------------- */
+
+  function renderChips() {
+    chipsEl.innerHTML = PRESETS.map(function (p, i) {
+      return '<button type="button" data-i="' + i + '" class="chip' + (i === selected ? ' chip-on' : '') + '">#' + p.id + '</button>';
+    }).join('');
+  }
+
+  function paintChips(index) {
+    var buttons = chipsEl.querySelectorAll('button[data-i]');
+    for (var i = 0; i < buttons.length; i++) {
+      if (Number(buttons[i].getAttribute('data-i')) === index) {
+        buttons[i].classList.add('chip-on');
+      } else {
+        buttons[i].classList.remove('chip-on');
+      }
+    }
+  }
+
+  function showIssue(p) {
+    metaEl.innerHTML =
+      '<div class="flex items-start justify-between gap-2">' +
+        '<div class="text-sm font-semibold leading-snug text-slate-900">' + esc(p.title) +
+          ' <span class="font-normal text-slate-400">#' + esc(p.id) + '</span></div>' +
+      '</div>' +
+      '<div class="mt-1.5 text-[11px] text-slate-500">opened by ' + esc(p.author) + '</div>' +
+      '<div class="mt-1.5">' + p.labels.map(function (l) { return '<span class="label">' + esc(l) + '</span>'; }).join('') + '</div>' +
+      '<p class="mt-2 text-xs leading-relaxed text-slate-600">' + esc(p.body) + '</p>';
+  }
+
+  function showCustom(title) {
+    metaEl.innerHTML =
+      '<div class="text-sm font-semibold leading-snug text-slate-900">' + esc(title || 'Untitled issue') +
+        ' <span class="font-normal text-slate-400">#custom</span></div>' +
+      '<div class="mt-1.5 text-[11px] text-slate-500">opened by you · just now</div>' +
+      '<div class="mt-1.5"><span class="label">agent:ok</span></div>' +
+      '<p class="mt-2 text-xs leading-relaxed text-slate-600">' +
+        'Branch name and PR title are generated from your text. The patch and checks shown are sample data.' +
+      '</p>';
+  }
+
+  function renderSteps() {
+    stepsEl.innerHTML = TITLES.map(function (t, i) {
+      return '<div class="flex items-start gap-3" data-step="' + i + '">' +
+        '<div class="mark">' + (i + 1) + '</div>' +
+        '<div class="min-w-0 flex-1">' +
+          '<div class="step-title text-sm font-medium text-slate-400">' + esc(t) + '</div>' +
+          '<div class="step-detail mt-0.5 hidden text-xs leading-relaxed text-slate-500"></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function setStep(index, state, detail) {
+    var el = stepsEl.querySelector('[data-step="' + index + '"]');
+    if (!el) { return; }
+    var mark = el.querySelector('.mark');
+    var title = el.querySelector('.step-title');
+    var det = el.querySelector('.step-detail');
+    if (!mark || !title || !det) { return; }
+
+    if (state === 'run') {
+      mark.className = 'mark run';
+      mark.innerHTML = '<span class="spin"></span>';
+      title.className = 'step-title text-sm font-medium text-slate-900';
+    } else if (state === 'done') {
+      mark.className = 'mark done';
+      mark.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor" class="h-3 w-3"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-6.5 6.5a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 1 1 1.06-1.06L6.75 10.19l5.97-5.97a.75.75 0 0 1 1.06 0Z"></path></svg>';
+      title.className = 'step-title text-sm font-medium text-slate-700';
+      if (detail) {
+        det.textContent = detail;
+        det.classList.remove('hidden');
+      }
+    }
+  }
+
+  function setStatus(text, tone) {
+    statusEl.textContent = text;
+    statusEl.className = 'rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ' +
+      (tone === 'run' ? 'bg-indigo-100 text-indigo-700' :
+       tone === 'done' ? 'bg-emerald-100 text-emerald-700' :
+       'bg-slate-200/80 text-slate-600');
+  }
+
+  function logLine(text) {
+    var sec = ((performance.now() - startedAt) / 1000).toFixed(1);
+    var row = document.createElement('div');
+    row.className = 'logline';
+    row.innerHTML = '<span class="text-slate-600">+' + sec + 's</span>  <span>' + esc(text) + '</span>';
+    logEl.appendChild(row);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function resetLog() {
+    logEl.innerHTML = '<div class="logline text-slate-500">// agent idle — pick an issue and dispatch</div>';
+  }
+
+  /* ---------------- Session model ---------------- */
+
+  function customFor(title) {
+    var slug = String(title || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 34);
+    if (!slug) { slug = 'agent-task'; }
+    return {
+      id: 'custom',
+      repo: 'acme/checkout-api',
+      title: title,
+      author: 'you',
+      labels: ['agent:ok'],
+      body: '',
+      branch: 'agent/' + slug,
+      sha: '4f1c9a2',
+      wi: 'aa31',
+      inspect: 'Read 11 files. Traced the code path the issue describes into src/services/.',
+      files: '2 files changed',
+      plus: 24,
+      minus: 9,
+      checks: 'typecheck passed · 148 tests passed (1 new) · build passed in 40s',
+      pr: '523',
+      prTitle: title,
+      checksBadges: ['typecheck', '148 tests', 'build'],
+      diff: [
+        { k: 'ctx', t: '// sample patch — the shape of a typical Relay change' },
+        { k: 'del', t: '  if (!input) return null;' },
+        { k: 'add', t: '  if (!input) throw new ValidationError("input required");' },
+        { k: 'ctx', t: '  const parsed = schema.parse(input);' },
+        { k: 'add', t: '  return parsed;' }
+      ]
+    };
+  }
+
+  function stepsFor(p) {
+    return [
+      { d: 'Rule "bugfix" matched: label agent:ok → claim and act, no approval needed.', ms: 650 },
+      { d: 'Work item wi_' + p.wi + ' created. Replied: "Picking this up — PR to follow."', ms: 650 },
+      { d: p.branch + ' from main @ ' + p.sha, ms: 550 },
+      { d: p.inspect, ms: 850 },
+      { d: p.files + ' · +' + p.plus + ' −' + p.minus, ms: 950 },
+      { d: p.checks, ms: 950 },
+      { d: 'PR #' + p.pr + ' opened · review requested from @you', ms: 700 }
+    ];
+  }
+
+  function diffHtml(p) {
+    return p.diff.map(function (line) {
+      var cls = line.k === 'add' ? 'bg-emerald-50 text-emerald-800' :
+                line.k === 'del' ? 'bg-rose-50 text-rose-800' : 'text-slate-500';
+      var sign = line.k === 'add' ? '+' : line.k === 'del' ? '-' : ' ';
+      return '<div class="px-1.5 ' + cls + '">' + esc(sign + ' ' + line.t) + '</div>';
+    }).join('');
+  }
+
+  function showPR(p, title) {
+    var prTitle = p.prTitle || title;
+    prEl.classList.remove('hidden');
+    prEl.innerHTML =
+      '<div class="fade-in rounded-xl border border-emerald-200 bg-emerald-50/60 p-4">' +
+        '<div class="flex items-start gap-3">' +
+          '<span class="mt-0.5 grid h-8 w-8 flex-none place-items-center rounded-lg bg-emerald-600 text-white">' +
+            '<svg viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4">' +
+              '<path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path>' +
+            '</svg>' +
+          '</span>' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex flex-wrap items-center gap-x-2 gap-y-1">' +
+              '<span class="text-sm font-semibold text-slate-900">#' + esc(p.pr) + '</span>' +
+              '<span class="text-sm leading-snug text-slate-800">' + esc(prTitle) + '</span>' +
+              '<span class="rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">open</span>' +
+            '</div>' +
+            '<div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-slate-600">' +
+              '<code class="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono">' + esc(p.branch) + '</code>' +
+              '<span class="text-slate-400">→</span>' +
+              '<code class="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono">main</code>' +
+              '<span class="text-slate-300">·</span>' +
+              '<span>' + esc(p.files) + ', <span class="font-semibold text-emerald-700">+' + p.plus + '</span> <span class="font-semibold text-rose-700">−' + p.minus + '</span></span>' +
+            '</div>' +
+            '<pre class="mt-3 max-h-36 overflow-auto rounded-lg border border-slate-200 bg-white p-1.5 font-mono text-[11px] leading-relaxed">' + diffHtml(p) + '</pre>' +
+            '<div class="mt-3 flex flex-wrap items-center gap-2">' +
+              p.checksBadges.map(function (b) {
+                return '<span class="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-medium text-emerald-700 ring-1 ring-emerald-200">✓ ' + esc(b) + '</span>';
+              }).join('') +
+            '</div>' +
+            '<div class="mt-3 flex flex-wrap gap-2">' +
+              '<button type="button" data-act="panel" class="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800">Review in panel</button>' +
+              '<button type="button" data-act="changes" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50">Ask for changes</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  /* ---------------- Run ---------------- */
+
+  async function run() {
+    if (running) { return; }
+    running = true;
+
+    var myToken = ++runToken;
+    var title = (inputEl.value || '').trim();
+    if (!title) {
+      title = 'Fix the reported issue';
+      inputEl.value = title;
+    }
+
+    var presetIndex = -1;
+    for (var i = 0; i < PRESETS.length; i++) {
+      if (PRESETS[i].title === title) { presetIndex = i; break; }
+    }
+    var p = presetIndex >= 0 ? PRESETS[presetIndex] : customFor(title);
+
+    prEl.classList.add('hidden');
+    prEl.innerHTML = '';
+    renderSteps();
+    logEl.innerHTML = '';
+    startedAt = performance.now();
+    setStatus('working', 'run');
+    runBtn.disabled = true;
+    runLabel.textContent = 'Working…';
+
+    logLine('session started · repo ' + p.repo + ' · rule "bugfix"');
+
+    var steps = stepsFor(p);
+    for (var s = 0; s < steps.length; s++) {
+      if (myToken !== runToken) { return; }
+      setStep(s, 'run');
+      await sleep(steps[s].ms);
+      if (myToken !== runToken) { return; }
+      setStep(s, 'done', steps[s].d);
+      logLine(steps[s].d);
+    }
+
+    await sleep(250);
+    if (myToken !== runToken) { return; }
+
+    logLine('done — awaiting a human review');
+    setStatus('awaiting review', 'done');
+    showPR(p, title);
+    runBtn.disabled = false;
+    runLabel.textContent = 'Run another issue';
+    running = false;
+  }
+
+  /* ---------------- Wiring ---------------- */
+
+  chipsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-i]');
+    if (!btn) { return; }
+    var idx = Number(btn.getAttribute('data-i'));
+    if (isNaN(idx) || !PRESETS[idx]) { return; }
+    selected = idx;
+    inputEl.value = PRESETS[idx].title;
+    paintChips(idx);
+    showIssue(PRESETS[idx]);
+  });
+
+  inputEl.addEventListener('input', function () {
+    var value = inputEl.value.trim();
+    var idx = -1;
+    for (var i = 0; i < PRESETS.length; i++) {
+      if (PRESETS[i].title === value) { idx = i; break; }
+    }
+    selected = idx;
+    paintChips(idx);
+    if (idx >= 0) {
+      showIssue(PRESETS[idx]);
+    } else {
+      showCustom(value);
+    }
+  });
+
+  runBtn.addEventListener('click', function () { run(); });
+
+  prEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-act]');
+    if (!btn) { return; }
+    var act = btn.getAttribute('data-act');
+    if (act === 'panel') {
+      toast('Sample data — in the hosted product this opens the review panel.');
+    } else {
+      toast('Sample data — nothing was sent to a real repository.');
+    }
+  });
+
+  var planButtons = document.querySelectorAll('.planBtn');
+  for (var b = 0; b < planButtons.length; b++) {
+    planButtons[b].addEventListener('click', function () {
+      var plan = this.getAttribute('data-plan') || 'this plan';
+      toast('Sample data — ' + plan + ' signup is not wired up in this demo.');
+    });
+  }
+
+  var form = $('#waitlistForm');
+  var email = $('#waitEmail');
+  var msg = $('#waitlistMsg');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var value = (email.value || '').trim();
+    if (!value || value.indexOf('@') === -1) {
+      msg.className = 'mt-3 min-h-[20px] text-sm font-medium text-rose-400';
+      msg.textContent = 'Please enter an email address.';
+      return;
+    }
+    msg.className = 'mt-3 min-h-[20px] text-sm font-medium text-emerald-400';
+    msg.textContent = "You're on the list, " + value + " — sample only, nothing was submitted.";
+  });
+
+  /* ---------------- Init ---------------- */
+
+  renderChips();
+  showIssue(PRESETS[0]);
+  renderSteps();
+  resetLog();
+  setStatus('idle', 'idle');
+})();
+</script>
+</body>
+</html>
