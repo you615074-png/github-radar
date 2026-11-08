@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kiri Desktop — a window for the 2.5 ms container runtime</title>
+<meta name="description" content="Concept demo of Kiri Desktop: a native app for Kiri, a tiny container runtime that starts containers in about 2.5 ms." />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background: #f7f8f8;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono, code, pre {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    border-radius: 9999px; font-size: .875rem; font-weight: 500; line-height: 1.2;
+    padding: .68rem 1.15rem; border: 1px solid transparent; cursor: pointer;
+    transition: background-color .15s, border-color .15s, color .15s, transform .15s;
+    text-decoration: none;
+  }
+  .btn:active:not(:disabled) { transform: translateY(1px); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-dark { background: #0f172a; color: #fff; }
+  .btn-dark:hover:not(:disabled) { background: #1e293b; }
+  .btn-light { background: #fff; color: #0f172a; border-color: #e2e8f0; }
+  .btn-light:hover:not(:disabled) { border-color: #cbd5e1; background: #f8fafc; }
+  .btn-accent { background: #34d399; color: #04291d; }
+  .btn-accent:hover:not(:disabled) { background: #6ee7b7; }
+  .preset {
+    border-radius: 9999px; border: 1px solid #e2e8f0; background: #fff; color: #334155;
+    font-size: .78rem; padding: .44rem .82rem; cursor: pointer; white-space: nowrap;
+    transition: background-color .15s, border-color .15s, color .15s;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .preset:hover { border-color: #cbd5e1; background: #f8fafc; }
+  .preset[aria-pressed="true"] { background: #0f172a; border-color: #0f172a; color: #fff; }
+  .preset[aria-pressed="true"]:hover { background: #1e293b; }
+  .segbtn {
+    border-radius: 9999px; padding: .42rem .85rem; font-size: .78rem; color: #475569;
+    background: transparent; border: 0; cursor: pointer; white-space: nowrap;
+    transition: background-color .15s, color .15s, box-shadow .15s;
+  }
+  .segbtn[aria-pressed="true"] { background: #fff; color: #0f172a; font-weight: 600; box-shadow: 0 1px 2px rgba(15,23,42,.12); }
+  .barfill { transition: none; will-change: width; }
+  .race-row.winner { box-shadow: 0 0 0 1px #6ee7b7, 0 8px 24px -18px rgba(4,120,87,.9); }
+  .hero-grid {
+    background-image: radial-gradient(circle at 1px 1px, rgba(15,23,42,.08) 1px, transparent 0);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 20%, transparent 75%);
+  }
+  #plan option { color: #0f172a; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body class="text-slate-900">
+
+<!-- ============ HEADER ============ -->
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="flex h-16 items-center justify-between gap-3">
+      <a href="#top" class="flex items-center gap-2.5">
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 text-white shadow-sm">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="leading-tight">
+          <span class="block text-[15px] font-semibold tracking-tight">Kiri Desktop</span>
+          <span class="hidden text-[11px] text-slate-500 sm:block">a window for the 2.5 ms runtime</span>
+        </span>
+      </a>
+      <nav class="hidden items-center gap-7 text-sm text-slate-600 md:flex">
+        <a class="hover:text-slate-900" href="#race">Benchmark</a>
+        <a class="hover:text-slate-900" href="#usecases">Use cases</a>
+        <a class="hover:text-slate-900" href="#pricing">Pricing</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <span class="hidden items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600 sm:inline-flex">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Concept demo
+        </span>
+        <a href="#waitlist" class="btn btn-dark">Join waitlist</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative overflow-hidden">
+  <div class="hero-grid pointer-events-none absolute inset-0"></div>
+  <div class="relative mx-auto max-w-6xl px-4 pb-12 pt-12 sm:px-6 sm:pt-20">
+    <p class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+      New · native window, one-click install, and <span class="mono">kiri import</span>
+    </p>
+    <h1 class="mt-5 max-w-3xl text-4xl font-semibold leading-[1.06] tracking-tight sm:text-6xl">
+      Containers that start<br class="hidden sm:block" />
+      before you lift your finger.
+    </h1>
+    <p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+      <strong class="font-semibold text-slate-900">Kiri Desktop</strong> is the point-and-click app for Kiri — a ~15 MB
+      container runtime that starts and exits a container in about <strong class="font-semibold text-slate-900">2.5 ms</strong>,
+      roughly 80× faster than Docker Desktop. Same <code class="rounded bg-slate-200/70 px-1 py-0.5 text-[0.9em]">docker</code> CLI,
+      same images, same Compose files. Just no waiting.
+    </p>
+    <div class="mt-7 flex flex-wrap items-center gap-3">
+      <a href="#race" class="btn btn-dark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        Run the benchmark
+      </a>
+      <a href="#pricing" class="btn btn-light">See pricing</a>
+      <span class="text-xs text-slate-500">No sign-up · sample data</span>
+    </div>
+
+    <dl class="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-slate-200 pt-8 sm:grid-cols-4">
+      <div>
+        <dt class="text-[11px] font-medium uppercase tracking-wider text-slate-500">Container start</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">2.55<span class="ml-1 text-sm font-normal text-slate-500">ms</span></dd>
+      </div>
+      <div>
+        <dt class="text-[11px] font-medium uppercase tracking-wider text-slate-500">vs. Docker Desktop</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">~80<span class="ml-1 text-sm font-normal text-slate-500">× faster</span></dd>
+      </div>
+      <div>
+        <dt class="text-[11px] font-medium uppercase tracking-wider text-slate-500">Daemon at idle</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">15<span class="ml-1 text-sm font-normal text-slate-500">MB</span></dd>
+      </div>
+      <div>
+        <dt class="text-[11px] font-medium uppercase tracking-wider text-slate-500">Wake from sleep</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">0.15<span class="ml-1 text-sm font-normal text-slate-500">s</span></dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ RACE / CORE DEMO ============ -->
+<section id="race" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+  <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+    <div class="border-b border-slate-100 p-5 sm:p-6">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-semibold tracking-tight">Same command, three runtimes</h2>
+          <p class="mt-1 text-sm text-slate-500">Pick a command, press Start, watch the bars. Animation length is proportional to the sample timings.</p>
+        </div>
+        <span class="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-800">Sample data</span>
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-2" role="group" aria-label="Command to run">
+        <button class="preset" data-preset="run" aria-pressed="true">run --rm alpine true</button>
+        <button class="preset" data-preset="echo" aria-pressed="false">run --rm alpine echo hello</button>
+        <button class="preset" data-preset="compose" aria-pressed="false">compose up -d (3 services)</button>
+        <button class="preset" data-preset="k8s" aria-pressed="false">k8s start (1-node cluster)</button>
+      </div>
+
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <div class="inline-flex rounded-full bg-slate-100 p-1" role="group" aria-label="Measurement interface">
+          <button class="segbtn" data-iface="api" aria-pressed="true">Docker Engine API</button>
+          <button class="segbtn" data-iface="cli" aria-pressed="false">docker CLI</button>
+        </div>
+        <button id="startBtn" class="btn btn-accent">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Start race
+        </button>
+        <span id="ifaceNote" class="text-xs text-slate-500">measured through the Docker Engine API</span>
+      </div>
+
+      <div class="mt-4 overflow-x-auto">
+        <code id="cmdEcho" class="mono inline-block whitespace-nowrap rounded-lg bg-slate-900 px-3 py-2 text-[12px] text-emerald-300">$ docker --context kiri run --rm alpine true</code>
+      </div>
+    </div>
+
+    <div class="space-y-6 p-5 sm:p-6">
+      <!-- Kiri -->
+      <div class="race-row rounded-2xl p-3" data-runtime="kiri">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600"></span>
+            <span class="text-sm font-semibold">Kiri</span>
+            <span class="hidden rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-800" data-badge>Fastest</span>
+          </div>
+          <span class="mono text-sm tabular-nums text-slate-700" data-readout>—</span>
+        </div>
+        <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-100">
+          <div class="barfill h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500" data-bar style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Docker Desktop -->
+      <div class="race-row rounded-2xl p-3" data-runtime="docker">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-blue-400"></span>
+            <span class="text-sm font-medium text-slate-700">Docker Desktop</span>
+          </div>
+          <span class="mono text-sm tabular-nums text-slate-700" data-readout>—</span>
+        </div>
+        <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-100">
+          <div class="barfill h-full rounded-full bg-gradient-to-r from-blue-300 to-blue-500" data-bar style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- OrbStack -->
+      <div class="race-row rounded-2xl p-3" data-runtime="orbstack">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
+            <span class="text-sm font-medium text-slate-700">OrbStack</span>
+          </div>
+          <span class="mono text-sm tabular-nums text-slate-700" data-readout>—</span>
+        </div>
+        <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-100">
+          <div class="barfill h-full rounded-full bg-gradient-to-r from-amber-300 to-amber-500" data-bar style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 bg-slate-50/80 px-5 py-4 sm:px-6">
+      <p id="verdict" class="text-sm font-medium text-slate-800">Press Start to run the sample benchmark.</p>
+      <p class="text-[11px] text-slate-500">Median of 30 runs · sample values · wall clock compressed to ~2.4 s</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ USE CASES ============ -->
+<section id="usecases" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+  <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Where the milliseconds go back to you</h2>
+  <p class="mt-2 max-w-2xl text-slate-600">Three ways developers put a 2.5 ms container start to work.</p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <article class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <span class="text-2xl" aria-hidden="true">🧪</span>
+      <h3 class="mt-3 text-base font-semibold">A tight inner loop</h3>
+      <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600">
+        You run the test suite 200 times a day. When start-and-exit costs about 2.5 ms,
+        <code class="rounded bg-slate-100 px-1 text-[0.9em]">docker run --rm</code> feels like calling a local binary
+        instead of a two-second pause before every run.
+      </p>
+      <pre class="mono mt-4 overflow-x-auto rounded-lg bg-slate-900 px-3 py-2 text-[11px] text-slate-200">docker --context kiri run --rm \
+  -v "$PWD":/app node:22 npm test</pre>
+    </article>
+
+    <article class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <span class="text-2xl" aria-hidden="true">🚚</span>
+      <h3 class="mt-3 text-base font-semibold">Switch in one command</h3>
+      <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600">
+        <code class="rounded bg-slate-100 px-1 text-[0.9em]">kiri import</code> brings images, volumes and containers over
+        from Docker Desktop or OrbStack. Your Compose files, buildx and <code class="rounded bg-slate-100 px-1 text-[0.9em]">docker login</code>
+        keep working, because Kiri speaks the Docker Engine API.
+      </p>
+      <pre class="mono mt-4 overflow-x-auto rounded-lg bg-slate-900 px-3 py-2 text-[11px] text-slate-200">kiri import
+kiri ps</pre>
+    </article>
+
+    <article class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <span class="text-2xl" aria-hidden="true">☸️</span>
+      <h3 class="mt-3 text-base font-semibold">Kubernetes and Linux machines</h3>
+      <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600">
+        A single-node cluster that shows up as its own <code class="rounded bg-slate-100 px-1 text-[0.9em]">kubectl</code> context,
+        plus Linux machines with local <code class="rounded bg-slate-100 px-1 text-[0.9em]">&lt;name&gt;.kiri.local</code> domains and
+        HTTPS from Kiri's own certificate authority.
+      </p>
+      <pre class="mono mt-4 overflow-x-auto rounded-lg bg-slate-900 px-3 py-2 text-[11px] text-slate-200">kiri k8s start
+kiri machine create dev --distro ubuntu</pre>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+  <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Pricing that fits a runtime this small</h2>
+  <p class="mt-2 max-w-2xl text-slate-600">The runtime stays Apache-2.0 and free. You pay for the window, the installer and the support.</p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <!-- Community -->
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Community</h3>
+      <p class="mt-3 text-3xl font-semibold tracking-tight">$0</p>
+      <p class="mt-1 text-sm text-slate-500">Free forever · CLI only</p>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Full Kiri runtime (Apache-2.0)</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> docker, Compose, buildx, docker login</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> amd64 images through Rosetta</li>
+        <li class="flex gap-2"><span class="text-slate-400">–</span> No native window</li>
+      </ul>
+      <button type="button" class="btn btn-light mt-6 w-full js-demo-action" data-message="Download would start here — this is a concept demo.">Download</button>
+    </div>
+
+    <!-- Pro -->
+    <div class="relative flex flex-col rounded-2xl border-2 border-emerald-400 bg-white p-6 shadow-lg shadow-emerald-100/60">
+      <span class="absolute -top-3 left-6 rounded-full bg-emerald-400 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-950">Most popular</span>
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-emerald-700">Pro</h3>
+      <p class="mt-3 text-3xl font-semibold tracking-tight">$79<span class="text-base font-normal text-slate-500"> / year</span></p>
+      <p class="mt-1 text-sm text-slate-500">≈ $6.58 / month · USD, billed yearly</p>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Native window: containers, images, volumes, networks</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> One-click install + signed auto-update</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Migration wizard (<span class="mono">kiri import</span>)</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Local domains with HTTPS &amp; one-command Kubernetes</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Menu bar controls</li>
+      </ul>
+      <a href="#waitlist" class="btn btn-accent mt-6 w-full">Join waitlist</a>
+    </div>
+
+    <!-- Team -->
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Team</h3>
+      <p class="mt-3 text-3xl font-semibold tracking-tight">$12<span class="text-base font-normal text-slate-500"> / user / month</span></p>
+      <p class="mt-1 text-sm text-slate-500">USD · minimum 3 seats</p>
+      <ul class="mt-5 flex-1 space-y-2 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Everything in Pro</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Centralized seat management</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> SSO (SAML / OIDC)</li>
+        <li class="flex gap-2"><span class="text-emerald-600">✓</span> Priority support</li>
+      </ul>
+      <button type="button" class="btn btn-light mt-6 w-full js-demo-action" data-message="Sales contact form is not wired up in this demo.">Talk to us</button>
+    </div>
+  </div>
+  <p class="mt-4 text-xs text-slate-500">Prices are illustrative sample values for this concept demo, in USD.</p>
+</section>
+
+<!-- ============ WAITLIST ============ -->
+<section id="waitlist" class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+  <div class="grid items-center gap-8 rounded-3xl bg-slate-900 p-6 text-white sm:p-10 md:grid-cols-2">
+    <div>
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Join the Kiri Desktop waitlist</h2>
+      <p class="mt-3 text-sm leading-relaxed text-slate-300">
+        Pro builds go out to this list first. The runtime itself stays Apache-2.0 — the window, the installer and the
+        migration wizard are what you're signing up for.
+      </p>
+      <ul class="mt-5 space-y-2 text-sm text-slate-300">
+        <li class="flex gap-2"><span class="text-emerald-400">●</span> macOS 14+ (Apple silicon &amp; Intel), Windows 10/11 via WSL 2, Linux</li>
+        <li class="flex gap-2"><span class="text-emerald-400">●</span> Signed, self-updating releases</li>
+        <li class="flex gap-2"><span class="text-emerald-400">●</span> Your existing <span class="mono">docker</span> context keeps working</li>
+      </ul>
+    </div>
+    <form id="waitlistForm" class="space-y-3" novalidate>
+      <div>
+        <label for="email" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Work email</label>
+        <input id="email" name="email" type="email" autocomplete="off" value="dev@example.com"
+               class="mt-1.5 w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white placeholder-slate-400 outline-none transition focus:border-emerald-400" />
+      </div>
+      <div>
+        <label for="plan" class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Plan of interest</label>
+        <select id="plan" name="plan"
+                class="mt-1.5 w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm text-white outline-none transition focus:border-emerald-400">
+          <option>Pro — $79 / year</option>
+          <option>Team — $12 / user / month</option>
+          <option>Community — free</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-accent w-full">Join waitlist</button>
+      <p id="waitlistMsg" class="hidden rounded-lg bg-emerald-400/15 px-3 py-2 text-xs text-emerald-200"></p>
+      <p class="text-[11px] text-slate-400">Demo only — nothing is sent, stored or submitted anywhere.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <p>
+      Concept demo, based on the open-source project
+      <a class="font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 hover:text-slate-900" href="https://github.com/libracoder/kiri" target="_blank" rel="noopener">libracoder/kiri</a>
+      (Apache-2.0), unofficial, all data is sample data
+    </p>
+    <p class="text-slate-400">“Kiri” name and logo belong to the project, not covered by the licence.</p>
+  </div>
+</footer>
+
+<!-- ============ TOAST ============ -->
+<div id="toast" role="status" aria-live="polite"
+     class="pointer-events-none fixed inset-x-4 bottom-6 z-50 mx-auto max-w-sm translate-y-3 rounded-xl bg-slate-900 px-4 py-3 text-center text-sm text-white opacity-0 shadow-xl transition duration-300"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- sample data ---------- */
+  var PRESETS = {
+    run: {
+      cmd: 'docker --context kiri run --rm alpine true',
+      kiri:     { api: 2.55,  cli: 14.2 },
+      docker:   { api: 213,   cli: 243 },
+      orbstack: { api: 380,   cli: 442 }
+    },
+    echo: {
+      cmd: 'docker --context kiri run --rm alpine echo hello',
+      kiri:     { api: 3.1,   cli: 15.4 },
+      docker:   { api: 229,   cli: 251 },
+      orbstack: { api: 396,   cli: 458 }
+    },
+    compose: {
+      cmd: 'docker --context kiri compose up -d',
+      kiri:     { api: 388,   cli: 431 },
+      docker:   { api: 4120,  cli: 4380 },
+      orbstack: { api: 5040,  cli: 5310 }
+    },
+    k8s: {
+      cmd: 'kiri k8s start',
+      kiri:     { api: 4820,  cli: 5310 },
+      docker:   { api: 21400, cli: 22600 },
+      orbstack: { api: 18900, cli: 19700 }
+    }
+  };
+
+  var KEYS = ['kiri', 'docker', 'orbstack'];
+  var WALL = 2400; /* real wall-clock milliseconds for the slowest bar */
+
+  var state = { preset: 'run', iface: 'api', running: false };
+
+  var startBtn   = document.getElementById('startBtn');
+  var verdictEl  = document.getElementById('verdict');
+  var cmdEcho    = document.getElementById('cmdEcho');
+  var ifaceNote  = document.getElementById('ifaceNote');
+  var toastEl    = document.getElementById('toast');
+
+  /* ---------- helpers ---------- */
+  function rowEl(key) {
+    return document.querySelector('.race-row[data-runtime="' + key + '"]');
+  }
+
+  function fmtTime(ms) {
+    if (typeof ms !== 'number' || !isFinite(ms) || ms < 0) ms = 0;
+    if (ms >= 1000) return (ms / 1000).toFixed(2) + ' s';
+    if (ms >= 100)  return Math.round(ms) + ' ms';
+    if (ms >= 10)   return ms.toFixed(1) + ' ms';
+    return ms.toFixed(2) + ' ms';
+  }
+
+  function applyProgress(key, progress, ms) {
+    var row = rowEl(key);
+    if (!row) return;
+    var bar = row.querySelector('[data-bar]');
+    var readout = row.querySelector('[data-readout]');
+    if (bar) bar.style.width = (progress * 100).toFixed(2) + '%';
+    if (readout) readout.textContent = fmtTime(ms);
+  }
+
+  function setBadge(key, visible) {
+    var row = rowEl(key);
+    if (!row) return;
+    var badge = row.querySelector('[data-badge]');
+    if (!badge) return;
+    if (visible) {
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  var toastTimer = null;
+  function toast(text) {
+    if (!toastEl) return;
+    toastEl.textContent = text;
+    toastEl.classList.remove('opacity-0', 'translate-y-3');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      if (!toastEl) return;
+      toastEl.classList.add('opacity-0', 'translate-y-3');
+    }, 3200);
+  }
+
+  /* ---------- UI sync ---------- */
+  function syncUI() {
+    var presets = document.querySelectorAll('[data-preset]');
+    for (var i = 0; i < presets.length; i++) {
+      presets[i].setAttribute('aria-pressed', presets[i].getAttribute('data-preset') === state.preset ? 'true' : 'false');
+    }
+    var ifaces = document.querySelectorAll('[data-iface]');
+    for (var j = 0; j < ifaces.length; j++) {
+      ifaces[j].setAttribute('aria-pressed', ifaces[j].getAttribute('data-iface') === state.iface ? 'true' : 'false');
+    }
+    var preset = PRESETS[state.preset];
+    if (cmdEcho && preset) {
+      cmdEcho.textContent = '$ ' + preset.cmd;
+    }
+    if (ifaceNote) {
+      ifaceNote.textContent = state.iface === 'api'
+        ? 'measured through the Docker Engine API'
+        : 'measured through the docker CLI';
+    }
+  }
+
+  function resetRace() {
+    for (var i = 0; i < KEYS.length; i++) {
+      var key = KEYS[i];
+      var row = rowEl(key);
+      if (!row) continue;
+      row.classList.remove('winner');
+      var bar = row.querySelector('[data-bar]');
+      var readout = row.querySelector('[data-readout]');
+      if (bar) bar.style.width = '0%';
+      if (readout) readout.textContent = '—';
+      setBadge(key, false);
+    }
+  }
+
+  /* ---------- race ---------- */
+  function startRace() {
+    if (state.running) return;
+
+    var preset = PRESETS[state.preset];
+    if (!preset) return;
+
+    var values = KEYS.map(function (key) {
+      var entry = preset[key] || {};
+      var ms = typeof entry[state.iface] === 'number' ? entry[state.iface] : 0;
+      return { key: key, ms: ms };
+    });
+    var max = 0;
+    for (var i = 0; i < values.length; i++) {
+      if (values[i].ms > max) max = values[i].ms;
+    }
+    if (max <= 0) max = 1;
+
+    resetRace();
+    state.running = true;
+    if (startBtn) startBtn.disabled = true;
+    if (verdictEl) verdictEl.textContent = 'Running…';
+
+    var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    if (reduce) {
+      finish(values);
+      return;
+    }
+
+    var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+
+    function frame(now) {
+      var t = (typeof now === 'number') ? now : Date.now();
+      var elapsed = Math.max(0, t - t0);
+      var done = 0;
+
+      for (var i = 0; i < values.length; i++) {
+        var v = values[i];
+        var dur = Math.max(30, (v.ms / max) * WALL);
+        var p = Math.min(1, elapsed / dur);
+        applyProgress(v.key, p, v.ms * p);
+        if (p >= 1) done++;
+      }
+
+      if (done < values.length) {
+        requestAnimationFrame(frame);
+      } else {
+        finish(values);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function finish(values) {
+    state.running = false;
+    if (startBtn) startBtn.disabled = false;
+
+    var map = {};
+    for (var i = 0; i < values.length; i++) {
+      applyProgress(values[i].key, 1, values[i].ms);
+      map[values[i].key] = values[i].ms;
+    }
+
+    var kiri = typeof map.kiri === 'number' ? map.kiri : 0;
+    var docker = typeof map.docker === 'number' ? map.docker : 0;
+    var orbstack = typeof map.orbstack === 'number' ? map.orbstack : 0;
+
+    var speed = kiri > 0 ? docker / kiri : 0;
+    var speedTxt = speed >= 10 ? String(Math.round(speed)) : speed.toFixed(1);
+
+    var kiriRow = rowEl('kiri');
+    if (kiriRow) kiriRow.classList.add('winner');
+    setBadge('kiri', true);
+
+    if (verdictEl) {
+      verdictEl.textContent = 'Kiri finished ' + speedTxt + '× faster than Docker Desktop — ' +
+        fmtTime(kiri) + ' vs ' + fmtTime(docker) + ' (OrbStack: ' + fmtTime(orbstack) + ').';
+    }
+  }
+
+  /* ---------- events ---------- */
+  if (startBtn) startBtn.addEventListener('click', startRace);
+
+  var presetButtons = document.querySelectorAll('[data-preset]');
+  for (var i = 0; i < presetButtons.length; i++) {
+    presetButtons[i].addEventListener('click', function () {
+      if (state.running) return;
+      state.preset = this.getAttribute('data-preset');
+      syncUI();
+      resetRace();
+      if (verdictEl) verdictEl.textContent = 'Press Start to run the sample benchmark.';
+    });
+  }
+
+  var ifaceButtons = document.querySelectorAll('[data-iface]');
+  for (var j = 0; j < ifaceButtons.length; j++) {
+    ifaceButtons[j].addEventListener('click', function () {
+      if (state.running) return;
+      state.iface = this.getAttribute('data-iface');
+      syncUI();
+      resetRace();
+      if (verdictEl) verdictEl.textContent = 'Press Start to run the sample benchmark.';
+    });
+  }
+
+  var demoActions = document.querySelectorAll('.js-demo-action');
+  for (var k = 0; k < demoActions.length; k++) {
+    demoActions[k].addEventListener('click', function () {
+      toast(this.getAttribute('data-message') || 'Demo only — no data is sent.');
+    });
+  }
+
+  var form = document.getElementById('waitlistForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var emailInput = document.getElementById('email');
+      var planSelect = document.getElementById('plan');
+      var msg = document.getElementById('waitlistMsg');
+      var email = (emailInput && typeof emailInput.value === 'string' ? emailInput.value : '').trim() || 'dev@example.com';
+      var plan = (planSelect && typeof planSelect.value === 'string' && planSelect.value) ? planSelect.value : 'Pro — $79 / year';
+      if (msg) {
+        msg.textContent = "You're #1,284 on the list for " + plan + " (" + email + "). Demo only — nothing was sent.";
+        msg.classList.remove('hidden');
+      }
+      toast('Waitlist is a demo — nothing was submitted.');
+    });
+  }
+
+  /* ---------- boot ---------- */
+  syncUI();
+  resetRace();
+  setTimeout(startRace, 800);
+})();
+</script>
+</body>
+</html>

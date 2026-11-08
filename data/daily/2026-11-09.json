@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-09",
+ "headline": "Kiri：轻量容器运行时，桌面封装还有机会吗？",
+ "summary_md": "Kiri is a small container runtime for macOS, Windows and Linux, written in Rust by libracoder. It runs your Docker images in a single lightweight Linux VM and speaks the Docker Engine API, so the `docker` CLI, Compose and buildx you already use keep working. On first launch it registers a `kiri` Docker context and can import images, volumes and containers from OrbStack or Docker Desktop.\n\nIt's getting attention for two reasons. First, the numbers: per the README's own benchmarks, `alpine true` starts and exits in about 2.55 ms through the Docker Engine API versus 213 ms on Docker Desktop and 380 ms on OrbStack. The VM sleeps after 60 seconds idle, the daemon idles around 15 MB, and it wakes in about 0.15 s. Second, scope: beyond containers it offers `kiri k8s start` for a single-node Kubernetes cluster, `kiri machine` for Linux VMs, and local `*.kiri.local` domains with its own CA.\n\nWhere the product opportunity is: Kiri already ships a native window and menu bar item, but most developers still want a guided first-run, a clear migration path off Docker Desktop, and a reason to trust a new runtime with their daily workflow. That's less about repackaging the runtime and more about onboarding, migration guarantees and support. The benchmark gap is the hook, but the real sell is compatibility you don't have to think about.",
+ "title_en": "Kiri: a tiny Docker Desktop replacement in Rust",
+ "tagline_en": "A fast, lightweight container runtime that works with your existing docker CLI.",
+ "pick": {
+  "full_name": "libracoder/kiri",
+  "url": "https://github.com/libracoder/kiri",
+  "description": "A small, fast container runtime for macOS, Windows and Linux",
+  "license": "Apache-2.0",
+  "stars": 1126,
+  "daily_rate": 423.0,
+  "category": "开发者工具",
+  "one_liner": "比 Docker Desktop 快 80 倍的轻量容器运行时",
+  "one_liner_en": "A tiny, fast Docker Desktop alternative for Mac, Windows and Linux",
+  "reason": "星标增速与 80 倍性能差异带来传播点；包装空间与订阅变现受免费巨头产品压制。",
+  "content": 7.67,
+  "startup": 7.15,
+  "final": 7.34,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-09-libracoder-kiri",
+ "top": [
+  {
+   "full_name": "libracoder/kiri",
+   "url": "https://github.com/libracoder/kiri",
+   "one_liner": "比 Docker Desktop 快 80 倍的轻量容器运行时",
+   "reason": "星标增速与 80 倍性能差异带来传播点；包装空间与订阅变现受免费巨头产品压制。",
+   "one_liner_en": "A tiny, fast Docker Desktop alternative for Mac, Windows and Linux",
+   "content": 7.67,
+   "startup": 7.15,
+   "final": 7.34,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "blader/humanizer",
+   "url": "https://github.com/blader/humanizer",
+   "one_liner": "把AI写出来的文章改成真人语气，不改事实",
+   "reason": "话题热、痛点真实、demo极直观，MIT许可友好；但技术门槛低、易被抄袭，需靠产品体验和品牌取胜",
+   "one_liner_en": "Rewrites AI-generated text so it reads like a person wrote it",
+   "content": 8.33,
+   "startup": 7.7,
+   "final": 7.26,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "pingdotgg/t3code",
+   "url": "https://github.com/pingdotgg/t3code",
+   "one_liner": "用手机远程遥控电脑上的AI编程助手替你写代码",
+   "reason": "话题度极高的 AI 编程 agent 遥控器，但项目本身已是完善商业产品、大厂生态依赖重，做内容很值、做产品空间小。",
+   "one_liner_en": "Control coding agents running on your computer from your phone",
+   "content": 7.67,
+   "startup": 5.65,
+   "final": 7.06,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "sarpstar/cinecode",
+   "url": "https://github.com/sarpstar/cinecode",
+   "one_liner": "用一句话让 AI 写代码生成整部短片，直接输出 MP4",
+   "reason": "话题性与惊喜感极强、MIT 协议、代码渲染视频方向新颖；痛点真实但制作门槛仍高，商业化需与视频大模型竞争，包装成托管产品的空间大。",
+   "one_liner_en": "Type one idea; an AI coding agent writes code to render a finished MP4 film.",
+   "content": 9.0,
+   "startup": 7.1,
+   "final": 7.06,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "LNPANDY/NX2Apple",
+   "url": "https://github.com/LNPANDY/NX2Apple",
+   "one_liner": "在自己的 iPhone 上运行自己的 Switch 游戏，图形界面一键搞定",
+   "reason": "话题性和惊喜感极强，适合做爆款内容；但法律风险、付费合规、缺少可行的商业化路径，只能做内容而不能做成公开收费产品。",
+   "one_liner_en": "Play your own Switch games natively on iPhone/iPad with a one-click Mac app.",
+   "content": 8.67,
+   "startup": 6.4,
+   "final": 7.01,
+   "category_penalty": 0
+  }
+ ]
+}
