@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chimera.voice — a voice you can sculpt</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .chip {
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    color: #94a3b8;
+    border-radius: 10px;
+    padding: 7px 13px;
+    font-size: 13px;
+    transition: color .15s, border-color .15s, background .15s;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chip:hover { color: #7cffb2; border-color: rgba(124,255,178,.45); background: rgba(124,255,178,.08); }
+  .chip.active { color: #08130d; background: #7cffb2; border-color: #7cffb2; }
+  .roll-note {
+    position: absolute;
+    height: 20px;
+    border-radius: 6px;
+    background: rgba(124,255,178,.13);
+    border: 1px solid rgba(124,255,178,.28);
+    color: #7cffb2;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0 4px;
+    box-sizing: border-box;
+    transition: background .08s, color .08s, box-shadow .08s;
+  }
+  .roll-note.on {
+    background: #7cffb2;
+    color: #08130d;
+    border-color: #7cffb2;
+    box-shadow: 0 0 18px rgba(124,255,178,.45);
+  }
+  #roll { background-image: repeating-linear-gradient(to right, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 10%); }
+  input[type="range"] { accent-color: #7cffb2; height: 22px; width: 100%; }
+  .glow-text { text-shadow: 0 0 26px rgba(124,255,178,.35); }
+  #tongueHandle, #lipHandle { cursor: grab; }
+  #tongueHandle:active, #lipHandle:active { cursor: grabbing; }
+</style>
+</head>
+<body class="bg-[#0b0d12] text-slate-200 antialiased selection:bg-[#7cffb2]/30">
+
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-30 backdrop-blur-md bg-[#0b0d12]/85 border-b border-white/5">
+  <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-8 h-8 shrink-0 rounded-lg bg-[#7cffb2]/15 border border-[#7cffb2]/30 grid place-items-center text-[#7cffb2] text-sm font-bold">◑</div>
+      <span class="font-semibold tracking-tight truncate">Chimera<span class="text-[#7cffb2]">.voice</span></span>
+      <span class="hidden sm:inline text-[10px] px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-400 uppercase tracking-widest">concept</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-7 text-sm text-slate-400">
+      <a href="#studio" class="hover:text-white transition">Studio</a>
+      <a href="#uses" class="hover:text-white transition">Use cases</a>
+      <a href="#pricing" class="hover:text-white transition">Pricing</a>
+    </nav>
+    <a href="#pricing" class="shrink-0 text-sm px-4 py-2 rounded-lg bg-[#7cffb2] text-[#08130d] font-semibold hover:bg-[#9dffc6] transition">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="mx-auto max-w-6xl px-5 pt-14 pb-8">
+  <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/5 border border-white/10 text-slate-400 mb-6">
+    <span class="w-1.5 h-1.5 rounded-full bg-[#7cffb2]"></span>
+    Physical modeling · no sample library · runs in your browser
+  </div>
+  <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl">
+    A voice you can <span class="text-[#7cffb2] glow-text">sculpt</span> with your hands.
+  </h1>
+  <p class="mt-5 text-lg text-slate-400 max-w-2xl leading-relaxed">
+    Drag the tongue. Part the lips. Hear the vowel change as you move. Then type a line and let it sing.
+    Every sound comes from a simulated 3D airway — lungs, vocal folds, a branched tract — not from a sample pack.
+  </p>
+  <div class="mt-7 flex flex-wrap items-center gap-3">
+    <a href="#studio" class="px-5 py-3 rounded-xl bg-[#7cffb2] text-[#08130d] font-semibold hover:bg-[#9dffc6] transition">Try the studio →</a>
+    <span class="text-xs text-slate-500">No install. No download. Everything below is sample data.</span>
+  </div>
+</section>
+
+<!-- ================= STUDIO ================= -->
+<section id="studio" class="mx-auto max-w-6xl px-5 pb-16">
+  <div class="grid lg:grid-cols-5 gap-5">
+
+    <!-- ---- HEAD ---- -->
+    <div class="lg:col-span-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-medium text-slate-300">Vocal tract</h2>
+        <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500">sample data</span>
+      </div>
+
+      <div class="relative rounded-xl bg-[#080b10] border border-white/5 overflow-hidden">
+        <svg id="headSvg" viewBox="0 0 400 320" class="w-full h-auto block select-none" style="touch-action:none">
+          <defs>
+            <linearGradient id="skinG" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#151d28"/>
+              <stop offset="100%" stop-color="#0c1118"/>
+            </linearGradient>
+            <linearGradient id="tongueG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38d99a"/>
+              <stop offset="100%" stop-color="#14664a"/>
+            </linearGradient>
+            <radialGradient id="foldG" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#7cffb2" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#7cffb2" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- head silhouette -->
+          <path d="M200 30 C252 30 288 50 301 80 C311 100 314 118 305 133 C320 143 337 151 338 161 C340 169 322 171 312 173 C318 179 326 183 322 191 C318 199 322 203 326 209 C330 217 322 223 313 227 C317 239 313 251 299 263 C281 279 249 293 219 297 C159 305 99 277 81 225 C65 179 69 120 91 84 C117 46 158 30 200 30 Z"
+                fill="url(#skinG)" stroke="#2b3a4d" stroke-width="2" stroke-linejoin="round"/>
+          <!-- eye -->
+          <path d="M272 108 q11 -9 22 0" fill="none" stroke="#2b3a4d" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- nose -->
+          <path d="M318 152 q7 8 2 14" fill="none" stroke="#2b3a4d" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- nasal cavity -->
+          <path d="M300 168 Q262 142 210 150 L206 174 Q258 166 300 178 Z" fill="#121b26" stroke="#233040" stroke-width="1.5"/>
+
+          <!-- pharynx -->
+          <path d="M198 214 C186 240 190 272 206 292" fill="none" stroke="#233040" stroke-width="15" stroke-linecap="round"/>
+          <path d="M198 214 C186 240 190 272 206 292" fill="none" stroke="#0e151d" stroke-width="9" stroke-linecap="round"/>
+
+          <!-- palate -->
+          <path d="M188 202 Q250 172 318 190" fill="none" stroke="#3a4d63" stroke-width="9" stroke-linecap="round"/>
+
+          <!-- oral cavity glow -->
+          <path id="cavityGlow" d="M196 208 Q252 182 314 196 L314 216 Q252 202 196 228 Z" fill="#7cffb2" opacity="0.10"/>
+
+          <!-- tongue -->
+          <path id="tongue" d="M 186 258 Q 291 214 321 228 L 321 248 Q 291 258 186 272 Z"
+                fill="url(#tongueG)" stroke="#4ff0b4" stroke-opacity="0.35" stroke-width="1.5"/>
+
+          <!-- vocal folds -->
+          <circle id="foldGlow" cx="205" cy="290" r="20" fill="url(#foldG)" opacity="0.2"/>
+          <path d="M199 288 l8 -6 l0 12 z" fill="#7cffb2" opacity="0.9"/>
+          <path d="M211 288 l-8 -6 l0 12 z" fill="#7cffb2" opacity="0.9"/>
+
+          <!-- lips -->
+          <ellipse id="lipU" cx="330" cy="191" rx="11" ry="6" fill="#38d99a" opacity="0.85"/>
+          <ellipse id="lipL" cx="330" cy="210" rx="11" ry="6" fill="#38d99a" opacity="0.85"/>
+
+          <!-- handles -->
+          <circle id="tongueHandle" cx="291" cy="208" r="10" fill="#0b1219" stroke="#7cffb2" stroke-width="2.5"/>
+          <circle id="tongueDot" cx="291" cy="208" r="3" fill="#7cffb2" pointer-events="none"/>
+          <circle id="lipHandle" cx="348" cy="211" r="8" fill="#0b1219" stroke="#7cffb2" stroke-width="2.5"/>
+          <circle id="lipDot" cx="348" cy="211" r="2.5" fill="#7cffb2" pointer-events="none"/>
+        </svg>
+        <div class="absolute top-3 left-3 text-[11px] text-slate-500 pointer-events-none">
+          drag the <span class="text-[#7cffb2]">●</span> tongue · drag the <span class="text-[#7cffb2]">●</span> lip
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-wrap gap-2" id="presets"></div>
+      <p class="mt-3 text-xs text-slate-500">
+        Each preset repositions the articulators; the engine recomputes the formants from the geometry.
+      </p>
+    </div>
+
+    <!-- ---- READOUTS + SING ---- -->
+    <div class="lg:col-span-2 flex flex-col gap-5">
+
+      <!-- engine output -->
+      <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-medium text-slate-300">Engine output</h2>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500">live</span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+          <div class="rounded-lg bg-[#0a0e14] border border-white/5 py-3">
+            <div class="text-[10px] text-slate-500 uppercase tracking-wider">F1</div>
+            <div class="mt-1 mono text-lg text-[#7cffb2]"><span id="outF1">0</span></div>
+          </div>
+          <div class="rounded-lg bg-[#0a0e14] border border-white/5 py-3">
+            <div class="text-[10px] text-slate-500 uppercase tracking-wider">F2</div>
+            <div class="mt-1 mono text-lg text-[#7cffb2]"><span id="outF2">0</span></div>
+          </div>
+          <div class="rounded-lg bg-[#0a0e14] border border-white/5 py-3">
+            <div class="text-[10px] text-slate-500 uppercase tracking-wider">F3</div>
+            <div class="mt-1 mono text-lg text-[#7cffb2]"><span id="outF3">0</span></div>
+          </div>
+        </div>
+
+        <div class="mt-3 flex items-center justify-between rounded-lg bg-[#0a0e14] border border-white/5 px-4 py-3">
+          <span class="text-xs text-slate-500">Nearest vowel</span>
+          <span id="outVowel" class="mono text-sm text-white">/i/</span>
+        </div>
+        <div class="mt-2 flex items-center justify-between rounded-lg bg-[#0a0e14] border border-white/5 px-4 py-3">
+          <span class="text-xs text-slate-500">Pitch</span>
+          <span id="outPitch" class="mono text-sm text-white">330 Hz</span>
+        </div>
+
+        <div class="mt-5 space-y-4">
+          <label class="block">
+            <span class="text-[11px] uppercase tracking-wider text-slate-500">Pitch</span>
+            <input id="pitchSlider" type="range" min="45" max="72" value="64" step="1">
+          </label>
+          <label class="block">
+            <span class="text-[11px] uppercase tracking-wider text-slate-500">Body blend — <span id="outBlend" class="text-slate-300">50%</span></span>
+            <input id="blendSlider" type="range" min="0" max="100" value="50" step="1">
+          </label>
+          <label class="block">
+            <span class="text-[11px] uppercase tracking-wider text-slate-500">Breathiness</span>
+            <input id="breathSlider" type="range" min="0" max="100" value="35" step="1">
+          </label>
+        </div>
+      </div>
+
+      <!-- sing it -->
+      <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-medium text-slate-300">Make it sing</h2>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500">sample data</span>
+        </div>
+
+        <div class="mt-3 flex flex-wrap gap-2" id="modes">
+          <button class="chip active" data-mode="sing">Sing</button>
+          <button class="chip" data-mode="speak">Speak</button>
+          <button class="chip" data-mode="beatbox">Beatbox</button>
+        </div>
+
+        <label class="block mt-4">
+          <span class="text-[11px] uppercase tracking-wider text-slate-500">Lyrics</span>
+          <input id="textInput" type="text" value="hello world sing for me"
+                 class="mt-1 w-full rounded-lg bg-[#0a0e14] border border-white/10 px-3 py-2.5 text-sm text-white placeholder-slate-600 outline-none focus:border-[#7cffb2]/60 transition">
+        </label>
+
+        <div class="mt-3 flex items-center gap-2">
+          <button id="playBtn" class="px-4 py-2 rounded-lg bg-[#7cffb2] text-[#08130d] text-sm font-semibold hover:bg-[#9dffc6] transition">▶ Play</button>
+          <button id="stopBtn" class="px-4 py-2 rounded-lg border border-white/10 text-sm text-slate-300 hover:border-white/30 transition">Reset</button>
+          <span class="text-[11px] text-slate-500 ml-auto">4/4 · 120 BPM</span>
+        </div>
+
+        <div class="mt-4 relative rounded-xl bg-[#080b10] border border-white/5 overflow-hidden">
+          <div id="roll" class="relative h-[104px] w-full"></div>
+        </div>
+
+        <p id="nowLine" class="mt-3 text-xs text-slate-400 mono min-h-[18px]">Idle — drag the head or press play.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= USE CASES ================= -->
+<section id="uses" class="mx-auto max-w-6xl px-5 pb-16">
+  <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Where people use it</h2>
+  <p class="mt-2 text-slate-400 max-w-2xl">Three workflows the browser studio was built around. All shown with sample data.</p>
+
+  <div class="mt-8 grid md:grid-cols-3 gap-4">
+    <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <div class="text-2xl">🎬</div>
+      <h3 class="mt-3 font-medium">Film &amp; game scoring</h3>
+      <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+        Sing a scratch vocal on the piano roll, print the consonants exactly on the beat, then export a stem.
+        Directors hear words on day one instead of a placeholder synth pad.
+      </p>
+      <p class="mt-4 text-[11px] uppercase tracking-widest text-slate-500">WAV stems · MIDI in</p>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <div class="text-2xl">🦭</div>
+      <h3 class="mt-3 font-medium">Creature sound design</h3>
+      <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+        Morph a seal into a songbird by changing the airway instead of layering samples.
+        Two-voice syrinx, elephant trunk, alligator — all the same engine, different anatomy.
+      </p>
+      <p class="mt-4 text-[11px] uppercase tracking-widest text-slate-500">Bestiary presets · additive anatomy</p>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <div class="text-2xl">🧪</div>
+      <h3 class="mt-3 font-medium">Speech &amp; voice research</h3>
+      <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+        Type IPA or English text and get a controllable source with no licensing attached to it.
+        Every gesture is a parameter you can log, sweep and compare against real speakers.
+      </p>
+      <p class="mt-4 text-[11px] uppercase tracking-widest text-slate-500">IPA input · deterministic renders</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="pricing" class="mx-auto max-w-6xl px-5 pb-16">
+  <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Pricing</h2>
+  <p class="mt-2 text-slate-400 max-w-2xl">The engine is open source. These plans pay for the hosted studio, the sample packs and the export pipeline.</p>
+
+  <div class="mt-8 grid md:grid-cols-3 gap-4">
+    <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 flex flex-col">
+      <div class="text-sm text-slate-400">Free</div>
+      <div class="mt-2 text-3xl font-semibold">$0</div>
+      <div class="text-xs text-slate-500 mt-1">forever</div>
+      <ul class="mt-5 space-y-2 text-sm text-slate-400 flex-1">
+        <li>✓ Full browser studio</li>
+        <li>✓ 30-second exports</li>
+        <li>✓ Vowel pad + presets</li>
+        <li class="text-slate-600">— watermarked audio</li>
+      </ul>
+      <button class="mt-6 w-full py-2.5 rounded-lg border border-white/15 text-sm hover:border-white/35 transition wl-btn" data-plan="Free">Start free</button>
+    </div>
+
+    <div class="rounded-2xl border border-[#7cffb2]/40 bg-[#7cffb2]/[0.04] p-6 flex flex-col relative">
+      <div class="absolute -top-3 left-6 text-[10px] uppercase tracking-widest px-2 py-1 rounded-full bg-[#7cffb2] text-[#08130d] font-bold">Most picked</div>
+      <div class="text-sm text-[#7cffb2]">Studio</div>
+      <div class="mt-2 text-3xl font-semibold">$12<span class="text-base text-slate-400 font-normal">/mo</span></div>
+      <div class="text-xs text-slate-500 mt-1">billed monthly, cancel anytime</div>
+      <ul class="mt-5 space-y-2 text-sm text-slate-300 flex-1">
+        <li>✓ Unlimited WAV + stem export</li>
+        <li>✓ Every creature in the bestiary</li>
+        <li>✓ MIDI in / MIDI out</li>
+        <li>✓ Commercial license</li>
+      </ul>
+      <button class="mt-6 w-full py-2.5 rounded-lg bg-[#7cffb2] text-[#08130d] text-sm font-semibold hover:bg-[#9dffc6] transition wl-btn" data-plan="Studio">Join waitlist</button>
+    </div>
+
+    <div class="rounded-2xl border border-white/10 bg-white/[0.02] p-6 flex flex-col">
+      <div class="text-sm text-slate-400">Perpetual</div>
+      <div class="mt-2 text-3xl font-semibold">$249</div>
+      <div class="text-xs text-slate-500 mt-1">one-time, yours forever</div>
+      <ul class="mt-5 space-y-2 text-sm text-slate-400 flex-1">
+        <li>✓ Everything in Studio</li>
+        <li>✓ Offline CLI renders</li>
+        <li>✓ Plugin builds (VST3 / AU)</li>
+        <li>✓ 2 years of updates</li>
+      </ul>
+      <button class="mt-6 w-full py-2.5 rounded-lg border border-white/15 text-sm hover:border-white/35 transition wl-btn" data-plan="Perpetual">Join waitlist</button>
+    </div>
+  </div>
+
+  <div class="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+    <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+      <div class="flex-1">
+        <div class="font-medium">Get early access</div>
+        <div class="text-sm text-slate-400">Leave an email and we'll ping you when the hosted studio opens. This demo sends nothing.</div>
+      </div>
+      <div class="flex gap-2 w-full sm:w-auto">
+        <input id="emailInput" type="email" value="you@studio.com" placeholder="you@studio.com"
+               class="flex-1 sm:w-64 rounded-lg bg-[#0a0e14] border border-white/10 px-3 py-2.5 text-sm text-white placeholder-slate-600 outline-none focus:border-[#7cffb2]/60 transition">
+        <button id="waitlistBtn" class="shrink-0 px-5 py-2.5 rounded-lg bg-[#7cffb2] text-[#08130d] text-sm font-semibold hover:bg-[#9dffc6] transition">Join</button>
+      </div>
+    </div>
+    <p id="waitlistMsg" class="mt-3 text-sm text-[#7cffb2] hidden"></p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-white/5">
+  <div class="mx-auto max-w-6xl px-5 py-8 flex flex-col sm:flex-row gap-3 items-center justify-between text-xs text-slate-500">
+    <p class="text-center sm:text-left">
+      Concept demo, based on the open-source project
+      <a class="text-[#7cffb2] hover:underline" href="https://github.com/jamesondh/chimera-vocal-synth" target="_blank" rel="noopener">jamesondh/chimera-vocal-synth</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+    <p class="mono shrink-0">Chimera.voice · concept</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function lerp(a, b, k) { return a + (b - a) * k; }
+
+  /* ---------------- state ---------------- */
+  var state = {
+    t: 0.90,   // tongue front (0 back .. 1 front)
+    h: 0.92,   // tongue height (0 low .. 1 high)
+    o: 0.18,   // jaw / lip opening (0 closed .. 1 open)
+    midi: 64,
+    blend: 50,
+    breath: 35
+  };
+
+  var VOWELS = {
+    i: { t: 0.90, h: 0.92, o: 0.18, ipa: '/i/', hint: 'see' },
+    e: { t: 0.72, h: 0.62, o: 0.45, ipa: '/e/', hint: 'say' },
+    a: { t: 0.40, h: 0.10, o: 0.92, ipa: '/a/', hint: 'father' },
+    o: { t: 0.15, h: 0.35, o: 0.62, ipa: '/o/', hint: 'more' },
+    u: { t: 0.06, h: 0.80, o: 0.20, ipa: '/u/', hint: 'boot' }
+  };
+  var VOWEL_KEYS = ['i', 'e', 'a', 'o', 'u'];
+
+  /* ---------------- elements ---------------- */
+  var svg = $('headSvg');
+  var tongue = $('tongue');
+  var tongueHandle = $('tongueHandle');
+  var tongueDot = $('tongueDot');
+  var lipHandle = $('lipHandle');
+  var lipDot = $('lipDot');
+  var lipU = $('lipU');
+  var lipL = $('lipL');
+  var cavityGlow = $('cavityGlow');
+  var foldGlow = $('foldGlow');
+
+  var outF1 = $('outF1'), outF2 = $('outF2'), outF3 = $('outF3');
+  var outVowel = $('outVowel'), outPitch = $('outPitch'), outBlend = $('outBlend');
+  var pitchSlider = $('pitchSlider'), blendSlider = $('blendSlider'), breathSlider = $('breathSlider');
+
+  var roll = $('roll');
+  var textInput = $('textInput');
+  var playBtn = $('playBtn');
+  var stopBtn = $('stopBtn');
+  var nowLine = $('nowLine');
+
+  /* ---------------- acoustics (demo model) ---------------- */
+  function formants() {
+    var f1 = 230 + 470 * state.o + 40 * (1 - state.h);
+    var f2 = 820 + 1250 * state.t + 200 * state.h;
+    var f3 = 2400 + 500 * state.t - 300 * state.o + 200 * state.h;
+    var scale = 1.12 - 0.0024 * state.blend; // male .. child
+    return [Math.round(f1 * scale), Math.round(f2 * scale), Math.round(f3 * scale)];
+  }
+
+  function detectVowel() {
+    var best = 'i', bestD = Infinity, i, k, v, d;
+    for (i = 0; i < VOWEL_KEYS.length; i++) {
+      k = VOWEL_KEYS[i];
+      v = VOWELS[k];
+      d = Math.pow(state.t - v.t, 2) * 1.0 +
+          Math.pow(state.h - v.h, 2) * 0.8 +
+          Math.pow(state.o - v.o, 2) * 1.2;
+      if (d < bestD) { bestD = d; best = k; }
+    }
+    return VOWELS[best].ipa;
+  }
+
+  function midiToHz(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+
+  function blendLabel() {
+    var b = state.blend;
+    var name = b < 34 ? 'Male' : (b < 67 ? 'Neutral' : 'Child');
+    return name + ' · ' + Math.round(b) + '%';
+  }
+
+  /* ---------------- render ---------------- */
+  function render() {
+    var humpX = 212 + 88 * state.t;
+    var humpY = 262 - 46 * state.h - 6 * state.t;
+    var tipX = humpX + 30;
+    var tipY = Math.min(286, humpY + 14);
+    var botY = Math.min(292, humpY + 44);
+
+    tongue.setAttribute('d',
+      'M 186 258 Q ' + humpX.toFixed(1) + ' ' + humpY.toFixed(1) + ' ' + tipX.toFixed(1) + ' ' + tipY.toFixed(1) +
+      ' L ' + tipX.toFixed(1) + ' ' + (tipY + 20).toFixed(1) +
+      ' Q ' + humpX.toFixed(1) + ' ' + botY.toFixed(1) + ' 186 272 Z');
+
+    var upY = 191 + state.o * 6;
+    var loY = 210 + state.o * 9;
+    var rx = (11 - state.o * 2).toFixed(1);
+    lipU.setAttribute('cy', upY.toFixed(1));
+    lipL.setAttribute('cy', loY.toFixed(1));
+    lipU.setAttribute('rx', rx);
+    lipL.setAttribute('rx', rx);
+
+    cavityGlow.setAttribute('opacity', (0.05 + state.o * 0.20).toFixed(2));
+
+    var hx = humpX, hy = humpY - 6;
+    tongueHandle.setAttribute('cx', hx.toFixed(1));
+    tongueHandle.setAttribute('cy', hy.toFixed(1));
+    tongueDot.setAttribute('cx', hx.toFixed(1));
+    tongueDot.setAttribute('cy', hy.toFixed(1));
+
+    var lx = 348, ly = 208 + state.o * 16;
+    lipHandle.setAttribute('cx', lx);
+    lipHandle.setAttribute('cy', ly.toFixed(1));
+    lipDot.setAttribute('cx', lx);
+    lipDot.setAttribute('cy', ly.toFixed(1));
+
+    var f = formants();
+    outF1.textContent = f[0];
+    outF2.textContent = f[1];
+    outF3.textContent = f[2];
+    outVowel.textContent = detectVowel();
+    outPitch.textContent = Math.round(midiToHz(state.midi)) + ' Hz';
+    outBlend.textContent = blendLabel();
+  }
+
+  /* ---------------- animated transitions ---------------- */
+  var animId = null;
+  function animateTo(target) {
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+    var from = { t: state.t, h: state.h, o: state.o };
+    var start = (window.performance && performance.now) ? performance.now() : Date.now();
+    var dur = 360;
+    function step(now) {
+      var k = Math.min(1, (now - start) / dur);
+      var e = 1 - Math.pow(1 - k, 3);
+      state.t = lerp(from.t, target.t, e);
+      state.h = lerp(from.h, target.h, e);
+      state.o = lerp(from.o, target.o, e);
+      render();
+      if (k < 1) { animId = requestAnimationFrame(step); }
+      else { animId = null; }
+    }
+    animId = requestAnimationFrame(step);
+  }
+
+  /* ---------------- dragging ---------------- */
+  var drag = null;
+
+  function svgPoint(evt) {
+    var r = svg.getBoundingClientRect();
+    return {
+      x: (evt.clientX - r.left) / r.width * 400,
+      y: (evt.clientY - r.top) / r.height * 320
+    };
+  }
+
+  function startDrag(kind, evt) {
+    drag = kind;
+    if (evt.preventDefault) evt.preventDefault();
+    if (evt.pointerId !== undefined && svg.setPointerCapture) {
+      try { svg.setPointerCapture(evt.pointerId); } catch (e) { /* ignore */ }
+    }
+    onMove(evt);
+  }
+
+  function onMove(evt) {
+    if (!drag) return;
+    var p = svgPoint(evt);
+    if (drag === 'tongue') {
+      state.t = clamp((p.x - 212) / 88, 0, 1);
+      var humpY = p.y + 6;
+      state.h = clamp((262 - 6 * state.t - humpY) / 46, 0.02, 1);
+    } else if (drag === 'lip') {
+      state.o = clamp((p.y - 208) / 16, 0.02, 1);
+    }
+    render();
+  }
+
+  function endDrag() { drag = null; }
+
+  tongueHandle.addEventListener('pointerdown', function (e) { startDrag('tongue', e); });
+  lipHandle.addEventListener('pointerdown', function (e) { startDrag('lip', e); });
+  svg.addEventListener('pointermove', onMove);
+  svg.addEventListener('pointerup', endDrag);
+  svg.addEventListener('pointercancel', endDrag);
+  svg.addEventListener('pointerleave', endDrag);
+  window.addEventListener('pointerup', endDrag);
+
+  /* ---------------- vowel presets ---------------- */
+  var presetsEl = $('presets');
+  VOWEL_KEYS.forEach(function (k) {
+    var v = VOWELS[k];
+    var b = document.createElement('button');
+    b.className = 'chip';
+    b.type = 'button';
+    b.textContent = v.ipa + '  as in "' + v.hint + '"';
+    b.addEventListener('click', function () {
+      animateTo({ t: v.t, h: v.h, o: v.o });
+      Array.prototype.forEach.call(presetsEl.children, function (c) { c.classList.remove('active'); });
+      b.classList.add('active');
+    });
+    presetsEl.appendChild(b);
+  });
+
+  /* ---------------- sliders ---------------- */
+  pitchSlider.addEventListener('input', function () {
+    state.midi = parseInt(pitchSlider.value, 10);
+    render();
+  });
+  blendSlider.addEventListener('input', function () {
+    state.blend = parseInt(blendSlider.value, 10);
+    render();
+  });
+  breathSlider.addEventListener('input', function () {
+    state.breath = parseInt(breathSlider.value, 10);
+  });
+
+  /* ---------------- fold glow loop ---------------- */
+  var foldPulse = 0;
+  function pulseFolds() { foldPulse = 1; }
+
+  function tick() {
+    foldPulse *= 0.93;
+    var base = 0.16 + state.breath / 500;
+    foldGlow.setAttribute('opacity', Math.min(0.95, base + foldPulse * 0.75).toFixed(3));
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  /* ---------------- note building ---------------- */
+  var mode = 'sing';
+  var notes = [];
+  var playTimer = null;
+  var playIndex = 0;
+
+  var MELODY = [0, 2, 4, 5, 4, 2, 0, -2];
+  var DRUMS = ['Kick', 'Hat', 'Snare', 'Hat', 'Kick', 'Kick', 'Snare', 'Hat'];
+  var DRUM_VOWEL = ['u', 'i', 'a', 'i', 'u', 'u', 'a', 'i'];
+
+  function pickVowel(word) {
+    var lower = word.toLowerCase().replace(/[^a-z]/g, '');
+    var map = { a: 'a', e: 'e', i: 'i', o: 'o', u: 'u', y: 'i' };
+    for (var i = 0; i < lower.length; i++) {
+      if (map[lower.charAt(i)]) return map[lower.charAt(i)];
+    }
+    return 'a';
+  }
+
+  function buildNotes(text) {
+    var words = text.trim().split(/\s+/).filter(function (w) { return w.length > 0; });
+    if (words.length === 0) return [];
+    words = words.slice(0, 8);
+
+    var out = [];
+    var n = words.length;
+    for (var i = 0; i < n; i++) {
+      var w = words[i];
+      if (mode === 'beatbox') {
+        var d = DRUMS[i % DRUMS.length];
+        out.push({
+          label: d,
+          vowel: DRUM_VOWEL[i % DRUM_VOWEL.length],
+          midi: 40 + (i % 3) * 3,
+          start: i / n,
+          dur: 1 / n - 0.012
+        });
+      } else {
+        var clean = w.replace(/[^a-zA-Z']/g, '') || w;
+        out.push({
+          label: clean,
+          vowel: pickVowel(w),
+          midi: 60 + MELODY[i % MELODY.length],
+          start: i / n,
+          dur: 1 / n - 0.012
+        });
+      }
+    }
+    return out;
+  }
+
+  function renderRoll() {
+    roll.innerHTML = '';
+    if (!notes.length) {
+      var hint = document.createElement('div');
+      hint.className = 'absolute inset-0 grid place-items-center text-xs text-slate-600';
+      hint.textContent = 'Type a line above to generate notes';
+      roll.appendChild(hint);
+      return;
+    }
+    notes.forEach(function (n) {
+      var el = document.createElement('div');
+      el.className = 'roll-note';
+      el.style.left = (n.start * 100) + '%';
+      el.style.width = (n.dur * 100) + '%';
+      var top = 80 - (n.midi - 40) * 1.6;
+      el.style.top = clamp(top, 8, 78) + 'px';
+      el.textContent = n.label;
+      el.title = n.label + ' · /' + n.vowel + '/';
+      roll.appendChild(el);
+    });
+  }
+
+  function rebuild() {
+    stopPlayback(true);
+    notes = buildNotes(textInput.value);
+    renderRoll();
+  }
+
+  /* ---------------- playback ---------------- */
+  function stopPlayback(quiet) {
+    if (playTimer) { clearInterval(playTimer); playTimer = null; }
+    var els = roll.querySelectorAll('.roll-note');
+    Array.prototype.forEach.call(els, function (e) { e.classList.remove('on'); });
+    playBtn.textContent = '▶ Play';
+    if (!quiet) nowLine.textContent = 'Stopped.';
+  }
+
+  function stepPlayback(els) {
+    if (playIndex >= els.length) {
+      stopPlayback(true);
+      nowLine.textContent = 'Done — sample render complete.';
+      return;
+    }
+    Array.prototype.forEach.call(els, function (e) { e.classList.remove('on'); });
+    var el = els[playIndex];
+    if (el) el.classList.add('on');
+
+    var n = notes[playIndex];
+    state.midi = n.midi;
+    if (mode !== 'beatbox') {
+      var v = VOWELS[n.vowel];
+      animateTo({ t: v.t, h: v.h, o: v.o });
+    } else {
+      var vd = VOWELS[n.vowel];
+      state.t = vd.t; state.h = vd.h; state.o = vd.o;
+      render();
+    }
+    pitchSlider.value = String(clamp(n.midi, 45, 72));
+    pulseFolds();
+
+    if (mode === 'beatbox') {
+      nowLine.textContent = n.label + ' · articulatory gesture · ' + Math.round(midiToHz(n.midi)) + ' Hz';
+    } else {
+      nowLine.textContent = '“' + n.label + '” · ' + VOWELS[n.vowel].ipa + ' · ' +
+        Math.round(midiToHz(n.midi)) + ' Hz';
+    }
+    playIndex++;
+  }
+
+  playBtn.addEventListener('click', function () {
+    if (playTimer) { stopPlayback(); return; }
+    if (!notes.length) { nowLine.textContent = 'Type a line first.'; return; }
+    playIndex = 0;
+    playBtn.textContent = '■ Stop';
+    var els = roll.querySelectorAll('.roll-note');
+    stepPlayback(els);
+    playTimer = setInterval(function () { stepPlayback(els); }, 470);
+  });
+
+  stopBtn.addEventListener('click', function () {
+    stopPlayback(true);
+    var v = VOWELS.i;
+    animateTo({ t: v.t, h: v.h, o: v.o });
+    state.midi = 64;
+    pitchSlider.value = '64';
+    nowLine.textContent = 'Reset — back to /i/.';
+    render();
+  });
+
+  /* ---------------- modes ---------------- */
+  var modesEl = $('modes');
+  Array.prototype.forEach.call(modesEl.children, function (btn) {
+    btn.addEventListener('click', function () {
+      Array.prototype.forEach.call(modesEl.children, function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      mode = btn.getAttribute('data-mode');
+      if (mode === 'sing') {
+        textInput.value = 'hello world sing for me';
+        nowLine.textContent = 'Sing mode — one note per word.';
+      } else if (mode === 'speak') {
+        textInput.value = 'the airway is the instrument';
+        nowLine.textContent = 'Speak mode — consonants land before the beat.';
+      } else {
+        textInput.value = 'boots and cats and boots and cats';
+        nowLine.textContent = 'Beatbox mode — every drum is a gesture.';
+      }
+      rebuild();
+    });
+  });
+
+  /* ---------------- waitlist ---------------- */
+  var waitlistBtn = $('waitlistBtn');
+  var waitlistMsg = $('waitlistMsg');
+
+  function showWaitlist(plan) {
+    waitlistMsg.classList.remove('hidden');
+    waitlistMsg.textContent = '✓ ' + plan + ' spot reserved — sample data only, nothing was sent.';
+  }
+
+  waitlistBtn.addEventListener('click', function () {
+    var email = $('emailInput').value.trim();
+    if (email.length < 3) {
+      waitlistMsg.classList.remove('hidden');
+      waitlistMsg.textContent = 'Please enter an email address (this demo sends nothing).';
+      return;
+    }
+    showWaitlist('Waitlist');
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.wl-btn'), function (b) {
+    b.addEventListener('click', function () {
+      var plan = b.getAttribute('data-plan') || 'Waitlist';
+      showWaitlist(plan);
+      var target = $('pricing');
+      if (target && target.scrollIntoView) {
+        try { target.scrollIntoView({ behavior: 'smooth', block: 'end' }); } catch (e) { /* ignore */ }
+      }
+    });
+  });
+
+  /* ---------------- init ---------------- */
+  textInput.addEventListener('input', rebuild);
+
+  render();
+  rebuild();
+})();
+</script>
+</body>
+</html>
