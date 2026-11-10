@@ -131,6 +131,12 @@
    "full_name": "jamesondh/chimera-vocal-synth",
    "category": "AI应用",
    "final": 7.29
+  },
+  {
+   "date": "2026-11-11",
+   "full_name": "janestreet/agent_skills",
+   "category": "教育学习",
+   "final": 7.7
   }
  ],
  "top": {
@@ -170,7 +176,7 @@
   "ARahim3/DigUp": "2026-10-25",
   "pollen-robotics/microduck": "2026-10-25",
   "HeyPuter/everything": "2026-10-26",
-  "rddmwmddr/android-ad-cleaner": "2026-10-26",
+  "rddmwmddr/android-ad-cleaner": "2026-11-11",
   "designfuchen/word-atlas": "2026-11-04",
   "seedds/nxnative": "2026-11-06",
   "TauricResearch/TradingAgents": "2026-11-04",
@@ -193,7 +199,7 @@
   "thedotmack/claude-mem": "2026-10-31",
   "heydamir/unslop": "2026-11-08",
   "jhaizhou-ops/d2r-mobile": "2026-10-31",
-  "qybaihe/bla": "2026-10-31",
+  "qybaihe/bla": "2026-11-11",
   "affaan-m/ECC": "2026-10-31",
   "patch-gg/pixelfx": "2026-11-01",
   "elvarofficial/teardown": "2026-11-01",
@@ -225,7 +231,10 @@
   "jhaizhou-ops/S2Arm": "2026-11-10",
   "IainKay/ram-altman": "2026-11-10",
   "storytold/craft-anything": "2026-11-10",
-  "vercel-labs/agent-desktop": "2026-11-10"
+  "vercel-labs/agent-desktop": "2026-11-10",
+  "janestreet/agent_skills": "2026-11-11",
+  "NVIDIA/auto-ontology": "2026-11-11",
+  "DIYgod/pinky": "2026-11-11"
  },
  "scores": {
   "openai/math": {
@@ -3698,6 +3707,219 @@
      "项目刚创建 7 天，只在 iPhone 17 Pro 上实测过，iPad 尚未验证，整体很不稳定"
     ],
     "reason": "话题性和惊喜感都很强，演示效果也很容易传播，但许可证限制、侧载门槛和苹果法律风险导致用户不愿付费、商业化困难，更适合做内容而不是做产品"
+   }
+  },
+  "homeassistant-ai/ha-mcp": {
+   "date": "2026-11-11",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "让AI助手帮你配置和自动化智能家居",
+    "one_liner_en": "Control and automate your smart home with AI assistants",
+    "target_user": "美国/全球的 Home Assistant 用户与智能家居爱好者（偏技术型房主、自建自动化玩家）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "托管版：无需装HA，连上你的智能设备，用聊天一句命令创建自动化",
+    "demo_idea": "网页里用自然语言说'晚上10点关灯锁门'，右侧实时生成自动化流程",
+    "attack_tool": false,
+    "red_flags": [
+     "已自带官方集成与成熟安装路径，第三方可包装空间有限",
+     "目标用户是小众技术人群，规模天花板低",
+     "需管理员级权限访问家庭设备，安全与隐私顾虑影响付费转化",
+     "MCP/Claude客户端生态本身仍在快速变动，依赖风险高"
+    ],
+    "reason": "话题性强、演示直观、许可宽松，但受众小众且项目已相当成熟，产品化差异空间与付费意愿都受限，更适合做内容而非创业。"
+   }
+  },
+  "yappologistic/CUI": {
+   "date": "2026-11-11",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "用纯 C 写桌面界面，190 个组件自带渲染，零依赖",
+    "one_liner_en": "A zero-dependency UI library for C with 190 built-in components",
+    "target_user": "写 C/C++ 桌面工具、编辑器、仪表盘的独立开发者和小团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "把 WebAssembly 演示站做成 CUI 组件展示与拖拽生成界面代码的在线工具",
+    "demo_idea": "网页里直接跑同一份 C 代码，实时切换主题、拖组件生成源码",
+    "attack_tool": false,
+    "red_flags": [
+     "库本身开源免费，C 开发者习惯不付费，商业化只能靠周边",
+     "仅成立 5 天、星标增长异常快，成熟度与可持续性未经时间验证",
+     "无屏幕阅读器和输入法支持，达不到无障碍合规要求"
+    ],
+    "reason": "演示效果强、MIT 干净、WebAssembly 展示天然适合做内容；但目标用户付费意愿低，包装空间偏薄，更适合做内容而不是做产品。"
+   }
+  },
+  "janestreet/agent_skills": {
+   "date": "2026-11-11",
+   "v": 3,
+   "eval": {
+    "category": "教育学习",
+    "one_liner": "把任意 AI 变成严格的苏格拉底式私人导师",
+    "one_liner_en": "Turn any AI chatbot into a strict Socratic personal tutor",
+    "target_user": "美国自学考试人群（LSAT/GRE/CFA）、转行学编程者、K12 家长",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 8,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "上传教材即可生成分阶段苏格拉底导师的网页应用，含进度追踪与间隔复习",
+    "demo_idea": "网页里让 AI 反问用户一道题，逐步推进技能地图并给出最终测评",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是一组 SKILL.md 提示词文件，没有代码壁垒，极易被复制",
+     "仅提供一个技能，内容单薄，长期更新能力存疑",
+     "Jane Street 官方仓库，非个人原创，做内容需注明来源",
+     "面向 K12 使用时需注意 COPPA"
+    ],
+    "reason": "话题正热、演示直观、MIT 许可安全，但只是提示词集合，护城河低，需靠产品化体验取胜。"
+   }
+  },
+  "anefzaoui/misterdownloadmanager": {
+   "date": "2026-11-11",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "免费开源的下载管理器，比 IDM 更快，支持磁力和视频抓取",
+    "one_liner_en": "A free, open-source download manager that beats IDM on speed, with torrent and video support.",
+    "target_user": "全球重度下载用户：视频收藏者、开源软件爱好者、需要批量下载素材的创作者和 IT 从业者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 4,
+     "demoability": 6
+    },
+    "product_idea": "做成带托管加速、批量视频与磁力下载的订阅制桌面客户端，免费版加广告位或云空间增值。",
+    "demo_idea": "网页里跑模拟下载条：同一文件在 IDM 与 MDM 并排对比，5 秒对 1 秒的直观差距。",
+    "attack_tool": false,
+    "red_flags": [
+     "GPL-3.0 许可证，商业闭源包装受限",
+     "核心卖点是免费替代 IDM，用户付费意愿天然低",
+     "与 yt-dlp、gallery-dl 等成熟工具功能重合，差异化薄",
+     "涉及视频抓取与磁力下载，有版权与 DMCA 风险",
+     "README 自承 macOS 版未经实机测试，早期项目质量待验证"
+    ],
+    "reason": "话题性和易懂度不错，但免费替代品的定位让商业化很难，GPL 又限制闭源包装，内容可做，产品化空间有限。"
+   }
+  },
+  "addyosmani/agent-skills": {
+   "date": "2026-11-11",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "给AI编程助手装上一套资深工程师的工作流程",
+    "one_liner_en": "Senior-engineer workflows and quality gates for AI coding agents",
+    "target_user": "用 Claude Code/Cursor 的软件工程师、独立开发者与小团队；愿意为规范化 AI 编码流程付费的工程负责人",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "把技能包做成可视化 AI 编码流程编辑器，选技能、配质量门、一键同步到各编辑器",
+    "demo_idea": "网页里点选 spec→build→test 流程，右侧实时生成可复制的 agent 指令和技能文件",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是 markdown 提示词和技能集合，内容容易被复制，难以形成商业壁垒",
+     "由知名开发者 Addy Osmani 维护且已超 11 万星，官方已提供 npx 和插件安装，第三方做包装的空间很小",
+     "强依赖 Claude Code、Cursor 等第三方平台，其自身也在做同类功能，随时可能被纳入产品",
+     "技能质量参差，用户价值主要是工作流规范而非独特技术",
+     "变现路径不清晰，目标用户习惯免费获取这类开源技能包"
+    ],
+    "reason": "话题性和痛点都有，但核心是可复制的提示词资源，大 V 免费维护，商业包装空间有限，更适合做内容选题而非付费产品"
+   }
+  },
+  "Kianuni/Erosion-CN": {
+   "date": "2026-11-11",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "普通 iPhone 一键解锁苹果隐藏功能和国行限制的系统修改工具",
+    "one_liner_en": "An iOS toolbox that unlocks hidden Apple features and removes regional limits on your own iPhone",
+    "target_user": "想用 Apple Intelligence 和新功能但被地区或旧机型限制的全球 iPhone 用户，以及喜欢折腾越狱的玩家",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 2,
+     "monetization": 3,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "做成一键签名托管的 iOS 功能解锁服务，用户上传设备信息即得配置好的 App",
+    "demo_idea": "网页对比同一台 iPhone 解锁前后苹果智能和翻译功能开关的截图与录屏",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖个人开发者证书自签，分发和持续服务完全不稳",
+     "修改 MobileGestalt 绕过苹果地区与机型限制，可能违反 Apple 开发者协议、导致保修失效或设备变白苹果",
+     "GPL-3.0 传染性强，商业化有法律限制",
+     "仅面向简体中文用户和国内签名工具生态，与美国市场脱节",
+     "涉及沙盒逃逸和文件系统写入，法律与合规风险高",
+     "核心功能需要真机签名安装，无法做成网页 demo"
+    ],
+    "reason": "技术扎实能做出让人惊讶的效果，但本质是灰色地带的系统魔改工具，难合法包装成产品，商业化路径极窄"
+   }
+  },
+  "xiaoyang111222/cn-math-taxonomy": {
+   "date": "2026-11-11",
+   "v": 3,
+   "eval": {
+    "category": "教育学习",
+    "one_liner": "一个覆盖小学到高中、数学英语物理等学科的国产课程知识图谱，能做前置诊断，找出学生真正缺的知识点",
+    "one_liner_en": "A knowledge graph of China's K-12 curriculum that traces a student's wrong answer back to the missing prerequisite skill",
+    "target_user": "把中国数学教材当作补充练习或数学竞赛起点的美国华裔家庭和中文沉浸式学校，不面向主流的美国学校体系",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 8
+    },
+    "product_idea": "面向华裔家庭的中文数学诊断应用：答错一道题后，就沿着先修关系一路回溯到缺失的小学知识点，并给出练习路径",
+    "demo_idea": "在网页上选一道配方法题并答错，动画沿着先修边一路回溯到小学的完全平方公式，并标出沿途每个缺失的知识点",
+    "attack_tool": false,
+    "red_flags": [
+     "采用 CC BY-NC 4.0，商业使用需单独授权，因此做付费产品之前必须先谈授权",
+     "内容与中国人教版教材、中国课程标准绑定紧密，对美国学生几乎没有直接价值，可触达的市场很小",
+     "作者自己承认先修边和诊断题没有经过一线教师审核，数据质量没有保障",
+     "作者联系渠道是 QQ 邮箱和 X 私信，商业化合作能否走通存在不确定性"
+    ],
+    "reason": "数据打磨得扎实、诊断回溯概念很亮眼，但深度绑定中国课程，在英文市场几乎没有付费场景，再加上非商用许可，商业天花板很低，更适合用来做内容。"
    }
   }
  }

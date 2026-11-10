@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-11",
+ "headline": "Jane Street 开源苏格拉底导师提示词",
+ "summary_md": "**What it is**\n\n`janestreet/agent_skills` is a small MIT-licensed repo from Jane Street. Right now it contains one skill, `socratic-tutor`: a directory with a `SKILL.md` file of instructions. Drop it into a coding agent's skills folder, or paste the body into a plain chatbot's system prompt, and ask it to \"teach me X.\" Per the README, the skill runs a diagnostic, builds a skill map with levels 0–5, asks one question at a time, schedules spaced review, and ends with a final assessment.\n\n**Why it's taking off**\n\nDemo-friendly and easy to try. The repo is a prompt file, not a framework, so anyone can copy it in a minute. It also arrives at a moment when people are using LLMs to prep for the LSAT, GRE, and CFA, or to learn to code, and most generic chatbot tutoring is too agreeable to be useful. A strict, question-first tutor is a visible behavior change.\n\n**Where the product opportunity is**\n\nThe value isn't the prompt; it's the experience around it. A web app where you upload a textbook or syllabus, the skill builds the level map, and the app tracks progress, schedules spaced review, and shows a parent or learner a weekly report. Persistence, content ingestion, and assessment records are the parts a copied `SKILL.md` can't match.\n\n**Worth noting**\n\nThis is Jane Street's official repo, so any commercial use should credit the source. For K12 audiences in the US, COPPA applies.",
+ "title_en": "Jane Street's socratic-tutor: a skill file that makes any LLM teach",
+ "tagline_en": "A drop-in SKILL.md that turns any chatbot into a strict Socratic tutor.",
+ "pick": {
+  "full_name": "janestreet/agent_skills",
+  "url": "https://github.com/janestreet/agent_skills",
+  "description": "Agent skills",
+  "license": "MIT",
+  "stars": 3446,
+  "daily_rate": 1625.0,
+  "category": "教育学习",
+  "one_liner": "把任意 AI 变成严格的苏格拉底式私人导师",
+  "one_liner_en": "Turn any AI chatbot into a strict Socratic personal tutor",
+  "reason": "话题正热、演示直观、MIT 许可安全，但只是提示词集合，护城河低，需靠产品化体验取胜。",
+  "content": 7.67,
+  "startup": 7.05,
+  "final": 7.7,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-11-janestreet-agent-skills",
+ "top": [
+  {
+   "full_name": "janestreet/agent_skills",
+   "url": "https://github.com/janestreet/agent_skills",
+   "one_liner": "把任意 AI 变成严格的苏格拉底式私人导师",
+   "reason": "话题正热、演示直观、MIT 许可安全，但只是提示词集合，护城河低，需靠产品化体验取胜。",
+   "one_liner_en": "Turn any AI chatbot into a strict Socratic personal tutor",
+   "content": 7.67,
+   "startup": 7.05,
+   "final": 7.7,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "qybaihe/bla",
+   "url": "https://github.com/qybaihe/bla",
+   "one_liner": "给软件成品加一层 AI 逆向防护盾，让 AI 破解工具又费钱又蒙圈",
+   "reason": "话题性极强、叙事好讲，MIT 许可干净；但价值依赖未验证的对抗效果，需用实测 demo 支撑可信度",
+   "one_liner_en": "An anti-AI reverse-engineering shield that makes LLM agents burn tokens trying to crack your app",
+   "content": 7.67,
+   "startup": 6.85,
+   "final": 7.29,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "NVIDIA/auto-ontology",
+   "url": "https://github.com/NVIDIA/auto-ontology",
+   "one_liner": "给AI智能体一份企业数据的语义地图，让它少查错数",
+   "reason": "痛点真实、许可证干净、大厂背书带来话题度，但产品已相当成熟且属基础设施层级，个人做差异化与演示的空间都偏小。",
+   "one_liner_en": "An ontology layer that stops AI agents from giving wrong answers on enterprise data",
+   "content": 6.33,
+   "startup": 7.15,
+   "final": 6.86,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "rddmwmddr/android-ad-cleaner",
+   "url": "https://github.com/rddmwmddr/android-ad-cleaner",
+   "one_liner": "连电脑点几下，关掉国产安卓系统里的广告和营销推送",
+   "reason": "痛点真实、话题有趣，但重度依赖国内机型场景，与目标美国市场错位，变现和包装空间都有限，适合做内容而非产品。",
+   "one_liner_en": "Plug your phone into a computer and turn off built-in Android ads and marketing pushes",
+   "content": 7.33,
+   "startup": 6.2,
+   "final": 6.71,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "DIYgod/pinky",
+   "url": "https://github.com/DIYgod/pinky",
+   "one_liner": "让 AI 代理在你的手机屏幕上执行操作，关键步骤需你亲自确认",
+   "reason": "概念抓人、审批网关设计有差异化，传播价值高；但工程门槛与免费定位压缩了商业化空间，适合做内容而非重仓产品。",
+   "one_liner_en": "Let AI agents operate your real phone while you approve every risky step.",
+   "content": 8.33,
+   "startup": 6.65,
+   "final": 6.68,
+   "category_penalty": 0.8
+  }
+ ]
+}

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aporia — the tutor that asks, never tells</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .chat-scroll::-webkit-scrollbar { width: 6px; }
+  .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+  .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="bg-white text-slate-900 antialiased">
+
+<header class="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3">
+    <div class="flex items-center gap-2">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-sm">🦉</span>
+      <span class="text-[15px] font-semibold tracking-tight">Aporia</span>
+      <span class="ml-1 hidden rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 sm:inline">Concept</span>
+    </div>
+    <nav class="hidden items-center gap-6 text-[13px] text-slate-600 md:flex">
+      <a href="#app" class="hover:text-slate-900">Live demo</a>
+      <a href="#uses" class="hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-full bg-slate-900 px-4 py-2 text-[13px] font-medium text-white transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<section class="mx-auto max-w-6xl px-5 pb-10 pt-14 text-center sm:pt-20">
+  <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] font-medium text-slate-600">
+    🦉 Built on the <code class="font-mono text-[11px]">socratic-tutor</code> skill from Jane Street's agent_skills
+  </span>
+  <h1 class="mx-auto mt-5 max-w-3xl text-4xl font-semibold leading-[1.08] tracking-tight sm:text-6xl">
+    The tutor that asks,<br class="hidden sm:block"> never tells.
+  </h1>
+  <p class="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-slate-600 sm:text-lg">
+    Aporia takes whatever you are studying — an LSAT argument, a GRE quant set, chapter 3 of a Python book — and teaches it the hard way: a diagnostic, a 0–5 skill map, and one pointed question at a time until you can defend your answer out loud.
+  </p>
+  <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-[12px] text-slate-500">
+    <span class="rounded-full bg-slate-100 px-2.5 py-1">No answers handed out</span>
+    <span class="rounded-full bg-slate-100 px-2.5 py-1">Skill map 0–5</span>
+    <span class="rounded-full bg-slate-100 px-2.5 py-1">Spaced review built in</span>
+  </div>
+</section>
+
+<section id="app" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-24">
+  <div class="grid gap-4 lg:grid-cols-[300px_minmax(0,1fr)]">
+
+    <aside class="rounded-2xl border border-slate-200 bg-white p-5">
+      <div class="flex items-center justify-between">
+        <h2 class="text-[12px] font-semibold uppercase tracking-wide text-slate-500">Skill map</h2>
+        <span class="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">Sample data</span>
+      </div>
+      <p class="mt-1 text-[12px] text-slate-400">Levels 0–5, updated as you answer.</p>
+      <ul id="skills" class="mt-3 divide-y divide-slate-100"></ul>
+      <div class="mt-4 rounded-xl bg-slate-50 p-3">
+        <div class="flex items-center justify-between text-[11px] font-medium text-slate-500">
+          <span>Overall mastery</span>
+          <span id="overallPct">0%</span>
+        </div>
+        <div class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+          <div id="overallBar" class="h-full rounded-full bg-slate-900 transition-all duration-500" style="width:0%"></div>
+        </div>
+      </div>
+      <p class="mt-3 text-[11px] leading-relaxed text-slate-400">Levels are simulated in the browser. Nothing leaves this page.</p>
+    </aside>
+
+    <div class="flex h-[580px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white lg:h-[640px]">
+      <div id="tracks" class="flex items-center gap-2 overflow-x-auto border-b border-slate-200 px-3 py-2.5"></div>
+      <div id="chat" class="chat-scroll flex-1 space-y-4 overflow-y-auto px-4 py-4 sm:px-5"></div>
+      <div id="composer" class="border-t border-slate-200 bg-white px-3 py-2.5"></div>
+    </div>
+
+  </div>
+</section>
+
+<section id="uses" class="border-t border-slate-200 bg-slate-50/70 py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-5">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Three people, three very different Tuesdays</h2>
+    <p class="mt-2 max-w-2xl text-[15px] leading-relaxed text-slate-600">Same loop every time: drop in the material, take the diagnostic, get asked questions you cannot dodge.</p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <div class="text-2xl">⚖️</div>
+        <h3 class="mt-3 text-[15px] font-semibold">Maya, 8 weeks out from the LSAT</h3>
+        <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">She pastes in a logic-reasoning set. Aporia finds her conclusions are solid but her assumption-spotting collapses under one counterexample — and drills that for three sessions instead of vaguely "reviewing logic games."</p>
+        <p class="mt-3 text-[12px] font-medium text-emerald-700">Nightly 15-minute diagnostic</p>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <div class="text-2xl">💻</div>
+        <h3 class="mt-3 text-[15px] font-semibold">Devin, six months into a career switch</h3>
+        <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">He uploads his Python course notes. The tutor refuses to explain default arguments for the fifth time and instead asks him to predict the output — until he can say why the list is shared between calls.</p>
+        <p class="mt-3 text-[12px] font-medium text-emerald-700">Uploads his own chapters</p>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <div class="text-2xl">🧒</div>
+        <h3 class="mt-3 text-[15px] font-semibold">Priya, parent of a 6th grader</h3>
+        <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">She photographs the fraction worksheet. Aporia will not give the answer — it asks what half of a half looks like, waits, and asks again from a different angle when the child guesses.</p>
+        <p class="mt-3 text-[12px] font-medium text-emerald-700">No answer key, by design</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-5">
+    <div class="text-center">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Priced like a workbook, not like a bootcamp</h2>
+      <p class="mt-2 text-[15px] text-slate-600">Sample pricing for this concept demo.</p>
+    </div>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-slate-200 bg-white p-6">
+        <h3 class="text-[13px] font-semibold uppercase tracking-wide text-slate-500">Study</h3>
+        <div class="mt-2 flex items-baseline gap-1"><span class="text-3xl font-semibold tracking-tight">$0</span><span class="text-[13px] text-slate-500">/forever</span></div>
+        <ul class="mt-4 space-y-2 text-[13.5px] text-slate-600">
+          <li>✔︎ One active track</li>
+          <li>✔︎ Two diagnostics a day</li>
+          <li>✔︎ Skill map, levels 0–5</li>
+          <li class="text-slate-400">— No spaced review queue</li>
+        </ul>
+      </div>
+
+      <div class="relative rounded-2xl border-2 border-slate-900 bg-white p-6">
+        <span class="absolute -top-2.5 left-6 rounded-full bg-slate-900 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Most picked</span>
+        <h3 class="text-[13px] font-semibold uppercase tracking-wide text-slate-500">Scholar</h3>
+        <div class="mt-2 flex items-baseline gap-1"><span class="text-3xl font-semibold tracking-tight">$12</span><span class="text-[13px] text-slate-500">/month</span></div>
+        <ul class="mt-4 space-y-2 text-[13.5px] text-slate-600">
+          <li>✔︎ Unlimited tracks and uploads</li>
+          <li>✔︎ Full 0–5 skill map with history</li>
+          <li>✔︎ Spaced review queue</li>
+          <li>✔︎ Final assessments with receipts</li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white p-6">
+        <h3 class="text-[13px] font-semibold uppercase tracking-wide text-slate-500">Study group</h3>
+        <div class="mt-2 flex items-baseline gap-1"><span class="text-3xl font-semibold tracking-tight">$29</span><span class="text-[13px] text-slate-500">/month</span></div>
+        <ul class="mt-4 space-y-2 text-[13.5px] text-slate-600">
+          <li>✔︎ Up to 5 learners</li>
+          <li>✔︎ Parent / coach read-only view</li>
+          <li>✔︎ Weekly progress report</li>
+          <li>✔︎ Everything in Scholar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-6 rounded-2xl bg-slate-900 p-6 text-white sm:p-8">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h3 class="text-lg font-semibold tracking-tight">Get one email when this ships</h3>
+          <p class="mt-1 text-[13px] text-slate-300">No drip sequence, no newsletter. One email, then silence.</p>
+        </div>
+        <form id="waitlist" class="flex w-full gap-2 sm:w-auto">
+          <input id="email" type="email" required value="maya@example.com" aria-label="Email address"
+                 class="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-[13px] text-white placeholder-slate-500 outline-none focus:border-emerald-400 sm:w-64">
+          <button type="submit" class="shrink-0 rounded-lg bg-white px-4 py-2 text-[13px] font-medium text-slate-900 transition hover:bg-slate-200">Join</button>
+        </form>
+      </div>
+      <p id="waitlistMsg" class="mt-3 hidden text-[13px] font-medium text-emerald-400"></p>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200 bg-slate-50 py-8">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-2 px-5 text-center">
+    <div class="flex items-center gap-2 text-[13px] font-semibold text-slate-700"><span>🦉</span> Aporia</div>
+    <p class="text-[11.5px] leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/janestreet/agent_skills" class="underline decoration-slate-400 underline-offset-2 hover:text-slate-700">janestreet/agent_skills</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var TRACKS = [
+    {
+      id: 'lsat',
+      tag: 'LSAT',
+      label: 'LSAT Logical Reasoning',
+      blurb: 'You bring the argument. I bring the questions.',
+      skills: ['Locate the conclusion', 'Spot hidden assumptions', 'Name the flaw'],
+      steps: [
+        {
+          skill: 0,
+          stimulus: 'City councilor: "We must either raise parking-meter rates or repave Main Street. Our budget cannot cover both. So we should raise parking-meter rates."',
+          question: 'Which sentence is the argument\u2019s main conclusion?',
+          options: [
+            { t: 'We must either raise parking-meter rates or repave Main Street.', ok: false },
+            { t: 'Our budget cannot cover both.', ok: false },
+            { t: 'We should raise parking-meter rates.', ok: true },
+            { t: 'Main Street needs repaving.', ok: false }
+          ],
+          hint: 'A conclusion is the claim the other sentences are doing work for. Which sentence has nothing built on top of it?',
+          explain: 'The first two sentences are the setup and the constraint; the recommendation is what they support. "Main Street needs repaving" never appears in the argument at all \u2014 that option is a scope shift.',
+          follow: {
+            q: 'Now defend it, in one sentence: why is that the conclusion and not a premise?',
+            sample: 'Because the other two sentences are evidence for it and nothing else in the argument is built on top of it.',
+            good: 'Right. You just did what "find the conclusion" actually means: you checked what supports what, instead of picking the sentence that sounded most important.',
+            weak: 'Thin. Push on the support relation \u2014 which claim are the other sentences doing work for? Say it in your own words; that is the skill being trained, not the letter choice.'
+          }
+        },
+        {
+          skill: 2,
+          stimulus: 'All the novels on that shelf are paperbacks. Some paperbacks are illustrated. Therefore, some of the novels on that shelf are illustrated.',
+          question: 'What is the flaw in this argument?',
+          options: [
+            { t: 'It assumes every paperback is a novel.', ok: false },
+            { t: 'It treats "some paperbacks" as if it covered the novels on the shelf.', ok: true },
+            { t: 'It contradicts itself.', ok: false },
+            { t: 'It draws a conclusion from a survey of the shelf.', ok: false }
+          ],
+          hint: 'Track the word "some". Which group of paperbacks is illustrated \u2014 and is it the same group as the novels on the shelf?',
+          explain: 'The illustrated paperbacks could be a completely different set from the novels on the shelf. The argument quietly assumes the overlap it is supposed to be proving.',
+          follow: {
+            q: 'Say it without naming the flaw. Where exactly does the evidence stop and the conclusion start?',
+            sample: 'The evidence only says some paperbacks are illustrated; the conclusion claims something about the novels on the shelf, and nothing connects those two groups.',
+            good: 'Exactly. You located the gap instead of just labelling it \u2014 which is why this transfers to arguments you have never seen.',
+            weak: 'You named a flaw but did not locate it. Redo it as a gap: what does the evidence guarantee, and what does the conclusion need?'
+          }
+        },
+        {
+          skill: 1,
+          stimulus: 'A ten-year study found that people who drink two cups of coffee a day live longer on average than people who drink none. The authors concluded that coffee causes longer life.',
+          question: 'What must the authors be assuming?',
+          options: [
+            { t: 'Everyone should drink two cups of coffee a day.', ok: false },
+            { t: 'Coffee drinkers do not differ from non-drinkers in other ways that affect longevity.', ok: true },
+            { t: 'Coffee is bad for you.', ok: false },
+            { t: 'Longer life causes coffee drinking.', ok: false }
+          ],
+          hint: 'Association to causation needs a bridge. Could a third thing explain both the coffee habit and the long life?',
+          explain: 'The study only shows a correlation. The hidden assumption is that the two groups are otherwise comparable \u2014 same income, same health habits, same everything that matters.',
+          follow: {
+            q: 'Give me one concrete third factor that would wreck the conclusion, and say what it would do to the argument.',
+            sample: 'Suppose coffee drinkers are richer and richer people see doctors more often. Then the longevity could come from wealth or healthcare, not coffee, and the conclusion collapses.',
+            good: 'Perfect. That is what an assumption really is: the unstated thing you can attack with a specific counterexample.',
+            weak: 'Too abstract. Name a real, specific third factor and say how it would produce both the coffee habit and the longer life.'
+          }
+        }
+      ]
+    },
+    {
+      id: 'gre',
+      tag: 'GRE Quant',
+      label: 'GRE Quantitative Reasoning',
+      blurb: 'Numbers are easy. Knowing which number the question wants is not.',
+      skills: ['Translate words to algebra', 'Work with rates', 'Check boundary cases'],
+      steps: [
+        {
+          skill: 1,
+          stimulus: 'A car drives 120 miles to a town at an average speed of 40 mph, then returns along the same road at 60 mph.',
+          question: 'What is the car\u2019s average speed for the entire round trip?',
+          options: [
+            { t: '48 mph', ok: true },
+            { t: '50 mph', ok: false },
+            { t: '45 mph', ok: false },
+            { t: '52 mph', ok: false }
+          ],
+          hint: 'You cannot average speeds the way you average test scores \u2014 the two legs take different amounts of time. Time each leg.',
+          explain: 'Out: 3 hours. Back: 2 hours. 240 miles in 5 hours is 48 mph. The midpoint of 40 and 60 is the classic trap, and it is wrong because the legs are not equally long in time.',
+          follow: {
+            q: 'Why is 50 wrong? Say what the arithmetic of rates actually requires.',
+            sample: 'Average speed is total distance over total time, and the legs take 3 hours and 2 hours \u2014 not equal times \u2014 so you cannot take the midpoint of the two speeds.',
+            good: 'Yes. Equal distances, unequal times \u2014 that is exactly the condition that makes the harmonic mean, not the arithmetic one, the right tool.',
+            weak: 'You have the number but not the reason. Say out loud why averaging speeds is only valid when the times are equal.'
+          }
+        },
+        {
+          skill: 0,
+          stimulus: '3x + 2y = 24, where x and y are positive integers.',
+          question: 'How many possible values of y are there?',
+          options: [
+            { t: '2', ok: false },
+            { t: '3', ok: true },
+            { t: '4', ok: false },
+            { t: '5', ok: false }
+          ],
+          hint: 'Solve for one variable first. What does the equation force y to be a multiple of?',
+          explain: 'Rewrite as 3x = 24 \u2212 2y, so 24 \u2212 2y must be divisible by 3, which forces y to be a multiple of 3. Positivity gives 0 < y < 12, so y is 3, 6, or 9 \u2014 three values.',
+          follow: {
+            q: 'Where did the upper bound come from? Justify the range you checked.',
+            sample: 'x has to stay positive, so 24 \u2212 2y > 0, which puts y below 12. Combined with y being a positive multiple of 3, only 3, 6 and 9 survive.',
+            good: 'Good \u2014 you built the bound instead of guessing values until something stuck. That is the whole translation skill.',
+            weak: 'You found values but did not bound them. State the inequality that caps y, then count inside it.'
+          }
+        },
+        {
+          skill: 2,
+          stimulus: 'A set of five distinct positive integers has a mean of 6 and a median of 7.',
+          question: 'What is the greatest possible value of the largest integer in the set?',
+          options: [
+            { t: '10', ok: false },
+            { t: '11', ok: false },
+            { t: '12', ok: true },
+            { t: '13', ok: false }
+          ],
+          hint: 'Mean 6 over five numbers fixes the total. To make one number large, what must the others do \u2014 and what does "distinct" forbid?',
+          explain: 'Total is 30. Sorting as a < b < 7 < c < d, the fourth value must be at least 8 because it has to be distinct from the median. Minimise the small ones: 1, 2, 7, 8, leaving 12.',
+          follow: {
+            q: 'Which constraint did you almost break \u2014 distinctness, positivity, or the median? Name it and say what it did to your answer.',
+            sample: 'Distinctness. The number right after the median cannot also be 7, so it has to be at least 8, and that is what caps the largest value at 12.',
+            good: 'That is the boundary skill: knowing which constraint binds. Almost everyone drops distinctness and answers 13.',
+            weak: 'Name the constraint explicitly next time. The difference between 12 and 13 is one word in the question.'
+          }
+        }
+      ]
+    },
+    {
+      id: 'python',
+      tag: 'Python',
+      label: 'Python for career switchers',
+      blurb: 'Predict the output before you run it. That is the whole exercise.',
+      skills: ['Read expressions', 'Trace loops', 'Understand mutability'],
+      steps: [
+        {
+          skill: 0,
+          stimulus: "print(len('hello') * 2)",
+          question: 'What does this line print?',
+          options: [
+            { t: '10', ok: true },
+            { t: 'hellohello', ok: false },
+            { t: 'hellohellohello', ok: false },
+            { t: 'TypeError', ok: false }
+          ],
+          hint: 'Order of operations: which happens first, len or the multiplication? And what type does len return?',
+          explain: "len('hello') is 5, an integer, and 5 * 2 is 10. String repetition only kicks in when a string is one of the operands.",
+          follow: {
+            q: 'Walk me through the evaluation order \u2014 what is the value of each sub-expression?',
+            sample: 'len of the string evaluates first and returns the integer 5, then the multiply operator applies to 5 and 2, giving 10.',
+            good: 'Clean. You evaluated inside-out instead of pattern-matching on the word "hello" \u2014 that is the actual skill.',
+            weak: 'Too vague. Name each sub-expression and its value, in order, like an interpreter would.'
+          }
+        },
+        {
+          skill: 1,
+          stimulus: '[i * 2 for i in range(3)]',
+          question: 'What is the resulting list?',
+          options: [
+            { t: '[0, 2, 4]', ok: true },
+            { t: '[2, 4, 6]', ok: false },
+            { t: '[0, 1, 2]', ok: false },
+            { t: '[0, 2, 4, 6]', ok: false }
+          ],
+          hint: 'range(3) starts where? Write out the three values of i before multiplying anything.',
+          explain: 'range(3) yields 0, 1, 2 \u2014 the upper bound is exclusive \u2014 so the doubled values are 0, 2, 4.',
+          follow: {
+            q: 'If I wanted [2, 4, 6] instead, what is the smallest change to the expression?',
+            sample: 'Change the expression to i * 2 for i in range(1, 4), so the three values of i become 1, 2 and 3 before doubling.',
+            good: 'Right \u2014 you reasoned about the range object, not the output. That is how you stop guessing at off-by-one bugs.',
+            weak: 'Try again with the range arguments named explicitly. Which start value produces 2 from 2 * 1?'
+          }
+        },
+        {
+          skill: 2,
+          stimulus: 'def add(a, box=[]):\n    box.append(a)\n    return box',
+          question: 'add(1) runs, then add(2) runs. What does the second call return?',
+          options: [
+            { t: '[2]', ok: false },
+            { t: '[1, 2]', ok: true },
+            { t: '[1]', ok: false },
+            { t: '[2, 1]', ok: false }
+          ],
+          hint: 'Default arguments are evaluated when? Once per call, or once when the def line runs?',
+          explain: 'The default list is created once, at definition time, and shared across every call. Mutating it leaks state between calls \u2014 the classic mutable-default gotcha.',
+          follow: {
+            q: 'How would you fix it, and why does the fix work?',
+            sample: 'Default the parameter to None and build a fresh list inside the function, so the mutable object is created per call instead of once at definition time.',
+            good: 'Yes. You fixed the cause, not the symptom \u2014 a fresh object per call instead of a shared one.',
+            weak: 'A fix without a reason will bite you again. Say when the default is created, then say why your fix changes that.'
+          }
+        }
+      ]
+    }
+  ];
+
+  var state = {
+    trackId: 'lsat',
+    step: 0,
+    phase: 'answer',
+    levels: {},
+    tried: false,
+    run: 0
+  };
+
+  var chatEl = document.getElementById('chat');
+  var composerEl = document.getElementById('composer');
+  var tabsEl = document.getElementById('tracks');
+  var skillsEl = document.getElementById('skills');
+  var overallBar = document.getElementById('overallBar');
+  var overallPct = document.getElementById('overallPct');
+
+  function currentTrack() {
+    for (var i = 0; i < TRACKS.length; i++) {
+      if (TRACKS[i].id === state.trackId) return TRACKS[i];
+    }
+    return TRACKS[0];
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function rich(s) {
+    return esc(s)
+      .replace(/`([^`]+)`/g, '<code class="rounded bg-slate-200/70 px-1 py-0.5 font-mono text-[12px] text-slate-700">$1</code>')
+      .replace(/\n/g, '<br>');
+  }
+
+  function letter(i) {
+    return String.fromCharCode(65 + i);
+  }
+
+  function msg(role, html) {
+    var row = document.createElement('div');
+    var body = document.createElement('div');
+    if (role === 'tutor') {
+      row.className = 'flex gap-3';
+      row.innerHTML = '<div class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-900 text-[13px] text-white">🦉</div>';
+      body.className = 'max-w-[86%] rounded-2xl rounded-tl-sm bg-slate-100 px-4 py-3 text-[13.5px] leading-relaxed text-slate-800';
+      body.innerHTML = html;
+      row.appendChild(body);
+    } else {
+      row.className = 'flex justify-end';
+      body.className = 'max-w-[86%] rounded-2xl rounded-tr-sm bg-slate-900 px-4 py-3 text-[13.5px] leading-relaxed text-white';
+      body.innerHTML = html;
+      row.appendChild(body);
+    }
+    chatEl.appendChild(row);
+    chatEl.scrollTop = chatEl.scrollHeight;
+    return body;
+  }
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    TRACKS.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      var active = t.id === state.trackId;
+      b.className = 'shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-medium transition ' +
+        (active
+          ? 'bg-slate-900 text-white'
+          : 'border border-slate-200 bg-white text-slate-600 hover:border-slate-400 hover:text-slate-900');
+      b.textContent = t.tag;
+      b.addEventListener('click', function () {
+        if (t.id !== state.trackId) startTrack(t.id);
+      });
+      tabsEl.appendChild(b);
+    });
+  }
+
+  function renderSkills() {
+    var t = currentTrack();
+    skillsEl.innerHTML = '';
+    var sum = 0;
+
+    t.skills.forEach(function (name) {
+      var lvl = state.levels[name] || 0;
+      sum += lvl;
+      var li = document.createElement('li');
+      li.className = 'py-2.5';
+      li.innerHTML =
+        '<div class="flex items-baseline justify-between gap-2">' +
+          '<span class="text-[13px] ' + (lvl > 0 ? 'text-slate-900' : 'text-slate-500') + '">' + esc(name) + '</span>' +
+          '<span class="shrink-0 rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600">L' + lvl + '</span>' +
+        '</div>' +
+        '<div class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">' +
+          '<div class="h-full rounded-full bg-emerald-500 transition-all duration-500" style="width:' + (lvl / 5 * 100) + '%"></div>' +
+        '</div>';
+      skillsEl.appendChild(li);
+    });
+
+    var max = t.skills.length * 5;
+    var pct = max ? Math.round(sum / max * 100) : 0;
+    overallBar.style.width = pct + '%';
+    overallPct.textContent = pct + '%';
+  }
+
+  function bump(skillIdx, amount) {
+    var name = currentTrack().skills[skillIdx];
+    if (!name) return;
+    var next = Math.min(5, (state.levels[name] || 0) + amount);
+    state.levels[name] = next;
+    renderSkills();
+  }
+
+  function setComposerIdle() {
+    composerEl.innerHTML = '<p class="px-1 py-2 text-[11px] text-slate-400">Pick an option above to continue.</p>';
+  }
+
+  function startTrack(id) {
+    state.run += 1;
+    var run = state.run;
+    state.trackId = id;
+    state.step = 0;
+    state.levels = {};
+    state.tried = false;
+    state.phase = 'answer';
+
+    chatEl.innerHTML = '';
+    renderTabs();
+    renderSkills();
+    setComposerIdle();
+
+    var t = currentTrack();
+    msg('tutor',
+      '<p class="font-medium">' + esc(t.label) + '</p>' +
+      '<p class="mt-1 text-slate-600">' + esc(t.blurb) + '</p>' +
+      '<p class="mt-2">One question at a time. Answer it, then tell me <em>why</em> \u2014 the why is the whole point.</p>'
+    );
+
+    setTimeout(function () {
+      if (state.run === run) askStep();
+    }, 320);
+  }
+
+  function askStep() {
+    var t = currentTrack();
+    if (state.step >= t.steps.length) {
+      finish();
+      return;
+    }
+
+    var s = t.steps[state.step];
+    state.tried = false;
+    state.phase = 'answer';
+    setComposerIdle();
+
+    var html = '';
+    if (s.stimulus) {
+      html += '<div class="mb-2 rounded-md border-l-2 border-slate-400 bg-white px-3 py-2 text-[12.5px] italic leading-snug text-slate-600">' + rich(s.stimulus) + '</div>';
+    }
+    html += '<p>' + rich(s.question) + '</p>';
+
+    var body = msg('tutor', html);
+
+    var opts = document.createElement('div');
+    opts.className = 'mt-3 space-y-2';
+
+    s.options.forEach(function (o, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-left text-[13px] text-slate-700 transition hover:border-slate-900 hover:bg-slate-50';
+      b.textContent = letter(i) + '. ' + o.t;
+      b.addEventListener('click', function () {
+        pick(i, s, opts);
+      });
+      opts.appendChild(b);
+    });
+
+    body.appendChild(opts);
+    chatEl.scrollTop = chatEl.scrollHeight;
+  }
+
+  function pick(i, s, optsEl) {
+    if (state.phase !== 'answer') return;
+
+    var chosen = s.options[i];
+    var buttons = Array.prototype.slice.call(optsEl.children);
+
+    buttons.forEach(function (b, j) {
+      b.disabled = true;
+      b.classList.add('opacity-40', 'cursor-default');
+      b.classList.remove('hover:border-slate-900', 'hover:bg-slate-50');
+      if (j === i) b.classList.add('border-slate-900', 'bg-slate-50');
+    });
+
+    msg('user', esc(letter(i) + '. ' + chosen.t));
+
+    if (chosen.ok) {
+      bump(s.skill, state.tried ? 2 : 3);
+      state.phase = 'follow';
+      msg('tutor',
+        '<p>That is the one. But a right answer you cannot defend is a guess.</p>' +
+        '<p class="mt-2">' + rich(s.follow.q) + '</p>'
+      );
+      reasonComposer(s);
+      return;
+    }
+
+    if (state.tried) {
+      bump(s.skill, 1);
+      var correctIdx = 0;
+      for (var k = 0; k < s.options.length; k++) {
+        if (s.options[k].ok) { correctIdx = k; break; }
+      }
+      msg('tutor',
+        '<p>Not this time. The answer is <strong>' + letter(correctIdx) + '. ' + esc(s.options[correctIdx].t) + '</strong></p>' +
+        '<p class="mt-2 text-slate-600">' + rich(s.explain) + '</p>' +
+        '<p class="mt-2 text-slate-500">This one goes into your review queue.</p>'
+      );
+      state.phase = 'between';
+      state.step += 1;
+      var run = state.run;
+      setTimeout(function () {
+        if (state.run === run) askStep();
+      }, 900);
+      return;
+    }
+
+    state.tried = true;
+    state.phase = 'answer';
+    msg('tutor',
+      '<p>Not that one. ' + rich(s.hint) + '</p>' +
+      '<p class="mt-2">Look again \u2014 the other options stay open.</p>'
+    );
+
+    buttons.forEach(function (b, j) {
+      if (j === i) return;
+      b.disabled = false;
+      b.classList.remove('opacity-40', 'cursor-default');
+      b.classList.add('hover:border-slate-900', 'hover:bg-slate-50');
+    });
+  }
+
+  function reasonComposer(s) {
+    composerEl.innerHTML =
+      '<div class="rounded-xl border border-slate-200 bg-slate-50 p-2">' +
+        '<div class="mb-1 px-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Your reasoning</div>' +
+        '<textarea id="reason" rows="2" class="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-[13px] text-slate-800 outline-none focus:border-slate-900"></textarea>' +
+        '<div class="mt-2 flex items-center justify-between gap-2">' +
+          '<span class="px-1 text-[11px] text-slate-400">Sample answer pre-filled</span>' +
+          '<button id="sendReason" type="button" class="rounded-lg bg-slate-900 px-4 py-1.5 text-[13px] font-medium text-white transition hover:bg-slate-800">Send</button>' +
+        '</div>' +
+      '</div>';
+
+    var ta = composerEl.querySelector('#reason');
+    ta.value = s.follow.sample;
+
+    composerEl.querySelector('#sendReason').addEventListener('click', function () {
+      if (state.phase !== 'follow') return;
+      submitReason(s, ta.value);
+    });
+  }
+
+  function submitReason(s, text) {
+    var clean = String(text || '').trim();
+    msg('user', esc(clean || '(no answer given)'));
+
+    var strong = clean.length >= 25;
+    if (strong) bump(s.skill, 2);
+
+    msg('tutor', '<p>' + rich(strong ? s.follow.good : s.follow.weak) + '</p>');
+
+    setComposerIdle();
+    state.phase = 'between';
+    state.step += 1;
+
+    var run = state.run;
+    setTimeout(function () {
+      if (state.run === run) askStep();
+    }, 1000);
+  }
+
+  function finish() {
+    state.phase = 'done';
+    var t = currentTrack();
+    var sum = 0;
+    t.skills.forEach(function (n) { sum += (state.levels[n] || 0); });
+
+    var max = t.skills.length * 5;
+    var pct = max ? Math.round(sum / max * 100) : 0;
+
+    var solid = [];
+    var next = [];
+    t.skills.forEach(function (n) {
+      var lvl = state.levels[n] || 0;
+      if (lvl >= 4) solid.push(n);
+      if (lvl < 3) next.push(n);
+    });
+
+    var solidTxt = solid.length ? solid.map(esc).join(', ') : 'nothing locked in yet';
+    var nextTxt = next.length ? next.map(esc).join(', ') : 'review-only from here';
+
+    var body = msg('tutor',
+      '<p class="font-medium">Final assessment</p>' +
+      '<div class="mt-3 rounded-xl border border-slate-200 bg-white p-4">' +
+        '<div class="flex items-end justify-between">' +
+          '<span class="text-3xl font-semibold tracking-tight text-slate-900">' + pct + '%</span>' +
+          '<span class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">' + esc(t.tag) + '</span>' +
+        '</div>' +
+        '<div class="mt-3 space-y-2 text-[13px] leading-relaxed text-slate-600">' +
+          '<p><span class="font-medium text-slate-900">Solid:</span> ' + solidTxt + '</p>' +
+          '<p><span class="font-medium text-slate-900">Needs work:</span> ' + nextTxt + '</p>' +
+          '<p class="text-slate-500">Scheduled for spaced review: 3 days, then 10, then 28.</p>' +
+        '</div>' +
+      '</div>' +
+      '<p class="mt-3">You were not told anything new today. Every step forward was a question you had to answer yourself \u2014 that is the method, and it is the reason it sticks.</p>'
+    );
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mt-3 rounded-lg bg-slate-900 px-4 py-2 text-[13px] font-medium text-white transition hover:bg-slate-800';
+    btn.textContent = 'Run the diagnostic again';
+    btn.addEventListener('click', function () {
+      startTrack(state.trackId);
+    });
+    body.appendChild(btn);
+
+    composerEl.innerHTML = '<p class="px-1 py-2 text-[11px] text-slate-400">Session complete. All data on this page is sample data.</p>';
+    chatEl.scrollTop = chatEl.scrollHeight;
+    renderSkills();
+  }
+
+  document.getElementById('waitlist').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('email');
+    var out = document.getElementById('waitlistMsg');
+    var val = input.value.trim();
+    out.classList.remove('hidden');
+    if (!val) {
+      out.textContent = 'Add an email address first.';
+      return;
+    }
+    out.textContent = 'Thanks \u2014 you are on the list. (Demo only: nothing was sent or stored.)';
+    input.value = '';
+  });
+
+  startTrack('lsat');
+})();
+</script>
+
+</body>
+</html>
