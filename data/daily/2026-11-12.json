@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-12",
+ "headline": "开源个人财务 App，前身烧掉百万美元",
+ "summary_md": "**What it is.** [we-promise/sure](https://github.com/we-promise/sure) is a community fork of the abandoned Maybe Finance app, a full personal finance and wealth management tool. You can run it with Docker, use it from a browser, the macOS desktop app, mobile, API clients, or LLM agents, per the README.\n\n**Why it's taking off.** The original Maybe team spent most of 2021–2022 building a polished product that even included an \"Ask an Advisor\" feature with a real CFP/CFA. After spending nearly $1 million on development, they open-sourced it in mid-2023 and briefly tried a hosted version. That didn't work as a B2C subscription, so the codebase is now kept alive by this fork, which has been gaining about 1,000 stars a day.\n\n**Where the product opportunity is.** The obvious one is a hosted version with bank connections (Plaid and similar), automatic categorization, and monthly financial health reports as a subscription. That is exactly what the original team tried. A smaller, more realistic angle: managed dashboards for small financial advisors or privacy-first power users who want to self-host but pay for setup and support.\n\n**Caveats.** It's AGPL-3.0, so closed-source hosting is legally risky. Financial data aggregation has real cost and compliance overhead (GLBA and state privacy laws in the US), and the README openly admits performance issues on data-heavy views.",
+ "title_en": "Sure: Self-hosted personal finance app (Maybe fork)",
+ "tagline_en": "A self-hosted, open-source personal finance app you can run yourself.",
+ "pick": {
+  "full_name": "we-promise/sure",
+  "url": "https://github.com/we-promise/sure",
+  "description": "The personal finance app for everyone (by everyone)",
+  "license": "AGPL-3.0",
+  "stars": 12720,
+  "daily_rate": 1079,
+  "category": "效率工具",
+  "one_liner": "可自托管的个人财务管家，开源版 Copilot Money",
+  "one_liner_en": "A self-hosted, open-source personal finance and wealth dashboard",
+  "reason": "话题性和演示性都不错，痛点真实，但 AGPL 加前身商业失败使包装和变现空间受限，更适合做内容而非直接创业。",
+  "content": 7.0,
+  "startup": 5.5,
+  "final": 6.8,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-12-we-promise-sure",
+ "top": [
+  {
+   "full_name": "we-promise/sure",
+   "url": "https://github.com/we-promise/sure",
+   "one_liner": "可自托管的个人财务管家，开源版 Copilot Money",
+   "reason": "话题性和演示性都不错，痛点真实，但 AGPL 加前身商业失败使包装和变现空间受限，更适合做内容而非直接创业。",
+   "one_liner_en": "A self-hosted, open-source personal finance and wealth dashboard",
+   "content": 7.0,
+   "startup": 5.5,
+   "final": 6.8,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Donchitos/Claude-Code-Game-Studios",
+   "url": "https://github.com/Donchitos/Claude-Code-Game-Studios",
+   "one_liner": "用一句话描述游戏，Claude Code 自动把它做成能玩的网页小游戏",
+   "reason": "话题热、演示效果好、MIT 安全；但本质是 prompt 框架，商业化和壁垒都偏弱，适合做内容而非重产品。",
+   "one_liner_en": "Describe a game in one sentence and Claude Code builds a playable browser game",
+   "content": 8.33,
+   "startup": 6.85,
+   "final": 6.66,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "wangzan101/Mika",
+   "url": "https://github.com/wangzan101/Mika",
+   "one_liner": "用一句话指令，让手机上的 AI 自己在后台操作 App 和网页完成任务",
+   "reason": "传播价值高、Apache 许可安全，但安装门槛与上架政策是主要障碍，商业化需靠托管模型与模板订阅，适合先做爆款内容再验证产品。",
+   "one_liner_en": "An on-device AI agent that operates your Android apps and the web for you in the background",
+   "content": 8.67,
+   "startup": 6.65,
+   "final": 6.56,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "anefzaoui/misterdownloadmanager",
+   "url": "https://github.com/anefzaoui/misterdownloadmanager",
+   "one_liner": "免费开源的下载管理器，比 IDM 更快，支持磁力和视频抓取",
+   "reason": "话题性和易懂度不错，但免费替代品的定位让商业化很难，GPL 又限制闭源包装，内容可做，产品化空间有限。",
+   "one_liner_en": "A free, open-source download manager that beats IDM on speed, with torrent and video support.",
+   "content": 7.0,
+   "startup": 4.85,
+   "final": 6.28,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "SirBonney/scrcpy-mirror-control",
+   "url": "https://github.com/SirBonney/scrcpy-mirror-control",
+   "one_liner": "一键把安卓手机投屏到电脑并直接用鼠标键盘控制",
+   "reason": "易懂易演示有传播性，但实为 scrcpy 套壳，商业化和差异化薄弱，星标增长可疑，做内容尚可做产品难。",
+   "one_liner_en": "Mirror and control any Android phone on your desktop in one click",
+   "content": 7.33,
+   "startup": 6.35,
+   "final": 6.22,
+   "category_penalty": 0.8
+  }
+ ]
+}

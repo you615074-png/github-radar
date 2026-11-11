@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Beacon — see all your money, understand it in a minute</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4',
+            400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e',
+            800: '#115e59', 900: '#134e4a'
+          }
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="bg-white text-slate-900">
+
+<!-- ===================== HEADER ===================== -->
+<header class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="grid h-8 w-8 place-items-center rounded-xl bg-brand-700 text-sm font-bold text-white">B</span>
+      <span class="text-lg font-semibold tracking-tight">Beacon</span>
+      <span class="hidden rounded-full bg-brand-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand-700 sm:inline">cloud</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm text-slate-600 md:flex">
+      <a href="#demo" class="transition hover:text-slate-900">Demo</a>
+      <a href="#scenarios" class="transition hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="transition hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section id="top" class="relative overflow-hidden">
+  <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[460px]" style="background: radial-gradient(58% 62% at 50% 0%, #ecfdf5 0%, rgba(255,255,255,0) 72%);"></div>
+  <div class="mx-auto max-w-6xl px-5 pb-10 pt-14 md:pb-14 md:pt-20">
+    <span class="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-brand-800">
+      <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+      Hosted on the open-source Sure codebase
+    </span>
+    <h1 class="mt-5 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-slate-900 md:text-6xl">
+      See all your money.<br />
+      <span class="text-brand-700">Understand it in a minute.</span>
+    </h1>
+    <p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg">
+      Beacon is the hosted version of Sure. Connect your accounts once, let every transaction sort itself,
+      and read one plain-English money report each month. No spreadsheets, no sales calls — and your data stays yours.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <a href="#demo" class="inline-flex items-center gap-2 rounded-full bg-brand-700 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-brand-800">
+        Try the live demo <span aria-hidden="true">→</span>
+      </a>
+      <a href="#pricing" class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">
+        Join the waitlist
+      </a>
+    </div>
+    <ul class="mt-8 flex flex-wrap gap-x-7 gap-y-2 text-sm text-slate-500">
+      <li class="flex items-center gap-1.5"><span class="text-brand-600">✓</span> Bank sync in 30 seconds</li>
+      <li class="flex items-center gap-1.5"><span class="text-brand-600">✓</span> Auto-categorized transactions</li>
+      <li class="flex items-center gap-1.5"><span class="text-brand-600">✓</span> Export or self-host anytime</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== INTERACTIVE DEMO ===================== -->
+<section id="demo" class="mx-auto max-w-6xl px-5 pb-16 md:pb-24">
+  <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white" style="box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 24px 60px -28px rgba(15,23,42,.28);">
+
+    <!-- toolbar -->
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-slate-50/80 px-4 py-3.5 md:px-6">
+      <div class="flex items-center gap-2.5">
+        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+        <span class="text-sm font-medium text-slate-900">Household dashboard</span>
+        <span class="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-700">Sample data</span>
+      </div>
+      <div class="inline-flex rounded-full bg-slate-200/70 p-0.5" role="group" aria-label="Date range">
+        <button type="button" class="range-btn" data-range="3">3M</button>
+        <button type="button" class="range-btn" data-range="6">6M</button>
+        <button type="button" class="range-btn" data-range="12">12M</button>
+      </div>
+    </div>
+
+    <div class="space-y-4 p-4 md:space-y-5 md:p-6">
+
+      <!-- row 1: chart + stats -->
+      <div class="grid gap-4 md:gap-5 lg:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 p-4 md:p-5 lg:col-span-2">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Net worth</p>
+              <p id="netWorth" class="mt-1 text-3xl font-semibold tracking-tight text-slate-900">—</p>
+              <p id="netChange" class="mt-1 text-sm font-medium text-emerald-600">—</p>
+            </div>
+            <span class="shrink-0 text-[11px] text-slate-400">USD · all accounts</span>
+          </div>
+          <div id="chartWrap" class="mt-2">
+            <svg id="chart" role="img" aria-label="Net worth over time" width="100%" height="230"></svg>
+          </div>
+        </div>
+        <div id="stats" class="grid grid-cols-2 content-start gap-3 lg:grid-cols-1 lg:gap-4"></div>
+      </div>
+
+      <!-- row 2: transactions + ask -->
+      <div class="grid gap-4 md:gap-5 lg:grid-cols-2">
+
+        <!-- transactions -->
+        <div class="flex flex-col overflow-hidden rounded-2xl border border-slate-200">
+          <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
+            <p class="text-sm font-medium text-slate-900">Recent transactions</p>
+            <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">auto-categorized</span>
+          </div>
+          <div class="flex gap-2 border-b border-slate-100 px-3 py-2.5">
+            <input id="txnSearch" type="text" placeholder="Search merchants or categories…"
+              class="min-w-0 flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+            <select id="catFilter"
+              class="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-600 focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-100"></select>
+          </div>
+          <ul id="txnList" class="divide-y divide-slate-100 overflow-y-auto" style="max-height: 340px;"></ul>
+          <p id="txnCount" class="border-t border-slate-100 px-4 py-2.5 text-xs text-slate-400"></p>
+        </div>
+
+        <!-- ask beacon -->
+        <div class="flex flex-col overflow-hidden rounded-2xl border border-slate-200">
+          <div class="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+            <p class="text-sm font-medium text-slate-900">Ask Beacon</p>
+            <span class="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-700">Sample data</span>
+          </div>
+          <div id="chat" class="flex-1 space-y-3 overflow-y-auto px-3.5 py-3.5" style="max-height: 300px;"></div>
+          <div class="border-t border-slate-100 p-3">
+            <div class="flex gap-2">
+              <input id="askInput" type="text" value="How much did I spend on dining out last quarter?"
+                class="min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-brand-300 focus:outline-none focus:ring-2 focus:ring-brand-100" />
+              <button id="askBtn" type="button"
+                class="shrink-0 rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 active:scale-[.98]">Ask</button>
+            </div>
+            <div id="chips" class="mt-2 flex flex-wrap gap-1.5"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <p class="mt-3 text-center text-xs text-slate-400">
+    Everything above is a front-end simulation with built-in sample data. No accounts are connected and nothing is sent anywhere.
+  </p>
+</section>
+
+<!-- ===================== SCENARIOS ===================== -->
+<section id="scenarios" class="border-y border-slate-200 bg-slate-50">
+  <div class="mx-auto max-w-6xl px-5 py-16 md:py-20">
+    <h2 class="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">Three ways people use Beacon</h2>
+    <p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
+      Same engine, three very different households. Every plan can export everything and walk away — that's the point of building on an AGPL codebase.
+    </p>
+    <div class="mt-10 grid gap-4 md:grid-cols-3 md:gap-5">
+
+      <article class="rounded-2xl border border-slate-200 bg-white p-6">
+        <div class="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-xl" aria-hidden="true">🔐</div>
+        <h3 class="mt-4 text-base font-semibold text-slate-900">The privacy-first household</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          You like the idea of self-hosting but not the three-hour Docker weekend. Beacon runs the Sure codebase for you —
+          same data model, same export, zero server maintenance.
+        </p>
+        <p class="mt-4 text-xs font-medium text-brand-700">Beacon Cloud · $12/mo</p>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 bg-white p-6">
+        <div class="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-xl" aria-hidden="true">📊</div>
+        <h3 class="mt-4 text-base font-semibold text-slate-900">The family CFO</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Two adults, four accounts, one joint credit card. Every Sunday you get a six-bullet summary of what changed,
+          what's due, and whether you're still on track for the year.
+        </p>
+        <p class="mt-4 text-xs font-medium text-brand-700">Beacon Cloud · $12/mo</p>
+      </article>
+
+      <article class="rounded-2xl border border-slate-200 bg-white p-6">
+        <div class="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-xl" aria-hidden="true">💼</div>
+        <h3 class="mt-4 text-base font-semibold text-slate-900">The independent advisor</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600">
+          Run a branded dashboard for each client. Transactions categorize themselves and the monthly health report
+          goes out without you touching a spreadsheet.
+        </p>
+        <p class="mt-4 text-xs font-medium text-brand-700">Advisor · $49/mo</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING / WAITLIST ===================== -->
+<section id="pricing" class="mx-auto max-w-6xl px-5 py-16 md:py-20">
+  <h2 class="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">Simple pricing</h2>
+  <p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
+    Hosted plans include the app for free if you self-host it yourself. Beacon Cloud just takes the server off your hands.
+  </p>
+
+  <div class="mt-10 grid gap-4 md:grid-cols-3 md:gap-5">
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 p-6">
+      <p class="text-sm font-medium text-slate-500">Self-hosted</p>
+      <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">$0<span class="text-base font-normal text-slate-400"> forever</span></p>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">Run the open-source app on your own machine or VPS.</p>
+      <ul class="mt-5 space-y-2 text-sm text-slate-600">
+        <li>✓ Unlimited accounts</li>
+        <li>✓ Full data export</li>
+        <li>✓ Community support</li>
+      </ul>
+      <a href="https://github.com/we-promise/sure" class="mt-6 inline-flex items-center justify-center rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50">View the source</a>
+    </div>
+
+    <div class="relative flex flex-col rounded-2xl border-2 border-brand-600 bg-white p-6 shadow-sm">
+      <span class="absolute -top-3 left-6 rounded-full bg-brand-600 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">Most popular</span>
+      <p class="text-sm font-medium text-brand-700">Beacon Cloud</p>
+      <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">$12<span class="text-base font-normal text-slate-400"> /mo</span></p>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">We host it, you just log in. Cancel any month.</p>
+      <ul class="mt-5 space-y-2 text-sm text-slate-600">
+        <li>✓ Bank sync across accounts</li>
+        <li>✓ Auto-categorization</li>
+        <li>✓ Monthly health report</li>
+        <li>✓ One-click export</li>
+      </ul>
+      <button type="button" data-waitlist class="mt-6 inline-flex items-center justify-center rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-brand-800">Join the waitlist</button>
+    </div>
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 p-6">
+      <p class="text-sm font-medium text-slate-500">Advisor</p>
+      <p class="mt-2 text-3xl font-semibold tracking-tight text-slate-900">$49<span class="text-base font-normal text-slate-400"> /mo</span></p>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">Up to 10 client dashboards with your own branding.</p>
+      <ul class="mt-5 space-y-2 text-sm text-slate-600">
+        <li>✓ 10 client workspaces</li>
+        <li>✓ White-label reports</li>
+        <li>✓ Read-only client access</li>
+      </ul>
+      <button type="button" data-waitlist class="mt-6 inline-flex items-center justify-center rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50">Join the waitlist</button>
+    </div>
+
+  </div>
+
+  <p id="waitlistMsg" class="mt-6 hidden text-center text-sm font-medium text-brand-700">
+    🎉 You're on the list — this is a demo, so nothing was actually submitted.
+  </p>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="border-t border-slate-200 bg-slate-50">
+  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-10 md:flex-row md:items-center md:justify-between">
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+      <span class="grid h-6 w-6 place-items-center rounded-lg bg-brand-700 text-[11px] font-bold text-white">B</span>
+      Beacon · a product concept
+    </div>
+    <p class="max-w-xl text-xs leading-relaxed text-slate-500 md:text-right">Concept demo, based on the open-source project <a href="https://github.com/we-promise/sure" class="underline decoration-slate-300 underline-offset-2 hover:text-brand-700">we-promise/sure</a> (AGPL-3.0), unofficial, all data is sample data</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------ */
+  /* Sample data                                                         */
+  /* ------------------------------------------------------------------ */
+  var MONTHS = ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
+  var NETWORTH = [41200, 42800, 42100, 44900, 46300, 45800, 48200, 50100, 52400, 53900, 56100, 58420];
+  var INCOME = [7800, 7800, 8200, 7900, 8100, 8400, 8100, 8600, 8400, 8800, 8600, 8600];
+  var SPEND = [5900, 6120, 5840, 6300, 6010, 6580, 6240, 6720, 6390, 6900, 6480, 7050];
+
+  var TXNS = [
+    { d: 'Feb 14', m: 'Blue Bottle Coffee', c: 'Dining', a: -6.75, acc: 'Chase Checking', conf: 97 },
+    { d: 'Feb 14', m: 'Whole Foods Market', c: 'Groceries', a: -82.40, acc: 'Amex Gold', conf: 99 },
+    { d: 'Feb 13', m: 'Netflix', c: 'Subscriptions', a: -22.99, acc: 'Amex Gold', conf: 100 },
+    { d: 'Feb 12', m: 'Spotify Premium', c: 'Subscriptions', a: -11.99, acc: 'Chase Checking', conf: 100 },
+    { d: 'Feb 11', m: 'Uber', c: 'Transport', a: -18.60, acc: 'Amex Gold', conf: 95 },
+    { d: 'Feb 10', m: 'Acme Corp Payroll', c: 'Income', a: 7200.00, acc: 'Chase Checking', conf: 100 },
+    { d: 'Feb 09', m: "Trader Joe's", c: 'Groceries', a: -54.12, acc: 'Amex Gold', conf: 98 },
+    { d: 'Feb 08', m: 'Sweetgreen', c: 'Dining', a: -16.25, acc: 'Amex Gold', conf: 96 },
+    { d: 'Feb 07', m: 'Amazon', c: 'Shopping', a: -124.99, acc: 'Amex Gold', conf: 92 },
+    { d: 'Feb 06', m: 'Con Edison', c: 'Utilities', a: -92.30, acc: 'Chase Checking', conf: 99 },
+    { d: 'Feb 05', m: 'Planet Fitness', c: 'Health', a: -24.99, acc: 'Amex Gold', conf: 100 },
+    { d: 'Feb 04', m: 'Delta Air Lines', c: 'Travel', a: -410.00, acc: 'Amex Gold', conf: 94 },
+    { d: 'Feb 03', m: 'Rent — 8th Ave', c: 'Housing', a: -2450.00, acc: 'Chase Checking', conf: 100 },
+    { d: 'Feb 02', m: 'Citibank Interest', c: 'Income', a: 38.42, acc: 'Citibank Savings', conf: 99 },
+    { d: 'Feb 01', m: 'CVS Pharmacy', c: 'Health', a: -31.20, acc: 'Amex Gold', conf: 97 },
+    { d: 'Jan 30', m: 'Tartine Bakery', c: 'Dining', a: -24.50, acc: 'Amex Gold', conf: 95 },
+    { d: 'Jan 29', m: 'Apple iCloud+', c: 'Subscriptions', a: -2.99, acc: 'Amex Gold', conf: 100 }
+  ];
+
+  var CAT = {
+    Dining: { icon: '☕', chip: 'bg-amber-100 text-amber-800' },
+    Groceries: { icon: '🛒', chip: 'bg-emerald-100 text-emerald-800' },
+    Subscriptions: { icon: '📺', chip: 'bg-violet-100 text-violet-800' },
+    Transport: { icon: '🚕', chip: 'bg-sky-100 text-sky-800' },
+    Income: { icon: '💵', chip: 'bg-teal-100 text-teal-800' },
+    Shopping: { icon: '🛍️', chip: 'bg-rose-100 text-rose-800' },
+    Utilities: { icon: '💡', chip: 'bg-yellow-100 text-yellow-800' },
+    Health: { icon: '💊', chip: 'bg-pink-100 text-pink-800' },
+    Travel: { icon: '✈️', chip: 'bg-indigo-100 text-indigo-800' },
+    Housing: { icon: '🏠', chip: 'bg-slate-200 text-slate-700' }
+  };
+
+  var CHIPS = [
+    'How much did I spend on dining out last quarter?',
+    "What's my savings rate?",
+    'Which subscriptions am I paying for?',
+    'Where can I cut back?'
+  ];
+
+  /* ------------------------------------------------------------------ */
+  /* Helpers                                                             */
+  /* ------------------------------------------------------------------ */
+  function $(id) { return document.getElementById(id); }
+
+  function usd(n) { return '$' + Math.round(Math.abs(n)).toLocaleString('en-US'); }
+
+  function usd2(n) {
+    return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var state = { range: 6, query: '', category: 'All' };
+
+  function stats() {
+    var n = state.range;
+    var inc = INCOME.slice(-n);
+    var sp = SPEND.slice(-n);
+    var nw = NETWORTH.slice(-n);
+    var sumI = inc.reduce(function (a, b) { return a + b; }, 0);
+    var sumS = sp.reduce(function (a, b) { return a + b; }, 0);
+    var avgI = sumI / n;
+    var avgS = sumS / n;
+    return {
+      n: n,
+      avgI: avgI,
+      avgS: avgS,
+      rate: ((avgI - avgS) / avgI) * 100,
+      nw: nw[nw.length - 1],
+      change: nw[nw.length - 1] - nw[0]
+    };
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Stats cards                                                         */
+  /* ------------------------------------------------------------------ */
+  function statCard(label, value, sub, tone) {
+    return '<div class="rounded-2xl border border-slate-200 p-4">' +
+      '<p class="text-[10px] font-semibold uppercase leading-tight tracking-wider text-slate-500">' + label + '</p>' +
+      '<p class="mt-1 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">' + value + '</p>' +
+      '<p class="mt-1 text-[11px] leading-snug ' + (tone || 'text-slate-500') + '">' + sub + '</p>' +
+      '</div>';
+  }
+
+  function renderStats() {
+    var st = stats();
+
+    $('netWorth').textContent = usd(st.nw);
+
+    var ce = $('netChange');
+    ce.textContent = (st.change >= 0 ? '+' : '−') + usd(st.change) + ' over ' + st.n + ' months';
+    ce.className = 'mt-1 text-sm font-medium ' + (st.change >= 0 ? 'text-emerald-600' : 'text-rose-600');
+
+    $('stats').innerHTML =
+      statCard('Avg. monthly income', usd(st.avgI), 'Two paychecks + interest') +
+      statCard('Avg. monthly spending', usd(st.avgS), 'Across 4 accounts') +
+      statCard(
+        'Savings rate',
+        st.rate.toFixed(1) + '%',
+        st.rate >= 20 ? 'Above your 12-month average' : 'Room to improve',
+        st.rate >= 20 ? 'text-emerald-600' : 'text-amber-600'
+      );
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Chart                                                               */
+  /* ------------------------------------------------------------------ */
+  function drawChart() {
+    var svg = $('chart');
+    var wrap = $('chartWrap');
+    if (!svg || !wrap) return;
+
+    var n = state.range;
+    var vals = NETWORTH.slice(-n);
+    var labels = MONTHS.slice(-n);
+
+    var W = Math.max((wrap.clientWidth || 320) - 2, 240);
+    var H = 230;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('height', String(H));
+
+    var L = 12, R = 12, T = 20, B = 26;
+    var innerW = W - L - R;
+    var innerH = H - T - B;
+
+    var min = Math.min.apply(null, vals);
+    var max = Math.max.apply(null, vals);
+    var span = (max - min) || 1;
+    var lo = min - span * 0.35;
+    var hi = max + span * 0.35;
+
+    function X(i) { return L + innerW * (n === 1 ? 0.5 : i / (n - 1)); }
+    function Y(v) { return T + innerH * (1 - (v - lo) / (hi - lo)); }
+
+    var pts = vals.map(function (v, i) {
+      return { x: X(i), y: Y(v), v: v, label: labels[i] };
+    });
+
+    var grid = '';
+    for (var g = 0; g < 3; g++) {
+      var gy = T + innerH * (g / 2);
+      grid += '<line x1="' + L + '" y1="' + gy.toFixed(1) + '" x2="' + (W - R) + '" y2="' + gy.toFixed(1) + '" stroke="#eef2f6" stroke-width="1"/>';
+    }
+
+    var d = 'M ' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i];
+      var p1 = pts[i];
+      var p2 = pts[i + 1];
+      var p3 = pts[i + 2] || p2;
+      var c1x = p1.x + (p2.x - p0.x) / 6;
+      var c1y = p1.y + (p2.y - p0.y) / 6;
+      var c2x = p2.x - (p3.x - p1.x) / 6;
+      var c2y = p2.y - (p3.y - p1.y) / 6;
+      d += ' C ' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) + ', ' + c2x.toFixed(1) + ' ' + c2y.toFixed(1) + ', ' + p2.x.toFixed(1) + ' ' + p2.y.toFixed(1);
+    }
+
+    var area = d + ' L ' + pts[pts.length - 1].x.toFixed(1) + ' ' + (H - B) +
+      ' L ' + pts[0].x.toFixed(1) + ' ' + (H - B) + ' Z';
+
+    var dots = '';
+    pts.forEach(function (p, idx) {
+      var last = idx === pts.length - 1;
+      dots += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="' + (last ? 4.5 : 3) +
+        '" fill="#ffffff" stroke="#0f766e" stroke-width="' + (last ? 3 : 2) + '">' +
+        '<title>' + p.label + ': ' + usd(p.v) + '</title></circle>';
+    });
+
+    var step = n > 7 ? 2 : 1;
+    var xlabels = '';
+    pts.forEach(function (p, idx) {
+      if (idx % step !== 0 && idx !== pts.length - 1) return;
+      xlabels += '<text x="' + p.x.toFixed(1) + '" y="' + (H - 8) +
+        '" text-anchor="middle" font-size="11" fill="#94a3b8">' + p.label + '</text>';
+    });
+
+    svg.innerHTML =
+      '<defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0%" stop-color="#0d9488" stop-opacity="0.20"/>' +
+      '<stop offset="100%" stop-color="#0d9488" stop-opacity="0"/>' +
+      '</linearGradient></defs>' +
+      grid +
+      '<path d="' + area + '" fill="url(#areaFill)"/>' +
+      '<path d="' + d + '" fill="none" stroke="#0f766e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      dots + xlabels;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Transactions                                                        */
+  /* ------------------------------------------------------------------ */
+  function renderTxns() {
+    var q = state.query.trim().toLowerCase();
+    var rows = TXNS.filter(function (t) {
+      var catOk = state.category === 'All' || t.c === state.category;
+      var qOk = !q || t.m.toLowerCase().indexOf(q) !== -1 || t.c.toLowerCase().indexOf(q) !== -1;
+      return catOk && qOk;
+    });
+
+    var list = $('txnList');
+
+    if (!rows.length) {
+      list.innerHTML = '<li class="px-4 py-10 text-center text-sm text-slate-500">No matching transactions.</li>';
+    } else {
+      list.innerHTML = rows.map(function (t) {
+        var cat = CAT[t.c] || { icon: '•', chip: 'bg-slate-100 text-slate-600' };
+        var neg = t.a < 0;
+        var amt = (neg ? '−' : '+') + usd2(t.a);
+        return '<li class="flex items-center gap-3 px-4 py-2.5">' +
+          '<span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-[13px]" aria-hidden="true">' + cat.icon + '</span>' +
+          '<div class="min-w-0 flex-1">' +
+          '<p class="truncate text-sm font-medium text-slate-900">' + esc(t.m) + '</p>' +
+          '<p class="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] text-slate-500">' +
+          '<span>' + esc(t.d) + '</span>' +
+          '<span class="text-slate-300">·</span>' +
+          '<span class="rounded px-1.5 py-0.5 font-medium ' + cat.chip + '">' + esc(t.c) + '</span>' +
+          '<span class="text-slate-300">·</span>' +
+          '<span>' + t.conf + '% auto</span>' +
+          '</p></div>' +
+          '<span class="shrink-0 text-sm font-medium tabular-nums ' + (neg ? 'text-slate-900' : 'text-emerald-600') + '">' + amt + '</span>' +
+          '</li>';
+      }).join('');
+    }
+
+    $('txnCount').textContent = 'Showing ' + rows.length + ' of ' + TXNS.length + ' transactions · Sample data';
+  }
+
+  function buildCategoryOptions() {
+    var sel = $('catFilter');
+    var cats = ['All'];
+    TXNS.forEach(function (t) {
+      if (cats.indexOf(t.c) === -1) cats.push(t.c);
+    });
+    sel.innerHTML = cats.map(function (c) {
+      return '<option value="' + esc(c) + '">' + (c === 'All' ? 'All categories' : esc(c)) + '</option>';
+    }).join('');
+    sel.value = 'All';
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Ask Beacon                                                          */
+  /* ------------------------------------------------------------------ */
+  function answerFor(q) {
+    var s = q.toLowerCase();
+    var st = stats();
+
+    if (/dining|restaurant|eat|food|coffee|takeout|brunch/.test(s)) {
+      return '<p class="font-medium text-slate-900">Dining out</p>' +
+        '<p class="mt-1">You spent <strong>' + usd(1842) + '</strong> on dining over the last 3 months — ' +
+        '42 transactions, an average of ' + usd2(43.86) + ' each. That is <span class="font-medium text-rose-600">14% more</span> ' +
+        'than the quarter before.</p>' +
+        '<p class="mt-2 text-slate-500">Top merchants: Sweetgreen ' + usd(412) + ', Blue Bottle ' + usd(286) + ', Tartine ' + usd(198) + '.</p>' +
+        '<p class="mt-2 text-[10px] uppercase tracking-wider text-slate-400">Sample data</p>';
+    }
+
+    if (/subscription|recurring|netflix|spotify|membership|renew/.test(s)) {
+      return '<p class="font-medium text-slate-900">Recurring charges</p>' +
+        '<p class="mt-1">7 subscriptions total <strong>' + usd(128.94) + '</strong> a month — ' + usd2(1547.28) + ' a year.</p>' +
+        '<p class="mt-2">Two look duplicated: Spotify Premium (' + usd2(11.99) + ') and Spotify Family (' + usd2(16.99) + '). ' +
+        'Dropping one saves about $204 a year.</p>' +
+        '<p class="mt-2 text-[10px] uppercase tracking-wider text-slate-400">Sample data</p>';
+    }
+
+    if (/savings rate|saving rate|how much am i saving|am i saving/.test(s)) {
+      return '<p class="font-medium text-slate-900">Savings rate</p>' +
+        '<p class="mt-1">Over the last ' + st.n + ' months you saved <strong>' + st.rate.toFixed(1) + '%</strong> of income — ' +
+        'about ' + usd(st.avgI - st.avgS) + ' a month.</p>' +
+        '<p class="mt-2 text-slate-500">Households at your income level typically land between 15% and 18%.</p>' +
+        '<p class="mt-2 text-[10px] uppercase tracking-wider text-slate-400">Sample data</p>';
+    }
+
+    if (/cut|trim|reduce|lower|budget|overspend/.test(s)) {
+      return '<p class="font-medium text-slate-900">Where to trim</p>' +
+        '<p class="mt-1">Three categories make up <strong>61%</strong> of your flexible spending: ' +
+        'Shopping ' + usd(624) + '/mo, Dining ' + usd(614) + '/mo, Travel ' + usd(410) + '/mo.</p>' +
+        '<p class="mt-2">Cutting Shopping by 20% would free up roughly ' + usd(125) + ' a month — about ' + usd(1500) + ' a year.</p>' +
+        '<p class="mt-2 text-[10px] uppercase tracking-wider text-slate-400">Sample data</p>';
+    }
+
+    if (/net worth|networth|worth|balance/.test(s)) {
+      return '<p class="font-medium text-slate-900">Net worth</p>' +
+        '<p class="mt-1">You are at <strong>' + usd(st.nw) + '</strong>, ' + (st.change >= 0 ? 'up ' : 'down ') +
+        usd(st.change) + ' over the last ' + st.n + ' months.</p>' +
+        '<p class="mt-2 text-slate-500">About 82% of that gain came from cash flow rather than market returns.</p>' +
+        '<p class="mt-2 text-[10px] uppercase tracking-wider text-slate-400">Sample data</p>';
+    }
+
+    if (/account|bank|connect|sync|plaid|import/.test(s)) {
+      return '<p class="font-medium text-slate-900">Connecting accounts</p>' +
+        '<p class="mt-1">Beacon uses read-only connections, so it can never move money. ' +
+        'In this demo nothing is connected — the four accounts on screen are sample data.</p>' +
+        '<p class="mt-2 text-[10px] uppercase tracking-wider text-slate-400">Sample data</p>';
+    }
+
+    return '<p>I am a demo assistant with a small script. Try asking about <em>dining</em>, <em>subscriptions</em>, ' +
+      'your <em>savings rate</em>, <em>net worth</em>, or where to cut back.</p>' +
+      '<p class="mt-2 text-[10px] uppercase tracking-wider text-slate-400">Sample data</p>';
+  }
+
+  function ask(text) {
+    var t = String(text || '').trim();
+    if (!t) return;
+    var chat = $('chat');
+    chat.insertAdjacentHTML('beforeend',
+      '<div class="flex justify-end"><div class="max-w-[90%] rounded-2xl rounded-br-md bg-slate-900 px-3.5 py-2.5 text-[13px] leading-relaxed text-white">' +
+      esc(t) + '</div></div>');
+    chat.insertAdjacentHTML('beforeend',
+      '<div class="flex justify-start"><div class="max-w-[92%] rounded-2xl rounded-bl-md border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-[13px] leading-relaxed text-slate-700">' +
+      answerFor(t) + '</div></div>');
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function renderChips() {
+    var box = $('chips');
+    box.innerHTML = CHIPS.map(function (c) {
+      return '<button type="button" data-chip="' + esc(c) +
+        '" class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-600 transition hover:border-brand-300 hover:bg-brand-50 hover:text-brand-800">' +
+        esc(c) + '</button>';
+    }).join('');
+    box.querySelectorAll('[data-chip]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        ask(b.getAttribute('data-chip'));
+        $('askInput').value = b.getAttribute('data-chip');
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Range buttons                                                       */
+  /* ------------------------------------------------------------------ */
+  function syncRangeButtons() {
+    document.querySelectorAll('.range-btn').forEach(function (b) {
+      var on = Number(b.getAttribute('data-range')) === state.range;
+      b.className = 'range-btn rounded-full px-3 py-1 text-xs font-medium transition ' +
+        (on ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Init                                                                */
+  /* ------------------------------------------------------------------ */
+  function renderAll() {
+    renderStats();
+    drawChart();
+    renderTxns();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    syncRangeButtons();
+    buildCategoryOptions();
+    renderAll();
+    renderChips();
+
+    document.querySelectorAll('.range-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var v = Number(b.getAttribute('data-range'));
+        if (!v || v === state.range) return;
+        state.range = v;
+        syncRangeButtons();
+        renderStats();
+        drawChart();
+      });
+    });
+
+    var search = $('txnSearch');
+    search.addEventListener('input', function () {
+      state.query = search.value;
+      renderTxns();
+    });
+
+    var catFilter = $('catFilter');
+    catFilter.addEventListener('change', function () {
+      state.category = catFilter.value;
+      renderTxns();
+    });
+
+    var askBtn = $('askBtn');
+    var askInput = $('askInput');
+
+    askBtn.addEventListener('click', function () {
+      ask(askInput.value);
+    });
+
+    askInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        ask(askInput.value);
+      }
+    });
+
+    document.querySelectorAll('[data-waitlist]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var msg = $('waitlistMsg');
+        msg.textContent = '🎉 You\'re on the list — this is a demo, so nothing was actually submitted.';
+        msg.classList.remove('hidden');
+      });
+    });
+
+    // Seed the chat with the prefilled question so the demo works on load.
+    ask(askInput.value || CHIPS[0]);
+
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(drawChart, 140);
+    });
+  });
+})();
+</script>
+</body>
+</html>
