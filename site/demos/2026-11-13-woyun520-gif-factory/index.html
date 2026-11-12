@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wobble — One photo in. Four animated GIFs out.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #fbfaf9;
+    background-image: radial-gradient(900px 420px at 50% -180px, #ede9fe 0%, rgba(237,233,254,0) 70%);
+  }
+
+  /* ---------- motion loops (simulated GIF animation) ---------- */
+  @keyframes nod {
+    0%,100% { transform: rotate(-3.5deg) scale(1.03); }
+    50%     { transform: rotate(3.5deg) scale(1.03); }
+  }
+  @keyframes wave {
+    0%,100% { transform: rotate(-8deg) translateY(1%); }
+    50%     { transform: rotate(8deg) translateY(-1%); }
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(4%) scale(1.06,.94); }
+    45%     { transform: translateY(-7%) scale(.96,1.05); }
+  }
+  @keyframes sway {
+    0%,100% { transform: translateX(-5%) rotate(-2deg); }
+    50%     { transform: translateX(5%) rotate(2deg); }
+  }
+
+  /* ---------- chips ---------- */
+  .chip {
+    border: 1px solid #e4e4e7;
+    background: #fff;
+    border-radius: 9999px;
+    padding: .4rem .8rem;
+    font-size: .8125rem;
+    line-height: 1.1;
+    color: #3f3f46;
+    transition: background .15s, color .15s, border-color .15s, transform .1s;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: #a1a1aa; }
+  .chip:active { transform: scale(.97); }
+  .chip.is-on {
+    background: #18181b;
+    color: #fff;
+    border-color: #18181b;
+  }
+
+  /* ---------- per-style tone overlays ---------- */
+  .tone-pixel::after {
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(0,0,0,.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,.10) 1px, transparent 1px);
+    background-size: 8px 8px;
+    mix-blend-mode: multiply;
+  }
+  .tone-clay::after {
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(120% 90% at 28% 12%, rgba(255,255,255,.55), rgba(255,255,255,0) 58%);
+  }
+  .tone-illo::after {
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.16;
+    background-image: radial-gradient(rgba(0,0,0,.9) 0.6px, transparent 0.6px);
+    background-size: 4px 4px;
+  }
+  .tone-lens::after {
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(115deg, rgba(124,58,237,.38) 0 33%, rgba(255,255,255,0) 33% 66%, rgba(236,72,153,.38) 66% 100%);
+    background-size: 220% 220%;
+    animation: lensSweep 1.6s linear infinite;
+    mix-blend-mode: screen;
+  }
+  @keyframes lensSweep {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+  .tone-poster::after {
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(to top, rgba(0,0,0,.62), rgba(0,0,0,0) 58%);
+  }
+
+  input[type="range"] { accent-color: #7c3aed; }
+  input[type="checkbox"] { accent-color: #7c3aed; }
+</style>
+</head>
+<body class="text-zinc-900 antialiased">
+
+<!-- ======================= NAV ======================= -->
+<header class="sticky top-0 z-40 border-b border-zinc-200/70 bg-[#fbfaf9]/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <div class="flex items-center gap-2.5">
+      <div class="grid h-8 w-8 place-items-center rounded-xl bg-zinc-900 text-[15px] text-white">◐</div>
+      <span class="font-semibold tracking-tight">Wobble</span>
+      <span class="hidden rounded-full bg-violet-100 px-2 py-0.5 text-[11px] font-medium text-violet-700 sm:inline">GIF factory</span>
+    </div>
+    <nav class="hidden items-center gap-7 text-sm text-zinc-600 md:flex">
+      <a href="#studio" class="hover:text-zinc-900">Studio</a>
+      <a href="#usecases" class="hover:text-zinc-900">Use cases</a>
+      <a href="#pricing" class="hover:text-zinc-900">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ======================= HERO ======================= -->
+<section class="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:pt-20">
+  <div class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs text-zinc-500">
+    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+    Concept demo · everything below is sample data
+  </div>
+  <h1 class="mt-5 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+    One photo in.<br>
+    <span class="text-violet-600">Four animated GIFs</span> out.
+  </h1>
+  <p class="mt-5 max-w-xl text-base text-zinc-600 sm:text-lg">
+    Wobble turns a single picture — your pet, your product, your mascot — into looping GIF stickers,
+    animated signatures and title cards. No timeline, no keyframes, no design skills.
+  </p>
+  <div class="mt-7 flex flex-wrap items-center gap-3">
+    <a href="#studio" class="rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-700">Try the studio</a>
+    <span class="text-xs text-zinc-500">No signup · works on your first photo</span>
+  </div>
+</section>
+
+<!-- ======================= STUDIO ======================= -->
+<section id="studio" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20">
+  <div class="grid overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[0_1px_0_rgba(0,0,0,0.03),0_28px_70px_-40px_rgba(24,24,27,0.45)] lg:grid-cols-[380px_1fr]">
+
+    <!-- ---------- controls ---------- -->
+    <div class="space-y-6 border-b border-zinc-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+
+      <!-- 1. source -->
+      <div>
+        <div class="mb-2 flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">1 · Source photo</span>
+          <button id="resetBtn" type="button" class="text-[11px] text-zinc-500 underline underline-offset-2 hover:text-zinc-900">Use sample</button>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="previewBtn" type="button" class="h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100" title="Change photo">
+            <img id="srcPreview" alt="Source photo" class="h-full w-full object-cover">
+          </button>
+          <div class="min-w-0">
+            <button id="uploadBtn" type="button" class="rounded-full bg-zinc-100 px-3.5 py-1.5 text-sm font-medium transition hover:bg-zinc-200">Upload your own</button>
+            <p class="mt-1.5 truncate text-[11px] text-zinc-500">JPG or PNG · never leaves your browser</p>
+          </div>
+        </div>
+        <input id="fileInput" type="file" accept="image/*" class="hidden">
+      </div>
+
+      <!-- 2. style -->
+      <div>
+        <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-zinc-500">2 · Style</span>
+        <div id="styleChips" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- 3. motion -->
+      <div>
+        <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-zinc-500">3 · Motion</span>
+        <div id="motionChips" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- 4. caption -->
+      <div>
+        <label for="caption" class="mb-2 block text-xs font-semibold uppercase tracking-wider text-zinc-500">4 · Caption</label>
+        <input id="caption" type="text" maxlength="28" value="good morning" spellcheck="false"
+               class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100">
+        <label class="mt-2 flex items-center gap-2 text-xs text-zinc-600">
+          <input id="showCap" type="checkbox" checked>
+          Burn caption into the GIF
+        </label>
+      </div>
+
+      <!-- 5. speed + size -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <div class="mb-2 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Speed</span>
+            <span id="speedVal" class="text-[11px] font-medium text-zinc-500">1.0×</span>
+          </div>
+          <input id="speed" type="range" min="0.5" max="2" step="0.1" value="1" class="w-full">
+        </div>
+        <div>
+          <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-zinc-500">Size</span>
+          <select id="sizeSel" class="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-400">
+            <option value="480">480 × 480 · social</option>
+            <option value="600">600 × 600 · listing</option>
+            <option value="720">720 × 720 · HD</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- generate -->
+      <div>
+        <button id="genBtn" type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-2xl bg-zinc-900 py-3.5 font-medium text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60">
+          <span id="genLabel">Generate 4 GIFs</span>
+          <span class="text-[11px] font-normal text-white/60">sample render</span>
+        </button>
+        <p class="mt-2 text-center text-[11px] text-zinc-400">Demo runs locally — no uploads, no network calls.</p>
+      </div>
+    </div>
+
+    <!-- ---------- results ---------- -->
+    <div class="bg-[#fcfbfa] p-5 sm:p-6">
+      <div class="mb-4 flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <h2 class="font-semibold">Your GIF pack</h2>
+          <p id="status" class="mt-0.5 truncate text-xs text-zinc-500">4 loops · ready to download</p>
+        </div>
+        <span class="shrink-0 rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-amber-800">Sample data</span>
+      </div>
+
+      <div id="results" class="grid grid-cols-2 gap-3 sm:gap-4"></div>
+
+      <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-zinc-500">
+        <span>✓ Transparent-safe</span>
+        <span>✓ Loops seamlessly</span>
+        <span>✓ Under 2 MB each</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= USE CASES ======================= -->
+<section id="usecases" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20">
+  <div class="max-w-2xl">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Three things people make first</h2>
+    <p class="mt-2 text-zinc-600">Same tool, same one-photo input — completely different output.</p>
+  </div>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-3">
+    <div class="rounded-2xl border border-zinc-200 bg-white p-5">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-amber-100 text-lg">🐾</div>
+      <h3 class="mt-4 font-semibold">Pet creators</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-zinc-600">
+        Turn one photo of your dog into a 12-sticker reaction pack for Instagram, Discord and iMessage.
+        Same face, twelve moods.
+      </p>
+      <p class="mt-3 text-[11px] font-medium uppercase tracking-wider text-violet-700">Style: Photo Pet + Pixel Light</p>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 bg-white p-5">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-100 text-lg">🛍️</div>
+      <h3 class="mt-4 font-semibold">Etsy &amp; Shopify sellers</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-zinc-600">
+        Loop a product photo into a scroll-stopping GIF for listings, paid ads and email headers.
+        Pick the two-colour Lens Flip for bevelled packaging shots.
+      </p>
+      <p class="mt-3 text-[11px] font-medium uppercase tracking-wider text-violet-700">Style: Lens Flip + Clay Mascot</p>
+    </div>
+
+    <div class="rounded-2xl border border-zinc-200 bg-white p-5">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-violet-100 text-lg">🎬</div>
+      <h3 class="mt-4 font-semibold">Indie streamers &amp; musicians</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-zinc-600">
+        A wobbling logo sting, an animated signature for the end card, or a title loop for the intro —
+        without opening After Effects.
+      </p>
+      <p class="mt-3 text-[11px] font-medium uppercase tracking-wider text-violet-700">Style: Poster Type + Illustrated</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PRICING ======================= -->
+<section id="pricing" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20">
+  <div class="max-w-2xl">
+    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Simple pricing</h2>
+    <p class="mt-2 text-zinc-600">Pay per pack or subscribe. Cancel anytime — GIFs are yours forever.</p>
+  </div>
+
+  <div class="mt-8 grid gap-4 lg:grid-cols-3">
+    <!-- free -->
+    <div class="flex flex-col rounded-2xl border border-zinc-200 bg-white p-6">
+      <h3 class="font-semibold">Starter</h3>
+      <p class="mt-1 text-sm text-zinc-500">Try it on one photo.</p>
+      <div class="mt-4 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold">$0</span>
+        <span class="text-sm text-zinc-500">/ forever</span>
+      </div>
+      <ul class="mt-5 space-y-2 text-sm text-zinc-600">
+        <li>✓ 3 GIFs per month</li>
+        <li>✓ Up to 480 px</li>
+        <li>✓ Wobble watermark</li>
+      </ul>
+      <button type="button" data-plan="Starter"
+              class="planBtn mt-auto mt-6 w-full rounded-full border border-zinc-300 py-2.5 text-sm font-medium transition hover:border-zinc-900">Start free</button>
+    </div>
+
+    <!-- creator -->
+    <div class="relative flex flex-col rounded-2xl border-2 border-violet-500 bg-white p-6 shadow-[0_24px_60px_-40px_rgba(124,58,237,.9)]">
+      <span class="absolute -top-3 left-6 rounded-full bg-violet-600 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">Most popular</span>
+      <h3 class="font-semibold">Creator</h3>
+      <p class="mt-1 text-sm text-zinc-500">For people posting every day.</p>
+      <div class="mt-4 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold">$12</span>
+        <span class="text-sm text-zinc-500">/ month</span>
+      </div>
+      <ul class="mt-5 space-y-2 text-sm text-zinc-600">
+        <li>✓ 200 GIFs per month</li>
+        <li>✓ Up to 720 px, no watermark</li>
+        <li>✓ All 6 styles + lens cards</li>
+        <li>✓ Batch a 12-sticker pack at once</li>
+      </ul>
+      <button type="button" data-plan="Creator"
+              class="planBtn mt-auto mt-6 w-full rounded-full bg-violet-600 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-700">Join waitlist</button>
+    </div>
+
+    <!-- studio -->
+    <div class="flex flex-col rounded-2xl border border-zinc-200 bg-white p-6">
+      <h3 class="font-semibold">Studio</h3>
+      <p class="mt-1 text-sm text-zinc-500">Small teams and shops.</p>
+      <div class="mt-4 flex items-baseline gap-1">
+        <span class="text-3xl font-semibold">$39</span>
+        <span class="text-sm text-zinc-500">/ month</span>
+      </div>
+      <ul class="mt-5 space-y-2 text-sm text-zinc-600">
+        <li>✓ Unlimited GIFs</li>
+        <li>✓ Saved brand kit &amp; fonts</li>
+        <li>✓ Commercial license</li>
+        <li>✓ API + folder watch</li>
+      </ul>
+      <button type="button" data-plan="Studio"
+              class="planBtn mt-auto mt-6 w-full rounded-full border border-zinc-300 py-2.5 text-sm font-medium transition hover:border-zinc-900">Join waitlist</button>
+    </div>
+  </div>
+
+  <!-- waitlist -->
+  <div class="mt-6 rounded-2xl border border-zinc-200 bg-zinc-900 p-6 text-white sm:p-8">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+      <div class="max-w-md">
+        <h3 class="text-lg font-semibold">Get 20 free GIFs at launch</h3>
+        <p class="mt-1 text-sm text-white/60">We’ll email you once. This demo stores nothing.</p>
+      </div>
+      <div class="w-full sm:w-auto">
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <input id="waitEmail" type="email" value="you@studio.com" spellcheck="false"
+                 class="w-full rounded-full border border-white/15 bg-white/10 px-4 py-2.5 text-sm text-white placeholder-white/40 outline-none focus:border-violet-400 sm:w-64">
+          <button id="waitBtn" type="button"
+                  class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-200">Join waitlist</button>
+        </div>
+        <p id="waitMsg" class="mt-2 text-xs text-white/50">Demo only — nothing is sent anywhere.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="border-t border-zinc-200 bg-white/60">
+  <div class="mx-auto max-w-6xl px-5 py-8">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="grid h-7 w-7 place-items-center rounded-lg bg-zinc-900 text-[13px] text-white">◐</div>
+        <span class="text-sm font-medium">Wobble</span>
+        <span class="text-[11px] text-zinc-400">GIF factory, productized</span>
+      </div>
+      <div class="flex flex-wrap gap-x-5 gap-y-1 text-xs text-zinc-500">
+        <a href="#studio" class="hover:text-zinc-900">Studio</a>
+        <a href="#usecases" class="hover:text-zinc-900">Use cases</a>
+        <a href="#pricing" class="hover:text-zinc-900">Pricing</a>
+      </div>
+    </div>
+    <p class="mt-6 text-xs leading-relaxed text-zinc-500">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/WoYun520/gif-factory" class="text-violet-700 underline underline-offset-2 hover:text-violet-900">WoYun520/gif-factory</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<!-- toast -->
+<div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 max-w-[90vw] -translate-x-1/2 translate-y-3 rounded-xl bg-zinc-900 px-4 py-2.5 text-sm text-white opacity-0 shadow-lg transition-all duration-300"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+
+  /* ---------------- data ---------------- */
+  var STYLES = {
+    pixel:  { label: 'Pixel Light',  short: 'Pixel',       filter: 'contrast(1.15) saturate(1.6) brightness(1.04)', pixelate: true },
+    clay:   { label: 'Clay Mascot',  short: 'Clay',        filter: 'saturate(1.55) contrast(1.1) brightness(1.06)', pixelate: false },
+    pet:    { label: 'Photo Pet',    short: 'Photo',       filter: 'none', pixelate: false },
+    illo:   { label: 'Illustrated',  short: 'Illustrated', filter: 'saturate(1.35) contrast(1.06)', pixelate: false },
+    lens:   { label: 'Lens Flip',    short: 'Lens',        filter: 'saturate(1.25) contrast(1.05)', pixelate: false },
+    poster: { label: 'Poster Type',  short: 'Poster',      filter: 'contrast(1.12) saturate(1.3)', pixelate: false }
+  };
+
+  var MOTIONS = {
+    nod:    { label: 'Nod',    dur: 1100 },
+    wave:   { label: 'Wave',   dur: 900 },
+    bounce: { label: 'Bounce', dur: 780 },
+    sway:   { label: 'Sway',   dur: 1500 }
+  };
+
+  var VARIANTS = [
+    { name: 'Loop',      dir: 'normal',            mult: 1,    delay: 0 },
+    { name: 'Boomerang', dir: 'alternate',         mult: 1.15, delay: 150 },
+    { name: 'Slow',      dir: 'normal',            mult: 1.8,  delay: 0 },
+    { name: 'Pop',       dir: 'alternate-reverse', mult: 0.7,  delay: 80 }
+  ];
+
+  var state = {
+    image: null,
+    renderSrc: null,
+    style: 'pixel',
+    motion: 'nod',
+    caption: 'good morning',
+    showCaption: true,
+    speed: 1,
+    size: 480
+  };
+
+  var renderToken = 0;
+  var busy = false;
+
+  /* ---------------- sample photo (drawn locally, no network) ---------------- */
+  function makeSamplePhoto() {
+    var c = document.createElement('canvas');
+    c.width = 512; c.height = 512;
+    var x = c.getContext('2d');
+
+    var bg = x.createLinearGradient(0, 0, 512, 512);
+    bg.addColorStop(0, '#fde68a');
+    bg.addColorStop(1, '#fda4af');
+    x.fillStyle = bg;
+    x.fillRect(0, 0, 512, 512);
+
+    // ears
+    x.fillStyle = '#fff7ed';
+    x.beginPath(); x.moveTo(118, 190); x.lineTo(168, 58); x.lineTo(242, 152); x.closePath(); x.fill();
+    x.beginPath(); x.moveTo(394, 190); x.lineTo(344, 58); x.lineTo(270, 152); x.closePath(); x.fill();
+    x.fillStyle = '#fbcfe8';
+    x.beginPath(); x.moveTo(142, 172); x.lineTo(174, 92); x.lineTo(220, 152); x.closePath(); x.fill();
+    x.beginPath(); x.moveTo(370, 172); x.lineTo(338, 92); x.lineTo(292, 152); x.closePath(); x.fill();
+
+    // head
+    x.fillStyle = '#fff7ed';
+    x.beginPath(); x.ellipse(256, 286, 176, 156, 0, 0, Math.PI * 2); x.fill();
+
+    // eyes
+    x.fillStyle = '#1f2937';
+    x.beginPath(); x.ellipse(196, 270, 20, 27, 0, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.ellipse(316, 270, 20, 27, 0, 0, Math.PI * 2); x.fill();
+    x.fillStyle = '#ffffff';
+    x.beginPath(); x.arc(190, 258, 7, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.arc(310, 258, 7, 0, Math.PI * 2); x.fill();
+
+    // cheeks
+    x.fillStyle = 'rgba(251,113,133,.35)';
+    x.beginPath(); x.ellipse(150, 320, 30, 18, 0, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.ellipse(362, 320, 30, 18, 0, 0, Math.PI * 2); x.fill();
+
+    // nose
+    x.fillStyle = '#f472b6';
+    x.beginPath(); x.moveTo(256, 318); x.lineTo(238, 342); x.lineTo(274, 342); x.closePath(); x.fill();
+
+    // mouth
+    x.strokeStyle = '#1f2937';
+    x.lineWidth = 6;
+    x.lineCap = 'round';
+    x.beginPath(); x.arc(238, 350, 20, 0, Math.PI); x.stroke();
+    x.beginPath(); x.arc(274, 350, 20, 0, Math.PI); x.stroke();
+
+    // whiskers
+    x.strokeStyle = 'rgba(31,41,55,.42)';
+    x.lineWidth = 5;
+    x.beginPath(); x.moveTo(150, 300); x.lineTo(56, 282); x.stroke();
+    x.beginPath(); x.moveTo(150, 326); x.lineTo(54, 332); x.stroke();
+    x.beginPath(); x.moveTo(362, 300); x.lineTo(456, 282); x.stroke();
+    x.beginPath(); x.moveTo(362, 326); x.lineTo(458, 332); x.stroke();
+
+    return c.toDataURL('image/png');
+  }
+
+  /* ---------------- helpers ---------------- */
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+  function loadImage(src) {
+    return new Promise(function (resolve, reject) {
+      var im = new Image();
+      im.onload = function () { resolve(im); };
+      im.onerror = reject;
+      im.src = src;
+    });
+  }
+
+  function pixelateData(dataURL, size) {
+    return loadImage(dataURL).then(function (im) {
+      var c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      var x = c.getContext('2d');
+      var s = Math.min(im.width, im.height) || 1;
+      x.drawImage(im, (im.width - s) / 2, (im.height - s) / 2, s, s, 0, 0, size, size);
+      return c.toDataURL('image/png');
+    });
+  }
+
+  var toastTimer = null;
+  function toast(msg) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.classList.remove('opacity-0', 'translate-y-3');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      t.classList.add('opacity-0', 'translate-y-3');
+    }, 2800);
+  }
+
+  /* ---------------- chips ---------------- */
+  function buildChips() {
+    var sc = $('styleChips');
+    Object.keys(STYLES).forEach(function (k) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.dataset.style = k;
+      b.textContent = STYLES[k].label;
+      b.addEventListener('click', function () {
+        state.style = k;
+        syncChips();
+        prepareAndRender();
+      });
+      sc.appendChild(b);
+    });
+
+    var mc = $('motionChips');
+    Object.keys(MOTIONS).forEach(function (k) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.dataset.motion = k;
+      b.textContent = MOTIONS[k].label;
+      b.addEventListener('click', function () {
+        state.motion = k;
+        syncChips();
+        renderResults();
+      });
+      mc.appendChild(b);
+    });
+  }
+
+  function syncChips() {
+    var i, el;
+    var st = document.querySelectorAll('.chip[data-style]');
+    for (i = 0; i < st.length; i++) {
+      el = st[i];
+      el.classList.toggle('is-on', el.dataset.style === state.style);
+    }
+    var mo = document.querySelectorAll('.chip[data-motion]');
+    for (i = 0; i < mo.length; i++) {
+      el = mo[i];
+      el.classList.toggle('is-on', el.dataset.motion === state.motion);
+    }
+  }
+
+  /* ---------------- rendering ---------------- */
+  function skeletons() {
+    var out = '';
+    for (var i = 0; i < 4; i++) {
+      out += '<div class="overflow-hidden rounded-2xl border border-zinc-200 bg-white">' +
+        '<div class="aspect-square animate-pulse bg-zinc-200/80"></div>' +
+        '<div class="flex items-center justify-between px-2.5 py-2">' +
+        '<div class="h-3 w-16 animate-pulse rounded bg-zinc-200"></div>' +
+        '<div class="h-3 w-10 animate-pulse rounded bg-zinc-200"></div>' +
+        '</div></div>';
+    }
+    return out;
+  }
+
+  function renderResults() {
+    var grid = $('results');
+    var s = STYLES[state.style];
+    var m = MOTIONS[state.motion];
+    var src = state.renderSrc || state.image;
+    if (!src) return;
+
+    var capText = esc(state.caption.trim());
+    var mb = (Math.pow(state.size / 480, 2) * 1.2).toFixed(1);
+
+    grid.innerHTML = VARIANTS.map(function (v) {
+      var dur = Math.max(320, Math.round(m.dur * v.mult / state.speed));
+      var imgStyle = 'filter:' + s.filter + ';' +
+        'animation:' + state.motion + ' ' + dur + 'ms ease-in-out ' + v.delay + 'ms infinite ' + v.dir + ';';
+      if (s.pixelate) imgStyle += 'image-rendering:pixelated;';
+
+      var caption = (state.showCaption && capText)
+        ? '<div class="absolute inset-x-0 bottom-0 z-10 p-2"><span class="inline-block max-w-full truncate rounded bg-zinc-900/75 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">' + capText + '</span></div>'
+        : '';
+
+      return '<figure class="overflow-hidden rounded-2xl border border-zinc-200 bg-white">' +
+        '<div class="relative aspect-square overflow-hidden bg-zinc-100 tone-' + state.style + '">' +
+        '<img src="' + src + '" alt="Animated GIF preview" class="h-full w-full object-cover" style="' + imgStyle + '">' +
+        '<span class="absolute left-2 top-2 z-10 rounded-full bg-white/85 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-700">' + v.name + '</span>' +
+        '<span class="absolute right-2 top-2 z-10 rounded bg-zinc-900/85 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-white">GIF</span>' +
+        caption +
+        '</div>' +
+        '<figcaption class="flex items-center justify-between gap-2 px-2.5 py-2">' +
+        '<span class="text-[11px] text-zinc-500">' + state.size + '×' + state.size + ' · ' + mb + ' MB</span>' +
+        '<button type="button" class="dl text-[11px] font-semibold text-violet-700 transition hover:text-violet-900" data-name="' + esc(s.short) + ' ' + v.name + '">Download</button>' +
+        '</figcaption></figure>';
+    }).join('');
+
+    $('status').textContent = '4 loops · ' + state.size + '×' + state.size + ' · ' + s.label + ' + ' + m.label;
+  }
+
+  function prepareAndRender() {
+    var token = ++renderToken;
+    var promise = STYLES[state.style].pixelate
+      ? pixelateData(state.image, 80).catch(function () { return state.image; })
+      : Promise.resolve(state.image);
+
+    return promise.then(function (src) {
+      if (token !== renderToken) return;
+      state.renderSrc = src;
+      renderResults();
+    });
+  }
+
+  /* ---------------- generate flow ---------------- */
+  function generate() {
+    if (busy) return;
+    busy = true;
+
+    var btn = $('genBtn');
+    var label = $('genLabel');
+    var status = $('status');
+    var grid = $('results');
+
+    btn.disabled = true;
+    label.textContent = 'Rendering…';
+    grid.innerHTML = skeletons();
+    status.textContent = 'Starting…';
+
+    var steps = [
+      'Reading your subject…',
+      'Rigging the motion…',
+      'Painting 4 style variants…',
+      'Packing the GIFs…'
+    ];
+
+    (async function () {
+      for (var i = 0; i < steps.length; i++) {
+        status.textContent = steps[i];
+        await sleep(300);
+      }
+      await prepareAndRender();
+      status.textContent = 'Done — 4 loops · ' + state.size + '×' + state.size + ' · ' + STYLES[state.style].label;
+      label.textContent = 'Generate 4 GIFs';
+      btn.disabled = false;
+      busy = false;
+      toast('4 GIFs rendered from sample data — download is simulated.');
+    })();
+  }
+
+  /* ---------------- wiring ---------------- */
+  function wire() {
+    $('genBtn').addEventListener('click', generate);
+
+    $('results').addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('.dl') : null;
+      if (!btn) return;
+      toast('“' + btn.dataset.name + '” would download here — sample data only.');
+    });
+
+    $('caption').addEventListener('input', function (e) {
+      state.caption = e.target.value;
+      renderResults();
+    });
+
+    $('showCap').addEventListener('change', function (e) {
+      state.showCaption = e.target.checked;
+      renderResults();
+    });
+
+    $('speed').addEventListener('input', function (e) {
+      state.speed = Number(e.target.value) || 1;
+      $('speedVal').textContent = state.speed.toFixed(1) + '×';
+      renderResults();
+    });
+
+    $('sizeSel').addEventListener('change', function (e) {
+      state.size = Number(e.target.value) || 480;
+      renderResults();
+    });
+
+    function openPicker() { $('fileInput').click(); }
+    $('uploadBtn').addEventListener('click', openPicker);
+    $('previewBtn').addEventListener('click', openPicker);
+
+    $('fileInput').addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0];
+      if (!f) return;
+      if (!f.type || f.type.indexOf('image/') !== 0) {
+        toast('Please choose a JPG or PNG image.');
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () {
+        state.image = reader.result;
+        $('srcPreview').src = state.image;
+        prepareAndRender();
+        toast('Photo loaded — generating previews locally.');
+      };
+      reader.onerror = function () { toast('Could not read that file.'); };
+      reader.readAsDataURL(f);
+    });
+
+    $('resetBtn').addEventListener('click', function () {
+      state.image = makeSamplePhoto();
+      $('srcPreview').src = state.image;
+      prepareAndRender();
+    });
+
+    var planBtns = document.querySelectorAll('.planBtn');
+    for (var i = 0; i < planBtns.length; i++) {
+      planBtns[i].addEventListener('click', function (e) {
+        var plan = e.currentTarget.dataset.plan;
+        toast(plan + ' plan — waitlist signup is simulated in this demo.');
+      });
+    }
+
+    $('waitBtn').addEventListener('click', function () {
+      var v = ($('waitEmail').value || '').trim();
+      var msg = $('waitMsg');
+      if (!v || v.indexOf('@') < 1) {
+        msg.textContent = 'Please enter a valid email address.';
+        msg.className = 'mt-2 text-xs text-rose-300';
+        return;
+      }
+      msg.textContent = 'You’re on the list, ' + v.split('@')[0] + ' — demo only, nothing was sent.';
+      msg.className = 'mt-2 text-xs text-emerald-300';
+    });
+  }
+
+  /* ---------------- init ---------------- */
+  function init() {
+    state.image = makeSamplePhoto();
+    $('srcPreview').src = state.image;
+    buildChips();
+    syncChips();
+    wire();
+    prepareAndRender();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

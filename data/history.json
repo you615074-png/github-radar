@@ -143,6 +143,12 @@
    "full_name": "we-promise/sure",
    "category": "效率工具",
    "final": 6.8
+  },
+  {
+   "date": "2026-11-13",
+   "full_name": "WoYun520/gif-factory",
+   "category": "多媒体创作",
+   "final": 7.46
   }
  ],
  "top": {
@@ -243,7 +249,12 @@
   "DIYgod/pinky": "2026-11-11",
   "we-promise/sure": "2026-11-12",
   "anefzaoui/misterdownloadmanager": "2026-11-12",
-  "SirBonney/scrcpy-mirror-control": "2026-11-12"
+  "SirBonney/scrcpy-mirror-control": "2026-11-12",
+  "WoYun520/gif-factory": "2026-11-13",
+  "l0ng-ai/openidea": "2026-11-13",
+  "expo/exact": "2026-11-13",
+  "openai/codex-security": "2026-11-13",
+  "govijr/terminal-mac": "2026-11-13"
  },
  "scores": {
   "openai/math": {
@@ -770,405 +781,34 @@
     "reason": "话题与演示性极强，适合做内容爆点；但版权风险大、官方已商业化，包装成独立产品空间有限，适合内容引流而非主推产品。"
    }
   },
-  "github/spec-kit": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "给 AI 编程助手套上规范流程的开源工具包",
-    "one_liner_en": "A toolkit that gives AI coding agents a structured spec-driven workflow",
-    "target_user": "使用 Copilot/Claude Code/Cursor 的欧美软件团队与独立开发者、技术负责人",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 3,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "把 Spec Kit 流程包装成可视化编辑器加团队模板市场，收取席位订阅费",
-    "demo_idea": "网页里输入一句需求，实时生成 spec→plan→tasks 三栏对比，再点击一键导出",
-    "attack_tool": false,
-    "red_flags": [
-     "GitHub 官方项目，个人很难在它之上做出差异化产品",
-     "本质是模板与提示词集合，命令行安装，护城河极低",
-     "变现路径模糊，目标用户已习惯免费开源同类工具",
-     "竞品众多（Claude Code、Cursor 内置流程、BMAD 等）"
-    ],
-    "reason": "话题度和增长极强，适合做内容；但作为 GitHub 官方模板工具包，包装与变现空间小，产品化难度高。"
-   }
-  },
-  "harry0703/MoneyPrinterTurbo": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "输入一个关键词，自动生成带字幕和配乐的短视频",
-    "one_liner_en": "Turn a keyword into a finished short video with captions and music",
-    "target_user": "美国/全球的短视频内容创作者、社媒代运营小团队、TikTok/YouTube Shorts 批量出片者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 7,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "网页版一键出片 SaaS：输入主题选模板，按次/订阅出片，托管 API Key",
-    "demo_idea": "网页输入一个话题，30 秒内播放自动生成的成片对比",
-    "attack_tool": false,
-    "red_flags": [
-     "README 赞助区全是国内模型与人民币计费平台，海外可用性差",
-     "13 万 star、英文市场已有大量同类商业工具（Opus Clip、InVideo、Pictory），差异化空间小",
-     "素材来自网络搜索，版权与平台重复内容风险",
-     "本身已是成熟开源项目，包装空间有限"
-    ],
-    "reason": "话题性和上手门槛都好，但已成红海产品，开源版成熟、国内绑定多，做内容优于做产品。"
-   }
-  },
-  "wquguru/cicada": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "Mac 上给任何会议和直播加实时双语字幕、同声传译和 AI 纪要",
-    "one_liner_en": "Live bilingual subtitles, voice interpreting, and AI meeting notes for any call on your Mac",
-    "target_user": "美国/全球用 Mac 开跨语言会议的专业人士、远程工作者、跨国团队、留学生和内容创作者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 6,
-     "monetization": 7,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "把知了做成 Mac 菜单栏订阅制产品：系统声音字幕加一键同声传译，按月收费，含免费额度",
-    "demo_idea": "网页播放双人双语会议片段，同步滚动字幕条、实时纪要和按住说话的翻译波形演示",
-    "attack_tool": false,
-    "red_flags": [
-     "AI 纪要、语音克隆强依赖蚂蚁集团 Ling/Ming API，美国市场可用性与合规存疑",
-     "需 macOS 26 加 Apple 芯片，覆盖受限",
-     "未公证签名，首次安装被系统拦截，转化受阻",
-     "依赖 BlackHole 虚拟驱动与系统级音频权限，上手门槛高",
-     "部分功能中文优先，英文市场本地化需打磨"
-    ],
-    "reason": "痛点真实、演示直观、Apache 许可证干净，但依赖中国大模型服务和较新 macOS，产品化需重做英文市场与合规链路。"
-   }
-  },
-  "KKKKhazix/agent-autoloop": {
-   "date": "2026-11-05",
+  "govijr/terminal-mac": {
+   "date": "2026-11-13",
    "v": 3,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "让你的命令行 Agent 在后台自己接活干，拿不准时推卡片问你再继续",
-    "one_liner_en": "Run your CLI coding agent in the background; it only pings you when it needs a decision",
-    "target_user": "重度使用 Claude Code / Codex 的个人开发者、独立黑客、小团队工程负责人（美国/全球）",
+    "one_liner": "在终端里跑一台独立虚拟 Mac，给 AI 代理安全操作电脑",
+    "one_liner_en": "A separate virtual Mac inside your terminal that AI agents can safely control.",
+    "target_user": "开发与使用 computer-use 代理的 AI 工程师、自动化测试团队、做代理产品的初创公司",
     "scores": {
-     "topicality": 9,
+     "topicality": 8,
      "accessibility": 5,
-     "wow": 7,
+     "wow": 8,
      "pain": 7,
      "packaging_room": 7,
      "monetization": 6,
      "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "托管版 Agent 中台：网页配置规则、接入 Slack，托管运行并记录成本与审批",
-    "demo_idea": "网页里模拟一条 GitHub Issue 进来，Agent 自动修复，遇到删数据弹出审批卡片，点确认后跑完",
-    "attack_tool": false,
-    "red_flags": [
-     "创建仅 1 天就 2353 stars，增长异常，需警惕刷星或营销热度虚高",
-     "示例大量使用飞书/钉钉/企微，中国渠道为主，美国市场需换 Slack/Discord 才能成立",
-     "自称多个插件模板未在真实服务上跑通，成熟度不足",
-     "Windows 尚未支持，且依赖用户已有付费 Agent 订阅",
-     "单机自托管，托管化后需处理代码与密钥的隐私/安全责任"
-    ],
-    "reason": "痛点真实、定位清晰、MIT 可放心改写；但生态偏国内、成熟度待验证，适合先做内容再做轻托管版。"
-   }
-  },
-  "govijr/terminal-mac": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "在终端里跑一整台虚拟 Mac，给 AI 代理当电脑用",
-    "one_liner_en": "A full virtual Mac that runs in your terminal, built for AI agents to use as a computer.",
-    "target_user": "构建 computer-use 代理的 AI 开发者与自动化团队，以及需要隔离环境做测试的 macOS 独立开发者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 4
-    },
-    "product_idea": "托管版虚拟 Mac 沙箱：为 AI 代理提供远程独立 macOS 桌面，API 即用",
-    "demo_idea": "网页分屏：左边终端里敲指令，右边虚拟 Mac 屏幕上光标自动点击打开 App",
-    "attack_tool": false,
-    "red_flags": [
-     "仅支持 Apple silicon + macOS 14+，受众受限，且依赖本地虚拟化，难做成纯 SaaS",
-     "首次需下载安装 macOS 镜像并手动完成来宾系统设置和权限授予，体验重",
-     "自签名未公证，企业分发和信任是障碍",
-     "商业模型弱：核心能力 Apple Virtualization 已内置，收费点不清晰",
-     "创建仅 1 天、单人早期 RC，稳定性与维护风险高"
-    ],
-    "reason": "话题性与惊喜感强，切中 AI 代理需要隔离电脑的真痛点；但平台受限、安装重、变现路径不清，适合做内容不适合立刻产品化。"
-   }
-  },
-  "wheresryan22/anatomy": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让 Claude 把技术概念画成可交互的等轴测机械插图",
-    "one_liner_en": "A Claude skill that turns any tech idea into an interactive isometric machine.",
-    "target_user": "技术博主、开发者关系团队、文档和教学作者、做技术营销的创业公司",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 9,
-     "pain": 5,
-     "packaging_room": 7,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "上传概念或文档，一键生成可嵌入的统一风格交互式等轴测图解，支持品牌主题导出",
-    "demo_idea": "网页输入'令牌桶限流'，30 秒生成可悬停拆解的等轴测机器动画，数字实时跳动",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是 Claude Agent Skill，深度依赖第三方 agent 运行时，随时可能被平台内置功能吃掉",
-     "Star 27 天涨到 2.5 万，增速异常，需警惕刷量或炒作",
-     "产出质量强依赖模型能力，成品风格偏单一，用户留存和复购不确定",
-     "变现路径不清晰：单次生成价值低，愿意付费的多是企业团队而非个人"
-    ],
-    "reason": "演示效果惊艳、许可证干净、传播性强，但它是依附 agent 平台的技能，产品壁垒和付费理由都偏弱，适合做内容选题，包装成 SaaS 需往团队品牌化插图方向走。"
-   }
-  },
-  "NVIDIA/auto-ontology": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "给AI智能体一份企业数据的语义地图，让它少查错数",
-    "one_liner_en": "An ontology layer that stops AI agents from giving wrong answers on enterprise data",
-    "target_user": "美国中大型企业的数据平台团队和 analytics engineering 团队（已用 dbt/Snowflake/Databricks、正在上 Text-to-SQL agent 的公司）",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 5,
-     "wow": 6,
-     "pain": 8,
-     "packaging_room": 4,
-     "monetization": 7,
-     "license_safety": 10,
      "demoability": 5
     },
-    "product_idea": "托管版语义层：连上仓库自动生成并人工审定业务指标，给各类 agent 提供 MCP 上下文",
-    "demo_idea": "同一问题对比：裸 schema 的 agent 答错金额，接入本体后返回正确数字加可核查 SQL",
+    "product_idea": "一键在终端开虚拟 Mac 沙盒，MCP 接入主流编码代理，按订阅提供托管与合规审计",
+    "demo_idea": "网页录屏：Claude Code 在终端看图点击，右侧虚拟 Mac 自动打开设置修改屏幕录制权限",
     "attack_tool": false,
     "red_flags": [
-     "NVIDIA 官方项目，已有较完整 Docker 服务和 Web UI，个人包装空间有限",
-     "需要用户连接企业数据库、自建 Postgres 与 NVIDIA API key，门槛高",
-     "核心价值依赖企业内部数据，纯前端 30 秒演示只能靠模拟",
-     "准独角兽级厂商（dbt Semantic Layer、AtScale）已在同一赛道，差异化难"
+     "仅支持 Apple silicon 且需下载完整 macOS 镜像，首次体验重、门槛高",
+     "VM 内安装助手需手动完成系统设置，尚无无人值守流程",
+     "自签名、未经苹果公证，企业采购会受阻",
+     "computer-use 代操作用户界面可能违反部分平台服务条款"
     ],
-    "reason": "痛点真实、许可证干净、大厂背书带来话题度，但产品已相当成熟且属基础设施层级，个人做差异化与演示的空间都偏小。"
-   }
-  },
-  "JiaFeiMiao-K-Cat/DiscImageStudio": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "把图片刻进光盘盘面，做出肉眼可见的光雕刻画",
-    "one_liner_en": "Burn a picture into a CD/DVD's surface so you can see it with your eyes",
-    "target_user": "光盘收藏爱好者、实体媒介极客、DIY 手工艺创作者、做 YouTube/B 站光盘刻绘内容的博主（美国/欧洲/日本怀旧光盘社区）",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 4,
-     "packaging_room": 7,
-     "monetization": 4,
-     "license_safety": 4,
-     "demoability": 6
-    },
-    "product_idea": "做成一键式 Windows/Mac 桌面应用：导入图片、选盘片预设、生成镜像并直接刻录，带盘片社区预设库",
-    "demo_idea": "网页上用同一张图片对比普通刻录与光雕刻录的盘面模拟效果，再加拖拽图层和抖动调节的互动滑块",
-    "attack_tool": false,
-    "red_flags": [
-     "GPL-3.0：商业闭源分发受限，需法务评估或双许可",
-     "需求偏小众爱好，属于一次性好奇消费，复购与订阅意愿弱",
-     "依赖实体刻录机和空白盘片，纯数字用户无法体验，转化漏斗长",
-     "即时刻录为实验性功能，刻废盘片的风险高，易引发退款与差评",
-     "README 无英文首页主旨之外的商业化线索，工程偏硬核",
-     "刻录/光雕涉及介质与专利相关的老技术，品牌合作空间有限"
-    ],
-    "reason": "效果惊艳、话题性强，很适合做内容；但付费人群窄、一次性消费、GPL 限制商业化，更适合做流量内容再引流，而非主打付费产品。"
-   }
-  },
-  "Minireel/HGhub": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "第三方短剧客户端，能把某个短剧平台的视频扒下来看",
-    "one_liner_en": "An unofficial desktop and Android client that streams short-drama videos from a third-party site.",
-    "target_user": "基本没有合法付费人群；最多是少数想看特定短剧的海外华人用户，但他们也不会付费",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 6,
-     "wow": 3,
-     "pain": 3,
-     "packaging_room": 3,
-     "monetization": 1,
-     "license_safety": 7,
-     "demoability": 4
-    },
-    "product_idea": "没有可行的产品形态，因为它的核心价值建立在抓取某平台内容之上，无法合规商业化",
-    "demo_idea": "无法公开演示，一演示就等于展示如何绕过第三方平台的访问限制",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是抓取特定第三方平台的内容并把内容解密，版权与平台条款风险高，在美国面临 DMCA 问题",
-     "内容来源是中文短剧平台，目标市场不在美国或全球英文市场",
-     "靠侵权内容做产品，根本无法商业化，上架 App Store 或 Stripe 收款都会受阻",
-     "描述里的短剧平台属于小众中文内容源，在美国和全球英文市场没有用户基础"
-    ],
-    "reason": "这是抓取某平台内容的非官方客户端，版权风险和平台条款风险都很高，没有合法付费场景，也不适合做成产品，只适合在技术圈小范围讨论，不建议拿来做内容或包装成产品。"
-   }
-  },
-  "brightsongwrath/personal-data-deletor-osint": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "一键向 970 家数据经纪人发信，要求删除你的个人信息",
-    "one_liner_en": "Send 970 data brokers a request to delete your personal data, locally.",
-    "target_user": "关注隐私的美国普通消费者，包括被骚扰困扰的人、家暴或跟踪受害者的亲友、隐私爱好者、给父母代办的人",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 7,
-     "pain": 8,
-     "packaging_room": 6,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "包装成订阅制隐私清理桌面应用，代办表单、监控重新上榜并出具报告",
-    "demo_idea": "网页模拟输入姓名邮箱，实时生成 970 封请求的发送进度和倒计时看板",
-    "attack_tool": false,
-    "red_flags": [
-     "仅支持 Windows，无 macOS/iOS",
-     "约 160 家只收网页表单，CAPTCHA 和表单仍要用户手动完成",
-     "需要用户在本地配置邮箱应用专用密码，普通用户门槛高",
-     "对本地非技术用户安装和运行仍有摩擦",
-     "免费开源且无服务器，商业化只能靠代做表单等增值服务，付费意愿存疑",
-     "仅创建 1 天就 532 stars，增长异常，需警惕刷星或营销"
-    ],
-    "reason": "痛点真实、易懂且传播性强，但免费开源与隐私定位限制了付费空间，手动表单和邮箱配置也削弱了省心体验。"
-   }
-  },
-  "Chipwithinflash/watson-AI-osint-all-in-one": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "输入昵称或邮箱，一键查遍3100个公开网站找出一个人的数字足迹",
-    "one_liner_en": "Type a username or email and see what 3,100+ public sites say about that person.",
-    "target_user": "美国的小企业主、二手交易买家、HR/招聘筛选者、记者与尽职调查从业者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 7,
-     "pain": 4,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "浏览器插件版：在聊天/交易页面一键核查对方公开足迹并出风险小结",
-    "demo_idea": "网页输入一个模拟用户名，30秒内动态滚出匹配到的多个站点个人主页与关联结论",
-    "attack_tool": false,
-    "red_flags": [
-     "仓库创建仅1天却已有589星且日增589，数据异常，疑似刷星或营销号",
-     "发布的是 Windows 可执行文件而非可审计源码，存在捆绑恶意软件风险",
-     "README 自相矛盾：既称已代码签名又称未签名，且下载链接说仓库是私有的",
-     "用途涉及对他人做画像，美国多州隐私法与平台服务条款存在合规风险，易被滥用为骚扰/跟踪",
-     "声称永久免费，无付费路径，商业化空间薄弱"
-    ],
-    "reason": "定位易懂、演示性强，传播有话题度，但刷星可疑、闭源分发风险高、免费定位使变现困难，且用途有隐私合规隐患。"
-   }
-  },
-  "calesthio/OpenMontage": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让 AI 编程助手变身视频制作公司，一句话生成完整视频",
-    "one_liner_en": "Turn your AI coding assistant into a full video production studio.",
-    "target_user": "欧美内容创作者、独立营销人、小型品牌方、YouTube/TikTok 运营者、需要产品宣传片的小电商",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 7,
-     "license_safety": 2,
-     "demoability": 8
-    },
-    "product_idea": "托管式网页工作室：粘贴参考片或写一句话，自动出脚本、素材、配音和成片，按渲染时长收费",
-    "demo_idea": "网页里输入一句产品描述，30 秒生成竖屏短片，左右对比原始素材和成片时间线",
-    "attack_tool": false,
-    "red_flags": [
-     "AGPL-3.0：商用 SaaS 需开源整个服务端代码，或必须购买商业授权，法律风险高",
-     "依赖大量第三方付费模型 API（Veo、Kling、fal.ai、ElevenLabs），成本与可用性受制于人",
-     "本质是编排层，护城河浅，Sora、Runway、Google 等大厂原生产品随时可能覆盖",
-     "当前形态是给 AI 编程助手用的技能文件，普通用户门槛高，Product Hunt 式体验仍需重做",
-     "生成素材的版权、肖像权和音乐授权需逐一核查，面向美国市场有 DMCA 和州法风险",
-     "README 大量展示在渲染效果和网红式宣发上，项目稳定性和真实使用量存疑"
-    ],
-    "reason": "话题性和演示效果极强，包装成托管式视频生成工作流有清晰付费场景；但 AGPL 和依赖第三方模型是硬伤，护城河靠体验和模板。"
-   }
-  },
-  "andrew-babo/muse4ai": {
-   "date": "2026-11-05",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让ChatGPT、Claude这类AI助手直接调用你的Muse账号生成图片和视频",
-    "one_liner_en": "Let AI agents like ChatGPT and Claude generate images and videos through your Muse account.",
-    "target_user": "全球用Muse做营销图/短视频的小商家、内容创作者和自动化开发者（n8n用户）",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "Windows桌面端，把Muse会话包装成带OAuth的本地MCP/REST服务，供Claude、Cursor和n8n调用",
-    "demo_idea": "在网页里模拟Agent调用：输入一句提示→队列出现进度→缩略图成片，秒级展示全链路",
-    "attack_tool": false,
-    "red_flags": [
-     "自动化第三方Web会话，违反Muse/平台服务条款、随时可能失效，并有账号封禁和ToS风险",
-     "依赖未署名的Windows安装包，用户需手动绕过安全警告，信任成本高",
-     "核心价值建立在别人的产品上，平台一旦封堵或自建官方API即被架空",
-     "付费意愿弱：用户已为Muse付费，难再为'桥'单独订阅；变现路径不明",
-     "README与官网带越南语，创作者明显偏非美国市场，目标人群与账号受众错位"
-    ],
-    "reason": "包装和演示都不错，但本质是自动化他人平台的灰色连接器，付费意愿和可持续性弱，适合做内容而非独立产品。"
+    "reason": "终端里跑虚拟 Mac 供代理操作的定位新颖、演示感强，MCP 生态让它易被包装成代理电脑沙盒产品，但安装重、依赖 Apple 平台限制受众。"
    }
   },
   "JuneYaooo/rea-video": {
@@ -4129,6 +3769,431 @@
      "冒用商业软件品牌，存在商标侵权风险"
     ],
     "reason": "疑似冒用 MicroStation 品牌的恶意 PowerShell 安装器，星标数异常、风险极高，完全不适合做内容或产品。"
+   }
+  },
+  "openai/codex-security": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "用 AI 自动扫描代码漏洞并生成修复补丁",
+    "one_liner_en": "AI that finds, validates, and patches security bugs in your code",
+    "target_user": "美国中小型 SaaS 团队的 DevSecOps 工程师和安全负责人",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 2,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做面向小型团队的托管扫描服务：连 GitHub 仓库，出可读安全报告并自动开 PR 修复",
+    "demo_idea": "网页上传示例仓库，30 秒扫描后高亮一条真实漏洞并展示自动生成的修复 diff",
+    "attack_tool": false,
+    "red_flags": [
+     "OpenAI 官方 SDK 和 CLR，个人很难在其上做出差异化产品",
+     "依赖 OpenAI 账号、登录和 API Key，成本和调用政策由官方控制",
+     "核心能力与 Codex 平台深度耦合，第三方难以复用或自托管",
+     "商业化被官方云服务覆盖，独立产品空间小"
+    ],
+    "reason": "话题性和痛点是满分，官方出品自带关注度；但它是大厂官方工具，包装和商业化空间很小，更适合做内容，不太适合做产品"
+   }
+  },
+  "unclebob/ub-mode": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给AI编程助手立规矩的代码质量守则",
+    "one_liner_en": "An agent skill that keeps AI coding assistants disciplined and test-driven.",
+    "target_user": "使用 Claude Code / Cursor / Grok 的专业软件团队与工程负责人",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "把技能包做成AI代码质量门禁SaaS：一键接入编辑器，自动跑CRAP、重复度和变异测试并生成报告。",
+    "demo_idea": "网页里贴一段AI生成的烂代码，点一下跑质量门禁，实时显示CRAP分数和重复率下降。",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是一个SKILL.md提示词文件，加几个需要本地安装的配套工具，产品化空间有限",
+     "强绑定Uncle Bob个人IP与Claude/Cursor技能生态，平台规则变动风险",
+     "配套工具是独立仓库，整体体验碎片化，免费替代方案多"
+    ],
+    "reason": "话题性强、作者影响力大、许可友好，但实质是提示词规则集，护城河和付费意愿都偏弱，做内容比做产品更值。"
+   }
+  },
+  "GoogleChrome/modern-web-guidance-src": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给AI编程助手补课，让它写出现代网页代码",
+    "one_liner_en": "Teaches coding agents to write modern web code instead of legacy patterns",
+    "target_user": "美国/全球的前端工程师和用 Cursor、Copilot 写 Web 代码的独立开发者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做不了产品，只适合做一期内容：对比 AI 装前装后生成的网页代码",
+    "demo_idea": "同一提示词让AI生成弹窗动画，左右对比代码量和效果，展示指南前后差异",
+    "attack_tool": false,
+    "red_flags": [
+     "Google Chrome 官方项目，由 Chrome、Edge、Firefox、MDN 联合维护，个人无法在上面做出差异化产品",
+     "本质是知识库/skill 包加 CLI，打包空间几乎为零",
+     "已有官方文档站和 npm 安装方式，体验并不粗糙",
+     "商业化路径不明，大厂免费提供"
+    ],
+    "reason": "话题性强、痛点真实，但属大厂官方基础设施，只能做内容不能做产品，传播价值远大于创业价值"
+   }
+  },
+  "FrigadeHQ/yogurt": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "不会加入会议的本地AI会议纪要工具",
+    "one_liner_en": "Private AI meeting notes that never join your calls",
+    "target_user": "重视隐私的专业人士、咨询顾问、律师、医疗从业者及不愿购买云端纪要订阅的中小团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成一键安装的本地会议纪要桌面应用，提供云同步和团队共享功能作为付费版本",
+    "demo_idea": "网页模拟一段会议录音，实时生成转写和摘要，并展示数据不出本机",
+    "attack_tool": false,
+    "red_flags": [
+     "由公司 Frigade 官方维护，已具备产品化形态和官网，独立开发者的差异化空间有限",
+     "本地模型初次下载 5-14 GB，对普通用户门槛高",
+     "会议录音需遵守美国各州的双方同意法，部分州要求告知对方",
+     "转录涉及敏感对话，存在 HIPAA、GDPR 等合规风险",
+     "GitHub Star 增长异常（1 天 828 star），可能是营销推动"
+    ],
+    "reason": "隐私痛点真实且话题性强，MIT 许可安全；但官方已商业运营，本地模型门槛高，商业化空间受限，适合做内容而非独立包装产品"
+   }
+  },
+  "HolyArrs/HolyArrs": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "一个自托管应用，替代六款影视媒体管理工具",
+    "one_liner_en": "One self-hosted app that replaces six media-server tools",
+    "target_user": "全球自托管影视与家庭媒体爱好者（homelab、Plex/Jellyfin 用户）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 2,
+     "demoability": 4
+    },
+    "product_idea": "托管版一键部署的媒体库管家，按月订阅，免运维",
+    "demo_idea": "网页模拟搜片、自动下载入库、30 秒出片单",
+    "attack_tool": false,
+    "red_flags": [
+     "AGPL-3.0 许可证，商业闭源包装受限",
+     "项目创建仅 2 天、星标暴涨，需警惕刷星与真实性",
+     "媒体获取涉及版权灰色地带，美国市场法律风险高",
+     "重度依赖作者自费的元数据服务器，长期可用性存疑"
+    ],
+    "reason": "痛点真实、体积小，但版权灰区、AGPL 限制与刚上线高风险削弱商业价值。"
+   }
+  },
+  "Alishahryar1/free-claude-code": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让 Claude Code 等编程助手免费用上 61 家模型的服务",
+    "one_liner_en": "Use Claude Code and 11 other coding agents with free models from 61 providers",
+    "target_user": "global indie developers, students, and hobbyist coders who pay for AI coding tools",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 2,
+     "demoability": 5
+    },
+    "product_idea": "托管版模型路由服务，$5/月管理多个免费 key、自动故障切换和使用配额",
+    "demo_idea": "网页里切换 3 个免费供应商跑同一段代码生成，实时显示 token 消耗和自动 fallback",
+    "attack_tool": false,
+    "red_flags": [
+     "41License 为 NOASSERTION，商用条款不明确",
+     "依赖各厂商免费额度，随时可能被封或改条款，业务基础脆弱",
+     "本质是聚合免费额度，容易违反供应商 ToS，法律与封号风险高",
+     "官方安装脚本 curl|sh，供应链安全风险",
+     "商业模式易被用户直接绕开，很难收钱",
+     "项目已 287 天/69k stars，属于成熟社区项目，包装空间有限"
+    ],
+    "reason": "传播性强、痛点真实，但靠钻免费额度生存，许可证不明、变现几乎无路，适合做内容不适合做产品。"
+   }
+  },
+  "Lee-xeo/Claude-Cage": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "把 Claude 关进隔离虚拟机，防止封号并统一管理多个账号",
+    "one_liner_en": "Run Claude in an isolated VM to avoid bans and manage multiple accounts",
+    "target_user": "使用 Claude API 的重度开发者、AI 独立开发者、绕过地区限制的海外用户",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 4,
+     "wow": 5,
+     "pain": 5,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 8,
+     "demoability": 4
+    },
+    "product_idea": "面向 Claude 重度用户的多账号隔离与代理管理桌面工具",
+    "demo_idea": "录屏演示一键启动隔离环境、多账号切换、额度查看与封号风险提示",
+    "attack_tool": false,
+    "red_flags": [
+     "核心用途是规避 Anthropic 平台的风控与地区限制，属于绕过平台规则，商业化和长期运营风险高",
+     "依赖代理节点与规避检测，容易被平台判定违规，账号和产品都可能随时失效",
+     "主要面向中文用户与 QQ 群，海外英文市场受众有限",
+     "项目仅 12 天就有 4700 star，增长异常，可能刷 star 或短期炒作",
+     "依赖 macOS、Windows 虚拟机镜像，安装门槛与资源消耗高，包装空间有限"
+    ],
+    "reason": "痛点真实但本质是规避平台规则，商业化与合规风险大，传播有话题但难做成正经生意"
+   }
+  },
+  "expo/exact": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "写一次界面代码，AI 代理就能自动生成并测试网页、macOS、iOS、Linux 四个版本的应用",
+    "one_liner_en": "Write an app once; an AI agent builds, runs, sees and tests it on web, macOS, iOS and Linux.",
+    "target_user": "使用 Claude Code / Cursor 的独立开发者和小团队，想用 AI 代理一次性产出多平台原生 App 的人",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 4,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "云端多平台构建与代理测试平台：托管 Exact 运行时，一键生成多端 App 并让代理自动跑测试、截图验证",
+    "demo_idea": "网页里展示同一份 Contract 源码，右侧分屏实时切换 web、iOS、macOS 三端画面，再由代理自动点击并截图验证",
+    "attack_tool": false,
+    "red_flags": [
+     "pre-1.0 每天在变，无 API 稳定性，内容与产品都易过时",
+     "上手门槛极高：需要 Xcode、Rust、Bun、Chrome，首次构建约 57 分钟",
+     "核心设计文档 (LLP) 在私有仓库，外部难以深度贡献",
+     "Expo 官方出品，属于大厂基础设施，个人做差异化产品空间有限",
+     "依赖苹果生态，iOS 实机测试需 Apple 开发者账号"
+    ],
+    "reason": "话题性极强、演示震撼，MIT 许可友好；但上手门槛高、迭代过快，且背靠 Expo 大厂。适合做内容，包装成产品需先降低安装门槛。"
+   }
+  },
+  "pookjw/HermesEnabler": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在任意 Apple Watch 上解锁爱马仕表盘",
+    "one_liner_en": "Unlock Hermès watch faces on any Apple Watch",
+    "target_user": "全球想用高端表盘但不买爱马仕手表的 Apple Watch 用户",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "无。解锁受版权保护的表盘属于侵权，不能做成产品。",
+    "demo_idea": "网页对比普通表盘与爱马仕表盘的外观差异，展示解锁效果。",
+    "attack_tool": false,
+    "red_flags": [
+     "解锁Apple与爱马仕合作付费表盘，侵犯版权与商标，违反Apple服务条款",
+     "仅支持watchOS 27.0–27.3 beta 1，极易失效",
+     "需侧载IPA，操作门槛高且有安全风险",
+     "仅靠灰色修改无法合法商业化，收费即违法"
+    ],
+    "reason": "话题性和猎奇感强，但本质是绕过付费墙的版权侵权工具，无法合法包装成产品，只适合做内容不做生意。"
+   }
+  },
+  "l0ng-ai/openidea": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "用 Rust 重写的极速版 IntelliJ IDEA，启动快十倍、内存省十倍",
+    "one_liner_en": "A blazing-fast IDE in Rust that reuses the IntelliJ IDEA keymap and workflow",
+    "target_user": "嫌 IDEA 卡顿的 JetBrains 用户、Java/Kotlin 及多语言后端开发者、从 VS Code 迁出的重度键盘党",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 4,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "做托管版的云 IDE，或者团队版 IDE，内置团队统一配置和插件市场抽成",
+    "demo_idea": "在网页上同时打开 IDEA 和 OpenIDEA 打开同一项目，让用户直观对比两者的启动速度和内存占用",
+    "attack_tool": false,
+    "red_flags": [
+     "项目主页有支付宝和微信支付赞助入口，并设有微信群，明显只面向中国市场",
+     "JetBrains 的键位和整体交互方式存在商标和 UI 抄袭争议，项目方自己声明与 JetBrains 无关",
+     "插件 API 仍是 preview 状态，生态尚未成型，用户迁移成本高",
+     "22 天冲到 8735 星，增长速度异常，疑似被炒作"
+    ],
+    "reason": "项目本身已完成度很高，安装包和官网都很齐全，产品化空间主要在云 IDE 和团队版；不过它在中国变现，且与 IDEA 硬碰硬，商业化难度大，更适合拿来做内容传播，不适合直接包装成新产品"
+   }
+  },
+  "agentes-chat/agentes-chat": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "让AI同事像真人一样加入团队聊天的开源协作平台",
+    "one_liner_en": "Self-hosted Slack where AI agents work as real teammates",
+    "target_user": "美国中小型工程与产品团队、重视数据主权的自托管用户、AI自动化爱好者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 6,
+     "license_safety": 2,
+     "demoability": 6
+    },
+    "product_idea": "托管版团队聊天平台：一键部署、包月收费、按席位或按agent用量计费",
+    "demo_idea": "网页里预置团队频道，让agent当场接任务、开浏览器、发审批卡并执行",
+    "attack_tool": false,
+    "red_flags": [
+     "AGPL-3.0许可证：云服务托管或二次分发受强传染条款约束，商用风险高",
+     "README宣称已有Cloud付费版且代码同一套，本质是开源获客的商业产品，包装空间有限",
+     "自托管需Linux服务器、Docker、Postgres、Tailscale，配置门槛高",
+     "浏览器的computer-use与MCP连接第三方SaaS，存在凭据与数据安全责任",
+     "项目仅创建3天、Star日增342，热度疑似营销驱动，留存未验证"
+    ],
+    "reason": "方向热门、演示性强，但已是自带云端商业版的成熟产品，AGPL限制大，个人做差异化的空间有限，更适合做内容而非创业。"
+   }
+  },
+  "WoYun520/gif-factory": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "给一张图或一句话，让 AI 帮你做出各种风格的动态 GIF",
+    "one_liner_en": "Turn a photo or a prompt into stylish animated GIFs, stickers and posters",
+    "target_user": "美国/全球的独立创作者、小商家、宠物博主、Etsy/Shopify 卖家、社媒运营者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 8,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "上传照片选风格，一键生成表情包/动态签名/片头 GIF 的网页工具，按次或订阅收费",
+    "demo_idea": "网页上传一张宠物照，30 秒内生成 4 张不同风格会动的表情包 GIF 并直接下载",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是 Codex Skill 提示词加脚本集合，核心能力依赖底层图像/视频模型，自身技术壁垒低",
+     "依赖 Codex 与本地环境，非技术人员门槛高，账号实际要解决的是打包成托管产品",
+     "README 为中文、示例偏中文表情包与中文字体，需本地化才能打美国市场",
+     "部分案例角色 IP 与字体素材不随 MIT 授权，商用有版权风险",
+     "生成式 GIF 赛道竞争激烈（GIPHY、Canva、Pika 等），差异化要靠风格库"
+    ],
+    "reason": "易懂、好看、易演示，适合做内容；包装成托管生成工具空间大，但技术护城河弱、需本地化与合规把关。"
+   }
+  },
+  "ggml-org/llama.cpp": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "在自己电脑上本地跑大模型的开源推理引擎",
+    "one_liner_en": "Run large language models locally on your own hardware",
+    "target_user": "想本地/私有部署 LLM 的海外开发者、隐私敏感企业、AI 应用团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "做成一键本地 LLM 桌面客户端，自动匹配模型与量化档位，内置 OpenAI 兼容 API",
+    "demo_idea": "网页模拟：选设备→推荐模型→点击加载，进度条跑完后在浏览器里本地对话演示",
+    "attack_tool": false,
+    "red_flags": [
+     "超大厂/社区级基础设施项目，个人难以在其上做出差异化",
+     "本身已高度成熟并自带官网安装器，包装空间极小",
+     "竞品林立（Ollama、LM Studio、vLLM、llamafile），免费替代品众多",
+     "变现路径基本只剩托管/企业支持，个人切入难"
+    ],
+    "reason": "话题性与 wow 强，但属顶级开源基础设施，个人做产品差异化与收费空间都很小，更适合做内容而非创业。"
+   }
+  },
+  "CopilotKit/OpenBot": {
+   "date": "2026-11-13",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "给每个 AI 同事配一台自己的电脑，能上网、用工具、做事前先审批",
+    "one_liner_en": "AI coworkers that each get their own computer, browser and tools, with approval before every action",
+    "target_user": "美国中大型企业的 IT / 安全负责人和 AI 平台团队（需要自托管、审计和审批的合规型买家）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 3,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "不做直接替代，做垂直岗位版：例如面向律所或电商的审批制 AI 同事，按席位订阅。",
+    "demo_idea": "网页里让 AI 用浏览器查资料、填表，发送前弹审批卡片，用户点同意后展示全程录像回放。",
+    "attack_tool": false,
+    "red_flags": [
+     "CopilotKit 官方商业项目，已有 Business 版和企业销售团队，个人难在它上面做差异化",
+     "企业级自托管 + Kubernetes + 审计治理，个人包装成独立产品的空间很小",
+     "AI 代理操作浏览器和工具带来的数据泄露与越权风险，需自行承担合规责任"
+    ],
+    "reason": "话题性强、演示效果好、MIT 许可安全，但背后是成熟商业公司，留给独立开发者的包装和变现空间有限，更适合做内容而非做产品。"
    }
   }
  }

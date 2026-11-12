@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-13",
+ "headline": "给 Codex 装个 GIF 工厂，一句话出动态图",
+ "summary_md": "**What it is:** [WoYun520/gif-factory](https://github.com/WoYun520/gif-factory) is a collection of Codex Skills (prompts plus scripts) that turns a still image or a short text brief into animated GIFs. It covers sticker packs, lenticular flip cards, animated posters, dynamic signatures, cinematic title lettering, compact storybooks, and short brand films. You install the top-level Skill, describe what you want, and the agent picks the right style recipe and runs the scripts.\n\n**Why it's taking off:** The repo is visual and easy to demo — pixel stickers, pet animations, clay mascots, ink-assembly signatures. Each style ships with a STYLE.md recipe and a gallery of examples, so output is repeatable instead of a one-off prompt. It hit ~1.6k stars in a short window, per the repo's growth, which tracks with how much demand there is from indie creators and small shops for cheap, on-brand motion assets.\n\n**Where the product opportunity is:** The Skill is the recipe; the product is the hosted button. Wrap photo upload, style picker, and one-click export into a web tool priced per render or by subscription. The style catalog is the real differentiator — ship a licensed, English-first style library (stickers, Twitch emotes, Etsy listing GIFs, short brand bumpers) and keep the agent complexity out of the user's way. Note that the README is Chinese and examples lean toward Chinese text and fonts, so localization is part of the MVP, not an afterthought. Per the README, some character IP and fonts are not covered by the MIT license, so a commercial product needs its own cleared assets.",
+ "title_en": "gif-factory: Turn photos into styled animated GIFs with Codex",
+ "tagline_en": "Give a photo or a line of text and let an AI agent produce animated GIFs in many styles.",
+ "pick": {
+  "full_name": "WoYun520/gif-factory",
+  "url": "https://github.com/WoYun520/gif-factory",
+  "description": "GIF 工厂：按风格制作像素、人物与宠物、粘土吉祥物、光栅卡与动态海报的 GIF Skill。",
+  "license": "MIT",
+  "stars": 1602,
+  "daily_rate": 318.0,
+  "category": "多媒体创作",
+  "one_liner": "给一张图或一句话，让 AI 帮你做出各种风格的动态 GIF",
+  "one_liner_en": "Turn a photo or a prompt into stylish animated GIFs, stickers and posters",
+  "reason": "易懂、好看、易演示，适合做内容；包装成托管生成工具空间大，但技术护城河弱、需本地化与合规把关。",
+  "content": 8.33,
+  "startup": 7.1,
+  "final": 7.46,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-13-woyun520-gif-factory",
+ "top": [
+  {
+   "full_name": "WoYun520/gif-factory",
+   "url": "https://github.com/WoYun520/gif-factory",
+   "one_liner": "给一张图或一句话，让 AI 帮你做出各种风格的动态 GIF",
+   "reason": "易懂、好看、易演示，适合做内容；包装成托管生成工具空间大，但技术护城河弱、需本地化与合规把关。",
+   "one_liner_en": "Turn a photo or a prompt into stylish animated GIFs, stickers and posters",
+   "content": 8.33,
+   "startup": 7.1,
+   "final": 7.46,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "l0ng-ai/openidea",
+   "url": "https://github.com/l0ng-ai/openidea",
+   "one_liner": "用 Rust 重写的极速版 IntelliJ IDEA，启动快十倍、内存省十倍",
+   "reason": "项目本身已完成度很高，安装包和官网都很齐全，产品化空间主要在云 IDE 和团队版；不过它在中国变现，且与 IDEA 硬碰硬，商业化难度大，更适合拿来做内容传播，不适合直接包装成新产品",
+   "one_liner_en": "A blazing-fast IDE in Rust that reuses the IntelliJ IDEA keymap and workflow",
+   "content": 7.33,
+   "startup": 6.9,
+   "final": 7.12,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "expo/exact",
+   "url": "https://github.com/expo/exact",
+   "one_liner": "写一次界面代码，AI 代理就能自动生成并测试网页、macOS、iOS、Linux 四个版本的应用",
+   "reason": "话题性极强、演示震撼，MIT 许可友好；但上手门槛高、迭代过快，且背靠 Expo 大厂。适合做内容，包装成产品需先降低安装门槛。",
+   "one_liner_en": "Write an app once; an AI agent builds, runs, sees and tests it on web, macOS, iOS and Linux.",
+   "content": 7.0,
+   "startup": 7.15,
+   "final": 6.86,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "openai/codex-security",
+   "url": "https://github.com/openai/codex-security",
+   "one_liner": "用 AI 自动扫描代码漏洞并生成修复补丁",
+   "reason": "话题性和痛点是满分，官方出品自带关注度；但它是大厂官方工具，包装和商业化空间很小，更适合做内容，不太适合做产品",
+   "one_liner_en": "AI that finds, validates, and patches security bugs in your code",
+   "content": 8.0,
+   "startup": 5.7,
+   "final": 6.8,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "govijr/terminal-mac",
+   "url": "https://github.com/govijr/terminal-mac",
+   "one_liner": "在终端里跑一台独立虚拟 Mac，给 AI 代理安全操作电脑",
+   "reason": "终端里跑虚拟 Mac 供代理操作的定位新颖、演示感强，MCP 生态让它易被包装成代理电脑沙盒产品，但安装重、依赖 Apple 平台限制受众。",
+   "one_liner_en": "A separate virtual Mac inside your terminal that AI agents can safely control.",
+   "content": 7.0,
+   "startup": 7.15,
+   "final": 6.77,
+   "category_penalty": 0
+  }
+ ]
+}
