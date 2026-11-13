@@ -2,12 +2,11 @@ name: daily-radar
 
 on:
   schedule:
-    # 读者在美国太平洋时间，目标是早上 7 点前收到邮件。
-    # 触发点：北京时间 18:07 和 19:07（UTC 10:07、11:07；太平洋冬令时 02:07/03:07，夏令时 03:07/04:07）。
-    # DeepSeek 峰时是工作日北京时间 09-12、14-18 点，18 点后即谷时，所以不能再往前提。
-    # GitHub 定时任务实测会延迟 2-3 小时；第一个成功后第二个自动跳过，第一个失败或没触发由第二个补上。
-    - cron: "7 10 * * *"
-    - cron: "7 11 * * *"
+    # GitHub 定时任务实测会延迟 6-10 小时，而且不稳定，所以每小时都触发一次（UTC 00-14 点）。
+    # 真正开不开跑由 radar/offpeak.py 决定：只在 DeepSeek 谷时、且在北京 08:00-23:00（UTC 00-15 点）之间开跑，
+    # 当天日报已生成就跳过。跳过的那次只花半分钟，不装依赖、不调模型。
+    # 这样无论延迟多久，日报都在谷时生成，并在太平洋时间早上 7 点前送达。
+    - cron: "7 0-14 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -32,6 +31,8 @@ jobs:
   radar:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
     steps:
       - uses: actions/checkout@v7
 
@@ -40,12 +41,20 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+      - name: 检查是否在 DeepSeek 谷时
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+        run: python radar/offpeak.py --event "$EVENT"
+
       - name: 安装依赖
+        if: steps.gate.outputs.run == 'true'
         run: |
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
       - name: 运行雷达
+        if: steps.gate.outputs.run == 'true'
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
@@ -64,7 +73,7 @@ jobs:
           python -m radar.main $args
 
       - name: 提交数据和网站
-        if: success() || failure()
+        if: (success() || failure()) && steps.gate.outputs.run == 'true'
         run: |
           git config user.name "github-radar[bot]"
           git config user.email "github-radar[bot]@users.noreply.github.com"
@@ -75,11 +84,13 @@ jobs:
           git push
 
       - uses: actions/upload-pages-artifact@v5
+        if: steps.gate.outputs.run == 'true'
         with:
           path: site
 
   deploy:
     needs: radar
+    if: needs.radar.outputs.run == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
