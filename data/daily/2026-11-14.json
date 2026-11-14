@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-14",
+ "headline": "AI 股票分析日更：海外化的机会",
+ "summary_md": "**What it is.** [ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis) is an MIT-licensed, Python-based system that runs an LLM over your stock watchlist each day. For every ticker it pulls quotes, K-lines, technical indicators, news, filings and fundamentals, then writes a report with a verdict, a score, trend read, buy/sell levels, risk flags, catalysts and a checklist. Results land on a web dashboard and can be pushed to WeChat Work, Feishu, Telegram, Discord, Slack or email. It ships with a backtest view, a position tracker and a multi-turn \"strategy Q&A\" agent with 15 built-in playbooks.\n\n**Why it's taking off.** Setup is a fork plus a few GitHub Actions secrets, so the whole thing runs on a free schedule with no server. Per the README it covers A-shares, HK, US, Japan, Korea, Taiwan and ETFs, and defaults to free data sources like yfinance and AkShare, with paid sources optional. The repo has ~71.7k stars and gained roughly 540 stars/day recently, which usually means the output is genuinely useful rather than a demo.\n\n**Where the product opportunity is.** The code is solid but the packaging is aimed at Chinese retail users. A hosted English product with US tickers, Stripe billing, an email/Telegram digest and a friendly onboarding flow would let people who don't want to run GitHub Actions get the same output. The hard part is compliance (see note), not engineering.",
+ "title_en": "Daily Stock Analysis: LLM Stock Reports for Your Watchlist",
+ "tagline_en": "An AI that scans your stock watchlist every day and sends you a decision dashboard.",
+ "pick": {
+  "full_name": "ZhuLinsen/daily_stock_analysis",
+  "url": "https://github.com/ZhuLinsen/daily_stock_analysis",
+  "description": "LLM 驱动的多市场股票智能分析系统：多源行情、实时新闻、决策看板与自动推送，支持零成本定时运行。  LLM-powered multi-market stock analysis system with multi-source market data, real-time news, decision dashboard, automated notifications, and cost-free scheduled runs.",
+  "license": "MIT",
+  "stars": 71719,
+  "daily_rate": 539.7,
+  "category": "AI应用",
+  "one_liner": "每天用 AI 自动分析自选股，生成决策仪表盘并推送到你的聊天工具",
+  "one_liner_en": "AI analyzes your watchlist daily and pushes a decision dashboard to your chat app",
+  "reason": "项目热度高、MIT 许可干净、痛点真实；但偏中文股票生态，做海外产品需要重做数据源和合规，包装空间尚可。",
+  "content": 7.33,
+  "startup": 7.15,
+  "final": 7.28,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-14-zhulinsen-daily-stock-analysis",
+ "top": [
+  {
+   "full_name": "ZhuLinsen/daily_stock_analysis",
+   "url": "https://github.com/ZhuLinsen/daily_stock_analysis",
+   "one_liner": "每天用 AI 自动分析自选股，生成决策仪表盘并推送到你的聊天工具",
+   "reason": "项目热度高、MIT 许可干净、痛点真实；但偏中文股票生态，做海外产品需要重做数据源和合规，包装空间尚可。",
+   "one_liner_en": "AI analyzes your watchlist daily and pushes a decision dashboard to your chat app",
+   "content": 7.33,
+   "startup": 7.15,
+   "final": 7.28,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Jakeschincariol/day-trader-skill",
+   "url": "https://github.com/Jakeschincariol/day-trader-skill",
+   "one_liner": "用 Claude 帮你盯盘、择时、回测的日内交易助手",
+   "reason": "话题性强、MIT 干净、包装空间大，但变现受监管与免费数据制约，付费意愿集中在订阅制信号工具。",
+   "one_liner_en": "11 Claude skills that scan charts, time trades, and replay outcomes before you risk money",
+   "content": 7.0,
+   "startup": 7.35,
+   "final": 7.16,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Verlintas/NOIR",
+   "url": "https://github.com/Verlintas/NOIR",
+   "one_liner": "用电脑扫一遍你的安卓手机，查清哪些应用在偷偷外传你的数据",
+   "reason": "话题性强、差评少、MIT 许可宽松，包装成可视化桌面工具的想象空间大；但门槛高、付费场景不清，商业化偏弱。",
+   "one_liner_en": "Plug in your Android phone and see which apps leak your data, with safe one-click fixes",
+   "content": 8.0,
+   "startup": 6.9,
+   "final": 7.09,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "opencoredev/islandcn",
+   "url": "https://github.com/opencoredev/islandcn",
+   "one_liner": "用 shadcn 一行命令装进 React 应用的灵动岛式顶部状态组件",
+   "reason": "视觉惊艳、演示性极强，适合做内容爆款；但本质免费 UI 组件、痛点弱、变现天花板低，商标风险需留意。",
+   "one_liner_en": "An open-source Dynamic Island-style activity component for React, installed with shadcn.",
+   "content": 7.0,
+   "startup": 5.7,
+   "final": 6.82,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "shanselman/gputaskman",
+   "url": "https://github.com/shanselman/gputaskman",
+   "one_liner": "像 htop 一样查看每个进程到底占了多少显存",
+   "reason": "痛点真实，传播性强（作者自带粉丝），但只是免费开发者小工具，很难收费，包装成产品以免费增值为主",
+   "one_liner_en": "See which process is really eating your GPU memory, like htop for VRAM",
+   "content": 6.33,
+   "startup": 6.55,
+   "final": 6.6,
+   "category_penalty": 0
+  }
+ ]
+}

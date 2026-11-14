@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TickerBrief — AI decision briefs for your watchlist</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica Neue','Arial','sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .card-anim { animation: rise .45s cubic-bezier(.22,.9,.35,1) both; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  .skeleton {
+    background: linear-gradient(90deg, #eef2f7 25%, #f8fafc 50%, #eef2f7 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite linear;
+  }
+  .chan { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 8px; color: #64748b; transition: all .15s ease; }
+  .chan:hover { color: #0f172a; }
+  .chan.active { background: #fff; color: #0f172a; box-shadow: 0 1px 2px rgba(15,23,42,.14); }
+  .chip { font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 9999px; border: 1px solid #e2e8f0; color: #475569; background: #fff; transition: all .15s ease; }
+  .chip:hover { border-color: #94a3b8; color: #0f172a; transform: translateY(-1px); }
+  ::selection { background: #ddd6fe; }
+</style>
+</head>
+<body class="bg-white text-slate-900 antialiased font-sans">
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-40 border-b border-slate-200/80 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+    <a href="#top" class="flex items-center gap-2">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-sm">📈</span>
+      <span class="text-[15px] font-bold tracking-tight">TickerBrief</span>
+      <span class="ml-1 hidden rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500 sm:inline">Concept</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-[13px] font-medium text-slate-600 md:flex">
+      <a href="#brief" class="hover:text-slate-900">Live demo</a>
+      <a href="#scenarios" class="hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#waitlist" class="rounded-lg bg-slate-900 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-slate-700">Join waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO + CORE INTERACTION ============ -->
+  <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-gradient-to-br from-indigo-100 via-sky-50 to-transparent blur-3xl"></div>
+    <div class="relative mx-auto max-w-6xl px-4 pb-10 pt-12 sm:px-6 sm:pt-16">
+      <div class="mx-auto max-w-3xl text-center">
+        <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-[11px] font-semibold text-slate-600">
+          <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+          Sample data · No signup · Runs on an open-source analysis engine
+        </div>
+        <h1 class="mt-5 text-[34px] font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+          One page every morning that tells you<br class="hidden sm:block">
+          <span class="bg-gradient-to-r from-indigo-600 to-sky-500 bg-clip-text text-transparent">what to do with your watchlist.</span>
+        </h1>
+        <p class="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-slate-600">
+          Drop in a few tickers. TickerBrief pulls price action, news and technicals, then writes a decision card for each one — score, buy zone, target, stop, and the risks you'd otherwise miss.
+        </p>
+      </div>
+
+      <!-- Input panel -->
+      <div class="mx-auto mt-9 max-w-3xl rounded-3xl border border-slate-200 bg-white p-5 shadow-xl shadow-slate-200/60 sm:p-6">
+        <label for="tickers" class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Your watchlist</label>
+        <div class="mt-2 flex flex-col gap-2 sm:flex-row">
+          <input id="tickers" type="text" value="AAPL, NVDA, TSLA" spellcheck="false"
+            class="flex-1 rounded-xl border border-slate-300 bg-slate-50/60 px-4 py-3 text-sm font-semibold tracking-wide text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-indigo-500/10"
+            placeholder="AAPL, NVDA, 0700.HK, SPY">
+          <button id="run"
+            class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60">
+            <span id="runLabel">Generate brief</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Quick add</span>
+          <button class="chip" data-add="MSFT">MSFT</button>
+          <button class="chip" data-add="AMZN">AMZN</button>
+          <button class="chip" data-add="META">META</button>
+          <button class="chip" data-add="AMD">AMD</button>
+          <button class="chip" data-add="SPY">SPY</button>
+          <button class="chip" data-add="QQQ">QQQ</button>
+        </div>
+
+        <div class="mt-5 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
+          <div id="channels" class="inline-flex items-center gap-1 rounded-xl bg-slate-100 p-1">
+            <button class="chan" data-channel="email">Email</button>
+            <button class="chan active" data-channel="telegram">Telegram</button>
+            <button class="chan" data-channel="slack">Slack</button>
+          </div>
+          <p id="channelNote" class="text-[12px] text-slate-500">Brief lands in <span class="font-semibold text-slate-700">Telegram</span> at 8:00 AM ET, every trading day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="brief" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div id="output"></div>
+  </section>
+
+  <!-- ============ USE CASES ============ -->
+  <section id="scenarios" class="border-t border-slate-100 bg-slate-50/70">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <div class="max-w-2xl">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-indigo-600">Use cases</p>
+        <h2 class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Built for people who don't want to build a pipeline</h2>
+        <p class="mt-3 text-[15px] leading-relaxed text-slate-600">The open-source engine does the heavy lifting. You just read one page.</p>
+      </div>
+
+      <div class="mt-9 grid gap-5 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+          <div class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-lg">☕</div>
+          <h3 class="mt-4 text-[15px] font-bold">The 7-minute morning routine</h3>
+          <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Open Telegram with your coffee. Twelve tickers, twelve cards — score, zone, stop, one line of reasoning. No tab-hopping between six sites before the open.</p>
+          <p class="mt-3 text-[12px] font-semibold text-slate-400">Replaces: 40 minutes of scrolling</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+          <div class="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-lg">⚠️</div>
+          <h3 class="mt-4 text-[15px] font-bold">Earnings-season triage</h3>
+          <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Risk flags surface the names that report this week and the line item the market will judge them on — so you size down before the print, not after the gap.</p>
+          <p class="mt-3 text-[12px] font-semibold text-slate-400">Replaces: reading 10-K footnotes at midnight</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
+          <div class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-lg">🧩</div>
+          <h3 class="mt-4 text-[15px] font-bold">LLM help without the setup</h3>
+          <p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">No GitHub Actions, no API secrets, no cron job to babysit. You type tickers, we handle the models, data feeds and delivery — same engine, zero code.</p>
+          <p class="mt-3 text-[12px] font-semibold text-slate-400">Replaces: a weekend of YAML debugging</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-[11px] font-bold uppercase tracking-widest text-indigo-600">Pricing</p>
+      <h2 class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Start free. Upgrade when it earns its keep.</h2>
+      <p class="mt-3 text-[15px] text-slate-600">All prices in USD, billed monthly, cancel anytime.</p>
+    </div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      <!-- Free -->
+      <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+        <h3 class="text-[15px] font-bold">Starter</h3>
+        <p class="mt-1 text-[13px] text-slate-500">Try the habit</p>
+        <p class="mt-4 text-3xl font-extrabold tracking-tight">$0<span class="text-sm font-medium text-slate-400">/mo</span></p>
+        <ul class="mt-5 space-y-2.5 text-[13.5px] text-slate-600">
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>3 tickers</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Weekly brief by email</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>US markets only</li>
+          <li class="flex gap-2 text-slate-400"><span>—</span>Risk alerts</li>
+        </ul>
+        <button data-toast="Free plan noted — this is a concept demo, nothing was created." class="mt-6 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-[13px] font-semibold text-slate-700 transition hover:bg-slate-50">Get started</button>
+      </div>
+
+      <!-- Pro -->
+      <div class="relative flex flex-col rounded-2xl border-2 border-slate-900 bg-white p-6 shadow-xl shadow-slate-200/60">
+        <span class="absolute -top-3 left-6 rounded-full bg-slate-900 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Most popular</span>
+        <h3 class="text-[15px] font-bold">Pro</h3>
+        <p class="mt-1 text-[13px] text-slate-500">For the daily habit</p>
+        <p class="mt-4 text-3xl font-extrabold tracking-tight">$12<span class="text-sm font-medium text-slate-400">/mo</span></p>
+        <ul class="mt-5 space-y-2.5 text-[13.5px] text-slate-600">
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>25 tickers, US + ETFs</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Daily brief at 8:00 AM ET</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Email, Telegram or Slack</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Earnings &amp; risk flags</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Ask follow-up questions on any card</li>
+        </ul>
+        <button data-toast="Pro plan selected — this is a concept demo, no payment was taken." class="mt-6 w-full rounded-xl bg-slate-900 px-4 py-2.5 text-[13px] font-semibold text-white transition hover:bg-slate-700">Start 14-day trial</button>
+      </div>
+
+      <!-- Desk -->
+      <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-6">
+        <h3 class="text-[15px] font-bold">Desk</h3>
+        <p class="mt-1 text-[13px] text-slate-500">Multi-market power users</p>
+        <p class="mt-4 text-3xl font-extrabold tracking-tight">$39<span class="text-sm font-medium text-slate-400">/mo</span></p>
+        <ul class="mt-5 space-y-2.5 text-[13.5px] text-slate-600">
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Unlimited tickers</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>US, HK, JP, KR, TW + ETFs</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Intraday alerts on your zones</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>Strategy Q&amp;A + backtests</li>
+          <li class="flex gap-2"><span class="text-emerald-500">✓</span>API access</li>
+        </ul>
+        <button data-toast="Desk plan noted — this is a concept demo, nothing was created." class="mt-6 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-[13px] font-semibold text-slate-700 transition hover:bg-slate-50">Talk to us</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WAITLIST ============ -->
+  <section id="waitlist" class="border-t border-slate-100 bg-slate-900">
+    <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
+      <h2 class="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Get the first brief on us</h2>
+      <p class="mx-auto mt-3 max-w-md text-[14.5px] leading-relaxed text-slate-300">We're letting people in by batch. Leave an email and you'll get one free week of daily briefs when your spot opens.</p>
+      <form id="waitlistForm" class="mx-auto mt-7 flex max-w-md flex-col gap-2 sm:flex-row">
+        <input id="email" type="email" value="you@example.com" spellcheck="false"
+          class="flex-1 rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/20"
+          placeholder="you@example.com">
+        <button type="submit" class="rounded-xl bg-white px-6 py-3 text-sm font-bold text-slate-900 transition hover:bg-slate-200">Join waitlist</button>
+      </form>
+      <p class="mt-3 text-[11.5px] text-slate-500">Concept demo — nothing is submitted or stored.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-8 text-center sm:px-6">
+    <div class="flex items-center gap-2 text-[13px] font-bold text-slate-800">
+      <span class="grid h-6 w-6 place-items-center rounded-md bg-slate-900 text-[10px]">📈</span>
+      TickerBrief
+    </div>
+    <p class="text-[11.5px] leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project
+      <a class="font-semibold text-slate-700 underline decoration-slate-300 underline-offset-2 hover:text-slate-900" href="https://github.com/ZhuLinsen/daily_stock_analysis">ZhuLinsen/daily_stock_analysis</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+    <p class="max-w-xl text-[11px] leading-relaxed text-slate-400">Nothing here is investment advice. Prices, scores and headlines are generated locally for illustration only.</p>
+  </div>
+</footer>
+
+<!-- ============ TOAST ============ -->
+<div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 max-w-[90vw] -translate-x-1/2 translate-y-4 rounded-xl bg-slate-900 px-4 py-3 text-center text-[13px] font-medium text-white opacity-0 shadow-xl transition-all duration-300"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- Sample dataset (all fictional) ---------------- */
+  var PRESET = {
+    AAPL: {
+      name: "Apple Inc.", sector: "Technology", price: 231.44, pct: 1.24, score: 78, trend: "Uptrend",
+      buy: [224, 228], target: 252, stop: 214,
+      summary: "Holding above a rising 50-day with sector leadership. Add on pullbacks into the low $220s rather than at the highs.",
+      risks: ["China iPhone units tracking ~4% below consensus", "31x forward multiple leaves little room for a miss"],
+      catalysts: ["iPhone 17 cycle + Apple Intelligence attach rate", "$110B buyback retires ~3% of float per year"]
+    },
+    NVDA: {
+      name: "NVIDIA Corp.", sector: "Semiconductors", price: 142.80, pct: 2.61, score: 86, trend: "Strong uptrend",
+      buy: [134, 138], target: 168, stop: 128,
+      summary: "Highest-conviction momentum name on the list. Sizing matters more than entry — trim into strength, keep a hard stop under $128.",
+      risks: ["Hyperscaler capex guidance is the single biggest swing factor", "Export-rule headlines can gap the stock ±6% overnight"],
+      catalysts: ["Blackwell ramp into next quarter's shipments", "Sovereign AI orders from outside the US"]
+    },
+    TSLA: {
+      name: "Tesla Inc.", sector: "Automotive", price: 248.15, pct: -1.87, score: 41, trend: "Downtrend",
+      buy: [228, 236], target: 268, stop: 219,
+      summary: "Below the 200-day with negative earnings revisions — a trade, not a hold. Wait for a reclaim of $262 before adding size.",
+      risks: ["Deliveries decelerating for a third straight quarter", "Price cuts are compressing gross margin; FSD revenue still immaterial"],
+      catalysts: ["Robotaxi event could re-rate sentiment quickly", "Energy storage growing >50% year over year"]
+    },
+    MSFT: {
+      name: "Microsoft Corp.", sector: "Software", price: 428.60, pct: 0.62, score: 71, trend: "Uptrend",
+      buy: [415, 422], target: 470, stop: 398,
+      summary: "Steady compounding above all major averages. Azure AI consumption is the number that matters each print.",
+      risks: ["Cloud growth decelerating into comps", "Capex ramp weighs on free cash flow optics"],
+      catalysts: ["Copilot seat expansion across enterprise renewals", "Azure AI workloads shifting to long-term contracts"]
+    },
+    AMZN: {
+      name: "Amazon.com Inc.", sector: "Consumer / Cloud", price: 201.30, pct: 1.05, score: 74, trend: "Uptrend",
+      buy: [192, 197], target: 225, stop: 185,
+      summary: "Retail margins are the quiet story while AWS reaccelerates. Constructive setup into the next print.",
+      risks: ["Consumer softness in discretionary categories", "AWS pricing pressure from smaller cloud rivals"],
+      catalysts: ["AWS capacity coming online through next year", "Advertising growth outpacing retail"]
+    },
+    META: {
+      name: "Meta Platforms", sector: "Communication", price: 585.20, pct: -0.44, score: 66, trend: "Range",
+      buy: [560, 575], target: 640, stop: 540,
+      summary: "Choppy but structurally intact. Range trader's name for now — buy the lower half, don't chase the upper half.",
+      risks: ["Reality Labs losses remain an open-ended drag", "Ad-load limits capping impressions growth"],
+      catalysts: ["Ad ranking improvements lifting pricing", "Capex guide reset would be a positive catalyst"]
+    },
+    GOOGL: {
+      name: "Alphabet Inc.", sector: "Communication", price: 178.90, pct: 0.88, score: 63, trend: "Uptrend",
+      buy: [172, 176], target: 198, stop: 165,
+      summary: "Search monetization holding against AI disruption fears. A reasonable core holding at this valuation.",
+      risks: ["Antitrust remedies could change default placement", "AI answer engines eroding click-through rates"],
+      catalysts: ["Gemini distribution deals on mobile", "Cloud backlog growth accelerating"]
+    },
+    AMD: {
+      name: "Advanced Micro Devices", sector: "Semiconductors", price: 158.40, pct: 3.12, score: 69, trend: "Uptrend",
+      buy: [148, 153], target: 182, stop: 141,
+      summary: "High-beta participant in the same AI spend cycle. Volatile — use half-sized entries and let the stop do the work.",
+      risks: ["Server share gains slower than the narrative implies", "Customer concentration in a handful of buyers"],
+      catalysts: ["MI-series accelerator design wins", "Enterprise PC refresh cycle"]
+    },
+    SPY: {
+      name: "SPDR S&P 500 ETF", sector: "Broad index", price: 574.20, pct: 0.31, score: 72, trend: "Uptrend",
+      buy: [566, 570], target: 600, stop: 556,
+      summary: "Trend and breadth both positive. This is the baseline your single names have to beat — most don't.",
+      risks: ["Concentration in the top 10 names is historically extreme", "Rate surprises hit valuation multiples fast"],
+      catalysts: ["Seasonal strength into year-end", "Earnings growth broadening beyond megacaps"]
+    },
+    QQQ: {
+      name: "Invesco QQQ Trust", sector: "Tech index", price: 492.10, pct: 0.54, score: 75, trend: "Uptrend",
+      buy: [482, 488], target: 520, stop: 472,
+      summary: "Clean trend, orderly pullbacks. Adds here are a bet on continued AI capex — know that's the bet.",
+      risks: ["Semis are a large weight and a single point of failure", "Momentum unwind risk after a strong run"],
+      catalysts: ["Continued AI infrastructure spend", "Mega-cap earnings beats"]
+    }
+  };
+
+  var GENERIC_RISKS = [
+    "Multiple expansion is doing more work than earnings growth here",
+    "Thin liquidity around the open can exaggerate moves",
+    "Sector rotation could cap upside regardless of execution"
+  ];
+  var GENERIC_CATS = [
+    "Upcoming product cycle could reset expectations",
+    "Buyback authorization adds a steady bid"
+  ];
+  var FALLBACK_SECTORS = ["Technology", "Healthcare", "Industrials", "Financials", "Consumer", "Energy"];
+
+  /* ---------------- Helpers ---------------- */
+  function hashStr(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return h >>> 0;
+  }
+
+  function fmt(n) {
+    return Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function build(ticker) {
+    var key = ticker.toUpperCase();
+    if (PRESET[key]) {
+      var p = PRESET[key];
+      return {
+        ticker: key, name: p.name, sector: p.sector, price: p.price, pct: p.pct, score: p.score,
+        trend: p.trend, buy: p.buy, target: p.target, stop: p.stop,
+        summary: p.summary, risks: p.risks, catalysts: p.catalysts
+      };
+    }
+    var h = hashStr(key);
+    var price = 18 + (h % 46000) / 100;
+    var pct = ((h >> 7) % 620) / 100 - 2.2;
+    var score = 34 + ((h >> 3) % 58);
+    var trend = score >= 72 ? "Uptrend" : score >= 55 ? "Range" : "Downtrend";
+    var buyLo = price * 0.965;
+    var buyHi = price * 0.992;
+    var target = price * (1.07 + ((h >> 11) % 18) / 100);
+    var stop = price * 0.925;
+    var r1 = GENERIC_RISKS[h % GENERIC_RISKS.length];
+    var r2 = GENERIC_RISKS[(h >> 5) % GENERIC_RISKS.length];
+    var c1 = GENERIC_CATS[h % GENERIC_CATS.length];
+    return {
+      ticker: key,
+      name: key + " — sample profile",
+      sector: FALLBACK_SECTORS[(h >> 9) % FALLBACK_SECTORS.length],
+      price: price,
+      pct: pct,
+      score: score,
+      trend: trend,
+      buy: [buyLo, buyHi],
+      target: target,
+      stop: stop,
+      summary: "No live feed in this demo, so this card is generated from a fixed seed. The real engine pulls quotes, technicals and news before scoring.",
+      risks: [r1, r2 === r1 ? GENERIC_RISKS[(h >> 13) % GENERIC_RISKS.length] : r2],
+      catalysts: [c1]
+    };
+  }
+
+  function scoreMeta(score) {
+    if (score >= 75) return { label: "Strong Buy", ring: "#059669", text: "text-emerald-700", badge: "bg-emerald-50 text-emerald-700 border-emerald-200" };
+    if (score >= 60) return { label: "Buy", ring: "#0ea5e9", text: "text-sky-700", badge: "bg-sky-50 text-sky-700 border-sky-200" };
+    if (score >= 45) return { label: "Hold", ring: "#f59e0b", text: "text-amber-700", badge: "bg-amber-50 text-amber-700 border-amber-200" };
+    return { label: "Reduce", ring: "#e11d48", text: "text-rose-700", badge: "bg-rose-50 text-rose-700 border-rose-200" };
+  }
+
+  /* ---------------- DOM refs ---------------- */
+  var input = document.getElementById("tickers");
+  var runBtn = document.getElementById("run");
+  var runLabel = document.getElementById("runLabel");
+  var output = document.getElementById("output");
+  var channelNote = document.getElementById("channelNote");
+  var toastEl = document.getElementById("toast");
+  var busy = false;
+  var toastTimer = null;
+
+  var CHANNEL_LABEL = { email: "Email", telegram: "Telegram", slack: "Slack" };
+
+  /* ---------------- Toast ---------------- */
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.remove("opacity-0", "translate-y-4");
+    toastEl.classList.add("opacity-100", "translate-y-0");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.add("opacity-0", "translate-y-4");
+      toastEl.classList.remove("opacity-100", "translate-y-0");
+    }, 3200);
+  }
+
+  /* ---------------- Parsing ---------------- */
+  function parseTickers(raw) {
+    var parts = String(raw).toUpperCase().split(/[\s,;|]+/);
+    var seen = {};
+    var out = [];
+    for (var i = 0; i < parts.length; i++) {
+      var t = parts[i].replace(/[^A-Z0-9.\-^]/g, "");
+      if (!t || t.length > 10) continue;
+      if (seen[t]) continue;
+      seen[t] = true;
+      out.push(t);
+      if (out.length >= 6) break;
+    }
+    return out;
+  }
+
+  /* ---------------- Rendering ---------------- */
+  function summaryHTML(items, avg) {
+    var riskCount = items.reduce(function (a, b) { return a + b.risks.length; }, 0);
+    var read;
+    if (avg >= 72) read = "Risk-on. Momentum and breadth are both positive — stay long, but keep stops tight and don't add at the highs.";
+    else if (avg >= 58) read = "Mixed but constructive. Leadership is narrow; favour the names scoring above 65 and leave the rest on watch.";
+    else read = "Defensive tape. Scores are weak across the board — reduce exposure and wait for a reclaim of the 50-day before adding risk.";
+
+    var chips = [
+      items.length + (items.length === 1 ? " ticker" : " tickers"),
+      "Avg score " + avg,
+      riskCount + " risk flags"
+    ].map(function (c) {
+      return '<span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-[11.5px] font-semibold text-slate-600">' + esc(c) + '</span>';
+    }).join("");
+
+    return '' +
+      '<div class="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-5 sm:p-6">' +
+        '<div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">' +
+          '<div class="max-w-2xl">' +
+            '<div class="flex flex-wrap items-center gap-2">' +
+              '<span class="inline-flex items-center gap-1.5 rounded-full bg-indigo-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">🤖 AI read</span>' +
+              '<span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Sample data</span>' +
+            '</div>' +
+            '<p class="mt-3 text-[14.5px] font-medium leading-relaxed text-slate-800">' + esc(read) + '</p>' +
+            '<div class="mt-3 flex flex-wrap gap-2">' + chips + '</div>' +
+          '</div>' +
+          '<div class="shrink-0 text-left sm:text-right">' +
+            '<p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Generated</p>' +
+            '<p class="text-[13px] font-semibold text-slate-700">Today · 8:02 AM ET</p>' +
+            '<p class="mt-1 text-[11px] text-slate-400">6 news feeds · 4 price sources</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function cardHTML(item, index) {
+    var m = scoreMeta(item.score);
+    var deg = Math.max(0, Math.min(100, item.score)) * 3.6;
+    var up = item.pct >= 0;
+    var priceStr = fmt(item.price);
+
+    var risksHTML = item.risks.map(function (r) {
+      return '<div class="flex gap-2 text-[12px] leading-snug text-slate-600"><span class="shrink-0">⚠️</span><span>' + esc(r) + '</span></div>';
+    }).join("");
+
+    var catsHTML = item.catalysts.map(function (c) {
+      return '<div class="flex gap-2 text-[12px] leading-snug text-slate-600"><span class="shrink-0">⚡</span><span>' + esc(c) + '</span></div>';
+    }).join("");
+
+    return '' +
+      '<article class="card-anim flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg" style="animation-delay:' + (index * 70) + 'ms">' +
+        '<div class="flex items-start justify-between gap-3">' +
+          '<div class="min-w-0">' +
+            '<div class="flex flex-wrap items-center gap-2">' +
+              '<span class="text-[17px] font-extrabold tracking-tight">' + esc(item.ticker) + '</span>' +
+              '<span class="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-semibold text-slate-600">' + esc(item.trend) + '</span>' +
+            '</div>' +
+            '<p class="mt-0.5 truncate text-[11.5px] text-slate-500">' + esc(item.name) + ' · ' + esc(item.sector) + '</p>' +
+          '</div>' +
+          '<div class="shrink-0 text-center">' +
+            '<div class="grid h-14 w-14 place-items-center rounded-full" style="background:conic-gradient(' + m.ring + ' 0 ' + deg + 'deg, #eef2f7 ' + deg + 'deg 360deg)">' +
+              '<div class="grid h-10 w-10 place-items-center rounded-full bg-white">' +
+                '<span class="text-[13px] font-extrabold tabular-nums text-slate-900">' + item.score + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<p class="mt-1 text-[10px] font-bold uppercase tracking-wider ' + m.text + '">' + m.label + '</p>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="mt-3 flex items-baseline gap-2">' +
+          '<span class="text-[22px] font-bold tabular-nums tracking-tight">$' + priceStr + '</span>' +
+          '<span class="text-[12px] font-bold ' + (up ? 'text-emerald-600' : 'text-rose-600') + '">' + (up ? '▲ +' : '▼ ') + item.pct.toFixed(2) + '%</span>' +
+          '<span class="text-[10.5px] text-slate-400">today</span>' +
+        '</div>' +
+
+        '<p class="mt-2 text-[12.5px] leading-relaxed text-slate-600">' + esc(item.summary) + '</p>' +
+
+        '<div class="mt-3.5 grid grid-cols-3 gap-2 text-center">' +
+          '<div class="rounded-xl border border-emerald-100 bg-emerald-50/60 px-1 py-2">' +
+            '<div class="text-[9.5px] font-bold uppercase tracking-wider text-emerald-700/70">Buy zone</div>' +
+            '<div class="mt-0.5 text-[11.5px] font-bold tabular-nums text-emerald-800">$' + fmt(item.buy[0]) + '–' + fmt(item.buy[1]) + '</div>' +
+          '</div>' +
+          '<div class="rounded-xl border border-slate-200 bg-slate-50 px-1 py-2">' +
+            '<div class="text-[9.5px] font-bold uppercase tracking-wider text-slate-400">Target</div>' +
+            '<div class="mt-0.5 text-[11.5px] font-bold tabular-nums text-slate-800">$' + fmt(item.target) + '</div>' +
+          '</div>' +
+          '<div class="rounded-xl border border-rose-100 bg-rose-50/60 px-1 py-2">' +
+            '<div class="text-[9.5px] font-bold uppercase tracking-wider text-rose-700/70">Stop</div>' +
+            '<div class="mt-0.5 text-[11.5px] font-bold tabular-nums text-rose-800">$' + fmt(item.stop) + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="mt-3.5 space-y-1.5">' + risksHTML + catsHTML + '</div>' +
+
+        '<div class="mt-4 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">' +
+          '<button data-push="' + esc(item.ticker) + '" class="text-[11.5px] font-bold text-indigo-600 transition hover:text-indigo-800">Preview push →</button>' +
+          '<span class="rounded-full bg-slate-100 px-2 py-0.5 text-[9.5px] font-bold uppercase tracking-wider text-slate-500">Sample data</span>' +
+        '</div>' +
+      '</article>';
+  }
+
+  function render(items) {
+    var avg = Math.round(items.reduce(function (a, b) { return a + b.score; }, 0) / items.length);
+    var cards = items.map(cardHTML).join("");
+    output.innerHTML =
+      summaryHTML(items, avg) +
+      '<div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">' + cards + '</div>' +
+      '<p class="mt-6 text-center text-[11.5px] leading-relaxed text-slate-400">' +
+        'Scores, prices and headlines are generated locally for this concept demo — not live market data, not investment advice.' +
+      '</p>';
+  }
+
+  function renderSkeleton(list) {
+    var cards = list.map(function (_, i) {
+      return '' +
+        '<div class="rounded-2xl border border-slate-200 bg-white p-5">' +
+          '<div class="flex items-start justify-between gap-3">' +
+            '<div class="w-2/3">' +
+              '<div class="skeleton h-4 w-20 rounded"></div>' +
+              '<div class="skeleton mt-2 h-3 w-32 rounded"></div>' +
+            '</div>' +
+            '<div class="skeleton h-14 w-14 rounded-full"></div>' +
+          '</div>' +
+          '<div class="skeleton mt-4 h-7 w-28 rounded"></div>' +
+          '<div class="skeleton mt-3 h-3 w-full rounded"></div>' +
+          '<div class="skeleton mt-2 h-3 w-5/6 rounded"></div>' +
+          '<div class="mt-4 grid grid-cols-3 gap-2">' +
+            '<div class="skeleton h-12 rounded-xl"></div>' +
+            '<div class="skeleton h-12 rounded-xl"></div>' +
+            '<div class="skeleton h-12 rounded-xl"></div>' +
+          '</div>' +
+          '<div class="skeleton mt-4 h-3 w-11/12 rounded"></div>' +
+          '<div class="skeleton mt-2 h-3 w-3/4 rounded"></div>' +
+        '</div>';
+    }).join("");
+
+    output.innerHTML =
+      '<div class="rounded-2xl border border-slate-200 bg-slate-50/60 p-5 sm:p-6">' +
+        '<div class="skeleton h-3 w-24 rounded"></div>' +
+        '<div class="skeleton mt-3 h-4 w-3/4 rounded"></div>' +
+        '<div class="skeleton mt-2 h-3 w-1/2 rounded"></div>' +
+      '</div>' +
+      '<div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">' + cards + '</div>';
+  }
+
+  /* ---------------- Actions ---------------- */
+  function run() {
+    if (busy) return;
+    var list = parseTickers(input.value);
+    if (!list.length) {
+      toast("Add at least one ticker, like AAPL or NVDA.");
+      input.focus();
+      return;
+    }
+    busy = true;
+    runBtn.disabled = true;
+    runLabel.textContent = "Analyzing…";
+    renderSkeleton(list);
+
+    setTimeout(function () {
+      render(list.map(build));
+      busy = false;
+      runBtn.disabled = false;
+      runLabel.textContent = "Generate brief";
+    }, 850);
+  }
+
+  function addTicker(t) {
+    if (busy) return;
+    var list = parseTickers(input.value);
+    if (list.indexOf(t) === -1) {
+      if (list.length >= 6) {
+        toast("Demo limit is 6 tickers per brief.");
+        return;
+      }
+      list.push(t);
+    }
+    input.value = list.join(", ");
+    run();
+  }
+
+  /* ---------------- Events ---------------- */
+  runBtn.addEventListener("click", run);
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      run();
+    }
+  });
+
+  document.addEventListener("click", function (e) {
+    var target = e.target.closest("[data-add], [data-channel], [data-push], [data-toast]");
+    if (!target) return;
+
+    if (target.hasAttribute("data-add")) {
+      addTicker(target.getAttribute("data-add"));
+      return;
+    }
+
+    if (target.hasAttribute("data-channel")) {
+      var ch = target.getAttribute("data-channel");
+      var btns = document.querySelectorAll("#channels .chan");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle("active", btns[i] === target);
+      }
+      channelNote.innerHTML = "Brief lands in <span class=\"font-semibold text-slate-700\">" +
+        CHANNEL_LABEL[ch] + "</span> at 8:00 AM ET, every trading day.";
+      toast("Delivery set to " + CHANNEL_LABEL[ch] + " (demo only).");
+      return;
+    }
+
+    if (target.hasAttribute("data-push")) {
+      var tk = target.getAttribute("data-push");
+      var active = document.querySelector("#channels .chan.active");
+      var activeCh = active ? CHANNEL_LABEL[active.getAttribute("data-channel")] : "Telegram";
+      toast(tk + " brief preview sent to " + activeCh + " — this is a demo, nothing was sent.");
+      return;
+    }
+
+    if (target.hasAttribute("data-toast")) {
+      toast(target.getAttribute("data-toast"));
+      return;
+    }
+  });
+
+  var waitlistForm = document.getElementById("waitlistForm");
+  waitlistForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var emailInput = document.getElementById("email");
+    var value = (emailInput.value || "").trim();
+    if (!value || value.indexOf("@") === -1) {
+      toast("Enter an email address to join the list.");
+      emailInput.focus();
+      return;
+    }
+    toast("You're on the list — we'll be in touch. (Demo only, nothing was sent.)");
+    emailInput.blur();
+  });
+
+  /* ---------------- Initial render ---------------- */
+  render(parseTickers(input.value).map(build));
+})();
+</script>
+</body>
+</html>

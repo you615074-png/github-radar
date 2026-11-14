@@ -149,6 +149,12 @@
    "full_name": "WoYun520/gif-factory",
    "category": "多媒体创作",
    "final": 7.46
+  },
+  {
+   "date": "2026-11-14",
+   "full_name": "ZhuLinsen/daily_stock_analysis",
+   "category": "AI应用",
+   "final": 7.28
   }
  ],
  "top": {
@@ -199,7 +205,7 @@
   "alchaincyf/huashu-design": "2026-10-27",
   "HKUDS/DeepTutor": "2026-10-28",
   "andyhuo520/digital-human-koubo": "2026-10-28",
-  "Jakeschincariol/day-trader-skill": "2026-10-28",
+  "Jakeschincariol/day-trader-skill": "2026-11-14",
   "Leonxlnx/taste-skill": "2026-10-29",
   "pbakaus/impeccable": "2026-11-06",
   "obra/superpowers": "2026-10-29",
@@ -230,7 +236,7 @@
   "harry0703/MoneyPrinterTurbo": "2026-11-05",
   "JuneYaooo/rea-video": "2026-11-06",
   "D4Vinci/Scrapling": "2026-11-06",
-  "Verlintas/NOIR": "2026-11-06",
+  "Verlintas/NOIR": "2026-11-14",
   "caru-ini/stack-diagram": "2026-11-07",
   "livliv-dev/player": "2026-11-07",
   "deepseek-ai/dsh-superagent-prototype": "2026-11-08",
@@ -254,80 +260,23 @@
   "l0ng-ai/openidea": "2026-11-13",
   "expo/exact": "2026-11-13",
   "openai/codex-security": "2026-11-13",
-  "govijr/terminal-mac": "2026-11-13"
+  "govijr/terminal-mac": "2026-11-13",
+  "ZhuLinsen/daily_stock_analysis": "2026-11-14",
+  "opencoredev/islandcn": "2026-11-14",
+  "shanselman/gputaskman": "2026-11-14"
  },
  "scores": {
-  "openai/math": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "OpenAI 用模型自动生成 721 篇数学论文并附 Lean 证明",
-    "one_liner_en": "OpenAI's model wrote 721 math papers, some with machine-checked Lean proofs",
-    "target_user": "美国高校数学研究者、AI 安全与可验证推理方向的研究者和媒体",
-    "scores": {
-     "topicality": 10,
-     "accessibility": 7,
-     "wow": 10,
-     "pain": 3,
-     "packaging_room": 2,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "把 Lean 形式化证明做成可交互的验证与浏览网站，供研究者查证和引用",
-    "demo_idea": "网页里点开一个定理家族，左侧看论文结论，右侧一键跑 Lean 检查器验证",
-    "attack_tool": false,
-    "red_flags": [
-     "这是大厂官方发布的论文语料库，并非可包装的软件产品",
-     "内容属于论文、数据、研究成果，并非可用于创业的软件",
-     "部分结果未经形式化验证，存在错误风险",
-     "署名、优先权与学术归属存在争议"
-    ],
-    "reason": "话题性极强，但它是大厂发布的研究数据而非产品，可包装空间和商业化极低，只适合做内容选题。"
-   }
-  },
-  "google-research/harness2": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "让 AI 智能体在陌生任务中自己摸索、当场改进工作方式的框架",
-    "one_liner_en": "A framework that lets AI agents self-improve their own harness on unseen tasks",
-    "target_user": "构建生产级 AI agent 的北美 AI 工程师和 agent 平台团队",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 4,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 4
-    },
-    "product_idea": "把递归调 harness 能力做成托管 API，自动为你的 agent 调优提示词、工具与记忆配置",
-    "demo_idea": "网页上跑同一任务：基线 agent vs 自改进 agent，并列展示成功率与步骤对比",
-    "attack_tool": false,
-    "red_flags": [
-     "Google Research 官方研究框架，属大厂基础设施，个人做差异化产品空间小",
-     "依赖 Vertex AI/Google Cloud 登录与付费 benchmark，安装门槛高，普通用户难上手",
-     "README 偏论文与 benchmark，非产品化形态，包装空间有限",
-     "benchmark 评判需单次跑评测成本高，demo 难纯前端复现"
-    ],
-    "reason": "前沿 agent 自改进话题性强、许可干净，但大厂研究框架属性重、落地门槛高，内容价值大于产品化价值。"
-   }
-  },
   "deepseek-ai/DeepInfer": {
-   "date": "2026-11-06",
+   "date": "2026-11-14",
    "v": 3,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "DeepSeek 官方开源的高性能大模型推理框架，快速运行自家模型",
-    "one_liner_en": "DeepSeek's official open-source inference engine for running its models fast at scale",
-    "target_user": "有自建推理集群的 AI 基础设施团队和云厂商 MLOps 工程师（预算充足，按 GPU 节点付费）",
+    "one_liner": "DeepSeek 官方开源的大模型推理引擎，让 V4.1 模型跑得更快更省",
+    "one_liner_en": "DeepSeek's official open-source inference engine that serves its V4.1 model faster and cheaper",
+    "target_user": "跑自建 LLM 推理的 ML 平台团队和 GPU 云服务商（美国/全球），需 SM100 或昇腾 950 硬件",
     "scores": {
-     "topicality": 7,
-     "accessibility": 2,
+     "topicality": 8,
+     "accessibility": 3,
      "wow": 5,
      "pain": 5,
      "packaging_room": 2,
@@ -335,17 +284,16 @@
      "license_safety": 9,
      "demoability": 2
     },
-    "product_idea": "给使用 64 卡以上集群的团队做托管式 DeepSeek 推理调优 SaaS，但门槛极高",
-    "demo_idea": "网页展示吞吐对比条形图，但无法真实复现，只能放官方基准截图",
+    "product_idea": "没有可行的独立产品形态，只能做托管推理 API 或围绕部署的咨询",
+    "demo_idea": "网页上无法演示，最多放一张吞吐对比表",
     "attack_tool": false,
     "red_flags": [
-     "大厂官方基础设施类项目，个人难以在其上做差异化产品",
-     "需要 SM100 / Ascend 950 多卡集群、CUDA 13、编译链，普通开发者无法安装体验",
-     "README 明确说明 KV cache、PD 分离、跨副本负载均衡等关键部分未开源，离完整服务还很远",
-     "仅支持自家一个模型，通用性弱",
-     "性能基准表格是空的，缺少可信数据"
+     "大厂（DeepSeek）官方基础设施，个人难以在其上做差异化产品",
+     "只支持 DeepSeek-V4.1-Flash 单一模型，且仅限 SM100 / 昇腾 950 等顶级硬件",
+     "README 自述还需 KV cache、PD 分离、负载均衡等大量未开源组件，开箱不可用",
+     "主要面向中国厂商硬件的项目，与美国市场契合度低"
     ],
-    "reason": "大厂官方推理框架，工程价值高但无包装空间，个人无法部署也无付费切入点，只适合作为技术解读内容"
+    "reason": "话题热度高但属于大厂底层基础设施，门槛极高、无法包装成消费级产品，做内容可讲、做产品基本无空间。"
    }
   },
   "Renhuai123/ziwei-doushu": {
@@ -379,36 +327,6 @@
     "reason": "技术扎实、演示直观、MIT 代码友好，但核心数据非商用授权与自营商业站削弱包装与变现空间，英文市场需重新教育。"
    }
   },
-  "pbakaus/impeccable": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "给 AI 编程助手装上设计品味，帮它改好看并审出界面毛病",
-    "one_liner_en": "Design vocabulary and AI-slop detector for your coding agent.",
-    "target_user": "美国及全球的独立开发者、前端工程师、小型 SaaS 团队和用 Cursor/Claude Code 做产品的 AI 编程用户",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 6,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "做一个网页版设计审查工作台：粘贴页面或组件截图或 URL，列出 AI 生成的俗套设计问题和分级修改建议",
-    "demo_idea": "上传一张 AI 生成的落地页截图，左侧标出紫蓝渐变、灰色文字等俗套点，右侧一键给出改写后的对比图",
-    "attack_tool": false,
-    "red_flags": [
-     "已破 10 万 star、增长极快，属于现象级开源项目，内容红利期可能很短",
-     "依赖特定 AI 编程工具的斜杠命令生态，产品化容易受上游变化影响",
-     "live 模式在部分路径下会以绕过审批和沙箱的方式调用 CLI，存在信任与安全争议",
-     "核心价值依赖 LLM 品味判断，难以单独收费，需靠团队版或托管服务变现"
-    ],
-    "reason": "话题性与演示效果强，痛点真实，许可证宽松；但项目本身已是成熟开源爆款并自带官网，包装空间和独占商业价值有限，更适合做内容而非主打订阅产品。"
-   }
-  },
   "Nutlope/hallmark": {
    "date": "2026-11-10",
    "v": 3,
@@ -440,66 +358,35 @@
     "reason": "话题性和演示性极佳，痛点真实、许可干净；但大厂出品加上 prompt-skill 形态导致封装和变现空间受限，更适合做内容而非独立产品。"
    }
   },
-  "obra/superpowers": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让你的 AI 编程助手先想清楚需求再写代码",
-    "one_liner_en": "A skill pack that makes coding agents plan before they code",
-    "target_user": "使用 Claude Code / Cursor / Codex 的海外专业开发者与小型工程团队",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 7,
-     "packaging_room": 5,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "把技能包做成带可视化工作流看板和团队规范托管面板的 SaaS",
-    "demo_idea": "网页模拟一次对话：AI 先追问需求、拆出 spec 与计划，再逐个任务执行并自审",
-    "attack_tool": false,
-    "red_flags": [
-     "项目本身已是成熟、星标很高的框架，并已进入 Claude、Codex、Cursor 等官方插件市场，二次包装的空间有限",
-     "本质是一套提示词与技能的合集，很容易被复制或替代",
-     "作者已在做商业支持服务（sales@primeradiant.com），存在与官方正面竞争的风险",
-     "价值完全依赖外部 AI 编程工具，这些工具的版本和插件政策一变，价值就可能归零"
-    ],
-    "reason": "话题性强、许可证宽松、痛点真实，但产品已成熟且高度依赖大厂的插件生态，留给独立产品化的空间不大，更适合做内容选题，而不是做产品。"
-   }
-  },
   "anhao/ai-pose-gallery-zh": {
-   "date": "2026-11-06",
+   "date": "2026-11-14",
    "v": 3,
    "eval": {
-    "category": "AI应用",
-    "one_liner": "中文AI绘画姿势服装人像参考图库，配三合一合成工作台",
-    "one_liner_en": "Chinese AI art pose, costume and portrait reference library with a 3-in-1 character studio",
-    "target_user": "中文/华语 AI 绘画创作者（国内与海外华人），主要为使用 ComfyUI、Stable Diffusion、即梦、Qwen 的生图玩家与自媒体做图人群",
+    "category": "多媒体创作",
+    "one_liner": "中文 AI 绘画姿势、服装、人像参考图库，带合成工作台",
+    "one_liner_en": "A Chinese-language AI art reference library for poses, outfits, and portraits with a character studio.",
+    "target_user": "使用 ComfyUI 或 Midjourney 生成人物图的 AI 绘画爱好者、插画师和自媒体创作者",
     "scores": {
      "topicality": 7,
-     "accessibility": 8,
+     "accessibility": 7,
      "wow": 6,
      "pain": 6,
-     "packaging_room": 4,
-     "monetization": 3,
+     "packaging_room": 5,
+     "monetization": 4,
      "license_safety": 2,
-     "demoability": 7
+     "demoability": 8
     },
-    "product_idea": "做一个 AI 角色参考素材库订阅站，提供姿势/服装/人像素材加一键合成提示词与拼图，按美元月付或买断出售素材包。",
-    "demo_idea": "网页上点选人像+服装+姿势，实时生成三合一拼图与提示词，再一键调用生图 API 出图。",
+    "product_idea": "做成在线 AI 角色参考库加生成工作台，用订阅制让用户选姿势、服装、人像后直接出图。",
+    "demo_idea": "在网页上随机抽一个人像、一套服装和一个姿势，自动拼成参考图并调 API 生成成品角色图。",
     "attack_tool": false,
     "red_flags": [
-     "主要是图库镜像与中文翻译整理，核心资产版权归日本原作者ギア、たきAI，仓库自己也写明禁止倒卖，商用授权几乎不可能",
-     "License 为 NOASSERTION，图库与代码授权均不清晰，存在版权与 DMCA 风险",
-     "文档大量为中文，目标用户偏中文市场，与美国主流英文付费市场脱节",
-     "含 NSFW/成人向素体姿势内容，涉及支付渠道（Stripe）与 App Store 政策风险，可能触碰 COPPA/平台未成年保护条款",
-     "核心依赖阿里云百炼、字节火山方舟等国内模型，海外用户不适用",
-     "只是素材整理+前端拼装，没有真正的技术或产品护城河，容易被原作者原站替代"
+     "许可证为 NOASSERTION，图片素材来自第三方作者，有版权风险；仓库自称是中文翻译整理存档，禁止转卖。",
+     "图库包含 18+ 素体和内衣内容，在面向美国市场时需要处理内容分级和支付渠道问题",
+     "核心价值是图库数据本身，属于资源镜像，不是原创技术",
+     "中文元数据对英文市场吸引力有限，需要英文化才有商业价值",
+     "阿里、字节等国内模型直连对海外用户价值低"
     ],
-    "reason": "内容传播性不错的 AI 绘画素材站，但本质是第三方图库镜像汉化，版权与授权是硬伤，商业化空间和英文市场需求都很弱，拿来做内容可以，做成付费产品风险高。"
+    "reason": "图库规模和 ComfyUI 集成有一定需求，适合做内容；但版权不清晰、素材非原创、商业化要靠订阅且风险高，包装空间有限。"
    }
   },
   "tangency-labs/solidcraft": {
@@ -811,313 +698,36 @@
     "reason": "终端里跑虚拟 Mac 供代理操作的定位新颖、演示感强，MCP 生态让它易被包装成代理电脑沙盒产品，但安装重、依赖 Apple 平台限制受众。"
    }
   },
-  "JuneYaooo/rea-video": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "逐镜头拆解任何视频：哪些是实拍、哪些是AI生成，并给出复刻方案",
-    "one_liner_en": "Break down any video shot by shot: what was filmed, what was AI-made, and how to remake it.",
-    "target_user": "短视频广告投手、内容营销团队、想复刻爆款的创作者和小型代理商",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 8,
-     "packaging_room": 8,
-     "monetization": 7,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "网页版：上传视频，输出逐镜头拆解报告和可执行复刻清单，可导出为分镜和提示词",
-    "demo_idea": "上传一段爆款广告，30秒内生成逐镜头报告，标出实拍与AI镜头，并附复刻提示词",
-    "attack_tool": false,
-    "red_flags": [
-     "深度依赖外部视频模型（Gemini/豆包），成本和可用性受第三方影响",
-     "Doubao 等国内模型依赖，全球用户需换用 Gemini 等海外方案",
-     "文档目前以中文为主，英文市场体验需补齐",
-     "识别准确率有误判（README自述35%实拍被误判为AI）",
-     "AI溯源和版权判定可能引发争议"
-    ],
-    "reason": "话题性强、演示效果直观，踩中AI视频爆发点；核心是智能体工作流，产品化门槛中等，付费意愿明确。"
-   }
-  },
   "zortos293/Lichii": {
-   "date": "2026-11-06",
+   "date": "2026-11-14",
    "v": 3,
    "eval": {
-    "category": "其他",
-    "one_liner": "一个实验性开源 Nintendo Switch 2 模拟器，可在电脑上运行 Switch 游戏",
+    "category": "生活娱乐",
+    "one_liner": "实验性开源 Switch 2 模拟器，可在电脑上跑 Switch 游戏",
     "one_liner_en": "An experimental open-source Nintendo Switch 2 emulator for PC",
-    "target_user": "全球 Retro/主机游戏玩家、模拟器爱好者（美国为主），但他们几乎不为模拟器本身付费",
+    "target_user": "美国/全球的 PC 玩家、复古游戏爱好者、想玩 Switch 独占游戏但不愿买主机的人",
     "scores": {
      "topicality": 8,
      "accessibility": 8,
      "wow": 8,
-     "pain": 4,
+     "pain": 6,
      "packaging_room": 3,
      "monetization": 2,
      "license_safety": 4,
-     "demoability": 4
-    },
-    "product_idea": "几乎无法做成付费产品：模拟器本体须免费开源，只能靠围绕它的安装向导或游戏兼容性数据库做内容变现",
-    "demo_idea": "网页上播放一段在 PC 上运行 Switch 2 游戏的录屏，并对比帧率或画质，用来说明兼容进度",
-    "attack_tool": false,
-    "red_flags": [
-     "模拟器面临任天堂强硬法律风险（yuzu 已被起诉和解），商业包装几乎不可行",
-     "GPL-3.0 传染性许可，商业化受限",
-     "项目仅创建 5 天、星标暴涨但极不成熟，README 自述 'VERY experimental'",
-     "捐赠只收加密货币，合规与支付风险高",
-     "依赖用户自备游戏、密钥与固件，涉及版权灰色地带",
-     "对目标账号无可持续付费产品路径"
-    ],
-    "reason": "话题性强、易懂有惊喜，但法律风险、GPL 与版权灰色地带使其难商业化，只适合做科普内容而非产品。"
-   }
-  },
-  "s1dashu/quiet-md": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "Rust 写的极速本地笔记 App，文件存在自己电脑上",
-    "one_liner_en": "A blazing-fast, local-first notes app built in Rust — no cloud, files stay yours",
-    "target_user": "注重速度与数据主权的知识工作者、开发者、写作者（美国/全球），以及重度飞书/Lark 海外用户",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 3,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 7
-    },
-    "product_idea": "做成签名分发的桌面笔记 App，主打百万字不卡+本地文件，Pro 版卖同步与导出",
-    "demo_idea": "网页里并排演示百万字文档打字耗时对比，帧率可视化",
-    "attack_tool": false,
-    "red_flags": [
-     "本身已是可直接下载安装的成品 App（含签名、自动更新），包装空间小",
-     "0.x beta、4 天新项目、日增星异常，稳定性与热度真实性存疑",
-     "核心差异化『兼容飞书 DocxXML』对欧美用户几乎无价值，飞书海外渗透低",
-     "笔记赛道极度拥挤且用户迁移成本高，付费意愿弱",
-     "无云同步/协作，靠用户自己 Git/iCloud，难做订阅收费"
-    ],
-    "reason": "性能演示有话题性，MIT 干净，但已是成品 App、痛点已被成熟产品覆盖，商业化空间薄，适合做内容不适合做产品。"
-   }
-  },
-  "scenario-labs/skills": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让 AI 编程助手一句话生成商用级图片、视频、3D 素材",
-    "one_liner_en": "Skills that let any AI coding agent generate production-ready images, video, audio and 3D",
-    "target_user": "美国/全球的独立游戏开发者、3D 美术外包团队、内容创作小工作室",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "做一个面向游戏美术的 agent 技能市场，或按次计费的美术资产生成工作台",
-    "demo_idea": "网页里输入一句话，agent 自动选模型、报价并生成同角色 4 张图，展示一致性",
-    "attack_tool": false,
-    "red_flags": [
-     "是 Scenario 官方仓库，核心价值依赖其付费 MCP 服务和账号，个人很难在它上面做出差异化",
-     "本质是提示词与工作流配置集合，接近资源列表，产品壁垒薄",
-     "依赖 Blender/Maya/Unreal 等重型本地软件，分发门槛高",
-     "技能数量上百但质量参差，商业化只能寄生在 Scenario 定价上"
-    ],
-    "reason": "话题性强、许可证宽松，但属大厂官方技能包，包装空间和变现都被上游锁定，适合做内容不适合做产品。"
-   }
-  },
-  "TagPhaseArcade/tiktok-uploader": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "批量上传、定时发布和管理标签的 TikTok 视频发布工具",
-    "one_liner_en": "Batch upload, schedule, and manage hashtags for TikTok videos.",
-    "target_user": "做短视频内容的多账号运营者、社交媒体代运营公司、小型内容工作室",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 4,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
      "demoability": 5
     },
-    "product_idea": "面向多账号创作者的浏览器端 TikTok 排期发布工作台，内置标签模板和上传队列",
-    "demo_idea": "网页模拟：拖入 3 个视频，填好标签，时间轴显示自动排期并依次上传成功",
+    "product_idea": "做成一键安装的图形化模拟器客户端，内置兼容性列表和配置向导，按游戏推荐最优设置",
+    "demo_idea": "网页播放同一款 Switch 游戏在模拟器上的实机运行画面，并对比帧率与画质选项",
     "attack_tool": false,
     "red_flags": [
-     "依赖 TikTok 非官方会话认证，违反其服务条款，账号被封风险高",
-     "README 引导用户从 telegra.ph 链接下载 exe 压缩包，典型恶意软件分发手法，需高度警惕供应链投毒",
-     "核心功能受 TikTok 反自动化策略影响，随时可能失效",
-     "本身是脚本工具，商业化空间有限，且难以做出差异化"
+     "README 明确警告存在冒充官网的钓鱼/恶意软件站点，品牌信任风险高",
+     "项目基于 yuzu/Sudachi 分叉，而 yuzu 已被任天堂诉讼和解，法律风险极大",
+     "模拟器涉及游戏 ROM、密钥和固件，版权合规风险高",
+     "项目仅 13 天、用 AI 工具开发，极其实验性，稳定性差",
+     "捐赠走加密货币，且明示不换取任何服务，商业化路径基本被封死",
+     "GPL-3.0 且无任何官方商业分发渠道"
     ],
-    "reason": "传播话题一般，痛点真实但受平台封禁风险约束，商业化弱，README 下载链接有严重安全疑点，不建议作为产品方向。"
-   }
-  },
-  "garrytan/gstack": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "把 Claude Code 变成一支 AI 工程团队：CEO、设计、QA、发布各司其职",
-    "one_liner_en": "Turn Claude Code into a virtual engineering team with 23 role-based slash commands",
-    "target_user": "美国/全球的创业公司创始人、技术负责人和重度使用 Claude Code 的独立开发者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "做托管版 AI 工程团队工作流：一键接入仓库、可视化角色流水线、团队共享与审计面板，按席位订阅",
-    "demo_idea": "网页模拟同一份 PR：裸 Claude 漏掉的 bug 对比 gstack 各角色接力找出并修复",
-    "attack_tool": false,
-    "red_flags": [
-     "作者是 YC CEO，项目自带巨大流量，个人做内容容易变成蹭热点而非差异化",
-     "本质是一堆 Markdown 提示词加斜杠命令，复制门槛极低，难形成产品壁垒",
-     "强依赖 Claude Code/Bun/Git 本地环境，纯网页化包装空间有限",
-     "大厂编码代理自带 review/QA 能力，功能易被平台吞并",
-     "月增星异常高，需警惕刷星或媒体驱动的短期热度"
-    ],
-    "reason": "话题性和人设光环极强，适合做内容；但产品化难度高，提示词资产无壁垒，商业化路径模糊，包装空间小。"
-   }
-  },
-  "Lostuaexpand/windows-animated-wallpapers": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "给 Windows 桌面换上流畅的 60 帧动态壁纸",
-    "one_liner_en": "Smooth 60fps animated live wallpapers for your Windows desktop",
-    "target_user": "喜欢个性化桌面的 Windows 玩家和发烧友（全球英文用户），愿为壁纸包或订阅付费",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 9,
-     "wow": 5,
-     "pain": 4,
-     "packaging_room": 4,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "做壁纸订阅商店：精选 4K 动态壁纸包 + 轻量播放器，按月或买断收费",
-    "demo_idea": "网页左右对比静态与动态桌面，点击切换 60 帧壁纸并显示 CPU 占用",
-    "attack_tool": false,
-    "red_flags": [
-     "README 的下载按钮指向 telegra.ph 跳转链接并要求运行 WallpaperSetup.exe，存在恶意软件投毒风险",
-     "项目创建仅 1 天即暴涨 426 星，疑似刷星或引流号",
-     "本质是壁纸资源集合，不是技术产品，代码价值低",
-     "壁纸素材版权不明，商用有侵权风险",
-     "Lively Wallpaper、Wallpaper Engine 等成熟竞品已牢牢占据这一市场"
-    ],
-    "reason": "资源合集与 exe 下载链接存在安全与版权风险，技术含量低，商业空间有限，仅适合做警示类内容，不适合产品化"
-   }
-  },
-  "The-PR-Agent/pr-agent": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "给 GitHub PR 自动做 AI 代码审查的开源机器人",
-    "one_liner_en": "An open-source AI bot that automatically reviews your GitHub pull requests.",
-    "target_user": "美国/全球的中小工程团队、开源项目维护者、独立开发者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "托管版 PR 审查机器人：一键接入 GitHub，按仓库包月收费，无需自建 Docker。",
-    "demo_idea": "网页贴一个公开 PR 链接，30 秒内生成 AI 审查评论对比图。",
-    "attack_tool": false,
-    "red_flags": [
-     "是 Qodo 的社区维护 legacy 项目，官方已有免费商业版，差异化空间小",
-     "赛道拥挤：CodeRabbit、Greptile、Qodo 等英文竞品强势",
-     "自托管门槛低，托管服务定价难上量",
-     "近期 stars 暴增疑似刷量，需警惕"
-    ],
-    "reason": "经典开源项目，传播和演示都不错，但已有大厂免费版和密集竞品，包装与变现空间有限，更适合做内容而非独立产品。"
-   }
-  },
-  "dragonwolfshovel/youtube-uploader": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "批量把视频上传到 YouTube 并自动填好标题、封面和定时发布",
-    "one_liner_en": "Batch-upload videos to YouTube with thumbnails, metadata and scheduled publishing",
-    "target_user": "美国/全球的独立视频创作者、频道运营者、MCN 助理和小型媒体档案团队",
-    "scores": {
-     "topicality": 5,
-     "accessibility": 8,
-     "wow": 3,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做一个网页版批量上传工作台，接入 OAuth，自动生成标题、标签和封面并一键定时发布",
-    "demo_idea": "前端模拟 10 个视频拖入后自动生成元数据并排期，进度条演示上传与配额追踪",
-    "attack_tool": false,
-    "red_flags": [
-     "README 用 telegra.ph 外链伪装成下载按钮，是典型的恶意分发或钓鱼手法，代码可信度存疑",
-     "创建仅 1 天却有 426 star 且日增 426，增长极不自然，疑似刷 star 营销",
-     "依赖用户自建 Google Cloud 项目和 credentials.json，普通创作者门槛高",
-     "官方 API 配额和审核政策限制多，商业化空间受平台制约",
-     "功能面窄，市面已有多款成熟竞品，差异化不足"
-    ],
-    "reason": "功能实用但平庸，wow 和商业化都弱，加上可疑下载外链和异常 star 增长，适合做避坑或扒皮内容，不太适合做成产品"
-   }
-  },
-  "DeltaProviderGuide/auto-auction-bot-wow-forever": {
-   "date": "2026-11-06",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "自动扫描并买卖魔兽世界拍卖行的挂机炒货机器人",
-    "one_liner_en": "An auto-flipping bot that buys low and reposts high on the WoW auction house for you.",
-    "target_user": "玩 WoW 怀旧服或私服、想边上班边刷金币的玩家",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 2,
-     "packaging_room": 5,
-     "monetization": 1,
-     "license_safety": 2,
-     "demoability": 6
-    },
-    "product_idea": "不做自动执行，只做拍卖行选品和收益计算面板，由玩家自己手动操作",
-    "demo_idea": "网页上拖动一个利润率滑块，实时演示买多少、多久卖出、净赚多少，并用真实拍卖行数据标出三个陷阱",
-    "attack_tool": false,
-    "red_flags": [
-     "自动买入、上架，以及在被压价后自动取消重挂，违反暴雪对游戏自动化的条款，会导致封号",
-     "作者自己也承认『自动化风险由你承担』，而且构建没有代码签名，会触发 SmartScreen 警告",
-     "许可证为 NOASSERTION，条款不明，不能安全地商用或二次分发",
-     "一旦被暴雪打击，或者私服关停，这个项目就会立刻归零；这类业务无法长期经营，也不能接入 Stripe 收款或上架 Product Hunt",
-     "421 星在 1 天内暴涨，且有多个可疑新账号，看起来像是刷量、临时集中点击或发布时刻意造势，可信度低",
-     "只针对小众私服 WoW Forever 的数据，没有通用性"
-    ],
-    "reason": "技术实现不错，但本质上是会被封号的游戏外挂，许可证不明确、不能商用、也不能稳定收款；只适合从反面讲解风险，不适合作为素材做产品"
+    "reason": "话题性极强、易懂，但法律与版权风险致命，几乎没有可持续商业化空间，只适合做爆款内容而非产品。"
    }
   },
   "google/skills": {
@@ -4194,6 +3804,341 @@
      "AI 代理操作浏览器和工具带来的数据泄露与越权风险，需自行承担合规责任"
     ],
     "reason": "话题性强、演示效果好、MIT 许可安全，但背后是成熟商业公司，留给独立开发者的包装和变现空间有限，更适合做内容而非做产品。"
+   }
+  },
+  "deepseek-ai/chat-demo": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "DeepSeek 官方开源的浏览器端 AI 聊天界面",
+    "one_liner_en": "DeepSeek's official open-source chat UI that runs in your browser",
+    "target_user": "想自托管 AI 聊天界面、避免锁定在 ChatGPT 上的开发者与小团队，以及愿带自己 API key 的普通用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 6,
+     "pain": 5,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 10,
+     "demoability": 9
+    },
+    "product_idea": "几乎无法做成创业产品，它本身就是大厂官方成品，最多做私有部署托管或企业版。",
+    "demo_idea": "网页直接打开官方 demo，输入 API key 对话，展示流式回复、思维链、附件与语音。",
+    "attack_tool": false,
+    "red_flags": [
+     "DeepSeek 官方大厂项目，个人无法在其上做出差异化产品",
+     "功能已完整成熟，无安装门槛，packaging_room 极低",
+     "商业化基本不存在：免费、官方维护、依赖第三方 API key",
+     "创建仅 1 天近千星，热度疑似营销驱动，话题生命周期短"
+    ],
+    "reason": "传播性不错、易演示、MIT 协议安全，但它是大厂官方成品，几乎没包装和变现空间，只适合当内容素材而非创业项目。"
+   }
+  },
+  "AIRzZ90/study-materials-fork": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "基于 Tauri 的跨平台影音聚合播放器",
+    "one_liner_en": "A cross-platform desktop video aggregator and player built with Tauri",
+    "target_user": "想要一站式聚合在线视频源的极客用户（但本项目禁商用，几乎无法变现）",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 6,
+     "wow": 4,
+     "pain": 4,
+     "packaging_room": 3,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 4
+    },
+    "product_idea": "无明显可包装空间：核心价值在于抓取第三方片源，法律与许可双重受限，难以产品化。",
+    "demo_idea": "网页演示一个仿播放器 UI，用公开示例 HLS 流播放，展示跨平台界面与播放交互。",
+    "attack_tool": false,
+    "red_flags": [
+     "PolyForm 非商业许可证，明确禁止任何商业用途、广告和付费，无法变现",
+     "属于视频聚合/抓取第三方片源类项目，存在版权与 DMCA 风险，美国市场不可碰",
+     "是 fork 的转载仓库，并非原始项目，star 增长异常（1 天 499）疑似刷量",
+     "README 自述不再维护数据获取链路，功能可持续性差",
+     "依赖外部站点接口，随时失效"
+    ],
+    "reason": "非商业许可加版权灰区，无法变现也不宜做产品；仅有一点技术演示价值。"
+   }
+  },
+  "google/elephant-goldfish-model": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让AI先帮你写设计文档，再用'失忆'的AI挑刺",
+    "one_liner_en": "Draft specs with your AI agent, then have a fresh-context AI review them.",
+    "target_user": "用 Claude Code / Codex 写代码的欧美软件工程师和工程团队，尤其是看重设计与规范流程的资深开发者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 3,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "把插件流程做成网页版规格评审工作台，粘贴文档即得盲评清单",
+    "demo_idea": "左边贴一段设计文档，右边'金鱼'AI秒出盲点与矛盾清单，附带修复建议",
+    "attack_tool": false,
+    "red_flags": [
+     "Google 官方项目，自带分发渠道，个人难以差异化",
+     "本质是提示词/技能集合，依赖宿主 agent 能力，产品壁垒低",
+     "已有 egm.dev 官方站点，商业化空间被官方占据",
+     "目标用户已付费给 Claude Code 等，单独收费意愿存疑"
+    ],
+    "reason": "话题热度高、痛点真实，但大厂官方项目、包装空间与商业化空间都受限，更适合做内容而非创业。"
+   }
+  },
+  "faizfahmi77/ScanDot": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "用安卓手机扫描现实物体并生成可旋转查看的3D点云。",
+    "one_liner_en": "Scan real objects with an Android phone and view them as 3D point clouds.",
+    "target_user": "需要快速扫描实物用于可视化展示的3D爱好者、小型电商卖家、AR/模型创作者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "做成一个安卓App：用手机扫描实物，一键生成可分享的3D点云链接，支持网页嵌入。",
+    "demo_idea": "网页里放一段已扫描好的点云，用户拖动旋转缩放，旁边播放手机扫描过程的录屏。",
+    "attack_tool": false,
+    "red_flags": [
+     "扫描依赖ARCore Depth，兼容机型有限",
+     "原型阶段，结果有空洞、漂移和噪声，非可用网格模型",
+     "点云生成无法纯前端演示，demoability受限",
+     "手机端不做视频摄影测量，工作流割裂",
+     "3D扫描消费级付费意愿弱，变现路径不清"
+    ],
+    "reason": "易懂、有视觉惊喜、MIT许可干净，但原型粗糙、设备受限、付费场景弱，更适合做内容而非直接产品化。"
+   }
+  },
+  "DevedevT/FFmpeg-GUI-Editor-Windows": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "给 FFmpeg 套上图形界面的免费视频剪辑工具，下载即用",
+    "one_liner_en": "A free, no-install GUI for FFmpeg that trims, crops, and converts video on Windows",
+    "target_user": "美国/全球的普通 Windows 用户、内容创作者、需要批量压缩或转换视频的小团队",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 8,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 6,
+     "demoability": 6
+    },
+    "product_idea": "做成免安装的网页版或桌面版 FFmpeg 前端，提供一键无损剪切、压缩、转 GIF，并内置上传直链",
+    "demo_idea": "网页里拖入一段视频，30 秒内无损裁切并压缩出适合发 Discord 的小文件，前后体积对比明显",
+    "attack_tool": false,
+    "red_flags": [
+     "README 写 GPL v3，仓库元数据却标 MIT，许可证自相矛盾，商用有风险",
+     "依赖 libvlc.dll，并非纯单文件，分发和信任有门槛",
+     "已存在 HandBrake、Shutter Encoder、LosslessCut 等成熟英文竞品，差异化空间小",
+     "541 star 与 1 天创建时间不符，疑似刷星或搬运",
+     "VB.NET Windows 独占，跨平台和移动端受限"
+    ],
+    "reason": "门槛低、易懂，但竞品强、许可混乱、商业化路径弱，适合做内容而非产品。"
+   }
+  },
+  "tailscale/tailcat": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "不用装 Tailscale 也能打洞直连的 netcat",
+    "one_liner_en": "Netcat over WireGuard NAT traversal, no account or root needed",
+    "target_user": "全球自托管开发者、SRE、家庭实验室爱好者和需要临时安全传文件的运维人员",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "做网页版一次性安全传文件/开端口小工具，扫码即用，Stripe 按次或订阅收费",
+    "demo_idea": "两个浏览器标签页互传文件与文本，展示 WireGuard 端到端加密和即时地址",
+    "attack_tool": false,
+    "red_flags": [
+     "大厂 Tailscale 官方项目，个人难在其上做差异化",
+     "依赖其免费限速 DERP 中继，自建 derper 有运维成本",
+     "CLI 已成熟、多包管理器覆盖，包装空间小",
+     "浏览器端仅 DERP 中继，无直连，隐私与性能受限"
+    ],
+    "reason": "官方开源、许可证干净且有网页 demo，适合做内容；但产品化空间被大厂自身产品挤压，商业化偏弱。"
+   }
+  },
+  "mromidev/claude-animated-shorts": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "用 Claude 在你的电脑上生成带 3D 场景的竖屏动画短片",
+    "one_liner_en": "A Claude skill that renders vertical animated story shorts with 2D characters in a 3D world",
+    "target_user": "做 YouTube Shorts / TikTok 的独立内容创作者和增长营销人员",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "做一个网页版工作室：用户输入主题，自动生成脚本、场景和配音，并提供一键导出竖屏视频",
+    "demo_idea": "在网页里输入一段故事梗概，30 秒内渲染出带镜头运动的 3D 卡通片段，并与参考帧对比",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖本地 Remotion + Node + ffmpeg，且 public 占 1.3GB，网页化和云端渲染的成本高",
+     "参考帧仅限风格研究，商用素材版权需自查",
+     "题材为历史故事，事实与配音内容需用户自备，生成质量不稳定",
+     "同类 AI 视频工具（Sora、Runway、Pika）竞争激烈，差异化依赖风格模板"
+    ],
+    "reason": "使用 MIT 许可证，近期热度增长快，动画风格模板可复用；但本地渲染与素材版权门槛高，需要做云端封装和模板订阅才能商业化。"
+   }
+  },
+  "opencoredev/islandcn": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "用 shadcn 一行命令装进 React 应用的灵动岛式顶部状态组件",
+    "one_liner_en": "An open-source Dynamic Island-style activity component for React, installed with shadcn.",
+    "target_user": "做 Web 应用 / SaaS 前端、追求精致交互的 React / Next.js 开发者与独立产品团队（美国与全球）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 4,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 9
+    },
+    "product_idea": "做成可视化配置器 + 高级预设与模板库，免费开源核心、付费主题和团队授权",
+    "demo_idea": "网页里并排展示上传、计时、来电三种灵动岛动效，点击即可切换、拖拽调节参数",
+    "attack_tool": false,
+    "red_flags": [
+     "属于 UI 组件库/代码分发，shadcn 注册表模式天然免费，付费转化难",
+     "与 Apple Dynamic Island 外观/商标高度相似，存在 Apple 商标与商业外观风险",
+     "项目仅 1 天、340 星，作者与维护可持续性未知，录制素材未开源",
+     "痛点弱：是锦上添花的美化组件，不是刚需",
+     "二次分发即源码开放，难以阻止复制"
+    ],
+    "reason": "视觉惊艳、演示性极强，适合做内容爆款；但本质免费 UI 组件、痛点弱、变现天花板低，商标风险需留意。"
+   }
+  },
+  "Likely7/Veyra-NRVideo": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "Windows 上的实时 GPU 视频增强播放器，把游戏画面和视频变高清高帧率",
+    "one_liner_en": "Real-time GPU video enhancer for Windows that upscales and boosts FPS",
+    "target_user": "美国/全球的 PC 游戏玩家、直播主、视频发烧友，尤其是用 PS5/Xbox 采集卡或串流到 PC 的人群",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 4,
+     "demoability": 5
+    },
+    "product_idea": "做成 Windows 桌面应用，一键采集/播放实时超分补帧，预设分成游戏、直播、影视场景",
+    "demo_idea": "网页左右对比播放同一段游戏视频的原始与 120FPS 增强效果，附硬件加速指标",
+    "attack_tool": false,
+    "red_flags": [
+     "标题蹭 GTA6、DLSS 5 等未发布概念，涉嫌夸大宣传",
+     "GPL-3.0 许可，商业分发需开源衍生代码",
+     "依赖 NVIDIA/AMD 专有驱动与 SDK，跨平台和合规受限",
+     "需高性能显卡，普通用户门槛高，网页端无法真实演示",
+     "项目更新频繁，功能描述混乱，成熟度与稳定性存疑"
+    ],
+    "reason": "话题强、效果直观，但 GPL 与硬件依赖限制商业化和网页演示，蹭热点有风险，包装空间中等。"
+   }
+  },
+  "modelflare-ai/AnyModelBot": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "在自己电脑上跑的多模型AI机器人团队，能干活、有记忆",
+    "one_liner_en": "Your own local AI bots on any model, with memory and real computer actions",
+    "target_user": "美国/全球的独立开发者、重度AI用户、想把AI代理私有化部署在本地的小团队和中小企业主",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "本地优先的多模型AI代理桌面端，主打隐私+跨渠道接入+计算机操作，按量付费模型网关",
+    "demo_idea": "网页里让一个机器人读文件、跑命令、写结果到工作区，全程可视化步骤和审批卡片",
+    "attack_tool": false,
+    "red_flags": [
+     "官方商业项目+自带Modelflare付费网关，开源只是获客渠道，二次包装空间小",
+     "微信/飞书渠道在国内才成立，对英文市场无价值",
+     "商业化本质是转售模型API，毛利和差异化受制于上游",
+     "computer-use涉及本地权限，macOS/Windows权限与安全合规需说明"
+    ],
+    "reason": "话题性强、本地优先与多模型代理是热点，但本质是大厂式官方商业产品，付费闭环已由自家网关掌握，外部包装和变现空间有限"
+   }
+  },
+  "Verlintas/NOIR": {
+   "date": "2026-11-14",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "用电脑扫一遍你的安卓手机，查清哪些应用在偷偷外传你的数据",
+    "one_liner_en": "Plug in your Android phone and see which apps leak your data, with safe one-click fixes",
+    "target_user": "注重隐私的安卓用户、安全研究者、给员工做手机合规审计的小团队（美国/欧洲/全球英文市场）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "把 CLI 包成桌面 GUI 加一份可视化隐私报告，按设备订阅或一次性买断",
+    "demo_idea": "网页里用模拟手机数据展示仪表盘：权限、外传域名、数据流向连线图和一键回滚",
+    "attack_tool": false,
+    "red_flags": [
+     "必须插真机 + 开 USB 调试，普通用户门槛高、演示只能靠模拟数据",
+     "adb 加 jadx 反编译，容易被滥用为窥探他人手机的工具，需强调自我审计",
+     "核心用户付费意愿偏弱，安卓隐私工具多为免费或开源",
+     "未来若做云服务需注意美国各州隐私法规与新加坡 PDPA"
+    ],
+    "reason": "话题性强、差评少、MIT 许可宽松，包装成可视化桌面工具的想象空间大；但门槛高、付费场景不清，商业化偏弱。"
    }
   }
  }
