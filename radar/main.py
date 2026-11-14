@@ -6,7 +6,7 @@ import re
 import shutil
 import traceback
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from . import collect, config, filters, generate, llm, mailer, offpeak, score, site
 
@@ -35,7 +35,7 @@ def forget_today(history: dict, today: str):
 
 
 def run(args) -> None:
-    today = datetime.now(config.BJ).date()
+    today = offpeak.edition_date()
     ts = today.isoformat()
     peak_note = ("⚠️ 本次运行处于 DeepSeek 峰时（全价）" if llm.is_peak()
                  else "✅ 本次运行处于 DeepSeek 谷时（半价）")
