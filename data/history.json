@@ -155,6 +155,12 @@
    "full_name": "ZhuLinsen/daily_stock_analysis",
    "category": "AI应用",
    "final": 7.28
+  },
+  {
+   "date": "2026-11-15",
+   "full_name": "alibaba/open-code-review",
+   "category": "开发者工具",
+   "final": 6.78
   }
  ],
  "top": {
@@ -263,7 +269,12 @@
   "govijr/terminal-mac": "2026-11-13",
   "ZhuLinsen/daily_stock_analysis": "2026-11-14",
   "opencoredev/islandcn": "2026-11-14",
-  "shanselman/gputaskman": "2026-11-14"
+  "shanselman/gputaskman": "2026-11-14",
+  "alibaba/open-code-review": "2026-11-15",
+  "ChromeDevTools/chrome-devtools-mcp": "2026-11-15",
+  "backnotprop/plannotator": "2026-11-15",
+  "Topkiflare74/ai--manus2.0": "2026-11-15",
+  "Likely7/Veyra-NRVideo": "2026-11-15"
  },
  "scores": {
   "deepseek-ai/DeepInfer": {
@@ -387,68 +398,6 @@
      "阿里、字节等国内模型直连对海外用户价值低"
     ],
     "reason": "图库规模和 ComfyUI 集成有一定需求，适合做内容；但版权不清晰、素材非原创、商业化要靠订阅且风险高，包装空间有限。"
-   }
-  },
-  "tangency-labs/solidcraft": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "开源参数化 3D CAD，改一个数字模型自动重建",
-    "one_liner_en": "Open-source parametric 3D CAD: change a dimension, the model rebuilds.",
-    "target_user": "美国/全球的硬件创客、3D 打印爱好者、小型机械/产品设计工作室、教育 Maker 课程",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 5,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 9
-    },
-    "product_idea": "浏览器版参数化 CAD 订阅制，主打改参数即重建、STEP 导出和 AI 建模",
-    "demo_idea": "网页里拖一个尺寸滑块，模型实时重建并显示质量变化，30 秒看懂",
-    "attack_tool": false,
-    "red_flags": [
-     "已有官网、多平台安装包和 Discord，开源版完成度高，可包装空间有限",
-     "FreeCAD、Onshape、Fusion 360 等成熟竞品强势，付费转化难",
-     "核心用户对免费开源 CAD 价格极其敏感",
-     "Web 版依赖 WASM 性能，大装配体验可能不佳"
-    ],
-    "reason": "技术硬核、话题性和可演示性都强，但产品已相当成熟，商业化被免费竞品和强敌夹击，适合做内容不适合包装。"
-   }
-  },
-  "valentderah/totk-pc-recomp": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "生活娱乐",
-    "one_liner": "把《塞尔达传说：王国之泪》静态重编译成能在 Windows 和 Linux 上原生运行的高帧率版本",
-    "one_liner_en": "Play Tears of the Kingdom natively on PC at 60-144fps with Vulkan, built from your own game files.",
-    "target_user": "拥有 Switch 游戏和正版游戏的 PC 玩家、模拟器与 Mod 社区、Steam Deck 掌机玩家",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 3,
-     "demoability": 5
-    },
-    "product_idea": "面向正版玩家的图形化一键安装器：自动识别游戏文件、打包好配置、引导完成安装",
-    "demo_idea": "网页对比模拟器 30fps 卡顿与原生 144fps 丝滑画面，再展示一键安装流程",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖任天堂受版权保护的游戏，存在明确的版权和法律风险",
-     "任天堂法务以强硬著称，对这类项目历史上频繁发出删除通知甚至起诉",
-     "项目明确声明非商业，任何收费包装都极易招致诉讼",
-     "代码主要由 AI agent 编写，质量与维护可持续性存疑",
-     "项目仅 8 天、日增 666 star，热度可能是短期炒作",
-     "静态重编译的技术路径本身没有商业护城河"
-    ],
-    "reason": "话题和演示性极强，适合做内容；但版权法律风险高、许可受限、几乎无法商业化，只能当内容素材"
    }
   },
   "mattpocock/skills": {
@@ -728,468 +677,6 @@
      "GPL-3.0 且无任何官方商业分发渠道"
     ],
     "reason": "话题性极强、易懂，但法律与版权风险致命，几乎没有可持续商业化空间，只适合做爆款内容而非产品。"
-   }
-  },
-  "google/skills": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "让 AI 助手学会使用谷歌云的一套技能包",
-    "one_liner_en": "Teach your AI agent how to actually use Google Cloud",
-    "target_user": "使用 Claude Code / Cursor 等 AI 编程助手、正在或计划上 Google Cloud 的北美独立开发者与小型工程团队",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 5,
-     "wow": 4,
-     "pain": 5,
-     "packaging_room": 2,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "无法包装成独立产品，只能做围绕 Agent Skills 生态的第三方技能市场或托管服务",
-    "demo_idea": "网页演示：让 AI 助手凭技能包从零生成并部署一个 GCP 服务，对比无技能时的失败",
-    "attack_tool": false,
-    "red_flags": [
-     "谷歌官方仓库，个人很难在其上做出差异化产品",
-     "本质是官方文档+配置的技能集合，属于大厂基础设施",
-     "商业价值几乎完全归属于谷歌云生态，第三方收费空间极小",
-     "内容主要为面向代理的指令文件，演示效果依赖真实 GCP 账号"
-    ],
-    "reason": "话题性强、增速快，但属官方基础设施型仓库，包装与变现空间极小，适合做内容不适合做产品。"
-   }
-  },
-  "WoYun520/pixel-gif-sticker-pack": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "给一张角色图，自动生成一整套聊天动态表情包",
-    "one_liner_en": "Turn one character image into a full pack of animated chat stickers",
-    "target_user": "独立创作者、VTuber、小型品牌和宠物账号主，需要自有表情包和吉祥物短片的人",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 9,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 8,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "上传角色图，选动作模板，一键导出整套 GIF 表情包和品牌短片工程",
-    "demo_idea": "网页上传一张角色图，30 秒生成挥手比心 GIF，并排展示前后效果",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是 Codex skill 加示例素材库，242 张示例是内容资产而非产品",
-     "依赖 Codex 环境和提示词，普通用户安装门槛高、结果不稳定",
-     "项目仅创建 1 天、星数暴涨，热度真实性待观察",
-     "生成角色动作涉及肖像权和 IP 授权，商业使用需注意版权",
-     "GitHub 仓库以中文为主，面向英文市场需重做文案和模板"
-    ],
-    "reason": "概念直观、包装空间大，适合做内容；但当前只是提示词技能加素材集，需重做成上传即用的产品才成立，付费意愿中等偏上。"
-   }
-  },
-  "AtomIllusionistDwell/watson-username-footprint-finder": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "输入一个昵称或邮箱，自动搜索3100多个公开网站生成个人数字足迹报告",
-    "one_liner_en": "Type a username or email, scan 3,100+ public sites, get one readable footprint report",
-    "target_user": "美国做二手交易、招聘背调、相亲交友前想核实对方身份的个人用户与小企业主",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 9,
-     "wow": 6,
-     "pain": 6,
-     "packaging_room": 3,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "把搜索做成浏览器插件或网页版，单次付费出报告，避开Exe安装",
-    "demo_idea": "网页输入一个公开用户名，实时滚动扫站点并弹出汇总卡片和可信度标注",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是OSINT人肉搜索工具，极易被用于骚扰、跟踪、doxxing，美国多州有反跟踪与隐私法风险",
-     "下载链接指向私有仓库且官网出现404，疑似引流/可疑发布",
-     "名字叫Watson且打包exe、要求用户忽略Windows签名警告，有恶意软件嫌疑",
-     "声称3100+站点但多为公开页面抓取，准确率和法律边界都存疑",
-     "'永久免费'无商业模式，且此类能力大厂(Google/PimEyes/Spokeo)已覆盖"
-    ],
-    "reason": "演示性强、易懂，但这是人肉搜索工具，伦理法律风险高且无变现路径，不建议做产品或内容。"
-   }
-  },
-  "HerdBuilderEstimate/roblox-studio-mcp": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "让 Claude、Cursor 直接操控 Roblox Studio 写脚本和跑测试的桥接工具",
-    "one_liner_en": "Connect Claude or Cursor to Roblox Studio to read your game, edit Lua scripts, and run playtests.",
-    "target_user": "Roblox 独立开发者、青少年游戏创作者及小型 Roblox 工作室，尤其已经在用 Cursor / Claude Code 的人",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "做 Roblox Studio 里的 AI 副驾插件：一键安装，自然语言改脚本、查结构、跑测试",
-    "demo_idea": "网页分屏：左边输入“给这个门加开关脚本”，右边 Roblox 场景树实时出现新脚本并跑通",
-    "attack_tool": false,
-    "red_flags": [
-     "README 中“Download Core_Update_Pack / 运行 ProjectFiles.exe / inject the script”属于典型的恶意软件诱导下载，正规 MCP 服务器不需要这样做，该项目疑似伪造或投毒，不能直接推荐给粉丝",
-     "仓库仅创建 1 天即 427 stars，增长曲线异常，可能是刷 star 或营销号推动",
-     "Python 主语言与 README 声称的 Node.js/TypeScript 不一致，信息可信度存疑",
-     "依赖 Roblox Studio 插件 API，Roblox 平台政策变动或封禁会直接归零"
-    ],
-    "reason": "题材有传播点、MIT 友好，但 README 含可疑 exe 下载诱导，真实性与安全性存疑，需先审计代码再决定是否做内容。"
-   }
-  },
-  "cloudflare/security-audit-skill": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "让 AI 编程助手按六个阶段自动给你的代码做安全审计并输出可核查的漏洞报告",
-    "one_liner_en": "Turns your coding agent into a six-phase security auditor with verified, machine-readable findings.",
-    "target_user": "美国/全球的中小型 SaaS 团队与独立开发者、需要合规审计的初创 CTO、安全顾问",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 7,
-     "packaging_room": 5,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "上传 GitHub 仓库，一键跑 AI 安全审计，输出可核查的漏洞报告和修复建议，按次或订阅收费。",
-    "demo_idea": "网页粘贴一个含已知漏洞的公开仓库，30 秒跑完展示 confirmed/needs_validation 三类结论和对应代码行。",
-    "attack_tool": false,
-    "red_flags": [
-     "Cloudflare 官方出品，属大厂基础设施，个人做差异化产品空间有限",
-     "依赖支持工具调用与并行子代理的编码 agent 和 OS 级沙箱，普通用户体验门槛高",
-     "结果质量强依赖底层模型，误报/漏报责任风险高，涉及安全声明易引发法律与信任问题",
-     "自身是 skill 而非独立产品，包装成 SaaS 需自建 exec/sandbox/report 基础设施",
-     "面向客户代码的审计涉及保密与责任条款，需自建合规与保险"
-    ],
-    "reason": "话题性与许可证极佳，痛点真实，但大厂出品且依赖 agent+沙箱环境，包装空间和产品差异化受限，适合做内容爆款多于独立创业。"
-   }
-  },
-  "livliv-dev/player": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "在网页里几行代码就能放入会眨眼对口型、跟摄像头动的虚拟角色",
-    "one_liner_en": "Drop a lip-syncing, webcam-tracking 2.5D avatar into any web page with a few lines of code",
-    "target_user": "独立 VTuber/主播、做直播叠加层的开发者、SaaS 与教育产品里想加虚拟助手的团队",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 9
-    },
-    "product_idea": "做一个零代码的虚拟形象联动面板：上传或选择角色，生成网页嵌入和一键直播叠加层，按月订阅",
-    "demo_idea": "网页左右对比：真人摄像头画面和会同步口型、眨眼、点头的虚拟角色并排",
-    "attack_tool": false,
-    "red_flags": [
-     "21 个精选角色不适用 Apache 许可，仅限个人非商用，商业产品不能直接使用，需自建角色素材",
-     "自建角色依赖 livliv.ai 的 AI 生成服务，是官方商业产品的入口；第三方产品会被限制在这一层，且需注意人物肖像与 AI 生成内容的版权归属",
-     "核心角色渲染格式（.livliv）和角色生态由官方掌控，第三方产品容易被官方渠道挤压",
-     "摄像头人脸追踪涉及生物特征数据，美国伊利诺伊州 BIPA 等州法和新加坡 PDPA 需明确告知与本地处理合规"
-    ],
-    "reason": "播放器轻量、接口干净、演示效果强、Apache 许可宽松，很适合做内容；但角色素材授权受限，变现要绕开官方角色池，商业壁垒一般。"
-   }
-  },
-  "phaseboulderfetter/discord-quest-completer": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "自动帮你在 Discord 上完成游戏任务白拿奖励",
-    "one_liner_en": "Auto-complete Discord Quests to claim rewards without installing the games",
-    "target_user": "全球 Discord 重度用户、想薅平台奖励的年轻人；但不会有人付费",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 5,
-     "pain": 2,
-     "packaging_room": 2,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "不可做——它绕过 Discord 规则，任何产品化都会直接引来封号和法律风险",
-    "demo_idea": "演示有风险且无法在纯网页复现进程伪装，难以安全演示",
-    "attack_tool": false,
-    "red_flags": [
-     "明确绕过 Discord 服务条款、违反平台规则",
-     "README 里的下载链接指向可疑第三方页面，疑似为恶意软件分发",
-     "仅 Windows 的 exe 流程，风险高且开源代码缺失可信度",
-     "账号封禁风险和潜在法律风险",
-     "创建仅 1 天，Star 增速异常，需警惕刷星"
-    ],
-    "reason": "属于违反平台规则的黑灰产工具，虽然易懂但无法合规产品化，不应拿来做内容或包装"
-   }
-  },
-  "Lowbetweentrim/crypto-portfolio-tracker": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "本地运行的加密货币资产追踪工具，数据不离开自己的电脑",
-    "one_liner_en": "A self-hosted crypto portfolio tracker that keeps all your data on your own machine",
-    "target_user": "重视隐私的加密散户投资者、需要报税的美国加密持有者",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 3,
-     "pain": 5,
-     "packaging_room": 4,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "托管版加密资产看板，钱包地址导入即刻出盈亏和税表",
-    "demo_idea": "粘贴一个公开钱包地址，30秒生成持仓饼图和已实现盈亏",
-    "attack_tool": false,
-    "red_flags": [
-     "README 中 Quick Start 引导下载 exe 并注入脚本，属于典型的恶意软件分发特征，需高度警惕",
-     "仓库创建仅 1 天即 425 stars，增长异常，疑似刷星",
-     "描述写 Python，实际技术栈是 Node/TS，信息不一致",
-     "加密货币领域，且引导执行不明可执行文件，存在盗币风险",
-     "加密税务属于金融合规敏感领域，需谨慎"
-    ],
-    "reason": "隐私优先的定位有卖点，但 README 引导下载并执行 exe，恶意软件风险极高，且商业化空间有限，不建议采用"
-   }
-  },
-  "PulverizeLink/roblox-performance-tool": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "生活娱乐",
-    "one_liner": "给 Roblox 玩家解锁帧率、减少卡顿的 Windows 小工具",
-    "one_liner_en": "A Windows tool that unlocks Roblox frame rates and reduces lag",
-    "target_user": "美国及全球的 Roblox 青少年玩家及其家长",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 5,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做成傻瓜式一键优化器，会自动检测 Roblox 进程并为其设置帧率上限和优先级，且带有可还原的功能。",
-    "demo_idea": "网页模拟 Roblox 画面对比：在 30FPS 和 144FPS 下，用动画展示流畅度差异。",
-    "attack_tool": false,
-    "red_flags": [
-     "README 里有一个 telegra.ph 下载链接，并要求运行 ProjectFiles.exe“inject the script”，这是典型的恶意软件传播方式，可信度极低。",
-     "README 写的技术栈是 C++，但仓库使用的语言却是 Python，前后自相矛盾。",
-     "仓库创建仅 1 天、就有 426 star，而且 README 描述的用途与代码实际内容不符，疑似刷星或用来分发恶意软件。",
-     "修改 Roblox 客户端帧率标志位可能违反 Roblox 服务条款，存在被封号风险。",
-     "玩家付费意愿低，主要由未成年人组成，因此涉及 COPPA 和支付合规问题。"
-    ],
-    "reason": "概念易懂，也有现成的玩家痛点，但项目本身疑点重重，下载渠道和代码描述相互矛盾，不适合拿来做内容或产品，风险极高。"
-   }
-  },
-  "majorminorlabs/hermes-voice": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "把旧Echo变成能对话的私人AI语音助手",
-    "one_liner_en": "Turn an old Echo into a talking AI voice assistant",
-    "target_user": "已用Home Assistant和Hermes的开源玩家、自建智能家居的技术爱好者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 4,
-     "packaging_room": 7,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "托管式语音助手网关：连接Echo与AI profile，零配置开箱即用",
-    "demo_idea": "网页模拟Echo屏：显示听到的话、逐字回答、调用的工具",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖Hermes Agent和echo-dot-assist等小众开源项目，用户群窄",
-     "安装需Docker、Home Assistant、刷Echo，门槛极高",
-     "无明确付费人群，商业化路径不清",
-     "刚创建1天即383星，增长可疑"
-    ],
-    "reason": "场景有趣但依赖链过重，只适合极客；内容有话题性，产品化与付费路径弱。"
-   }
-  },
-  "MythicHokageRepel/steam-inventory-value-desktop": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "一键算出你的Steam库存值多少钱、卖到哪最划算",
-    "one_liner_en": "See what your whole Steam inventory is worth and where it sells for the most.",
-    "target_user": "全球CS2/Dota2/Rust饰品玩家，尤其是有几百刀库存、想变现或投资的中重度玩家",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 5,
-     "license_safety": 2,
-     "demoability": 5
-    },
-    "product_idea": "免费桌面应用，Pro版解锁历史价格曲线、多账号监控和低价提醒，订阅付费",
-    "demo_idea": "网页输入一个公开Steam ID，实时展示库存总货值、各平台净收益对比和分享卡",
-    "attack_tool": false,
-    "red_flags": [
-     "License为NOASSERTION，未声明开源许可，无法安全二次分发",
-     "读取用户steamLoginSecure cookie（完整会话凭证），存在账号安全与ToS风险",
-     "依赖Steam未文档化订单簿接口，随时可能失效",
-     "Steam饰品交易变现涉及各地区博彩/金融衍生品灰色地带，需谨慎合规",
-     "项目创建仅1天星数暴涨，可疑刷星，需警惕维护稳定性"
-    ],
-    "reason": "需求真实、演示直观，但许可证不明、依赖非官方接口和用户cookie，商业化和合规风险高，适合做内容而非主业。"
-   }
-  },
-  "Wallbycontact/java-mod-rust-port-tool": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "把 Minecraft 的 Java 模组自动改写成 Rust 版模组",
-    "one_liner_en": "Drop a Minecraft Java mod jar and get a Rust-based mod back",
-    "target_user": "Minecraft 模组开发者与重度玩家，尤其是想试用 Horizon（Rust 版 Minecraft）的人",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 4,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "做成网页版诊断器：拖入 jar 即可得到可移植性报告，并付费下载 Rust 转译包",
-    "demo_idea": "网页里拖入一个示例 mod jar，几秒后展示 Works/Partly/Won't run 三档判定和缺失部分",
-    "attack_tool": false,
-    "red_flags": [
-     "Horizon 是不成熟的第三方 Rust 重写版，生态极小，目标用户盘子很窄",
-     "官方命名容易让人误以为与 Mojang、微软有关，存在商标风险",
-     "把 jar 自动转成可执行代码、绕过官方平台分发，可能触及 Mojang EULA",
-     "最近每天新增 420 star，增长曲线异常，真实需求存疑",
-     "自动生成的代码质量与安全性难以保证，几乎没人愿意为此付费"
-    ],
-    "reason": "点子新奇、易讲清楚，但依赖一个尚未成气候的 Minecraft 重写版项目，付费意愿很弱，更适合做内容选题而非产品。"
-   }
-  },
-  "ly05010419/MacNativeGames": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "在自己苹果设备上原生运行 Switch 游戏的技术实验",
-    "one_liner_en": "Native ARM64 ports of Switch games running on Apple silicon (bring your own game)",
-    "target_user": "拥有正版 Switch 游戏、使用 Apple silicon Mac 或 iPhone 的欧美硬核玩家，以及爱折腾的模拟器与游戏移植爱好者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "做成一键打包工具：用户导入自己的游戏文件，生成 Mac 或 iPhone 应用并自动打补丁，同时提供兼容性列表",
-    "demo_idea": "在 iPhone 上原生跑《王国之泪》4K 画面，并左右分屏对比卡顿的模拟器",
-    "attack_tool": false,
-    "red_flags": [
-     "绕开任天堂版权与技术保护，实际使用需用户自备 prod.keys 和游戏本体，法律风险高",
-     "涉及游戏密钥与固件，易被用于盗版，DMCA 1201 反规避条款风险",
-     "依赖 Apple 私有 API 与内置游戏运行时，无法上架 App Store",
-     "纯技术探索，作者明确不鼓励商业化，变现几乎不可行",
-     "不要为用户提供游戏文件、密钥或 IPA 分发"
-    ],
-    "reason": "话题性和惊喜感极强、易于传播，但法律雷区多、变现困难，适合做内容而非做产品；只能定位为免费技术实验。"
-   }
-  },
-  "interplains/Zero-Breach-Toolkit": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "免费检查电脑和手机里有没有飞马等雇佣间谍软件的痕迹",
-    "one_liner_en": "Free, open-source check for traces of Pegasus and other mercenary spyware on your devices",
-    "target_user": "记者、人权工作者、律师、活动人士、高关注度个人及其协助组织（新闻机构、NGO 安全团队）、高净值个人和家庭安全顾问",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 7,
-     "pain": 7,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "面向记者/NGO 的隐私安全服务：免费扫描器做入口，付费提供人工解读报告、取证级复核、设备加固和持续监测订阅",
-    "demo_idea": "网页模拟一份扫描报告：列出发现项、证据强度和未覆盖范围，把'绿色不等于安全'的边界说清楚",
-    "attack_tool": false,
-    "red_flags": [
-     "纯检测工具，商业变现困难：目标用户多为预算有限的记者和 NGO，个人消费者又不认为自己被盯上",
-     "开源版已是双击即用的成品，打包空间有限；产品化只能靠服务而非软件本身",
-     "扫描结果的可信度依赖持续更新 IOC 库，单人维护难以长期保证，误报或漏报会引发责任和声誉风险",
-     "无代码签名的可执行文件易被杀软误报，普通用户下载和安装转化率低",
-     "安全类产品的合规与责任风险：误报'你被感染了'可能造成严重误导，涉及美国各州消费者保护与隐私宣传合规"
-    ],
-    "reason": "话题性和易懂度强，正值间谍软件新闻周期；但这是免费防守工具，付费人群窄、变现弱，更适合做内容而非独立产品。"
-   }
-  },
-  "JosssphZhou/poki": {
-   "date": "2026-11-07",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让AI智能体像人一样操作你的真实iPhone",
-    "one_liner_en": "Let AI agents control your real iPhone like a person would",
-    "target_user": "全球英语市场的AI开发者、自动化重度用户、QA测试团队和移动端效率极客",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 6,
-     "packaging_room": 8,
-     "monetization": 5,
-     "license_safety": 1,
-     "demoability": 7
-    },
-    "product_idea": "做成一条命令安装的Mac桌面App，连接iPhone就能用自然语言跨App自动操作",
-    "demo_idea": "网页播放分屏录像：左边聊天指令，右边iPhone屏幕实时自动搜索、点击、返回",
-    "attack_tool": false,
-    "red_flags": [
-     "AGPL-3.0，商用和闭源衍生受强传染限制",
-     "依赖macOS+Xcode+Rust+Node24+ffmpeg，安装门槛极高",
-     "需完整访问用户真实手机屏幕并上传到模型服务，隐私与信任风险大",
-     "iPhone实体机仅验证中文界面，美国市场适配未证实",
-     "项目仅创建1天却日增370星，热度真实性需警惕",
-     "官方Agent默认绑定自有/第三方模型服务，可能形成依赖"
-    ],
-    "reason": "概念抓人、演示性强，包装空间大；但AGPL、安装门槛、隐私信任和变现路径是硬伤"
    }
   },
   "sherlock-project/sherlock": {
@@ -4139,6 +3626,905 @@
      "未来若做云服务需注意美国各州隐私法规与新加坡 PDPA"
     ],
     "reason": "话题性强、差评少、MIT 许可宽松，包装成可视化桌面工具的想象空间大；但门槛高、付费场景不清，商业化偏弱。"
+   }
+  },
+  "ChromeDevTools/chrome-devtools-mcp": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让 AI 编程助手直接操控并调试真实 Chrome 浏览器",
+    "one_liner_en": "Let AI coding agents control and debug a live Chrome browser",
+    "target_user": "全球使用 Cursor / Claude Code 的前端与全栈工程师、Web 性能与 QA 团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做一层团队级 Web 性能与可访问性审计面板，用该 MCP 自动跑回归并出报告",
+    "demo_idea": "网页里输入一个 URL，AI 自动打开页面、录性能 trace 并高亮 LCP 问题",
+    "attack_tool": false,
+    "red_flags": [
+     "Google 官方项目，个人难在其上做差异化产品",
+     "默认向 Google 上报使用统计，需 --no-usage-statistics 关闭",
+     "性能工具会把 trace URL 发往 CrUX，有隐私顾虑",
+     "偏基础设施与配置类，安装门槛低、包装空间有限",
+     "依赖 npx / Node 环境，非技术用户无法直接用"
+    ],
+    "reason": "传播性极强、官方出品且工程价值高，但作为 Google 基础设施，包装与商业化空间都很窄，更适合做内容而非产品。"
+   }
+  },
+  "Topkiflare74/ai--manus2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "能自己写代码、开网页帮你干活的AI助手",
+    "one_liner_en": "An AI agent that writes code and browses the web to finish tasks for you",
+    "target_user": "美国/全球的中小企业运营者、独立开发者和需要处理重复性网页任务的远程工作者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做成托管版网页Agent：用户描述任务，云端沙箱跑代码加浏览器完成并返回结果",
+    "demo_idea": "网页输入“帮我抓取三个竞品价格做成表格”，实时展示Agent开浏览器、抓数据、生成表格",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库仅创建1天却已678星且日增678，疑似刷星或营销号，代码质量与真实性存疑",
+     "README是SEO关键词堆砌，几乎无真实安装/架构/代码说明，可能为套壳或空壳仓库",
+     "名为Manus但非官方，涉嫌蹭知名产品名字与品牌",
+     "浏览器控制+代码执行有凭据泄露与被恶意站点利用风险"
+    ],
+    "reason": "话题热度高、概念好演示，但仓库可信度极低，内容可做但包装成产品前必须先验证代码真实性。"
+   }
+  },
+  "backnotprop/plannotator": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "在浏览器里批注 AI 编程助手的方案和代码，一键把反馈发回去",
+    "one_liner_en": "Annotate your AI coding agent's plans and code in the browser, send feedback with one click",
+    "target_user": "使用 Claude Code、Codex 等 AI 编程代理的欧美开发者和技术团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "本地运行的浏览器批注工作台，统一收件箱汇总多个 AI 代理的待审方案与 PR",
+    "demo_idea": "网页载入一份假的方案 Markdown，划词批注后点击发送，展示生成的反馈 JSON",
+    "attack_tool": false,
+    "red_flags": [
+     "项目增长极快（日增近千星），热度可能透支，内容时效性强",
+     "深度绑定各家 agent 的插件与 hook，上游接口一变就容易失效",
+     "官方站已存在，商业化路径需与作者区分，开源版已有完整产品形态",
+     "本地 CLI 安装有门槛，纯网页演示只能模拟发送环节"
+    ],
+    "reason": "选题正当风口，痛点真实、易懂，演示直观；但已是完整产品、竞争拥挤，包装空间和收费路径有限。"
+   }
+  },
+  "vercel-labs/ui": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给 AI 编程助手用的无障碍 UI 行为库",
+    "one_liner_en": "Headless UI behaviors that AI coding agents can compose into accessible components",
+    "target_user": "使用 Cursor / Copilot / Claude Code 的前端团队和独立开发者，尤其是需要满足 WCAG 无障碍要求的中大型 SaaS 团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "面向 AI 生成代码的无障碍行为底座，叠加可视化组件市场与团队规范托管",
+    "demo_idea": "同一句提示词分别让 Agent 用原生组件和 UI SDK 生成下拉菜单，现场演示键盘操作和屏幕阅读器差异",
+    "attack_tool": false,
+    "red_flags": [
+     "Vercel Labs 官方项目，属于大厂基础设施，个人很难在其上做出差异化产品",
+     "API 处于 beta，明确说会变，向上封装风险高",
+     "本身定位就是给 Agent 用，安装和体验门槛极低，包装空间很小",
+     "核心价值几乎全部面向开发者，非技术用户难理解",
+     "与 Radix、React Aria、Base UI 高度同质，切换成本低"
+    ],
+    "reason": "话题性强、许可证干净，但大厂官方基础设施、给 Agent 用的定位让个人几乎无产品化空间，只适合做内容。"
+   }
+  },
+  "duwqijlk/muse-protocol": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "用纯 Python 脚本批量注册 muse.ai 账号并兑换邀请码",
+    "one_liner_en": "Bulk-register muse.ai accounts and redeem invite codes via plain HTTP scripts.",
+    "target_user": "没有可付费人群——这属于绕过服务条款的滥用工具",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 7,
+     "wow": 4,
+     "pain": 1,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 3
+    },
+    "product_idea": "无——将批量注册与邀请码滥用包装成产品，会违反平台服务条款并带来法律风险",
+    "demo_idea": "不宜演示；如要讲，只能把抓包分析当作“协议逆向怎么读”的教学素材",
+    "attack_tool": true,
+    "red_flags": [
+     "批量注册 + 代理池 + 验证码收件箱 = 违反 muse.ai 服务条款的账号自动化滥用",
+     "邀请码 30 次上限被批量兑换，明显用于薅羊毛或转卖",
+     "README 明确写“JP 节点免绑卡”，属于规避地区/风控限制",
+     "NOASSERTION + 自定义“非商业”声明，不可商用、不可再分发，license 极不安全",
+     "718 stars 一天暴涨，疑似刷星，话题本身有封号/合规争议",
+     "没有真实付费场景，无法作为独立产品包装"
+    ],
+    "reason": "协议逆向本身有技术含量，但核心用途是批量注册与邀请码滥用，商业化与传播都不合规，只适合当反面案例讲。"
+   }
+  },
+  "Minireel/HGhub": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "一个靠插件接入各种视频源的通用播放器",
+    "one_liner_en": "A plug-in video player that pulls content from any source you add",
+    "target_user": "想统一管理多个流媒体来源的海外影迷、追剧用户和插件开发者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 7,
+     "wow": 5,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 2,
+     "license_safety": 1,
+     "demoability": 6
+    },
+    "product_idea": "做跨设备聚合播放器，内置经过审核的合法内容源（公开库、播客、独立影视），并按订阅收费。",
+    "demo_idea": "网页里导入一个示例插件，30 秒内出现一个公开视频源的片单并直接播放。",
+    "attack_tool": false,
+    "red_flags": [
+     "PolyForm Noncommercial 许可证，明确禁止任何商业用途，不能直接做成收费产品",
+     "项目本身不提供内容源，插件生态极易被用来接入盗版影视，存在版权和 DMCA 风险",
+     "Rust/Tauri 客户端还是早期状态，只有 Windows/Android 相对可用",
+     "8880 星、11 天、日增 965 星，增长异常，需警惕刷星或短期炒作",
+     "拿 P2P 和灰色片源做卖点，在美国市场会触碰版权和支付通道风控"
+    ],
+    "reason": "话题度和易理解度不错，但非商业许可证把商业化道路完全堵死，且内容来源天然有版权风险，只适合做内容，不适合做产品。"
+   }
+  },
+  "alibaba/open-code-review": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "阿里开源的AI代码审查命令行工具，能逐行指出代码缺陷",
+    "one_liner_en": "Alibaba's open-source AI code review CLI that flags bugs line by line",
+    "target_user": "美国/全球的中小型工程团队、DevOps 负责人和需要把 AI review 接入 CI 的工程经理",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做成托管版 GitHub App：安装即可自动 PR 审查，按仓库月费订阅，免自配模型",
+    "demo_idea": "网页粘贴一段有 bug 的 diff，30 秒内逐行跳出审查评论并高亮缺陷",
+    "attack_tool": false,
+    "red_flags": [
+     "阿里巴巴大厂官方项目，已是成熟产品且有官网，个人在上面做差异化空间有限",
+     "纯 CLI 形态，核心价值依赖用户自备 LLM API key，门槛和成本转嫁给用户",
+     "LLM 推理成本高，订阅定价利润薄",
+     "同类竞品众多（CodeRabbit、Greptile、Graphite 等）竞争激烈"
+    ],
+    "reason": "大厂背书、话题热度高，适合做内容；但已是成熟官方产品，包装和商业化空间被大厂压住，更适合做测评而非创业。"
+   }
+  },
+  "tradermonty/claude-trading-skills": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "教 Claude 按固定流程做市场复盘、选股和交易日记的工具包",
+    "one_liner_en": "Claude skills that turn AI into a disciplined trading workflow for everyday investors.",
+    "target_user": "美国有时间做波段、但没时间盯盘的个人投资者和股息、ETF 长期持有人",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "把整套 skill 做成网页版交易纪律助手，上传持仓和图表，每天生成复盘和风控清单",
+    "demo_idea": "上传一份模拟持仓 CSV 和一张走势图，30 秒内输出仓位建议、风控清单和交易日记模板",
+    "attack_tool": false,
+    "red_flags": [
+     "金融建议类内容在美国受 SEC、FINRA 关于投资建议的监管，产品化必须严格停留在流程、教育层面",
+     "依赖客户自备 FMP、FINVIZ、Alpaca 等第三方数据，成本和集成是门槛",
+     "只是 Claude 的 skill 和提示词集合，核心价值易被复制，壁垒低",
+     "作者明确不是信号服务，用户会期待收益承诺，预期管理有风险"
+    ],
+    "reason": "话题热、MIT 许可证干净，但本质是提示词工作流，差异化有限，做成产品要严守合规边界。"
+   }
+  },
+  "trackboatwrightplan/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "GitHub 官方推出的、能把多个 AI 编程助手同时管起来的桌面应用",
+    "one_liner_en": "GitHub's official desktop app for running and steering multiple coding agents across your repos",
+    "target_user": "已经在付费使用 Copilot 或 Cursor 的个人开发者和小型工程团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 3,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 4
+    },
+    "product_idea": "没有可行的独立产品空间，只能做垂直的 agent 编排插件；不建议直接包装成产品",
+    "demo_idea": "用网页模拟多个 agent 并行修改同一个仓库的 worktree，并展示 diff 汇总",
+    "attack_tool": false,
+    "red_flags": [
+     "大厂 GitHub 官方产品仓库，个人无法在其上做出差异化产品",
+     "README 写 All rights reserved，与 GitHub 标注的 Apache-2.0 冲突，许可证有风险",
+     "README 挂的下载链接指向 Dropbox 的 .rar 文件，可疑，有被投毒或钓鱼风险，不像官方发布",
+     "Topics 里混有 xtreamcode、adminlte 等无关标签，仓库真实性存疑",
+     "目前只是发布和反馈渠道，没有可复用的源码",
+     "创建仅 1 天就有 672 stars，增长异常，可能是刷星"
+    ],
+    "reason": "大厂官方的分发仓库，既没有源码也没有差异化的包装空间；下载链接可疑还涉及许可证冲突，不推荐做内容或产品"
+   }
+  },
+  "WarriorRemember/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "号称免费看全球4K频道的IPTV播放器",
+    "one_liner_en": "An IPTV player promising thousands of free 4K channels worldwide",
+    "target_user": "想省掉有线电视费的美国流媒体用户——但这类人正是版权方追诉的对象",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 5,
+     "pain": 2,
+     "packaging_room": 3,
+     "monetization": 1,
+     "license_safety": 3,
+     "demoability": 3
+    },
+    "product_idea": "不建议包装成产品：这是盗版流媒体分发链路，做产品必然踩版权红线",
+    "demo_idea": "无可行合规演示；能演的只有播放器界面，价值全在盗版源上",
+    "attack_tool": false,
+    "red_flags": [
+     "Readme 实为盗版IPTV下载页：从Dropbox分发.rar可执行文件，宣称免费看BBC/ESPN/HBO等付费频道，属版权侵权与盗链",
+     "分发渠道可疑（Dropbox直链压缩包、无官网无源码发布），是恶意软件/钓鱼常见手法",
+     "仓库名与README品牌名不一致（IPTV_Player_2.0 vs MegaCubo Free），Star数1天涨673，疑似刷星或营销号",
+     "宣称支持4K/EPG/多平台却无实际代码信息，License标注Apache-2.0与盗版分发行为矛盾",
+     "面向美国市场涉及DMCA、版权方诉讼、应用商店封禁风险",
+     "商业化路径为零：不能向盗版用户收费，也不能上Product Hunt/App Store"
+    ],
+    "reason": "披着开源播放器外衣的盗版IPTV分发页，传播有话题但商业和合规全废，不建议做内容也不建议做产品"
+   }
+  },
+  "TrapAccountant/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "用桌面应用统一管理和调度多个AI编程助手，帮你完成发PR、改bug等开发任务",
+    "one_liner_en": "A desktop app for finding, running and steering AI coding agents across your GitHub repositories",
+    "target_user": "需要同时维护多个仓库、重度使用Copilot的美国/全球专业开发者与小团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 5
+    },
+    "product_idea": "无法二次包装，只能在内容层面拆解多agent并行工作流和画布式协作",
+    "demo_idea": "在网页中用假数据模拟三个agent在不同worktree里同时改bug并汇总成PR看板",
+    "attack_tool": false,
+    "red_flags": [
+     "这是GitHub官方产品仓库，不代表可复用源码，个人难在其上做出差异化",
+     "Apache-2.0标注与README中© GitHub, Inc. All rights reserved及“反馈去github/app/issues”矛盾，许可存疑",
+     "仓库1天涨670星、Topics堆砌vxe/xtreamcode等无关标签、README含Dropbox .rar下载链接，疑似刷量或冒名仓库",
+     "内容只能做科普解读，商业化路径几乎为零"
+    ],
+    "reason": "官方大厂产品且疑似冒名刷星，包装与商业化空间极低，仅适合做一次行业解读内容。"
+   }
+  },
+  "WattBeetleLearn/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "一个能播放 M3U 播放列表和节目单的跨平台 IPTV 播放器",
+    "one_liner_en": "Cross-platform IPTV player for M3U playlists and EPG guides.",
+    "target_user": "想合法收看免费/自建频道的海外流媒体爱好者，以及小型 OTT 服务商",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 7,
+     "wow": 3,
+     "pain": 3,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 8,
+     "demoability": 6
+    },
+    "product_idea": "做成正版友好的 IPTV 播放器，让用户用自己的合法播放列表观看，并内置节目单订阅和录制功能。",
+    "demo_idea": "在网页里载入一个公开的测试 M3U 列表，展示频道切换、EPG 节目单和画中画播放。",
+    "attack_tool": false,
+    "red_flags": [
+     "README 与仓库名不符，实际用 MegaCubo Free 名义推广，并引导下载 Dropbox 上的 rar 压缩包，存在恶意软件风险",
+     "宣称免费提供 BBC/CNN/HBO/ESPN 等付费频道，明显涉及盗版内容和版权侵权",
+     "用刻意宣传的 'Turbo Stream' 等方式诱导用户下载 exe/rar，是典型的灰色盗版分发套路",
+     "创建仅 1 天、星数暴涨，疑似刷星或营销号",
+     "商业模式建立在盗版内容上，在美国市场会触发版权诉讼和支付渠道封禁"
+    ],
+    "reason": "技术外壳尚可，但 README 实为盗版 IPTV 分发广告，附带可疑压缩包，商业化和合规均不可行，只适合做风险警示内容。"
+   }
+  },
+  "tornadonovicewhirl40/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "一款号称免费看全球直播频道的IPTV播放器",
+    "one_liner_en": "A free IPTV player claiming thousands of live channels worldwide",
+    "target_user": "不愿付有线电视费的美国cord-cutter和体育迷，但实际付费意愿低",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 8,
+     "wow": 4,
+     "pain": 5,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 2,
+     "demoability": 2
+    },
+    "product_idea": "没有可行产品形态，内容只是盗链分发，无法合规包装",
+    "demo_idea": "无法演示，核心是下载不明压缩包，不适合网页展示",
+    "attack_tool": false,
+    "red_flags": [
+     "README与GitHub仓库严重不符：描述为Rust M3U/EPG播放器，正文实为「MegaCubo Free」引流页",
+     "通过Dropbox分发无密码RAR压缩包，典型恶意软件/木马分发手法，高风险",
+     "宣称免费提供BBC/ESPN/HBO等付费频道，属盗版内容分发，侵犯版权",
+     "所谓Turbo Stream为无意义营销话术，无真实技术说明",
+     "Star增长异常（1天669星），疑似刷量或营销农场",
+     "Apache-2.0仅名义，实际仓库内容与许可证不符，法律风险高"
+    ],
+    "reason": "疑似盗版引流+可疑二进制分发的刷量仓库，无真实开源价值，不建议做内容或产品。"
+   }
+  },
+  "TurquoiseDetective/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "多平台 IPTV 播放器，但实际是带恶意软件的盗版直播源",
+    "one_liner_en": "An IPTV player promising free 4K channels, but really a malware lure",
+    "target_user": "无付费用户；这是恶意分发，不具备正当商业化基础",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 3,
+     "pain": 2,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 2,
+     "demoability": 2
+    },
+    "product_idea": "不可做产品：README 主要内容是引导下载 Dropbox 里的 .rar 文件，疑似恶意软件。",
+    "demo_idea": "不做演示；这属于恶意软件分发，内容方向应改为提醒他人防骗。",
+    "attack_tool": true,
+    "red_flags": [
+     "README 主要以免费 4K 频道为噱头，引导用户下载 Dropbox 的 .rar 压缩包，疑似恶意软件或银鼠类木马，不存在可打包的开源代码",
+     "宣称免费收看 BBC、ESPN、HBO 等付费频道，属于盗版直播源，在美国会面临版权侵权与 DMCA 风险",
+     "仓库只创建 1 天便获得 669 stars，增长方式异常，疑似刷量配合恶意分发",
+     "README 与仓库真实功能（Rust IPTV 播放器）严重不符，描述宣称支持 Android、TV Box，实际下载包只适配桌面系统",
+     "不存在可商业化与打包的空间，并且有可能导致用户设备被入侵、隐私泄露"
+    ],
+    "reason": "这不是一个正常的开源项目，而是借 IPTV 名义引导用户下载可疑压缩包的恶意分发，既没有包装成产品的空间，也存在法律与安全风险。建议内容方向改为防骗警示。"
+   }
+  },
+  "topapothecarycanal/ai--manus2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "一个能自己写代码、开浏览器的通用 AI 助手，帮你自动完成杂活",
+    "one_liner_en": "An autonomous AI agent that writes code and controls a browser to finish tasks for you.",
+    "target_user": "美国 / 全球的中小团队运营、独立开发者、知识工作者，以及想自动化的销售和客服团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 4,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "托管式浏览器 + 代码沙箱 Agent，用自然语言录制工作流并定时跑，面向小团队按任务计费",
+    "demo_idea": "网页 demo：输入一句话，几秒内它自动打开网站、抓数据、跑代码并返回结果截图",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库名模仿 Manus，README 里塞了 PROMO2026 推广码，疑似蹭热度或导流营销",
+     "README 为 SEO 堆砌关键词，无真实安装文档、无源码结构说明，主要语言未知",
+     "创建仅 1 天就 666 stars，增长异常，可信度低",
+     "没有实际代码证据，可能只是空壳仓库，难以复现和验证",
+     "浏览器控制 + 代码执行可被滥用，需做沙箱与权限隔离"
+    ],
+    "reason": "赛道是热门的通用 Agent，Apache 许可友好、可演示；但仓库质量可疑、像营销壳，痛点一般、付费方不清晰，包装前需先验证是否真有代码。"
+   }
+  },
+  "toppatronweave/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "在桌面端统一指挥多个AI代理替你改代码、跑任务、提PR",
+    "one_liner_en": "A desktop control center for steering AI coding agents across your GitHub repos",
+    "target_user": "美国/全球的重度使用 Copilot 或 AI 编程代理的个人开发者与小团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 5,
+     "packaging_room": 1,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 3
+    },
+    "product_idea": "无法包装：这是 GitHub 官方产品的外壳仓库，个人做不出差异化",
+    "demo_idea": "只能录屏展示多代理并行改仓库，网页无法复现",
+    "attack_tool": false,
+    "red_flags": [
+     "实为 GitHub 官方 Copilot 桌面应用的发布/反馈仓库，非可复用开源项目，属于大厂官方产品",
+     "README 写明 © GitHub, Inc. All rights reserved，与标注的 Apache-2.0 矛盾，许可证存疑",
+     "仓库创建仅1天却666星，增长异常，疑似刷星或营销操作",
+     "下载链接指向 dropbox 的 .rar 文件，存在分发恶意软件风险",
+     "Topics 混入 xtreamcode、adminlte 等无关标签，像 SEO 拼凑",
+     "仅提供二进制下载，无源码可改造"
+    ],
+    "reason": "大厂官方产品外壳仓库，无可包装空间与商业化路径，星标和分发方式可疑，不适合做内容或产品。"
+   }
+  },
+  "Trapbraneedle/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "一个支持 M3U 播放列表和电子节目单的 IPTV 播放器",
+    "one_liner_en": "An IPTV player that supports M3U playlists and EPG guides",
+    "target_user": "想省掉有线电视费、自己找频道源的北美流媒体用户",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 6,
+     "wow": 3,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 3,
+     "demoability": 5
+    },
+    "product_idea": "做一个干净的跨平台 IPTV 播放器，让用户自带合法 M3U 源，并整理节目单",
+    "demo_idea": "在网页里粘贴一个公开 M3U 链接，30 秒内渲染出可直接播放的频道列表",
+    "attack_tool": false,
+    "red_flags": [
+     "README 实际只是一个引流页面，引导用户下载 Dropbox 上的 RAR 压缩包，有恶意软件分发风险",
+     "宣称免费看 BBC、ESPN、HBO 等付费频道，涉嫌侵犯版权，无法在美国合法商业化",
+     "仓库只有 1 天却有 666 stars，增长异常，疑似刷星或营销账号",
+     "README 与仓库元数据严重不符，Rust 代码的真实性存疑",
+     "“Turbo Stream”等卖点无技术依据，产品质量不可信"
+    ],
+    "reason": "README 是盗版 IPTV 引流页，靠 RAR 分发，版权和高风险使其只适合作反面安全选题，不可产品化"
+   }
+  },
+  "TradesmanRecord/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "在大屏幕上集中管理多个AI编程代理处理GitHub任务的桌面应用",
+    "one_liner_en": "An agent-native desktop app to run and steer multiple Copilot coding agents across your GitHub repos",
+    "target_user": "重度使用GitHub Copilot的独立开发者与小团队工程负责人",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 5,
+     "wow": 4,
+     "pain": 5,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 2,
+     "demoability": 3
+    },
+    "product_idea": "无：这是GitHub官方闭源产品的宣传仓库，个人无法在其上做差异化包装",
+    "demo_idea": "无：本体是需安装的桌面客户端，README里只放了一段外部视频，无法纯前端复现",
+    "attack_tool": false,
+    "red_flags": [
+     "实为大厂(GitHub/Microsoft)官方产品的发布与issue仓库，非可复用开源代码",
+     "README声称Apache-2.0但尾注明© GitHub, Inc. All rights reserved，许可证自相矛盾且实际为专有软件",
+     "下载链接指向Dropbox的.rar压缩包，存在分发风险",
+     "只是资源/发布页性质，无源码，不构成独立创业基础",
+     "一天内星数虚高(665/天)可疑"
+    ],
+    "reason": "大厂官方产品发布仓库，无源码无包装空间，商业化与许可证几乎不可行，仅适合做话题内容而非创业起点"
+   }
+  },
+  "Torusdrasocket/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "免费看全球上千个电视频道的播放器",
+    "one_liner_en": "A free player for thousands of live TV channels worldwide",
+    "target_user": "想取消有线电视、看体育和新闻的北美流媒体用户",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 8,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "不建议做产品，内容只可做反面教材：识别伪装成开源的盗版IPTV分发",
+    "demo_idea": "无法安全演示，链接指向可疑压缩包，不做展示",
+    "attack_tool": false,
+    "red_flags": [
+     "README与仓库名不符，实为盗版IPTV引流，通过Dropbox分发RAR可执行文件，高度疑似恶意软件",
+     "宣称免费提供BBC/ESPN/HBO等付费频道，明显侵犯版权",
+     "仓库创建仅1天即665星，刷星刷榜嫌疑",
+     "只有README无实际Rust源码可信度，存在钓鱼/木马风险"
+    ],
+    "reason": "典型挂开源外衣的盗版IPTV引流页，版权与恶意软件风险极高，无产品化价值，只能当反面案例做内容。"
+   }
+  },
+  "TurkeyDesignate/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "官方 GitHub Copilot 桌面客户端，用画布管理多个 AI 编程助手",
+    "one_liner_en": "GitHub's official desktop app for running and steering multiple AI coding agents across repos",
+    "target_user": "已付费订阅 GitHub Copilot 的专业开发者与工程团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 4,
+     "pain": 5,
+     "packaging_room": 1,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 3
+    },
+    "product_idea": "无产品化空间，这是 GitHub 官方客户端的仓库，并非可二次包装的开源项目",
+    "demo_idea": "可演示多人代理并行跑任务、画布查看 diff 与合并，但无法由我们复刻",
+    "attack_tool": false,
+    "red_flags": [
+     "GitHub 官方产品仓库，个人无法在其上做出差异化",
+     "README 声明 All rights reserved，与 Apache-2.0 标签矛盾，实际授权不明",
+     "README 含 Dropbox 托管的 .rar 下载链接，疑似仿冒/钓鱼，存在供应链风险",
+     "创建1天即664星，增长异常，疑似刷星或仿冒官方仓库",
+     "仓库主要作为发布页和反馈渠道，并非可复用源码"
+    ],
+    "reason": "大厂官方客户端发布仓库，授权混乱且有可疑下载链接，既不能做产品也不值得推荐为内容素材"
+   }
+  },
+  "trackersnailgrip/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "GitHub 官方推出的桌面应用，让多个 AI 代理并行修改代码，由一个控制台统一管理",
+    "one_liner_en": "GitHub's desktop app for running and steering multiple coding agents across your repos",
+    "target_user": "美国/全球的软件工程师与工程团队，已在用 GitHub Copilot 或自带模型 key",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 5
+    },
+    "product_idea": "不建议二次包装；只能做教程、对比评测或代理工作流模板内容",
+    "demo_idea": "录屏展示三个代理并行修 bug、评审 diff 与合并，网页无法真实复现",
+    "attack_tool": false,
+    "red_flags": [
+     "README 版权声明为 GitHub, Inc. 保留所有权利，与标注的 Apache-2.0 矛盾，且正文称本仓库只是发布与反馈入口，并非源码仓库",
+     "大厂官方产品，个人无法在其上做出差异化产品，packaging_room 极低",
+     "下载链接指向 Dropbox 的 .rar 文件，而非 Releases，典型的假仓库/投毒风险信号",
+     "创建仅 1 天却 666 stars、topics 里混有 adminlte、xtreamcode 等无关标签，疑似刷 star 的仿冒仓库",
+     "仓库名 trackersnailgrip 与官方 github/app 无关联，存在冒充风险"
+    ],
+    "reason": "疑似冒充 GitHub 官方 Copilot 桌面端的仓库，并带有可疑下载包；内容话题性强但不可包装，仅适合作警示类内容。"
+   }
+  },
+  "TowerStalker/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "一个开源 IPTV 播放器，可加载 M3U 播放列表和节目单看直播电视",
+    "one_liner_en": "An open-source IPTV player that streams live TV from M3U playlists and EPG guides",
+    "target_user": "美国/全球的有线电视退订者（cord-cutters）、自建流媒体的技术爱好者",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 5,
+     "wow": 3,
+     "pain": 4,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 3
+    },
+    "product_idea": "做成跨平台 IPTV 播放器，内置播放列表管理和节目单，付费去除广告或解锁高级播放功能",
+    "demo_idea": "网页里粘贴一个公开 M3U 链接，立刻显示出频道列表并播放一个公开测试流",
+    "attack_tool": false,
+    "red_flags": [
+     "README 与仓库名不符，通篇宣传免费看 4K 直播频道（BBC/ESPN/HBO），实为盗版内容分发话术",
+     "下载链接指向 Dropbox 的加密压缩包而非 Release，典型的恶意软件/木马投放手法",
+     "无任何真实技术文档，语言声称 Rust 但内容全是营销文案",
+     "分发未经授权的版权频道，美国 DMCA 风险高",
+     "创建仅 1 天却星数暴涨，疑似刷星或营销账号"
+    ],
+    "reason": "README 实为盗版内容推广和可疑安装包分发，不是可信开源项目，仅可作反面案例谈论缺乏技术可信度"
+   }
+  },
+  "Titanlushrink/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "号称免费看全球几千个 4K 频道的 IPTV 播放器",
+    "one_liner_en": "A free IPTV player claiming thousands of 4K channels worldwide",
+    "target_user": "没有明确可付费人群；想省有线电视费的美国消费者是潜在受众，但该产品本身涉嫌盗版",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 7,
+     "wow": 4,
+     "pain": 2,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 3,
+     "demoability": 2
+    },
+    "product_idea": "不建议做产品：核心卖点是免费盗播频道，无法合法商业化",
+    "demo_idea": "无可信演示，播放列表来源非法，不能公开展示",
+    "attack_tool": false,
+    "red_flags": [
+     "README 实为盗版 IPTV 分发页，用 Dropbox 直链发 .rar 可执行文件，典型的恶意软件投放套路",
+     "宣称免费提供 BBC/ESPN/HBO 等付费频道，属明显版权侵权，在美国面临 DMCA 与版权诉讼风险",
+     "仓库创建仅 1 天、星数异常暴涨，疑似刷星或批量注册，不可信",
+     "分发未签名压缩包、无官网、无源码构建说明，安全风险极高",
+     "所谓 Turbo Stream 等描述像营销话术，与 Rust 项目实际能力不符",
+     "与 Apache-2.0 开源项目定位矛盾，实为挂开源名的钓鱼/盗版包"
+    ],
+    "reason": "这是伪装成开源项目的盗版 IPTV 分发页，涉嫌侵权和恶意软件投放，无产品化与内容价值，应避开。"
+   }
+  },
+  "toppatronweave/ai--manus2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "能自己写代码、开浏览器、替你把多步任务做完的AI助手",
+    "one_liner_en": "An AI agent that writes code and drives a browser to finish multi-step tasks for you",
+    "target_user": "美国的中小团队、独立开发者、做重复性网页调研和表单填写的运营人员",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "托管版浏览器和代码沙盒Agent，用户用自然语言下达任务，按任务次数订阅收费",
+    "demo_idea": "网页里给出一句指令：查三家竞品的定价并做成表格，Agent在沙盒中实时开页、抓取、产出表格",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库名叫manus2.0，README却满是'PROMO2026'引流词和SEO堆砌，疑似蹭Manus品牌流量、不是正规项目",
+     "没有任何实际代码或架构说明，665星只用了1天就涨完，刷星嫌疑高",
+     "无主页、无文档、无安装方式，无法验证项目真伪",
+     "浏览器自动化会触及目标站点的ToS，可能触发反爬和账号风险",
+     "浏览器Agent处理用户敏感页面涉及隐私与凭据安全问题"
+    ],
+    "reason": "赛道很热但项目本身可信度存疑，README像营销软文而非开源工程，做内容有话题度，做成产品前必须先验证代码真伪"
+   }
+  },
+  "TurquoiseConsultant/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "管理AI编码代理在多个仓库并行干活的桌面控制台",
+    "one_liner_en": "A desktop control center for running and steering AI coding agents across your repos",
+    "target_user": "美国/全球的重度使用 AI 编程代理的专业开发者与小型工程团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 2,
+     "monetization": 2,
+     "license_safety": 3,
+     "demoability": 4
+    },
+    "product_idea": "官方产品已闭环，个人无包装空间；可做的是围绕多代理工作流的周边增强，而不是重做客户端",
+    "demo_idea": "网页模拟三个并行代理在独立 worktree 里跑任务，用画布视图展示进度与合并状态",
+    "attack_tool": false,
+    "red_flags": [
+     "大厂官方产品仓库（GitHub Inc.），个人无法在其上做差异化产品",
+     "README 写 Apache-2.0，但 License 段写 © GitHub 保留所有权利，许可声明自相矛盾，商用风险高",
+     "下载走 Dropbox 的 .rar 链接，疑似被劫持/仿冒的钓鱼分发，安全性存疑",
+     "Topics 混入 adminlte、xtreamcode 等无关标签，仓库可信度低",
+     "创建仅 1 天星数暴涨，疑似刷星"
+    ],
+    "reason": "大厂官方产品，无包装与商业化空间，且分发链接和许可存在明显风险，只适合做话题内容，不值得创业。"
+   }
+  },
+  "Tealplesense/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "GitHub官方推出的AI编程助手桌面客户端",
+    "one_liner_en": "GitHub's official desktop app for agent-driven coding across repos",
+    "target_user": "专业软件开发者、小型工程团队",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 1,
+     "monetization": 2,
+     "license_safety": 2,
+     "demoability": 4
+    },
+    "product_idea": "不建议包装；最多做教程或对比测评内容",
+    "demo_idea": "录屏展示多worktree并行agent与canvas审阅流程",
+    "attack_tool": false,
+    "red_flags": [
+     "大厂GitHub官方产品，个人无法在其上做差异化",
+     "README声称Apache-2.0但正文写All rights reserved，许可矛盾",
+     "下载走Dropbox的rar包，疑似钓鱼或伪造仓库",
+     "Topics混乱（xtreamcode、adminlte）与描述不符",
+     "本质只是发布页/反馈仓，无源码"
+    ],
+    "reason": "大厂官方客户端加来源可疑，无包装与商业化空间，仅适合吐槽或打假类内容"
+   }
+  },
+  "TrapBladesmith/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "GitHub 官方出品的桌面版 AI 编程助手，用代理并行处理多个仓库的编码任务",
+    "one_liner_en": "GitHub's official desktop app where AI agents run parallel coding tasks across your repos",
+    "target_user": "已在用 GitHub Copilot 的欧美专业开发者与工程团队（个人或团队订阅付费）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 6,
+     "pain": 3,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 2,
+     "demoability": 3
+    },
+    "product_idea": "不适合再包装：这是 GitHub 官方桌面客户端，个人无法在其上加差异化产品",
+    "demo_idea": "只能录屏展示官方 app 多代理并行走 worktree；网页端难以 30 秒复现",
+    "attack_tool": false,
+    "red_flags": [
+     "大厂官方产品（GitHub/Microsoft），非可二次开发的开源项目",
+     "仓库标称 Apache-2.0，但 README 版权声明为 All rights reserved，许可证自相矛盾，存在法律风险",
+     "下载链接指向第三方网盘 .rar 安装包，来源可疑，可能是仿冒/钓鱼仓库",
+     "该仓库发布仅 1 天即获 664 star，增长异常，存在刷星或冒名风险",
+     "核心能力依赖 GitHub Copilot 订阅与官方云环境，个人无法在其上构建产品"
+    ],
+    "reason": "话题性强，但属大厂官方客户端且许可证矛盾、下载来源可疑，既无包装空间也不适合作为创业标的，只适合做风险提示类内容。"
+   }
+  },
+  "WebBookkeeper/GitHub-Copilot-app": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "GitHub 官方的桌面版 AI 编程助手，可让多个智能体同时帮你改代码",
+    "one_liner_en": "GitHub's official desktop AI coding agent that runs and steers agents across your repos",
+    "target_user": "已经为 GitHub Copilot 付费的开发者；想转售或集成这套能力的团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 2,
+     "demoability": 4
+    },
+    "product_idea": "无：这是大厂官方产品，个人无法在其上做差异化包装",
+    "demo_idea": "网页上无法复现：需要 Copilot 订阅、本地 git 和桌面客户端",
+    "attack_tool": false,
+    "red_flags": [
+     "大厂（GitHub/Microsoft）官方产品，README 写 © GitHub, Inc. All rights reserved，与声明的 Apache-2.0 矛盾，许可证不可信",
+     "仓库疑似冒名/搬运：描述、下载链接指向第三方 Dropbox 的 .rar 压缩包，存在恶意软件风险",
+     "当前仍是官方客户端的下载页，没有可供二次开发的源码",
+     "Topics 混杂 xtreamcode、adminlte 等无关标签，明显是刷标签堆砌出来的",
+     "无法包装成独立产品，商业化和包装空间几乎为零"
+    ],
+    "reason": "话题性高，但这是大厂官方客户端加可疑的冒名分发页，无源码、许可存疑、下载渠道有恶意软件风险，只适合做警示类内容，不适合产品化。"
+   }
+  },
+  "Tornadovonmodify/IPTV_Player_2.0": {
+   "date": "2026-11-15",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "用M3U播放列表看免费网络电视的播放器",
+    "one_liner_en": "An IPTV player for streaming channels from M3U playlists",
+    "target_user": "想省掉有线电视费、自己会找M3U订阅源的英文市场流媒体用户",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 7,
+     "wow": 3,
+     "pain": 4,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 7,
+     "demoability": 4
+    },
+    "product_idea": "做一款干净的跨平台IPTV播放器，内置EPG、收藏和合法源市场，按年订阅收费",
+    "demo_idea": "网页里加载一段模拟M3U，展示频道列表、节目单和秒开的4K播放画面",
+    "attack_tool": false,
+    "red_flags": [
+     "README是营销软文风格，实际下载指向Dropbox rar压缩包，典型的盗版或恶意软件分发套路",
+     "宣传'免费看BBC/ESPN/HBO'涉嫌盗播受版权保护内容，美国市场法律风险高",
+     "品牌名MegaCubo/IPTV Player 2.0与仓库名不符，stars一天暴涨663，数据可疑",
+     "Rust标签与'下载rar解压'不符，代码真实性存疑",
+     "所谓Turbo Stream是营销话术，无技术实质"
+    ],
+    "reason": "README实为盗播软件推广页，法律与安全风险高，代码可信度低，不适合做内容或产品。"
    }
   }
  }

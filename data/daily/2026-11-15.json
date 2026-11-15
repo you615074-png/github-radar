@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-15",
+ "headline": "阿里开源 AI 代码审查工具，产品化没戏？",
+ "summary_md": "**What it is**\n\n`alibaba/open-code-review` is an Apache-2.0 CLI that reads a Git diff and produces line-level review comments. It pairs a deterministic pipeline with an LLM agent: the pipeline decides which files to review and how to bundle related changes, while the agent can pull full file contents, search the repo, and look at other changed files before commenting. A built-in multi-language ruleset covers NPE, thread-safety, XSS, and SQL injection. You bring your own OpenAI- or Anthropic-compatible endpoint.\n\n**Why it's taking off**\n\nPer the README, this started as Alibaba's internal review assistant, used by tens of thousands of developers over two years. The team also published AACR-Bench on Hugging Face: 200 real PRs from 50 repos across 10 languages, with 1,505 ground-truth issues annotated by 80+ senior engineers. Their claim is higher precision and F1 than a general-purpose agent like Claude Code at roughly 1/9 the tokens — a deliberate trade of recall for less noise.\n\n**Where the product opportunity is**\n\nMost teams don't want to wire up a model key, tune a ruleset, and manage CI config themselves. A hosted GitHub App that installs in one click and posts PR comments on a per-repo subscription is the obvious packaging. The harder question is whether that's a real business: CodeRabbit, Greptile, and Graphite already sell exactly this, and the upstream project is an official, well-maintained release from a large company with its own site.",
+ "title_en": "Alibaba's Open Code Review: AI review CLI at scale",
+ "tagline_en": "Alibaba's open-source AI code review CLI that flags defects line by line.",
+ "pick": {
+  "full_name": "alibaba/open-code-review",
+  "url": "https://github.com/alibaba/open-code-review",
+  "description": "Secure, fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments, built-in multi-language ruleset (NPE, thread-safety, XSS, SQL injection), OpenAI & Anthropic compatible.",
+  "license": "Apache-2.0",
+  "stars": 51657,
+  "daily_rate": 939.0,
+  "category": "开发者工具",
+  "one_liner": "阿里开源的AI代码审查命令行工具，能逐行指出代码缺陷",
+  "one_liner_en": "Alibaba's open-source AI code review CLI that flags bugs line by line",
+  "reason": "大厂背书、话题热度高，适合做内容；但已是成熟官方产品，包装和商业化空间被大厂压住，更适合做测评而非创业。",
+  "content": 7.0,
+  "startup": 5.9,
+  "final": 6.78,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-15-alibaba-open-code-review",
+ "top": [
+  {
+   "full_name": "alibaba/open-code-review",
+   "url": "https://github.com/alibaba/open-code-review",
+   "one_liner": "阿里开源的AI代码审查命令行工具，能逐行指出代码缺陷",
+   "reason": "大厂背书、话题热度高，适合做内容；但已是成熟官方产品，包装和商业化空间被大厂压住，更适合做测评而非创业。",
+   "one_liner_en": "Alibaba's open-source AI code review CLI that flags bugs line by line",
+   "content": 7.0,
+   "startup": 5.9,
+   "final": 6.78,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "ChromeDevTools/chrome-devtools-mcp",
+   "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+   "one_liner": "让 AI 编程助手直接操控并调试真实 Chrome 浏览器",
+   "reason": "传播性极强、官方出品且工程价值高，但作为 Google 基础设施，包装与商业化空间都很窄，更适合做内容而非产品。",
+   "one_liner_en": "Let AI coding agents control and debug a live Chrome browser",
+   "content": 7.33,
+   "startup": 5.4,
+   "final": 6.7,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "backnotprop/plannotator",
+   "url": "https://github.com/backnotprop/plannotator",
+   "one_liner": "在浏览器里批注 AI 编程助手的方案和代码，一键把反馈发回去",
+   "reason": "选题正当风口，痛点真实、易懂，演示直观；但已是完整产品、竞争拥挤，包装空间和收费路径有限。",
+   "one_liner_en": "Annotate your AI coding agent's plans and code in the browser, send feedback with one click",
+   "content": 7.67,
+   "startup": 6.9,
+   "final": 6.59,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "Topkiflare74/ai--manus2.0",
+   "url": "https://github.com/Topkiflare74/ai--manus2.0",
+   "one_liner": "能自己写代码、开网页帮你干活的AI助手",
+   "reason": "话题热度高、概念好演示，但仓库可信度极低，内容可做但包装成产品前必须先验证代码真实性。",
+   "one_liner_en": "An AI agent that writes code and browses the web to finish tasks for you",
+   "content": 8.0,
+   "startup": 6.85,
+   "final": 6.45,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "Likely7/Veyra-NRVideo",
+   "url": "https://github.com/Likely7/Veyra-NRVideo",
+   "one_liner": "Windows 上的实时 GPU 视频增强播放器，把游戏画面和视频变高清高帧率",
+   "reason": "话题强、效果直观，但 GPL 与硬件依赖限制商业化和网页演示，蹭热点有风险，包装空间中等。",
+   "one_liner_en": "Real-time GPU video enhancer for Windows that upscales and boosts FPS",
+   "content": 7.67,
+   "startup": 5.6,
+   "final": 5.75,
+   "category_penalty": 0.8
+  }
+ ]
+}
