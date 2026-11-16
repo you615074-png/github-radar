@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tracehound — Username intelligence for OSINT teams</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink: '#070A0F',
+        panel: '#0D1319',
+        line: '#1B2530',
+        accent: '#3DDC97',
+        accent2: '#5AA9FF'
+      },
+      fontFamily: {
+        sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica Neue','Arial','sans-serif'],
+        mono: ['ui-monospace','SFMono-Regular','Menlo','Consolas','monospace']
+      }
+    }
+  }
+}
+</script>
+<style>
+  html { -webkit-text-size-adjust: 100%; }
+  body { background-color: #070A0F; }
+  .glow {
+    background: radial-gradient(58% 48% at 50% 0%, rgba(61,220,151,.16), rgba(90,169,255,.07) 45%, transparent 72%);
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: translateY(10px) scale(.985); }
+    to   { opacity: 1; transform: none; }
+  }
+  .reveal { animation: pop .38s cubic-bezier(.2,.8,.2,1) both; }
+  ::selection { background: rgba(61,220,151,.28); color: #fff; }
+  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: #1B2530; border-radius: 99px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="bg-ink font-sans text-slate-300 antialiased">
+
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-40 border-b border-line/70 bg-ink/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center gap-4 px-5 py-3.5">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent text-ink">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <circle cx="11" cy="11" r="6"></circle><path d="M20 20l-3.6-3.6"></path>
+        </svg>
+      </span>
+      <span class="text-[15px] font-semibold tracking-tight text-white">Tracehound</span>
+      <span class="rounded-full border border-line px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-slate-500">Beta</span>
+    </a>
+    <nav class="ml-auto hidden items-center gap-7 text-sm text-slate-400 md:flex">
+      <a href="#console" class="transition hover:text-white">Console</a>
+      <a href="#usecases" class="transition hover:text-white">Use cases</a>
+      <a href="#pricing" class="transition hover:text-white">Pricing</a>
+    </nav>
+    <a href="#waitlist" class="ml-auto rounded-lg border border-line bg-panel px-3.5 py-2 text-sm font-medium text-white transition hover:border-accent/50 hover:text-accent md:ml-0">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ================= HERO + CONSOLE ================= -->
+<section id="top" class="relative overflow-hidden">
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-[560px] glow"></div>
+
+  <div class="relative mx-auto max-w-6xl px-5 pb-12 pt-14 sm:pt-20">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-line bg-panel/60 px-3 py-1 text-[11px] font-medium uppercase tracking-widest text-slate-400">
+        <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+        412 platforms · runs live in this demo
+      </span>
+      <h1 class="mt-6 text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
+        One username.<br>
+        <span class="text-accent">Every account</span> it touches.
+      </h1>
+      <p class="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-slate-400 sm:text-base">
+        Tracehound sweeps 400+ social networks, forums, marketplaces and code hosts in seconds,
+        then hands you a clean, shareable investigation report.
+      </p>
+    </div>
+
+    <!-- CONSOLE -->
+    <div id="console" class="mx-auto mt-10 max-w-4xl scroll-mt-24">
+      <div class="rounded-2xl border border-line bg-panel/70 p-2 shadow-2xl shadow-black/50">
+        <div class="rounded-xl bg-ink/70 p-4 sm:p-6">
+
+          <div class="flex items-center justify-between gap-3">
+            <label for="username" class="text-[11px] font-medium uppercase tracking-widest text-slate-500">Username to trace</label>
+            <span class="rounded-full border border-line px-2 py-0.5 text-[10px] uppercase tracking-widest text-slate-500">Sample data</span>
+          </div>
+
+          <div class="mt-2.5 flex flex-col gap-3 sm:flex-row">
+            <div class="relative flex-1">
+              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-mono text-base text-slate-500">@</span>
+              <input id="username" type="text" value="sarah.chen" spellcheck="false" autocomplete="off"
+                     class="w-full rounded-xl border border-line bg-panel/80 py-3.5 pl-9 pr-4 font-mono text-[15px] text-white placeholder-slate-600 outline-none transition focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
+                     placeholder="username">
+            </div>
+            <button id="runBtn"
+                    class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-sm font-semibold text-ink transition hover:bg-[#4ee6a6] focus:outline-none focus:ring-2 focus:ring-accent/40">
+              Run trace
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="M12 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+
+          <div class="mt-3.5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-400">
+            <label class="inline-flex cursor-pointer items-center gap-2">
+              <input id="deepScan" type="checkbox" class="h-3.5 w-3.5 rounded border-line bg-panel accent-emerald-400">
+              Deep scan
+            </label>
+            <label class="inline-flex cursor-pointer items-center gap-2">
+              <input id="incArchived" type="checkbox" class="h-3.5 w-3.5 rounded border-line bg-panel accent-emerald-400">
+              Include archived profiles
+            </label>
+            <span class="ml-auto hidden items-center gap-2 sm:flex">
+              <span class="text-slate-600">Try:</span>
+              <button class="quick rounded-md border border-line px-2 py-1 font-mono text-[11px] text-slate-400 transition hover:border-accent/40 hover:text-accent" data-u="sarah.chen">sarah.chen</button>
+              <button class="quick rounded-md border border-line px-2 py-1 font-mono text-[11px] text-slate-400 transition hover:border-accent/40 hover:text-accent" data-u="dev_marcus">dev_marcus</button>
+              <button class="quick rounded-md border border-line px-2 py-1 font-mono text-[11px] text-slate-400 transition hover:border-accent/40 hover:text-accent" data-u="lena.rt">lena.rt</button>
+            </span>
+          </div>
+
+          <!-- PROGRESS -->
+          <div id="progressWrap" class="mt-5 hidden">
+            <div class="flex items-center justify-between text-[11px]">
+              <span id="scanStatus" class="font-mono text-slate-400" aria-live="polite">Idle</span>
+              <span id="pct" class="font-mono text-slate-500">0%</span>
+            </div>
+            <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-line">
+              <div id="bar" class="h-full w-0 rounded-full bg-gradient-to-r from-accent to-accent2 transition-[width] duration-150 ease-out"></div>
+            </div>
+          </div>
+
+          <!-- OUTPUT -->
+          <div id="output" class="mt-6 hidden">
+            <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <h2 class="text-sm font-semibold text-white">Matched accounts</h2>
+              <span class="rounded-full border border-line px-2 py-0.5 text-[10px] uppercase tracking-widest text-slate-500">Simulated results</span>
+            </div>
+
+            <div id="filters" class="mb-4 flex flex-wrap gap-2"></div>
+            <div id="grid" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+            <!-- SUMMARY -->
+            <div id="summary" class="mt-6 hidden rounded-xl border border-line bg-panel/60 p-5">
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                  <p class="text-[10px] font-medium uppercase tracking-widest text-slate-500">Trace complete</p>
+                  <h3 class="mt-1.5 text-base font-semibold text-white">
+                    <span id="sumCount" class="text-accent">0</span> accounts found for
+                    <span id="sumHandle" class="font-mono text-accent">@sarah.chen</span>
+                  </h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <button id="previewBtn" class="rounded-lg border border-line bg-ink/60 px-3.5 py-2 text-xs font-medium text-slate-300 transition hover:border-accent/40 hover:text-white">Preview report</button>
+                  <button id="downloadBtn" class="rounded-lg bg-accent px-3.5 py-2 text-xs font-semibold text-ink transition hover:bg-[#4ee6a6]">Download report</button>
+                </div>
+              </div>
+
+              <dl class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div class="rounded-lg border border-line bg-ink/60 p-3">
+                  <dt class="text-[10px] uppercase tracking-widest text-slate-500">Matches</dt>
+                  <dd id="statMatches" class="mt-1 text-xl font-semibold text-white">0</dd>
+                </div>
+                <div class="rounded-lg border border-line bg-ink/60 p-3">
+                  <dt class="text-[10px] uppercase tracking-widest text-slate-500">Exact</dt>
+                  <dd id="statExact" class="mt-1 text-xl font-semibold text-accent">0</dd>
+                </div>
+                <div class="rounded-lg border border-line bg-ink/60 p-3">
+                  <dt class="text-[10px] uppercase tracking-widest text-slate-500">Similar</dt>
+                  <dd id="statSimilar" class="mt-1 text-xl font-semibold text-amber-300">0</dd>
+                </div>
+                <div class="rounded-lg border border-line bg-ink/60 p-3">
+                  <dt class="text-[10px] uppercase tracking-widest text-slate-500">Checked</dt>
+                  <dd id="statScope" class="mt-1 text-xl font-semibold text-white">0</dd>
+                </div>
+              </dl>
+
+              <div class="mt-5">
+                <p class="text-[10px] font-medium uppercase tracking-widest text-slate-500">Exposure signals</p>
+                <ul id="signals" class="mt-2.5 grid gap-2 sm:grid-cols-2"></ul>
+              </div>
+            </div>
+
+            <pre id="reportBox" class="mt-4 hidden max-h-80 overflow-auto rounded-xl border border-line bg-ink/80 p-4 font-mono text-[11px] leading-relaxed text-slate-400 scrollbar-thin"></pre>
+          </div>
+
+        </div>
+      </div>
+      <p class="mt-3 text-center text-[11px] text-slate-600">
+        Every result on this page is generated in your browser from sample data. Nothing is sent anywhere.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= USE CASES ================= -->
+<section id="usecases" class="border-t border-line/60 scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+    <div class="max-w-2xl">
+      <p class="text-[11px] font-medium uppercase tracking-widest text-accent">Use cases</p>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">Built for the people who ask “who is this?”</h2>
+      <p class="mt-3 text-[15px] leading-relaxed text-slate-400">Three teams run Tracehound every week. Same one-field workflow, three very different reports.</p>
+    </div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      <div class="rounded-2xl border border-line bg-panel/50 p-6 transition hover:border-accent/30">
+        <div class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-ink text-lg">🛡️</div>
+        <h3 class="mt-4 text-base font-semibold text-white">Pre-engagement OSINT</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-400">
+          Red teams and pentesters map a target's public footprint before scoping a job — personal blogs,
+          package maintainer accounts, forum handles — and attach the export to the engagement file.
+        </p>
+        <p class="mt-4 font-mono text-[11px] text-slate-600">output: engagement-scope.pdf</p>
+      </div>
+
+      <div class="rounded-2xl border border-line bg-panel/50 p-6 transition hover:border-accent/30">
+        <div class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-ink text-lg">📋</div>
+        <h3 class="mt-4 text-base font-semibold text-white">Background &amp; due diligence</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-400">
+          Recruiters, legal teams and M&amp;A analysts confirm which public accounts belong to a candidate or
+          counterparty, and keep a timestamped record of what was public at the time.
+        </p>
+        <p class="mt-4 font-mono text-[11px] text-slate-600">output: diligence-log.xlsx</p>
+      </div>
+
+      <div class="rounded-2xl border border-line bg-panel/50 p-6 transition hover:border-accent/30">
+        <div class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-ink text-lg">🕵️</div>
+        <h3 class="mt-4 text-base font-semibold text-white">Brand &amp; impersonation watch</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-400">
+          Add your brand handles to a watchlist and get alerted when a new account appears on a
+          marketplace, forum or social platform with a near-identical name.
+        </p>
+        <p class="mt-4 font-mono text-[11px] text-slate-600">output: takedown-queue.csv</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="pricing" class="border-t border-line/60 scroll-mt-20">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-[11px] font-medium uppercase tracking-widest text-accent">Pricing</p>
+      <h2 class="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">Start solo, scale to a team</h2>
+      <p class="mt-3 text-[15px] leading-relaxed text-slate-400">Billed monthly in USD. Cancel anytime. Every plan includes unlimited platform coverage.</p>
+    </div>
+
+    <div class="mt-10 grid gap-5 lg:grid-cols-3">
+      <div class="rounded-2xl border border-line bg-panel/50 p-6">
+        <h3 class="text-[11px] font-medium uppercase tracking-widest text-slate-400">Analyst</h3>
+        <p class="mt-3 flex items-baseline gap-1 text-white"><span class="text-4xl font-semibold">$29</span><span class="text-sm text-slate-500">/mo</span></p>
+        <p class="mt-2 text-sm text-slate-400">Solo investigators and freelance researchers.</p>
+        <ul class="mt-5 space-y-2.5 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-accent">✓</span> 500 traces / month</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> 412-platform coverage</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> TXT &amp; CSV export</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> 30-day search history</li>
+        </ul>
+        <button data-plan="Analyst" class="mt-6 w-full rounded-lg border border-line bg-ink/60 px-4 py-2.5 text-sm font-medium text-white transition hover:border-accent/50 hover:text-accent">Join waitlist</button>
+      </div>
+
+      <div class="relative rounded-2xl border border-accent/40 bg-gradient-to-b from-accent/[0.07] to-panel/40 p-6 shadow-xl shadow-accent/5">
+        <span class="absolute -top-3 left-6 rounded-full bg-accent px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-ink">Most popular</span>
+        <h3 class="text-[11px] font-medium uppercase tracking-widest text-accent">Team</h3>
+        <p class="mt-3 flex items-baseline gap-1 text-white"><span class="text-4xl font-semibold">$99</span><span class="text-sm text-slate-500">/mo</span></p>
+        <p class="mt-2 text-sm text-slate-400">Small OSINT, trust &amp; safety and legal teams.</p>
+        <ul class="mt-5 space-y-2.5 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-accent">✓</span> 5 seats · 5,000 traces / month</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> PDF &amp; XLSX case reports</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Handle monitoring &amp; alerts</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> REST API access</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> 1-year history &amp; audit log</li>
+        </ul>
+        <button data-plan="Team" class="mt-6 w-full rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-[#4ee6a6]">Join waitlist</button>
+      </div>
+
+      <div class="rounded-2xl border border-line bg-panel/50 p-6">
+        <h3 class="text-[11px] font-medium uppercase tracking-widest text-slate-400">Enterprise</h3>
+        <p class="mt-3 flex items-baseline gap-1 text-white"><span class="text-4xl font-semibold">Custom</span></p>
+        <p class="mt-2 text-sm text-slate-400">Regulated teams with strict data handling rules.</p>
+        <ul class="mt-5 space-y-2.5 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-accent">✓</span> Unlimited seats &amp; traces</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> Self-hosted / VPC deployment</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> SSO, SCIM &amp; role controls</li>
+          <li class="flex gap-2"><span class="text-accent">✓</span> SLA + named analyst</li>
+        </ul>
+        <button data-plan="Enterprise" class="mt-6 w-full rounded-lg border border-line bg-ink/60 px-4 py-2.5 text-sm font-medium text-white transition hover:border-accent/50 hover:text-accent">Talk to us</button>
+      </div>
+    </div>
+
+    <!-- WAITLIST -->
+    <div id="waitlist" class="mt-10 scroll-mt-24 rounded-2xl border border-line bg-panel/60 p-6 sm:p-8">
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div class="max-w-md">
+          <h3 class="text-lg font-semibold text-white">Get early access</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-slate-400">
+            We are onboarding a small group of investigators each week. Drop your work email and we will ping you when a seat opens.
+          </p>
+        </div>
+        <div class="w-full md:max-w-sm">
+          <div class="flex flex-col gap-2 sm:flex-row">
+            <input id="waitEmail" type="email" value="analyst@yourfirm.com" autocomplete="off"
+                   class="w-full rounded-lg border border-line bg-ink/70 px-3.5 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
+                   placeholder="you@company.com">
+            <button id="waitBtn" class="shrink-0 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-[#4ee6a6]">Request access</button>
+          </div>
+          <p class="mt-2 text-[11px] text-slate-600">Demo only — the form does not submit anything.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-line/60">
+  <div class="mx-auto max-w-6xl px-5 py-10">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="grid h-7 w-7 place-items-center rounded-md bg-accent text-ink">
+          <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+            <circle cx="11" cy="11" r="6"></circle><path d="M20 20l-3.6-3.6"></path>
+          </svg>
+        </span>
+        <span class="text-sm font-semibold text-white">Tracehound</span>
+      </div>
+      <p class="text-[11px] text-slate-600">Use responsibly. Only investigate accounts you are authorized to review.</p>
+    </div>
+    <p class="mt-6 border-t border-line/60 pt-5 text-[11px] leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/sherlock-project/sherlock" target="_blank" rel="noopener noreferrer" class="text-slate-400 underline decoration-line underline-offset-2 transition hover:text-accent">sherlock-project/sherlock</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 translate-y-2 rounded-xl border border-line bg-panel px-4 py-2.5 text-sm text-white opacity-0 shadow-2xl shadow-black/60 transition-all duration-300"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------------- Sample platform dataset ---------------- */
+  var PLATFORMS = [
+    { n: 'GitHub',        c: 'Developer',    i: '🐙', d: 'github.com' },
+    { n: 'GitLab',        c: 'Developer',    i: '🦊', d: 'gitlab.com' },
+    { n: 'Stack Overflow',c: 'Developer',    i: '📚', d: 'stackoverflow.com' },
+    { n: 'Dev.to',        c: 'Developer',    i: '💻', d: 'dev.to' },
+    { n: 'Codeberg',      c: 'Developer',    i: '🧱', d: 'codeberg.org' },
+    { n: 'Hacker News',   c: 'Developer',    i: '🟠', d: 'news.ycombinator.com' },
+    { n: 'Docker Hub',    c: 'Developer',    i: '🐳', d: 'hub.docker.com' },
+    { n: 'npm',           c: 'Developer',    i: '📦', d: 'npmjs.com' },
+    { n: 'PyPI',          c: 'Developer',    i: '🐍', d: 'pypi.org' },
+    { n: 'Kaggle',        c: 'Developer',    i: '📊', d: 'kaggle.com' },
+    { n: 'Reddit',        c: 'Forums',       i: '👽', d: 'reddit.com' },
+    { n: 'X',             c: 'Social',       i: '✖️', d: 'x.com' },
+    { n: 'Instagram',     c: 'Social',       i: '📸', d: 'instagram.com' },
+    { n: 'TikTok',        c: 'Social',       i: '🎵', d: 'tiktok.com' },
+    { n: 'Facebook',      c: 'Social',       i: '📘', d: 'facebook.com' },
+    { n: 'Pinterest',     c: 'Social',       i: '📌', d: 'pinterest.com' },
+    { n: 'Threads',       c: 'Social',       i: '🧵', d: 'threads.net' },
+    { n: 'Bluesky',       c: 'Social',       i: '🦋', d: 'bsky.app' },
+    { n: 'Mastodon',      c: 'Social',       i: '🐘', d: 'mastodon.social' },
+    { n: 'Tumblr',        c: 'Social',       i: '📓', d: 'tumblr.com' },
+    { n: 'Snapchat',      c: 'Social',       i: '👻', d: 'snapchat.com' },
+    { n: 'LinkedIn',      c: 'Professional', i: '💼', d: 'linkedin.com' },
+    { n: 'AngelList',     c: 'Professional', i: '😇', d: 'wellfound.com' },
+    { n: 'Product Hunt',  c: 'Professional', i: '🐱', d: 'producthunt.com' },
+    { n: 'SlideShare',    c: 'Professional', i: '📑', d: 'slideshare.net' },
+    { n: 'YouTube',       c: 'Media',        i: '▶️', d: 'youtube.com' },
+    { n: 'Vimeo',         c: 'Media',        i: '🎬', d: 'vimeo.com' },
+    { n: 'Twitch',        c: 'Media',        i: '🟣', d: 'twitch.tv' },
+    { n: 'Flickr',        c: 'Media',        i: '📷', d: 'flickr.com' },
+    { n: 'SoundCloud',    c: 'Media',        i: '🔊', d: 'soundcloud.com' },
+    { n: 'Spotify',       c: 'Media',        i: '🎧', d: 'open.spotify.com' },
+    { n: 'Bandcamp',      c: 'Media',        i: '🎼', d: 'bandcamp.com' },
+    { n: 'Medium',        c: 'Writing',      i: '✍️', d: 'medium.com' },
+    { n: 'Substack',      c: 'Writing',      i: '📰', d: 'substack.com' },
+    { n: 'Wattpad',       c: 'Writing',      i: '📔', d: 'wattpad.com' },
+    { n: 'Behance',       c: 'Portfolio',    i: '🎨', d: 'behance.net' },
+    { n: 'Dribbble',      c: 'Portfolio',    i: '🏀', d: 'dribbble.com' },
+    { n: 'ArtStation',    c: 'Portfolio',    i: '🖌️', d: 'artstation.com' },
+    { n: 'Gravatar',      c: 'Identity',     i: '🪐', d: 'gravatar.com' },
+    { n: 'Keybase',       c: 'Identity',     i: '🔑', d: 'keybase.io' },
+    { n: 'About.me',      c: 'Identity',     i: '🪪', d: 'about.me' },
+    { n: 'Patreon',       c: 'Creator',      i: '🧡', d: 'patreon.com' },
+    { n: 'Ko-fi',         c: 'Creator',      i: '☕', d: 'ko-fi.com' },
+    { n: 'Etsy',          c: 'Marketplace',  i: '🛍️', d: 'etsy.com' },
+    { n: 'eBay',          c: 'Marketplace',  i: '🏷️', d: 'ebay.com' },
+    { n: 'Poshmark',      c: 'Marketplace',  i: '👗', d: 'poshmark.com' },
+    { n: 'Depop',         c: 'Marketplace',  i: '🧥', d: 'depop.com' },
+    { n: 'Steam',         c: 'Gaming',       i: '🎮', d: 'steamcommunity.com' },
+    { n: 'Roblox',        c: 'Gaming',       i: '🎲', d: 'roblox.com' },
+    { n: 'Chess.com',     c: 'Gaming',       i: '♟️', d: 'chess.com' },
+    { n: 'Xbox',          c: 'Gaming',       i: '🕹️', d: 'xboxgamertag.com' },
+    { n: 'Duolingo',      c: 'Learning',     i: '🦉', d: 'duolingo.com' },
+    { n: 'Goodreads',     c: 'Books',        i: '📖', d: 'goodreads.com' },
+    { n: 'Letterboxd',    c: 'Film',         i: '🎞️', d: 'letterboxd.com' },
+    { n: 'Trakt',         c: 'Film',         i: '📺', d: 'trakt.tv' },
+    { n: 'Strava',        c: 'Fitness',      i: '🏃', d: 'strava.com' },
+    { n: 'MyFitnessPal',  c: 'Fitness',      i: '🥗', d: 'myfitnesspal.com' },
+    { n: 'Venmo',         c: 'Finance',      i: '💸', d: 'venmo.com' },
+    { n: 'Cash App',      c: 'Finance',      i: '💵', d: 'cash.app' },
+    { n: 'Tripadvisor',   c: 'Travel',       i: '🧭', d: 'tripadvisor.com' },
+    { n: 'Couchsurfing',  c: 'Travel',       i: '🛋️', d: 'couchsurfing.com' },
+    { n: 'HackerOne',     c: 'Security',     i: '🛡️', d: 'hackerone.com' },
+    { n: 'TryHackMe',     c: 'Security',     i: '🧪', d: 'tryhackme.com' },
+    { n: 'Hack The Box',  c: 'Security',     i: '🟩', d: 'hackthebox.com' }
+  ];
+
+  var SUFFIXES = ['_', '.', '-', 'x', 'official', '1', '_dev'];
+
+  /* ---------------- Deterministic pseudo-random helpers ---------------- */
+  function hash32(str) {
+    var h = 2166136261 >>> 0;
+    for (var i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return h >>> 0;
+  }
+
+  function mulberry32(seed) {
+    var a = seed >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function normalize(v) {
+    return String(v).trim().replace(/^@+/, '').toLowerCase();
+  }
+
+  /* ---------------- State ---------------- */
+  var state = {
+    results: [],
+    filter: 'All',
+    username: '',
+    checked: 0,
+    elapsed: '0.0',
+    reportText: '',
+    raf: 0,
+    scanning: false,
+    revealed: 0
+  };
+
+  /* ---------------- Result generation ---------------- */
+  function buildResults(username, opts) {
+    var seed = hash32(username + '|' + (opts.deep ? 'd' : 's') + (opts.archived ? 'a' : ''));
+    var rand = mulberry32(seed);
+    var pool = PLATFORMS.slice();
+
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(rand() * (i + 1));
+      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+
+    var archivedExtra = opts.archived ? 3 + Math.floor(rand() * 4) : 0;
+    var base = (opts.deep ? 20 : 15) + Math.floor(rand() * (opts.deep ? 10 : 8));
+    var count = Math.min(pool.length, base + archivedExtra);
+    var out = [];
+
+    for (var k = 0; k < count; k++) {
+      var p = pool[k];
+      var archived = k < archivedExtra;
+      var similar = rand() < 0.16;
+      var suffix = SUFFIXES[Math.floor(rand() * SUFFIXES.length)];
+      var handle = similar ? username + suffix : username;
+      var conf = similar ? 57 + Math.floor(rand() * 25) : 95 + Math.floor(rand() * 6);
+
+      out.push({
+        name: p.n,
+        cat: p.c,
+        icon: p.i,
+        domain: p.d,
+        handle: handle,
+        similar: similar,
+        archived: archived,
+        conf: conf,
+        url: p.d + '/' + handle
+      });
+    }
+
+    out.sort(function (a, b) {
+      if (a.similar !== b.similar) return a.similar ? 1 : -1;
+      return b.conf - a.conf;
+    });
+
+    return out;
+  }
+
+  /* ---------------- Card rendering ---------------- */
+  function badgeHTML(r) {
+    if (r.archived) {
+      return '<span class="rounded bg-slate-500/15 px-1.5 py-0.5 text-[10px] font-medium text-slate-300">Archived</span>';
+    }
+    if (r.similar) {
+      return '<span class="rounded bg-amber-400/10 px-1.5 py-0.5 text-[10px] font-medium text-amber-300">Similar</span>';
+    }
+    return '<span class="rounded bg-accent/10 px-1.5 py-0.5 text-[10px] font-medium text-accent">Exact</span>';
+  }
+
+  function cardHTML(r, animate) {
+    return '' +
+      '<article class="' + (animate ? 'reveal ' : '') + 'rounded-xl border border-line bg-panel/50 p-4 transition hover:border-accent/40 hover:bg-panel/80">' +
+        '<div class="flex items-start gap-3">' +
+          '<div class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-line bg-ink text-base">' + esc(r.icon) + '</div>' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex items-center gap-2">' +
+              '<h3 class="truncate text-sm font-semibold text-white">' + esc(r.name) + '</h3>' +
+              badgeHTML(r) +
+            '</div>' +
+            '<p class="mt-0.5 truncate font-mono text-xs text-slate-400">@' + esc(r.handle) + '</p>' +
+          '</div>' +
+          '<span class="shrink-0 font-mono text-[11px] text-accent">' + r.conf + '%</span>' +
+        '</div>' +
+        '<div class="mt-3 flex items-center justify-between gap-3 text-[11px] text-slate-500">' +
+          '<span class="shrink-0 rounded border border-line px-1.5 py-0.5">' + esc(r.cat) + '</span>' +
+          '<span class="truncate font-mono">' + esc(r.url) + '</span>' +
+        '</div>' +
+      '</article>';
+  }
+
+  function renderGrid() {
+    var list = state.filter === 'All'
+      ? state.results
+      : state.results.filter(function (r) { return r.cat === state.filter; });
+    $('grid').innerHTML = list.map(function (r) { return cardHTML(r, false); }).join('');
+  }
+
+  function appendCard(r) {
+    $('grid').insertAdjacentHTML('beforeend', cardHTML(r, true));
+  }
+
+  /* ---------------- Filters ---------------- */
+  function chipHTML(label, total) {
+    var active = state.filter === label;
+    var cls = active
+      ? 'border-accent/50 bg-accent/10 text-accent'
+      : 'border-line bg-panel/60 text-slate-400 hover:text-white hover:border-slate-600';
+    return '<button data-cat="' + esc(label) + '" class="rounded-full border px-3 py-1 text-xs transition ' + cls + '">' +
+      esc(label) + ' <span class="opacity-60">' + total + '</span></button>';
+  }
+
+  function buildFilters() {
+    var counts = {};
+    state.results.forEach(function (r) { counts[r.cat] = (counts[r.cat] || 0) + 1; });
+    var cats = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+
+    var html = chipHTML('All', state.results.length);
+    cats.forEach(function (c) { html += chipHTML(c, counts[c]); });
+    $('filters').innerHTML = html;
+
+    Array.prototype.forEach.call($('filters').querySelectorAll('button'), function (btn) {
+      btn.addEventListener('click', function () {
+        state.filter = btn.dataset.cat;
+        buildFilters();
+        renderGrid();
+      });
+    });
+  }
+
+  /* ---------------- Exposure signals ---------------- */
+  function computeSignals(results) {
+    var names = {};
+    results.forEach(function (r) { names[r.name] = true; });
+    var list = [];
+
+    if (names['LinkedIn']) {
+      list.push({ t: 'Professional identity', d: 'A LinkedIn profile under this handle makes a verified legal name likely.', lvl: 'high' });
+    }
+    if (names['GitHub'] || names['GitLab'] || names['npm']) {
+      list.push({ t: 'Code footprint', d: 'Public commits and package metadata frequently leak personal email addresses.', lvl: 'high' });
+    }
+    if (names['Gravatar'] || names['Keybase']) {
+      list.push({ t: 'Email hash pivot', d: 'Avatar or key lookups can be pivoted to an email hash and then to other accounts.', lvl: 'medium' });
+    }
+    if (names['Venmo'] || names['Cash App']) {
+      list.push({ t: 'Payment handle', d: 'Payment profiles often expose a display name and a public transaction history.', lvl: 'high' });
+    }
+    if (names['Instagram'] || names['TikTok'] || names['Flickr']) {
+      list.push({ t: 'Personal media', d: 'Photo and video accounts regularly reveal location and daily routine.', lvl: 'medium' });
+    }
+    if (names['Steam'] || names['Roblox'] || names['Xbox']) {
+      list.push({ t: 'Gaming pseudonyms', d: 'Gaming identities are often reused across forums and marketplaces.', lvl: 'low' });
+    }
+    if (results.some(function (r) { return r.archived; })) {
+      list.push({ t: 'Archived pages', d: 'Cached or archived profiles can preserve earlier handles and bios.', lvl: 'low' });
+    }
+    if (!list.length) {
+      list.push({ t: 'Limited footprint', d: 'No high-signal accounts were matched. The handle may be new or unused.', lvl: 'low' });
+    }
+    return list.slice(0, 4);
+  }
+
+  function signalHTML(s) {
+    var color = s.lvl === 'high' ? 'text-amber-300' : s.lvl === 'medium' ? 'text-accent2' : 'text-slate-400';
+    var dot = s.lvl === 'high' ? 'bg-amber-300' : s.lvl === 'medium' ? 'bg-accent2' : 'bg-slate-500';
+    return '<li class="rounded-lg border border-line bg-ink/50 p-3">' +
+        '<div class="flex items-center gap-2">' +
+          '<span class="h-1.5 w-1.5 rounded-full ' + dot + '"></span>' +
+          '<span class="text-xs font-semibold ' + color + '">' + esc(s.t) + '</span>' +
+        '</div>' +
+        '<p class="mt-1 text-[11px] leading-relaxed text-slate-400">' + esc(s.d) + '</p>' +
+      '</li>';
+  }
+
+  /* ---------------- Report text ---------------- */
+  function buildReportText() {
+    var r = state.results;
+    var exact = r.filter(function (x) { return !x.similar; }).length;
+    var similar = r.length - exact;
+    var padR = function (s, n) { return (s + '                                                                        ').slice(0, n); };
+    var lines = [];
+
+    lines.push('TRACEHOUND // USERNAME EXPOSURE REPORT');
+    lines.push('==========================================================');
+    lines.push('Subject handle : @' + state.username);
+    lines.push('Generated      : ' + new Date().toLocaleString('en-US'));
+    lines.push('Scan scope     : ' + state.checked + ' platforms');
+    lines.push('Matches        : ' + r.length + '  (' + exact + ' exact / ' + similar + ' similar)');
+    lines.push('Scan time      : ' + state.elapsed + 's');
+    lines.push('');
+    lines.push('MATCHED ACCOUNTS');
+    lines.push('----------------------------------------------------------');
+    r.forEach(function (x, idx) {
+      var tag = x.archived ? ' [archived]' : (x.similar ? ' [similar]' : '');
+      lines.push(padR('[' + String(idx + 1).padStart(2, '0') + '] ' + x.name, 24) +
+                 padR('@' + x.handle, 26) +
+                 padR(x.conf + '%' + tag, 20) +
+                 x.url);
+    });
+    lines.push('');
+    lines.push('EXPOSURE SIGNALS');
+    lines.push('----------------------------------------------------------');
+    computeSignals(r).forEach(function (s) {
+      lines.push('* [' + s.lvl.toUpperCase() + '] ' + s.t);
+      lines.push('  ' + s.d);
+    });
+    lines.push('');
+    lines.push('NOTES');
+    lines.push('----------------------------------------------------------');
+    lines.push('This document contains simulated data produced by a concept demo.');
+    lines.push('Tracehound demo is based on the open-source project sherlock-project/sherlock (MIT).');
+    lines.push('Not affiliated with any platform listed above.');
+    lines.push('');
+    return lines.join('\n');
+  }
+
+  /* ---------------- Toast ---------------- */
+  var toastTimer = 0;
+  function showToast(msg) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.classList.remove('opacity-0', 'translate-y-2');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      t.classList.add('opacity-0', 'translate-y-2');
+    }, 3000);
+  }
+
+  /* ---------------- Scan ---------------- */
+  function setRunning(running) {
+    var btn = $('runBtn');
+    btn.disabled = running;
+    if (running) {
+      btn.classList.add('opacity-60', 'cursor-not-allowed');
+    } else {
+      btn.classList.remove('opacity-60', 'cursor-not-allowed');
+    }
+    state.scanning = running;
+  }
+
+  function runScan() {
+    var username = normalize($('username').value);
+
+    if (username.length < 2) {
+      showToast('Enter a username with at least 2 characters.');
+      $('username').focus();
+      return;
+    }
+    if (!/^[a-z0-9._-]{2,30}$/.test(username)) {
+      showToast('Use letters, numbers, dots, dashes or underscores only.');
+      $('username').focus();
+      return;
+    }
+
+    var deep = $('deepScan').checked;
+    var archived = $('incArchived').checked;
+
+    cancelAnimationFrame(state.raf);
+
+    $('username').value = username;
+    state.username = username;
+    state.filter = 'All';
+    state.revealed = 0;
+    state.results = buildResults(username, { deep: deep, archived: archived });
+    state.checked = deep ? 472 : 412;
+    state.elapsed = (deep ? 8.4 : 6.1).toFixed(1);
+
+    // reset UI
+    $('output').classList.remove('hidden');
+    $('grid').innerHTML = '';
+    $('filters').innerHTML = '';
+    $('summary').classList.add('hidden');
+    $('reportBox').classList.add('hidden');
+    $('reportBox').textContent = '';
+    $('previewBtn').textContent = 'Preview report';
+    $('progressWrap').classList.remove('hidden');
+    $('bar').style.width = '0%';
+    $('pct').textContent = '0%';
+    $('scanStatus').textContent = 'Resolving handle across ' + state.checked + ' platforms…';
+
+    setRunning(true);
+
+    var duration = deep ? 2900 : 1900;
+    var t0 = performance.now();
+
+    function tick(now) {
+      var t = Math.min(1, (now - t0) / duration);
+
+      $('bar').style.width = (t * 100).toFixed(1) + '%';
+      $('pct').textContent = Math.round(t * 100) + '%';
+
+      if (t > 0.55 && t < 0.9) {
+        $('scanStatus').textContent = 'Verifying responses · ' + Math.round(t * 100) + '% of queue…';
+      } else if (t >= 0.9) {
+        $('scanStatus').textContent = 'Compiling report…';
+      }
+
+      var target = Math.ceil(t * state.results.length);
+      while (state.revealed < target && state.revealed < state.results.length) {
+        appendCard(state.results[state.revealed]);
+        state.revealed++;
+      }
+
+      if (t < 1) {
+        state.raf = requestAnimationFrame(tick);
+      } else {
+        finishScan();
+      }
+    }
+
+    state.raf = requestAnimationFrame(tick);
+  }
+
+  function finishScan() {
+    var r = state.results;
+    var exact = r.filter(function (x) { return !x.similar; }).length;
+
+    $('bar').style.width = '100%';
+    $('pct').textContent = '100%';
+    $('scanStatus').textContent = 'Scan complete · ' + state.checked + ' platforms · ' + state.elapsed + 's';
+
+    setRunning(false);
+
+    $('sumCount').textContent = String(r.length);
+    $('sumHandle').textContent = '@' + state.username;
+    $('statMatches').textContent = String(r.length);
+    $('statExact').textContent = String(exact);
+    $('statSimilar').textContent = String(r.length - exact);
+    $('statScope').textContent = String(state.checked);
+
+    $('signals').innerHTML = computeSignals(r).map(signalHTML).join('');
+
+    buildFilters();
+    renderGrid();
+
+    state.reportText = buildReportText();
+    $('reportBox').textContent = state.reportText;
+
+    $('summary').classList.remove('hidden');
+  }
+
+  /* ---------------- Report actions ---------------- */
+  $('previewBtn').addEventListener('click', function () {
+    var box = $('reportBox');
+    var open = !box.classList.contains('hidden');
+    if (open) {
+      box.classList.add('hidden');
+      this.textContent = 'Preview report';
+    } else {
+      box.classList.remove('hidden');
+      this.textContent = 'Hide preview';
+    }
+  });
+
+  $('downloadBtn').addEventListener('click', function () {
+    if (!state.reportText) {
+      showToast('Run a trace first.');
+      return;
+    }
+    var a = document.createElement('a');
+    a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(state.reportText);
+    a.download = 'tracehound-' + state.username + '.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast('Report downloaded — sample data only.');
+  });
+
+  /* ---------------- Wiring ---------------- */
+  $('runBtn').addEventListener('click', runScan);
+
+  $('username').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      runScan();
+    }
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.quick'), function (btn) {
+    btn.addEventListener('click', function () {
+      $('username').value = btn.dataset.u;
+      runScan();
+    });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-plan]'), function (btn) {
+    btn.addEventListener('click', function () {
+      showToast(btn.dataset.plan + ' plan — waitlist is a demo, nothing was submitted.');
+    });
+  });
+
+  $('waitBtn').addEventListener('click', function () {
+    var email = $('waitEmail').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      showToast('Enter a valid email address (demo only).');
+      return;
+    }
+    showToast('You are on the list — demo only, no data was sent.');
+    $('waitEmail').value = '';
+  });
+
+  $('waitEmail').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      $('waitBtn').click();
+    }
+  });
+
+  /* ---------------- Auto-run once on load ---------------- */
+  window.addEventListener('load', function () {
+    setTimeout(runScan, 350);
+  });
+})();
+</script>
+</body>
+</html>

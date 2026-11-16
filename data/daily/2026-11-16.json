@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-16",
+ "headline": "Sherlock：11 万星的用户名追踪工具，能怎么产品化",
+ "summary_md": "**What it is.** Sherlock is a Python CLI from the sherlock-project that takes one or more usernames and checks them against 400+ social networks, writing the hits to a text file (JSON, CSV and XLSX output are also supported per the README). Install with `pipx install sherlock-project` or the official Docker image.\n\n**Why it's taking off.** It is a clean, MIT-licensed tool that solves a concrete problem in a few seconds, and the demo is self-explanatory: one command in, a list of live profiles out. The project has ~112k stars and adds roughly 1,500 a day right now, which is unusual for a security CLI. That growth looks driven by the OSINT and trust-and-safety crowd on X and YouTube, where \"look up a handle everywhere\" is an easy thing to show on screen.\n\n**Where the product opportunity is.** Not in re-selling the CLI. The plausible paid layer is workflow, not lookup: scheduled monitoring of a watchlist, diffing new accounts between runs, PDF/CSV case reports, and team seats for due-diligence and brand-protection teams who will not install Python. The pricing anchor is the existing commercial OSINT tools (Maltego, Pipl) on the high end, so $29–99/month sits well below them — but only if the product saves analyst time, not just answers one query.\n\nTreat the compliance side as a first-class feature, not a footnote: platform ToS, GDPR/PDPA and California privacy law all apply to automated lookups of other people's accounts.",
+ "title_en": "Sherlock: username lookup across 400+ social networks",
+ "tagline_en": "Type a username, see which of 400+ social platforms that handle exists on.",
+ "pick": {
+  "full_name": "sherlock-project/sherlock",
+  "url": "https://github.com/sherlock-project/sherlock",
+  "description": "Hunt down social media accounts by username across social networks",
+  "license": "MIT",
+  "stars": 112843,
+  "daily_rate": 1487.4,
+  "category": "安全",
+  "one_liner": "输入一个用户名，一键查出这个人在400多个社交平台的账号",
+  "one_liner_en": "Find a person's accounts across 400+ social networks from one username",
+  "reason": "话题性强、演示直观、MIT 协议干净，但项目本身已是成熟免费工具，产品化和付费转化空间有限，且隐私合规风险需重点提示。",
+  "content": 8.33,
+  "startup": 6.55,
+  "final": 7.68,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-16-sherlock-project-sherlock",
+ "top": [
+  {
+   "full_name": "sherlock-project/sherlock",
+   "url": "https://github.com/sherlock-project/sherlock",
+   "one_liner": "输入一个用户名，一键查出这个人在400多个社交平台的账号",
+   "reason": "话题性强、演示直观、MIT 协议干净，但项目本身已是成熟免费工具，产品化和付费转化空间有限，且隐私合规风险需重点提示。",
+   "one_liner_en": "Find a person's accounts across 400+ social networks from one username",
+   "content": 8.33,
+   "startup": 6.55,
+   "final": 7.68,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "RoutineMiku/apkstart",
+   "url": "https://github.com/RoutineMiku/apkstart",
+   "one_liner": "在Windows上双击APK就能像装原生软件一样运行安卓应用",
+   "reason": "演示直观、话题性强，但1.3GB包体、GMS条款和WSA/BlueStacks夹击下商业化空间窄，更适合做爆款内容而非独立产品。",
+   "one_liner_en": "Run Android apps on Windows like native apps: double-click any APK to install and launch.",
+   "content": 8.33,
+   "startup": 6.15,
+   "final": 7.23,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "n4ze3m/tiny-voca",
+   "url": "https://github.com/n4ze3m/tiny-voca",
+   "one_liner": "4.5M参数超小英文语音合成模型，能在浏览器和CPU上跑",
+   "reason": "演示效果出色且极易传播，但模型小、能力窄、巨头挤压，适合做内容选题，产品化天花板较低",
+   "one_liner_en": "A tiny 4.5M-parameter English text-to-speech model that runs in the browser or on a CPU",
+   "content": 7.33,
+   "startup": 6.25,
+   "final": 7.2,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Noniv/abyssal-garden",
+   "url": "https://github.com/Noniv/abyssal-garden",
+   "one_liner": "一个97KB的单HTML文件，用WebGPU纯代码生成可游泳的梦幻海底世界",
+   "reason": "传播性极强、演示惊艳、MIT许可安全，适合做内容；但商业化偏弱，需包装成场景生成/营销嵌入工具才有付费空间。",
+   "one_liner_en": "A dreamy swimmable underwater world generated entirely by code in a single 97KB HTML file.",
+   "content": 8.67,
+   "startup": 6.0,
+   "final": 6.77,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "heydamir/unslop",
+   "url": "https://github.com/heydamir/unslop",
+   "one_liner": "把AI生成的丑界面改成有设计感的界面",
+   "reason": "话题性和演示效果都非常强，正好赶上 vibe coding 的审美疲劳；但项目本质是提示词，License 也限制商业化，因此更适合做内容传播，变现要靠服务，而非做 SaaS 订阅",
+   "one_liner_en": "Turns vibecoded, AI-looking UI into a designed interface",
+   "content": 8.0,
+   "startup": 6.2,
+   "final": 6.72,
+   "category_penalty": 0.8
+  }
+ ]
+}
