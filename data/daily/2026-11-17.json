@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-17",
+ "headline": "AI 跨平台 30 天调研技能，可做付费情报简报吗？",
+ "summary_md": "**What it is.** `mvanhorn/last30days-skill` is an Agent Skill for Claude Code, Codex, Cursor and other Agent Skills hosts. You type `/last30days <topic or person>` and it searches Reddit, X, YouTube, TikTok, Hacker News, Polymarket and the web in parallel, scores results by real engagement (upvotes, likes, market odds), and has an agent judge write one synthesized brief. Per the README, Reddit, HN, Polymarket and GitHub work with zero config; X, YouTube and others unlock through a setup wizard where you bring your own API keys or browser sessions.\n\n**Why it's taking off.** It hits a real workflow: before a sales call, a meeting or a build decision, you want the last 30 days of what people actually said, not a 2023 LinkedIn page. No single AI has access to all these platforms, and the README's pitch is that one agent plus your own keys can bridge them. 68k stars and ~772/day suggest the demo lands instantly for the AI-curious developer crowd.\n\n**Where the product opportunity is.** The skill is free and distribution is already solved through plugin marketplaces, so a paid wrapper has to sell something the repo doesn't: hosted data access, no key setup, saved briefs, PDF/email export, team sharing and scheduled monitoring. A web app that turns a name or company into a recurring 30-day intel brief is the obvious shape. The catch is that the value sits on third-party platform access, so data cost, rate limits and ToS risk become your problem, not the repo's.",
+ "title_en": "last30days: Cross-platform research skill for AI agents",
+ "tagline_en": "A Claude Code skill that searches Reddit, X, YouTube, HN and Polymarket, then writes one grounded brief.",
+ "pick": {
+  "full_name": "mvanhorn/last30days-skill",
+  "url": "https://github.com/mvanhorn/last30days-skill",
+  "description": "AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary",
+  "license": "MIT",
+  "stars": 68598,
+  "daily_rate": 772,
+  "category": "AI应用",
+  "one_liner": "一个能跨 Reddit、X、YouTube 等平台做近 30 天深度调研的 AI 助手技能",
+  "one_liner_en": "An AI agent skill that researches any topic across Reddit, X, YouTube, HN and more in one brief.",
+  "reason": "需求真实、话题热度高、MIT 友好；但抓取依赖第三方平台授权、合规与稳定性风险大，产品化需自己扛住数据源成本与法律风险。",
+  "content": 8.0,
+  "startup": 7.7,
+  "final": 6.97,
+  "category_penalty": 0.8
+ },
+ "demo_path": "demos/2026-11-17-mvanhorn-last30days-skill",
+ "top": [
+  {
+   "full_name": "mvanhorn/last30days-skill",
+   "url": "https://github.com/mvanhorn/last30days-skill",
+   "one_liner": "一个能跨 Reddit、X、YouTube 等平台做近 30 天深度调研的 AI 助手技能",
+   "reason": "需求真实、话题热度高、MIT 友好；但抓取依赖第三方平台授权、合规与稳定性风险大，产品化需自己扛住数据源成本与法律风险。",
+   "one_liner_en": "An AI agent skill that researches any topic across Reddit, X, YouTube, HN and more in one brief.",
+   "content": 8.0,
+   "startup": 7.7,
+   "final": 6.97,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "google-research/paper-orchestra",
+   "url": "https://github.com/google-research/paper-orchestra",
+   "one_liner": "多智能体自动把研究素材写成投稿级LaTeX论文",
+   "reason": "话题性和惊喜感强，Stripe可收费，但大厂出身、数据集缺失、学术伦理争议限制包装与商业化。",
+   "one_liner_en": "Multi-agent AI that turns raw research notes into a submission-ready LaTeX paper.",
+   "content": 8.0,
+   "startup": 7.15,
+   "final": 6.83,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "affaan-m/ECC",
+   "url": "https://github.com/affaan-m/ECC",
+   "one_liner": "给你的AI编程助手装上一套工程流程和技能库",
+   "reason": "话题热、MIT 友好、痛点真实，但已有商业化和刷量疑云，适合做内容，不宜当作空白产品去包装。",
+   "one_liner_en": "Give your AI coding agent a built-in engineering workflow and skill library",
+   "content": 7.0,
+   "startup": 6.15,
+   "final": 6.43,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "vercel-labs/agent-browser",
+   "url": "https://github.com/vercel-labs/agent-browser",
+   "one_liner": "给AI智能体用的浏览器自动化命令行工具",
+   "reason": "话题热、痛点真实、许可证宽松，但出身大厂且已是成熟工具，可包装与收费空间有限，更适合做内容而非独立产品。",
+   "one_liner_en": "A CLI that gives AI agents a browser they can drive step by step",
+   "content": 6.67,
+   "startup": 5.65,
+   "final": 6.34,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "elementalsouls/Claude-BugHunter",
+   "url": "https://github.com/elementalsouls/Claude-BugHunter",
+   "one_liner": "给 Claude Code 装上的漏洞挖掘与红队技能包",
+   "reason": "话题热、增长猛、MIT 许可友好；但属进攻性知识包，商业化要往授权合规与托管服务走，付费转化是最大不确定点。",
+   "one_liner_en": "A Claude Code skill pack that turns it into a bug-hunting and red-team assistant",
+   "content": 7.0,
+   "startup": 6.9,
+   "final": 6.29,
+   "category_penalty": 0.8
+  }
+ ]
+}

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal30 — the last 30 days on anyone</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  section[id] { scroll-margin-top: 84px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .reveal { animation: fadeUp .55s cubic-bezier(.16,.84,.44,1) both; }
+
+  @keyframes logIn {
+    from { opacity: 0; transform: translateX(-4px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .log-line { animation: logIn .28s ease both; }
+
+  .chip {
+    padding: .3rem .65rem;
+    border-radius: .5rem;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #475569;
+    font-size: .75rem;
+    transition: all .15s ease;
+  }
+  .chip:hover { border-color: #94a3b8; color: #0f172a; background: #f8fafc; }
+
+  @keyframes toastIn {
+    from { opacity: 0; transform: translate(-50%, 16px); }
+    to   { opacity: 1; transform: translate(-50%, 0); }
+  }
+  .toast { animation: toastIn .3s ease both; }
+</style>
+</head>
+<body class="bg-white text-slate-900 font-sans">
+
+<!-- ───────────────────────── header ───────────────────────── -->
+<header class="sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-slate-200/70">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-2.5 shrink-0">
+      <span class="w-8 h-8 rounded-lg bg-slate-900 text-white grid place-items-center text-[13px] font-bold tracking-tight">30</span>
+      <span class="font-semibold tracking-tight text-slate-900">Signal30</span>
+      <span class="hidden sm:inline text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-500">beta</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-[13px] text-slate-600">
+      <a href="#demo" class="hover:text-slate-900 transition">Live demo</a>
+      <a href="#use-cases" class="hover:text-slate-900 transition">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900 transition">Pricing</a>
+    </nav>
+    <a href="#pricing" class="text-[13px] font-medium px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ───────────────────────── hero ───────────────────────── -->
+<div id="top" class="relative overflow-hidden">
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute -top-48 left-1/2 -translate-x-1/2 w-[880px] h-[520px] rounded-full bg-gradient-to-b from-emerald-100/70 via-slate-100/40 to-transparent blur-3xl"></div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto px-5 pt-16 md:pt-24 pb-10 text-center">
+    <div class="inline-flex items-center gap-2 text-[11.5px] font-medium text-slate-600 bg-white border border-slate-200 rounded-full px-3 py-1.5 shadow-sm">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      Researches X · Reddit · YouTube · Hacker News · Polymarket
+    </div>
+
+    <h1 class="mt-6 text-[34px] leading-[1.08] sm:text-5xl md:text-6xl font-semibold tracking-tight text-slate-900">
+      Everything said about anyone<br class="hidden md:block">
+      <span class="text-slate-400">in the last 30 days.</span>
+    </h1>
+
+    <p class="mt-5 text-[15px] md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+      Type a person or a company. In about 30 seconds you get one grounded brief — what X is arguing about,
+      what Reddit is upvoting, what YouTube is explaining, and where the real money on Polymarket is going.
+    </p>
+  </div>
+</div>
+
+<!-- ───────────────────────── demo ───────────────────────── -->
+<section id="demo" class="max-w-6xl mx-auto px-5 pb-12">
+  <div class="rounded-2xl bg-white border border-slate-200 shadow-[0_1px_2px_rgba(15,23,42,.04),0_24px_60px_-30px_rgba(15,23,42,.25)] p-2 sm:p-2.5">
+    <form id="briefForm" class="flex flex-col sm:flex-row gap-2">
+      <label class="flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 focus-within:border-slate-400 focus-within:bg-white transition">
+        <svg class="w-4 h-4 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path>
+        </svg>
+        <input id="topicInput" type="text" autocomplete="off" spellcheck="false"
+               aria-label="Name, company, or topic"
+               value="Peter Steinberger"
+               placeholder="Name, company, or topic"
+               class="w-full bg-transparent outline-none text-[15px] text-slate-900 placeholder:text-slate-400">
+      </label>
+      <button id="runBtn" type="submit"
+              class="px-6 py-3.5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 active:scale-[.99] transition flex items-center justify-center gap-2 min-w-[168px]">
+        <span id="runLabel">Generate brief</span>
+      </button>
+    </form>
+
+    <div class="flex flex-wrap items-center gap-2 px-2 pt-3 pb-1.5">
+      <span class="text-[11px] text-slate-400 mr-1">Try</span>
+      <button type="button" data-topic="Peter Steinberger" class="chip">Peter Steinberger</button>
+      <button type="button" data-topic="Anthropic" class="chip">Anthropic</button>
+      <button type="button" data-topic="Figma" class="chip">Figma</button>
+      <span class="ml-auto flex items-center gap-1.5 text-[11px] text-slate-400">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Sample data
+      </span>
+    </div>
+  </div>
+
+  <div id="output" class="mt-5"></div>
+
+  <div class="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] font-medium uppercase tracking-wider text-slate-400">
+    <span>X / Twitter</span>
+    <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+    <span>Reddit</span>
+    <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+    <span>YouTube</span>
+    <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+    <span>Hacker News</span>
+    <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+    <span>Polymarket</span>
+    <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+    <span>GitHub</span>
+  </div>
+</section>
+
+<!-- ───────────────────────── use cases ───────────────────────── -->
+<section id="use-cases" class="max-w-6xl mx-auto px-5 py-20 border-t border-slate-100">
+  <div class="max-w-2xl">
+    <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Use cases</p>
+    <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-slate-900 leading-tight">
+      Three ways people run this before a 10am call.
+    </h2>
+  </div>
+
+  <div class="mt-12 grid md:grid-cols-3 gap-5">
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 hover:border-slate-300 hover:shadow-sm transition">
+      <div class="w-10 h-10 rounded-xl bg-slate-900 text-white grid place-items-center text-lg">🤝</div>
+      <h3 class="mt-5 text-lg font-semibold text-slate-900 tracking-tight">Before the sales call</h3>
+      <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+        Pull the last 30 days on the prospect's company: what they're hiring for, what users complain about on
+        Reddit, and which competitor keeps coming up in the replies.
+      </p>
+      <p class="mt-4 text-[11px] text-slate-400 font-mono">/last30days Acme Corp</p>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 hover:border-slate-300 hover:shadow-sm transition">
+      <div class="w-10 h-10 rounded-xl bg-slate-900 text-white grid place-items-center text-lg">🎧</div>
+      <h3 class="mt-5 text-lg font-semibold text-slate-900 tracking-tight">Before the meeting</h3>
+      <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+        Read every tweet and podcast transcript from the person across the table. Know what they shipped this
+        month — not the LinkedIn headline from 2023.
+      </p>
+      <p class="mt-4 text-[11px] text-slate-400 font-mono">/last30days Jane Doe</p>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 hover:border-slate-300 hover:shadow-sm transition">
+      <div class="w-10 h-10 rounded-xl bg-slate-900 text-white grid place-items-center text-lg">🧱</div>
+      <h3 class="mt-5 text-lg font-semibold text-slate-900 tracking-tight">Before you build</h3>
+      <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+        Find the problem people are actually hitting. Upvote counts and comment volume tell you which complaint
+        is a real market and which one is one loud guy.
+      </p>
+      <p class="mt-4 text-[11px] text-slate-400 font-mono">/last30days "AI code review"</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── pricing ───────────────────────── -->
+<section id="pricing" class="border-t border-slate-200 bg-slate-50">
+  <div class="max-w-5xl mx-auto px-5 py-20">
+    <div class="text-center max-w-2xl mx-auto">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Pricing</p>
+      <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-tight text-slate-900">Start free. Pay when it's on your calendar every week.</h2>
+      <p class="mt-3 text-sm text-slate-600">Both plans are in beta. Join the waitlist and we'll ping you when your seat opens.</p>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-5 max-w-3xl mx-auto">
+      <!-- free -->
+      <div class="rounded-2xl border border-slate-200 bg-white p-7 flex flex-col">
+        <p class="text-sm font-semibold text-slate-900">Starter</p>
+        <div class="mt-3 flex items-baseline gap-1">
+          <span class="text-4xl font-semibold tracking-tight text-slate-900">$0</span>
+          <span class="text-sm text-slate-500">/ forever</span>
+        </div>
+        <ul class="mt-6 space-y-2.5 text-sm text-slate-600 flex-1">
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span>3 briefs per month</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span>Reddit, Hacker News and web sources</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span>30-day window, one-page summary</li>
+          <li class="flex gap-2 text-slate-400"><span>—</span>No Polymarket odds</li>
+        </ul>
+        <button type="button" data-waitlist="Starter"
+                class="mt-7 w-full py-3 rounded-xl border border-slate-300 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition">
+          Join waitlist
+        </button>
+      </div>
+
+      <!-- pro -->
+      <div class="rounded-2xl border border-slate-900 bg-slate-900 p-7 flex flex-col text-white relative overflow-hidden">
+        <div class="absolute -top-20 -right-16 w-56 h-56 rounded-full bg-emerald-400/10 blur-2xl"></div>
+        <div class="relative flex items-center justify-between">
+          <p class="text-sm font-semibold">Pro</p>
+          <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/10 text-emerald-300">Most popular</span>
+        </div>
+        <div class="relative mt-3 flex items-baseline gap-1">
+          <span class="text-4xl font-semibold tracking-tight">$29</span>
+          <span class="text-sm text-slate-400">/ month</span>
+        </div>
+        <ul class="relative mt-6 space-y-2.5 text-sm text-slate-300 flex-1">
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span>Unlimited briefs, any name or company</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span>X, YouTube, TikTok, arXiv + everything above</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span><span class="text-white font-medium">Polymarket odds, highlighted</span></li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span>Saved watchlist and weekly re-runs</li>
+        </ul>
+        <button type="button" data-waitlist="Pro"
+                class="relative mt-7 w-full py-3 rounded-xl bg-white text-slate-900 text-sm font-semibold hover:bg-slate-100 transition">
+          Join waitlist
+        </button>
+      </div>
+    </div>
+
+    <form id="waitlistForm" class="mt-8 flex flex-col sm:flex-row gap-2 max-w-lg mx-auto">
+      <input id="waitlistEmail" type="text" inputmode="email" autocomplete="off" value="you@company.com"
+             class="flex-1 px-4 py-3 rounded-xl border border-slate-300 bg-white text-sm text-slate-900 outline-none focus:border-slate-500 transition"
+             aria-label="Work email">
+      <button type="submit" class="px-6 py-3 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition">
+        Get early access
+      </button>
+    </form>
+    <p id="waitlistMsg" class="mt-3 text-center text-sm text-emerald-700 h-5"></p>
+  </div>
+</section>
+
+<!-- ───────────────────────── footer ───────────────────────── -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="max-w-6xl mx-auto px-5 py-10">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <span class="w-7 h-7 rounded-lg bg-slate-900 text-white grid place-items-center text-[11px] font-bold">30</span>
+        <span class="text-sm font-semibold text-slate-900 tracking-tight">Signal30</span>
+      </div>
+      <p class="text-[11px] text-slate-400 text-center sm:text-right">Built as a product concept, not a live service. No accounts, no tracking, no requests.</p>
+    </div>
+    <div class="mt-6 pt-6 border-t border-slate-100 text-center">
+      <p class="text-[11.5px] text-slate-500 leading-relaxed">
+        Concept demo, based on the open-source project <a href="https://github.com/mvanhorn/last30days-skill" class="underline decoration-slate-300 underline-offset-2 hover:text-slate-900 transition">mvanhorn/last30days-skill</a> (MIT), unofficial, all data is sample data
+      </p>
+    </div>
+  </div>
+</footer>
+
+<div id="toastHost" class="fixed left-1/2 bottom-6 z-50 -translate-x-1/2 pointer-events-none"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ───────────────────────── demo data ───────────────────────── */
+
+  var BRIEFS = {
+    'peter steinberger': {
+      name: 'Peter Steinberger',
+      kind: 'Person',
+      pos: 62, neu: 24, neg: 14,
+      takeaway: 'Shipping at a pace the community can\u2019t decide whether to applaud or dunk on.',
+      summary: 'Peter is in the middle of a very loud month. He joined OpenAI to work on Codex, publicly pushed back on Anthropic\u2019s ban on third-party agents, and kept merging at a rate most teams can\u2019t match \u2014 23 PRs at an 85% merge rate. r/ClaudeCode\u2019s biggest thread of the month (569 upvotes) argues over whether his open-source pace makes him a hero or \u201cinsufferable\u201d; the top-voted comment says both. There is almost no marketing chatter here \u2014 this is engineer-to-engineer signal.',
+      sources: [
+        {
+          name: 'X / Twitter', badge: 'X', color: '#0f172a', metric: '412 posts',
+          quote: '\u201cThe agent should own the whole loop, not just the diff.\u201d',
+          meta: '2.1k likes \u00b7 184 replies \u00b7 4d ago'
+        },
+        {
+          name: 'Reddit', badge: 'R', color: '#ff4500', metric: '138 threads',
+          quote: '\u201cHero or insufferable?\u201d \u2014 r/ClaudeCode\u2019s biggest thread this month',
+          meta: '569 upvotes \u00b7 214 comments \u00b7 6d ago'
+        },
+        {
+          name: 'YouTube', badge: '\u25b6', color: '#ef4444', metric: '6 videos',
+          quote: 'Three quotable minutes hidden inside a 38-minute walkthrough of agentic shipping',
+          meta: 'Transcript hits at 12:04, 21:37, 34:52'
+        },
+        {
+          name: 'Hacker News', badge: 'Y', color: '#f97316', metric: '24 threads',
+          quote: '\u201cShow HN: LobsterOS\u201d \u2014 cross-device agent control, argued about for a full day',
+          meta: '214 points \u00b7 96 comments \u00b7 9d ago'
+        }
+      ],
+      market: {
+        question: 'Will OpenAI ship Codex GA before July 1?',
+        odds: 71, delta: 6, volume: '$1.4M',
+        note: 'Traders are pricing in the same velocity the engineers keep posting about.'
+      }
+    },
+
+    'anthropic': {
+      name: 'Anthropic',
+      kind: 'Company',
+      pos: 48, neu: 33, neg: 19,
+      takeaway: 'Developer love for the models, developer friction with the policy.',
+      summary: 'The month splits cleanly in two. On capability, Hacker News and r/ClaudeCode keep posting side-by-side evals where Claude wins on long-context coding tasks, and YouTube reviewers mostly agree. On policy, the ban on third-party agent wrappers is the single loudest complaint \u2014 310 HN threads touch it, and the top reply on the 890-point thread is a link to a competing provider. Careers pages and patent filings both point at inference infrastructure rather than product surface area.',
+      sources: [
+        {
+          name: 'X / Twitter', badge: 'X', color: '#0f172a', metric: '3.4k posts',
+          quote: '\u201cNobody is talking about the fact that they shipped this quietly on a Friday.\u201d',
+          meta: '5.6k likes \u00b7 402 replies \u00b7 2d ago'
+        },
+        {
+          name: 'Reddit', badge: 'R', color: '#ff4500', metric: '892 threads',
+          quote: 'r/ClaudeAI \u2014 third-party agent ban megathread, still pinned',
+          meta: '1.2k upvotes \u00b7 780 comments \u00b7 11d ago'
+        },
+        {
+          name: 'YouTube', badge: '\u25b6', color: '#ef4444', metric: '41 videos',
+          quote: 'Three long-form reviews, one recurring complaint: rate limits at peak hours',
+          meta: 'Most-watched review: 318k views \u00b7 22 min'
+        },
+        {
+          name: 'Hacker News', badge: 'Y', color: '#f97316', metric: '310 threads',
+          quote: '\u201cClaude vs. the agent ecosystem\u201d \u2014 the comment section became the story',
+          meta: '890 points \u00b7 612 comments \u00b7 8d ago'
+        }
+      ],
+      market: {
+        question: 'Will Anthropic be the #1 model on LMArena on Aug 1?',
+        odds: 44, delta: -3, volume: '$2.1M',
+        note: 'Money is drifting away from the hype: odds down 3 points this week while Reddit sentiment held flat.'
+      }
+    },
+
+    'figma': {
+      name: 'Figma',
+      kind: 'Company',
+      pos: 54, neu: 30, neg: 16,
+      takeaway: 'Designers like the new toys; the loudest thread is still about seat pricing.',
+      summary: 'Config aftermath dominates the 30-day window. Creators are posting short walkthroughs of the new AI canvas tools on YouTube (41 videos, most under 10 minutes), while r/figma\u2019s biggest thread \u2014 1.4k upvotes \u2014 is a shared spreadsheet comparing seat costs after the pricing change. X is mostly screenshots and praise. The one thing missing from the whole month: any serious conversation about switching away.',
+      sources: [
+        {
+          name: 'X / Twitter', badge: 'X', color: '#0f172a', metric: '2.6k posts',
+          quote: '\u201cThe new canvas tools are genuinely good and nobody is saying it loudly enough.\u201d',
+          meta: '3.2k likes \u00b7 96 replies \u00b7 5d ago'
+        },
+        {
+          name: 'Reddit', badge: 'R', color: '#ff4500', metric: '611 threads',
+          quote: 'r/figma \u2014 \u201cThe real cost of the new seats (spreadsheet inside)\u201d',
+          meta: '1.4k upvotes \u00b7 502 comments \u00b7 13d ago'
+        },
+        {
+          name: 'YouTube', badge: '\u25b6', color: '#ef4444', metric: '41 videos',
+          quote: 'Most-watched: \u201cFigma AI in 12 minutes\u201d \u2014 the word \u201cprice\u201d appears 9 times',
+          meta: '480k views \u00b7 11:48 runtime'
+        },
+        {
+          name: 'Hacker News', badge: 'Y', color: '#f97316', metric: '78 threads',
+          quote: '\u201cFigma\u2019s new pricing, from the perspective of a team of 40\u201d',
+          meta: '320 points \u00b7 144 comments \u00b7 14d ago'
+        }
+      ],
+      market: {
+        question: 'Will Figma close above $70 on the last trading day of the quarter?',
+        odds: 38, delta: 4, volume: '$640K',
+        note: 'Small market, but the 4-point move lines up almost exactly with the pricing backlash threads.'
+      }
+    }
+  };
+
+  /* ───────────────────────── helpers ───────────────────────── */
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function hash(str) {
+    var h = 0, i;
+    for (i = 0; i < str.length; i++) {
+      h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    }
+    return h;
+  }
+
+  function makeGeneric(topic) {
+    var h = hash(topic);
+    var x = 90 + (h % 780);
+    var rd = 24 + ((h >> 3) % 240);
+    var yt = 2 + ((h >> 5) % 22);
+    var hn = 6 + ((h >> 7) % 90);
+    var up = 120 + ((h >> 9) % 800);
+    var likes = 800 + ((h >> 11) % 4200);
+    var pos = 38 + ((h >> 13) % 33);
+    var neg = 8 + ((h >> 15) % 18);
+    var neu = 100 - pos - neg;
+    if (neu < 5) { neu = 5; pos = 100 - neu - neg; }
+
+    return {
+      name: topic,
+      kind: 'Topic',
+      pos: pos, neu: neu, neg: neg,
+      takeaway: 'Steady chatter across every source, with no single story dominating.',
+      summary: topic + ' shows up on all five sources this month, but the conversation is spread thin rather than concentrated. X carries most of the volume (' + x + ' posts) with a handful of quote-tweet chains doing the actual arguing. Reddit is where the specifics live \u2014 ' + rd + ' threads, the loudest one sitting at ' + up + ' upvotes. Nothing here suggests a breakout moment, which is itself the finding: the topic is being discussed, not decided.',
+      sources: [
+        {
+          name: 'X / Twitter', badge: 'X', color: '#0f172a', metric: x + ' posts',
+          quote: 'The loudest quote-tweet chain is a disagreement about scope, not about facts.',
+          meta: likes + ' likes \u00b7 4d ago'
+        },
+        {
+          name: 'Reddit', badge: 'R', color: '#ff4500', metric: rd + ' threads',
+          quote: 'The top thread is a first-person account that everyone else is arguing with.',
+          meta: up + ' upvotes \u00b7 ' + (40 + (h % 320)) + ' comments \u00b7 7d ago'
+        },
+        {
+          name: 'YouTube', badge: '\u25b6', color: '#ef4444', metric: yt + ' videos',
+          quote: 'Transcripts mention the topic in passing \u2014 no dedicated deep dive yet.',
+          meta: 'Longest mention: 4 min 12 s'
+        },
+        {
+          name: 'Hacker News', badge: 'Y', color: '#f97316', metric: hn + ' threads',
+          quote: 'Technical consensus is closer than the Reddit thread implies.',
+          meta: (60 + (h % 400)) + ' points \u00b7 ' + (20 + (h % 180)) + ' comments \u00b7 10d ago'
+        }
+      ],
+      market: null
+    };
+  }
+
+  function lookup(raw) {
+    var key = String(raw).trim().toLowerCase();
+    if (BRIEFS[key]) return BRIEFS[key];
+    return makeGeneric(String(raw).trim());
+  }
+
+  /* ───────────────────────── render pieces ───────────────────────── */
+
+  function workingHTML(topic) {
+    return '' +
+      '<div class="reveal rounded-2xl border border-slate-800 bg-slate-900 p-5 md:p-6">' +
+        '<div class="flex items-center justify-between text-[11px] font-mono text-slate-400">' +
+          '<span class="flex items-center gap-2">' +
+            '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>' +
+            'agent pipeline \u00b7 researching \u201c' + esc(topic) + '\u201d' +
+          '</span>' +
+          '<span id="elapsed">0.0s</span>' +
+        '</div>' +
+        '<div id="logLines" class="mt-4 space-y-1.5 font-mono text-[11px] md:text-[11.5px] text-slate-300 break-words"></div>' +
+        '<div class="mt-5 h-1 rounded-full bg-white/10 overflow-hidden">' +
+          '<div id="progressBar" class="h-full w-0 bg-emerald-400 rounded-full transition-all duration-500 ease-out"></div>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function sentimentHTML(d) {
+    return '' +
+      '<div class="flex items-center justify-between text-[11px] text-slate-500">' +
+        '<span>Sentiment \u00b7 30d</span>' +
+        '<span class="font-medium text-slate-700">' + d.pos + '% positive</span>' +
+      '</div>' +
+      '<div class="mt-2 h-2 rounded-full overflow-hidden flex bg-slate-100">' +
+        '<div class="bg-emerald-500" style="width:' + d.pos + '%"></div>' +
+        '<div class="bg-slate-300" style="width:' + d.neu + '%"></div>' +
+        '<div class="bg-rose-400" style="width:' + d.neg + '%"></div>' +
+      '</div>' +
+      '<div class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[10px] text-slate-400">' +
+        '<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>Positive ' + d.pos + '%</span>' +
+        '<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 inline-block"></span>Neutral ' + d.neu + '%</span>' +
+        '<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-400 inline-block"></span>Negative ' + d.neg + '%</span>' +
+      '</div>';
+  }
+
+  function marketHTML(m) {
+    if (!m) {
+      return '' +
+        '<div class="bg-slate-900 text-white px-6 md:px-8 py-6">' +
+          '<div class="flex items-center gap-2">' +
+            '<span class="w-5 h-5 rounded bg-white/15 text-white grid place-items-center text-[9px] font-extrabold">PM</span>' +
+            '<span class="text-[10.5px] uppercase tracking-[0.16em] text-slate-400 font-semibold">Polymarket \u00b7 no live market</span>' +
+          '</div>' +
+          '<p class="mt-3 text-sm text-slate-300 max-w-xl leading-relaxed">No Polymarket contract matched this topic in the last 30 days. The brief below leans on social and editorial signal instead.</p>' +
+        '</div>';
+    }
+
+    var up = m.delta >= 0;
+    var arrow = up ? '\u25b2' : '\u25bc';
+    var deltaClass = up ? 'text-emerald-400' : 'text-rose-400';
+
+    return '' +
+      '<div class="bg-slate-900 text-white px-6 md:px-8 py-6">' +
+        '<div class="flex flex-wrap items-center justify-between gap-3">' +
+          '<div class="flex items-center gap-2">' +
+            '<span class="w-5 h-5 rounded bg-lime-300 text-slate-900 grid place-items-center text-[9px] font-extrabold">PM</span>' +
+            '<span class="text-[10.5px] uppercase tracking-[0.16em] text-lime-300 font-semibold">Polymarket \u00b7 money on the line</span>' +
+          '</div>' +
+          '<span class="text-[11px] text-slate-400">30d volume ' + esc(m.volume) + '</span>' +
+        '</div>' +
+        '<div class="mt-4 flex flex-wrap items-end justify-between gap-4">' +
+          '<p class="text-base md:text-lg text-slate-100 leading-snug max-w-lg">' + esc(m.question) + '</p>' +
+          '<div class="flex items-baseline gap-2.5">' +
+            '<span class="text-4xl md:text-5xl font-semibold tracking-tight tabular-nums">' + m.odds + '<span class="text-xl align-top">%</span></span>' +
+            '<span class="text-sm font-medium ' + deltaClass + '">' + arrow + ' ' + Math.abs(m.delta) + ' pts</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="mt-4 h-1.5 rounded-full bg-white/10 overflow-hidden">' +
+          '<div class="h-full rounded-full bg-lime-300" style="width:' + m.odds + '%"></div>' +
+        '</div>' +
+        '<p class="mt-3 text-[11.5px] text-slate-400 leading-relaxed">' + esc(m.note) + '</p>' +
+      '</div>';
+  }
+
+  function resultHTML(d, elapsed) {
+    var srcCards = d.sources.map(function (s, i) {
+      return '' +
+        '<div class="reveal rounded-xl border border-slate-200 bg-white p-3.5" style="animation-delay:' + (200 + i * 80) + 'ms">' +
+          '<div class="flex items-center gap-2">' +
+            '<span class="w-6 h-6 rounded-md grid place-items-center text-[11px] font-bold text-white shrink-0" style="background:' + s.color + '">' + esc(s.badge) + '</span>' +
+            '<span class="text-[13px] font-semibold text-slate-800">' + esc(s.name) + '</span>' +
+            '<span class="ml-auto text-[11px] text-slate-500 tabular-nums">' + esc(s.metric) + '</span>' +
+          '</div>' +
+          '<p class="mt-2 text-[13px] leading-snug text-slate-700">' + esc(s.quote) + '</p>' +
+          '<p class="mt-1.5 text-[11px] text-slate-400">' + esc(s.meta) + '</p>' +
+        '</div>';
+    }).join('');
+
+    return '' +
+      '<article class="reveal rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-[0_1px_2px_rgba(15,23,42,.04),0_20px_50px_-30px_rgba(15,23,42,.25)]">' +
+
+        /* header */
+        '<div class="p-6 md:p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-start gap-6 md:justify-between">' +
+          '<div class="min-w-0">' +
+            '<div class="flex flex-wrap items-center gap-2 text-[11px]">' +
+              '<span class="px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 font-medium">' + esc(d.kind) + '</span>' +
+              '<span class="px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 font-medium">Sample data</span>' +
+              '<span class="text-slate-400">Last 30 days \u00b7 ' + (d.sources.length + (d.market ? 1 : 0)) + ' sources \u00b7 ' + elapsed + 's</span>' +
+            '</div>' +
+            '<h2 class="mt-3 text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 break-words">' + esc(d.name) + '</h2>' +
+            '<p class="mt-2 text-slate-600 leading-relaxed max-w-xl">' + esc(d.takeaway) + '</p>' +
+          '</div>' +
+          '<div class="w-full md:w-56 shrink-0">' + sentimentHTML(d) + '</div>' +
+        '</div>' +
+
+        /* polymarket highlight */
+        marketHTML(d.market) +
+
+        /* body */
+        '<div class="grid lg:grid-cols-5">' +
+          '<div class="lg:col-span-3 p-6 md:p-8">' +
+            '<h3 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">Synthesized brief</h3>' +
+            '<p class="mt-3 text-[15px] leading-relaxed text-slate-700">' + esc(d.summary) + '</p>' +
+            '<div class="mt-6 pt-5 border-t border-slate-100 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-slate-400">' +
+              '<span>Scored by upvotes, likes, and money at risk \u2014 not by editors.</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="lg:col-span-2 border-t lg:border-t-0 lg:border-l border-slate-100 bg-slate-50/70 p-6 md:p-8">' +
+            '<h3 class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400 mb-3">Where it came from</h3>' +
+            '<div class="space-y-3">' + srcCards + '</div>' +
+          '</div>' +
+        '</div>' +
+
+      '</article>';
+  }
+
+  /* ───────────────────────── run flow ───────────────────────── */
+
+  var out = document.getElementById('output');
+  var input = document.getElementById('topicInput');
+  var form = document.getElementById('briefForm');
+  var runBtn = document.getElementById('runBtn');
+  var runLabel = document.getElementById('runLabel');
+
+  var token = 0;
+  var timerIds = [];
+
+  function clearTimers() {
+    timerIds.forEach(function (id) { clearTimeout(id); });
+    timerIds = [];
+  }
+
+  function buildSteps(d, topic) {
+    var steps = [];
+    steps.push({
+      html: '<span class="text-emerald-400">\u203a</span> planner <span class="text-slate-600">\u00b7</span> parsing <span class="text-white">' + esc(topic) + '</span> <span class="text-slate-600">\u2192</span> ' + (d.sources.length + 1) + ' source queries',
+      gap: 460
+    });
+    d.sources.forEach(function (s) {
+      steps.push({
+        html: '<span class="text-slate-600">\u203a</span> ' + esc(s.name.toLowerCase()) + ' <span class="text-slate-600">\u2192</span> <span class="text-white">' + esc(s.metric) + '</span>',
+        gap: 340 + Math.floor(Math.random() * 260)
+      });
+    });
+    if (d.market) {
+      steps.push({
+        html: '<span class="text-slate-600">\u203a</span> polymarket <span class="text-slate-600">\u2192</span> <span class="text-white">' + d.market.odds + '% on \u201c' + esc(d.market.question) + '\u201d</span>',
+        gap: 420
+      });
+    }
+    steps.push({
+      html: '<span class="text-slate-600">\u203a</span> judge <span class="text-slate-600">\u2192</span> scoring by upvotes, likes and money at risk',
+      gap: 480
+    });
+    steps.push({
+      html: '<span class="text-emerald-400">\u2713</span> synthesizing one brief',
+      gap: 560
+    });
+    return steps;
+  }
+
+  function runBrief(rawTopic) {
+    var topic = String(rawTopic || '').trim();
+    if (!topic) topic = 'Peter Steinberger';
+
+    var runId = ++token;
+    clearTimers();
+
+    var d = lookup(topic);
+    var start = Date.now();
+
+    out.innerHTML = workingHTML(topic);
+
+    var logEl = document.getElementById('logLines');
+    var barEl = document.getElementById('progressBar');
+    var elapsedEl = document.getElementById('elapsed');
+
+    var steps = buildSteps(d, topic);
+    var i = 0;
+
+    runBtn.disabled = true;
+    runBtn.classList.add('opacity-70');
+    runLabel.textContent = 'Researching\u2026';
+
+    function finish() {
+      if (runId !== token) return;
+      var secs = ((Date.now() - start) / 1000).toFixed(1);
+      out.innerHTML = resultHTML(d, secs);
+      runBtn.disabled = false;
+      runBtn.classList.remove('opacity-70');
+      runLabel.textContent = 'Generate brief';
+    }
+
+    function tick() {
+      if (runId !== token) return;
+      if (i >= steps.length) return;
+
+      var line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = steps[i].html;
+      if (logEl) logEl.appendChild(line);
+
+      var pct = Math.round(((i + 1) / steps.length) * 100);
+      if (barEl) barEl.style.width = pct + '%';
+      if (elapsedEl) elapsedEl.textContent = ((Date.now() - start) / 1000).toFixed(1) + 's';
+
+      i++;
+
+      if (i < steps.length) {
+        timerIds.push(setTimeout(tick, steps[i - 1].gap));
+      } else {
+        timerIds.push(setTimeout(finish, 640));
+      }
+    }
+
+    tick();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    runBrief(input.value);
+  });
+
+  var chips = document.querySelectorAll('[data-topic]');
+  Array.prototype.forEach.call(chips, function (btn) {
+    btn.addEventListener('click', function () {
+      var t = btn.getAttribute('data-topic');
+      input.value = t;
+      runBrief(t);
+    });
+  });
+
+  /* ───────────────────────── waitlist + toast ───────────────────────── */
+
+  var toastHost = document.getElementById('toastHost');
+  var toastTimer = null;
+
+  function toast(msg) {
+    if (!toastHost) return;
+    toastHost.innerHTML =
+      '<div class="toast pointer-events-auto bg-slate-900 text-white text-[13px] px-4 py-2.5 rounded-xl shadow-lg">' + esc(msg) + '</div>';
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      if (toastHost) toastHost.innerHTML = '';
+    }, 3200);
+  }
+
+  var waitlistForm = document.getElementById('waitlistForm');
+  var waitlistMsg = document.getElementById('waitlistMsg');
+  var waitlistEmail = document.getElementById('waitlistEmail');
+
+  if (waitlistForm) {
+    waitlistForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var val = (waitlistEmail && waitlistEmail.value ? waitlistEmail.value : '').trim();
+      if (waitlistMsg) {
+        waitlistMsg.textContent = val
+          ? 'You\u2019re on the list as #1,204 \u2014 demo only, nothing was sent.'
+          : 'Add an email first \u2014 demo only, nothing is sent either way.';
+        waitlistMsg.className = 'mt-3 text-center text-sm h-5 ' + (val ? 'text-emerald-700' : 'text-slate-500');
+      }
+      toast('Waitlist signup is a demo \u2014 no data was submitted.');
+    });
+  }
+
+  var planButtons = document.querySelectorAll('[data-waitlist]');
+  Array.prototype.forEach.call(planButtons, function (btn) {
+    btn.addEventListener('click', function () {
+      var plan = btn.getAttribute('data-waitlist');
+      toast('Added ' + plan + ' to your waitlist interest \u2014 demo only.');
+      var target = document.getElementById('waitlistEmail');
+      if (target && target.focus) {
+        try { target.focus({ preventScroll: true }); } catch (err) { target.focus(); }
+      }
+    });
+  });
+
+  /* ───────────────────────── boot ───────────────────────── */
+
+  window.addEventListener('load', function () {
+    timerIds.push(setTimeout(function () { runBrief(input.value); }, 420));
+  });
+})();
+</script>
+</body>
+</html>
