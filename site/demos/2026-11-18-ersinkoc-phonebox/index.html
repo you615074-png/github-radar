@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deckhand — turn an old Android phone into a live desk panel</title>
+<style>
+  :root{
+    --ink:#0b1220;
+    --muted:#5b6b82;
+    --line:rgba(15,23,42,.09);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:#f5f7fb;color:var(--ink);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.5;
+  }
+  a{color:inherit}
+  button,input{font-family:inherit}
+  .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
+
+  /* header */
+  .top{position:sticky;top:0;z-index:40;background:rgba(245,247,251,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .top-in{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:16px}
+  .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#0ea5e9,#6366f1);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px -8px rgba(99,102,241,.9)}
+  .tagpill{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#0369a1;background:#e0f2fe;border-radius:99px;padding:4px 9px}
+  .ghlink{font-size:12.5px;font-weight:700;color:#475569;text-decoration:none;border:1px solid var(--line);background:#fff;padding:7px 13px;border-radius:99px;transition:.15s}
+  .ghlink:hover{border-color:#bae6fd;color:#0369a1}
+
+  /* hero */
+  .hero{padding:52px 0 4px;text-align:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:#0284c7;background:#e0f2fe;padding:6px 12px;border-radius:99px;margin:0 0 18px}
+  h1{font-size:clamp(30px,4.8vw,52px);line-height:1.05;letter-spacing:-.035em;margin:0 0 16px;font-weight:800}
+  h1 em{font-style:normal;background:linear-gradient(120deg,#0ea5e9,#6366f1);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{max-width:650px;margin:0 auto;font-size:16px;color:var(--muted)}
+  .stats{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:22px;font-size:12.5px;color:#64748b}
+  .stats b{color:var(--ink);font-size:15px;font-weight:800;margin-right:5px}
+
+  /* demo */
+  .demo{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:34px;align-items:start;padding:34px 0 8px}
+  @media (max-width:900px){ .demo{grid-template-columns:1fr;gap:24px} }
+  @media (min-width:901px){ .phone-col{position:sticky;top:84px} }
+
+  /* phone */
+  .phone{
+    width:100%;max-width:320px;margin:0 auto;background:#0b1220;border-radius:38px;padding:9px;
+    box-shadow:0 44px 70px -34px rgba(15,23,42,.62),0 0 0 1px rgba(15,23,42,.14),inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .screen{
+    background:radial-gradient(120% 70% at 50% 0%,#111c31 0%,#070b14 62%);
+    border-radius:30px;overflow:hidden;display:flex;flex-direction:column;min-height:520px;color:#e2e8f0;
+  }
+  .sbar{display:flex;align-items:center;justify-content:space-between;padding:11px 16px 3px;font-size:10.5px;color:#94a3b8;font-variant-numeric:tabular-nums}
+  .sbadge{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7dd3fc;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.28);padding:2px 7px;border-radius:99px}
+  .phead{display:flex;align-items:flex-start;justify-content:space-between;padding:4px 15px 11px;gap:8px}
+  .phead h3{margin:0;font-size:15px;font-weight:800;letter-spacing:-.015em}
+  .psub{margin:1px 0 0;font-size:10.5px;color:#7c8ba1}
+  .live{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:#34d399;white-space:nowrap;padding-top:3px}
+  .live i{width:6px;height:6px;border-radius:99px;background:#34d399;animation:pulse 1.9s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.75)}70%{box-shadow:0 0 0 6px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+  .live.off{color:#94a3b8}
+  .live.off i{background:#94a3b8;animation:none}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px 14px;align-content:start;flex:1}
+  .grid:empty::after{content:"No widgets yet — add one from the library.";grid-column:span 2;text-align:center;color:#64748b;font-size:11px;padding:44px 10px}
+
+  .w{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);border-radius:15px;padding:8px 10px 10px;position:relative;transition:border-color .15s,background .15s,transform .15s}
+  .w.wide{grid-column:span 2}
+  .w.dragging{border-color:#38bdf8;background:rgba(56,189,248,.13);transform:scale(1.02);z-index:5}
+  .whead{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:3px}
+  .wlabel{font-size:9.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wgrip{font-size:12px;line-height:1;color:#64748b;cursor:grab;touch-action:none;padding:1px 4px;border-radius:6px;user-select:none;-webkit-user-select:none;flex:none}
+  .wgrip:hover{background:rgba(255,255,255,.1);color:#cbd5e1}
+  .wmain{display:flex;align-items:baseline;gap:6px}
+  .wval{font-size:22px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.15}
+  .wsub{font-size:10.5px;color:#94a3b8;font-variant-numeric:tabular-nums}
+  .pb{height:5px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px}
+  .pb i{display:block;height:100%;border-radius:99px;background:#38bdf8;transition:width .55s ease;width:0}
+  .spark{display:block;width:100%;height:28px;margin-top:6px;overflow:visible}
+  .mrow{display:flex;gap:8px;margin-top:2px}
+  .mcol{flex:1;min-width:0}
+  .mcol .mh{display:flex;justify-content:space-between;font-size:10px;color:#94a3b8}
+
+  .media{display:flex;align-items:center;gap:8px;margin-top:3px}
+  .art{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#22d3ee,#6366f1);display:flex;align-items:center;justify-content:center;font-size:15px;color:#04121f;flex:none}
+  .mtext{min-width:0;flex:1}
+  .mtext b{display:block;font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mtext span{display:block;font-size:10px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mbtn{width:30px;height:30px;border-radius:99px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#e2e8f0;font-size:11px;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
+  .mbtn:hover{background:rgba(255,255,255,.18)}
+
+  .macros{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:3px}
+  .macro{display:flex;align-items:center;gap:5px;padding:7px 8px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);color:#e2e8f0;font-size:10.5px;font-weight:700;cursor:pointer;transition:.12s;white-space:nowrap;overflow:hidden}
+  .macro:hover{background:rgba(255,255,255,.13)}
+  .macro.on{background:rgba(56,189,248,.2);border-color:rgba(56,189,248,.55);color:#bae6fd}
+
+  .sw{position:relative;width:38px;height:22px;border-radius:99px;background:rgba(255,255,255,.16);border:0;cursor:pointer;transition:.18s;padding:0;flex:none}
+  .sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:99px;background:#fff;transition:.18s}
+  .sw.on{background:#22d3ee}
+  .sw.on::after{left:19px}
+
+  .hint{margin:14px auto 0;max-width:310px;text-align:center;font-size:11.5px;color:#8b9bb1;line-height:1.55}
+
+  /* controls */
+  .controls{display:flex;flex-direction:column;gap:14px;min-width:0}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 18px 44px -38px rgba(15,23,42,.7)}
+  .cardhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:3px}
+  .cardhead h2{margin:0;font-size:14px;font-weight:800;letter-spacing:-.01em}
+  .cardsub{margin:0 0 12px;font-size:12.5px;color:var(--muted)}
+  .tag-mini{font-size:10.5px;font-weight:800;color:#64748b;background:#f1f5f9;border-radius:99px;padding:3px 8px;white-space:nowrap}
+  .badge-ok{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;padding:3px 9px;border-radius:99px;white-space:nowrap}
+  .badge-ok .dot{width:6px;height:6px;border-radius:99px;background:#10b981}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;font-size:13px;color:#334155}
+  .mono{font-variant-numeric:tabular-nums;font-weight:800;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .seg{display:flex;gap:8px;margin-top:4px}
+  .seg button{flex:1;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:12.5px;font-weight:700;color:#475569;cursor:pointer;transition:.15s}
+  .seg button:hover{border-color:#bae6fd;color:#0369a1}
+  .seg button.on{background:#0f172a;color:#fff;border-color:#0f172a}
+
+  .tplgrid,.libgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .tpl{display:flex;flex-direction:column;gap:1px;text-align:left;padding:10px 11px;border-radius:13px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:.15s}
+  .tpl:hover{border-color:#bae6fd}
+  .tpl b{font-size:12.5px;font-weight:800;letter-spacing:-.01em}
+  .tpl span{font-size:10.5px;color:#7c8ba1}
+  .tpl.on{border-color:#38bdf8;background:#f0f9ff;box-shadow:0 0 0 3px rgba(14,165,233,.13)}
+
+  .libbtn{display:flex;align-items:center;gap:7px;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12px;font-weight:700;color:#334155;text-align:left;transition:.15s}
+  .libbtn:hover{border-color:#bae6fd;background:#f8fbff}
+  .libbtn.on{border-color:#7dd3fc;background:#f0f9ff;color:#0369a1}
+  .libbtn .li{font-size:13px;line-height:1}
+  .libbtn .lm{margin-left:auto;font-weight:800;color:#94a3b8;font-size:13px}
+  .libbtn.on .lm{color:#0284c7}
+
+  .pillbtn{border:1px solid var(--line);background:#f1f5f9;color:#475569;font-size:11.5px;font-weight:800;padding:5px 13px;border-radius:99px;cursor:pointer;transition:.15s;letter-spacing:.02em}
+  .pillbtn.on{background:#ecfdf5;border-color:#a7f3d0;color:#047857}
+
+  /* sections */
+  .sectitle{font-size:clamp(22px,3vw,30px);letter-spacing:-.025em;margin:0 0 8px;font-weight:800}
+  .secsub{margin:0 0 26px;color:var(--muted);font-size:15px;max-width:680px}
+  .usecases{padding:66px 0 18px}
+  .ucgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:860px){ .ucgrid{grid-template-columns:1fr} }
+  .uc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
+  .uci{width:38px;height:38px;border-radius:12px;background:#f0f9ff;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+  .uc h3{margin:0 0 8px;font-size:16px;letter-spacing:-.015em}
+  .uc p{margin:0 0 12px;font-size:13.5px;color:var(--muted);line-height:1.6}
+  .ucmeta{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#0284c7}
+
+  .pricing{padding:60px 0 30px}
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+  @media (max-width:900px){ .pgrid{grid-template-columns:1fr} }
+  .plan{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;position:relative}
+  .plan.featured{border-color:#0ea5e9;background:linear-gradient(180deg,#f7fcff,#fff);box-shadow:0 26px 54px -34px rgba(14,165,233,.85)}
+  .ribbon{position:absolute;top:-11px;left:22px;background:#0ea5e9;color:#fff;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+  .plan h3{margin:0 0 8px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#475569}
+  .price{font-size:34px;font-weight:800;letter-spacing:-.035em;line-height:1}
+  .price span{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+  .planp{font-size:13px;color:var(--muted);margin:10px 0 16px;line-height:1.55}
+  .plan ul{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:8px}
+  .plan li{font-size:13px;color:#334155;display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+  .plan li::before{content:"✓";color:#0284c7;font-weight:800;font-size:12px;line-height:1.55;flex:none}
+  .btn{display:block;width:100%;border-radius:12px;padding:11px 14px;font-size:13.5px;font-weight:800;cursor:pointer;border:1px solid transparent;transition:.15s}
+  .btn.solid{background:#0f172a;color:#fff}
+  .btn.solid:hover{background:#1e293b}
+  .btn.ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+  .btn.ghost:hover{background:#f8fafc;border-color:#bae6fd}
+
+  .waitlist{margin-top:22px;background:#0b1220;color:#e2e8f0;border-radius:20px;padding:22px;display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .waitlist b{font-size:16px;display:block;margin-bottom:4px;letter-spacing:-.015em}
+  .waitlist p{margin:0;font-size:13px;color:#94a3b8;max-width:430px}
+  .wl-form{display:flex;gap:8px;flex-wrap:wrap}
+  .wl-form input{border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#e2e8f0;padding:11px 14px;font-size:13.5px;width:230px}
+  .wl-form input::placeholder{color:#7c8ba1}
+  .wl-form input:focus{outline:2px solid #38bdf8;outline-offset:1px}
+  .wl-form .btn{width:auto;background:#38bdf8;color:#04121f}
+  .wl-form .btn:hover{background:#7dd3fc}
+  .note{margin:10px 0 0;font-size:12px;color:var(--muted)}
+
+  .foot{border-top:1px solid var(--line);margin-top:44px;padding:22px 0 34px;text-align:center;font-size:12.5px;color:#64748b;line-height:1.7}
+  .foot a{color:#0284c7;font-weight:700;text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,18px);opacity:0;transition:.26s ease;
+    background:#0b1220;color:#fff;padding:11px 18px;border-radius:999px;font-size:13px;font-weight:700;
+    z-index:90;pointer-events:none;box-shadow:0 22px 44px -22px rgba(11,18,32,.95);
+    max-width:calc(100vw - 32px);text-align:center;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round">
+          <rect x="3" y="3" width="7" height="7" rx="1.6"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1.6"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1.6"></rect>
+          <path d="M14 17.5h7"></path>
+        </svg>
+      </span>
+      <span>Deckhand</span>
+      <span class="tagpill">Sample data</span>
+    </div>
+    <a class="ghlink" href="https://github.com/ersinkoc/phonebox" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+
+<section class="wrap hero">
+  <p class="eyebrow">Concept demo · built on open-source PhoneBox</p>
+  <h1>Your old Android phone<br>is your <em>desk control deck</em>.</h1>
+  <p class="lede">Deckhand turns the phone in your drawer into a live panel for your PC — CPU and GPU charts, Claude and Codex quotas, media and one-tap macros. Over USB or paired Wi-Fi. No cloud, no account, no root.</p>
+  <div class="stats">
+    <span><b>123</b>widgets</span>
+    <span><b>30</b>templates</span>
+    <span><b>12</b>languages</span>
+    <span><b>0</b>cloud services</span>
+  </div>
+</section>
+
+<section class="wrap demo">
+  <!-- PHONE -->
+  <div class="phone-col">
+    <div class="phone">
+      <div class="screen">
+        <div class="sbar">
+          <span>9:41</span>
+          <span class="sbadge">Sample data</span>
+        </div>
+        <div class="phead">
+          <div>
+            <h3 id="panelTitle">System panel</h3>
+            <p class="psub" data-bind="connLabel">Pixel 4a · USB</p>
+          </div>
+          <span class="live" id="liveDot"><i></i>Live</span>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+    <p class="hint">Drag the ⠿ handle to rearrange widgets · tap a macro, the play button or the lamp switch and your PC reacts</p>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Connection</h2>
+        <span class="badge-ok"><span class="dot"></span>Paired</span>
+      </div>
+      <p class="cardsub">Pixel 4a · the phone that was in your drawer</p>
+      <div class="seg" id="connSeg">
+        <button type="button" data-conn="usb" class="on">USB · adb</button>
+        <button type="button" data-conn="wifi">Paired Wi-Fi</button>
+      </div>
+      <div class="row">
+        <span>Round-trip latency</span>
+        <span class="mono" data-bind="latency">6 ms</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardhead">
+        <h2>Panel templates</h2>
+        <span class="tag-mini">30 in the app</span>
+      </div>
+      <div class="tplgrid" id="tplGrid"></div>
+    </section>
+
+    <section class="card">
+      <div class="cardhead">
+        <h2>Widget library</h2>
+        <span class="tag-mini">123 in the app</span>
+      </div>
+      <div class="libgrid" id="libGrid"></div>
+      <div class="row">
+        <span>Demo stream</span>
+        <button type="button" class="pillbtn on" id="streamBtn">Live</button>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="wrap usecases">
+  <h2 class="sectitle">Three ways people actually use it</h2>
+  <p class="secsub">A $0 Stream Deck that also happens to be the second monitor you never bought.</p>
+  <div class="ucgrid">
+    <article class="uc">
+      <div class="uci">📈</div>
+      <h3>Monitoring without alt-tab</h3>
+      <p>CPU, GPU, RAM, disks and ping stay visible while you render, compile or game. The phone wakes itself the moment the desktop agent sees it.</p>
+      <div class="ucmeta">System panel template</div>
+    </article>
+    <article class="uc">
+      <div class="uci">🤖</div>
+      <h3>AI quotas in your peripheral vision</h3>
+      <p>Claude and Codex session quotas with reset times and burn-rate forecasts. Opt in and answer permission prompts with Allow or Deny from the phone.</p>
+      <div class="ucmeta">AI coding template</div>
+    </article>
+    <article class="uc">
+      <div class="uci">🎛</div>
+      <h3>A Stream Deck that costs nothing</h3>
+      <p>Key combos, mic mute, OBS scenes, app shortcuts and Home Assistant actions — 123 widgets, multiple pages, no subscription required.</p>
+      <div class="ucmeta">Control deck template</div>
+    </article>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="wrap pricing">
+  <h2 class="sectitle">Simple pricing, the app stays open source</h2>
+  <p class="secsub">The core stays MIT and cloud-free. Paid tiers pay for the one-click installer and the hosted template marketplace.</p>
+  <div class="pgrid">
+    <div class="plan">
+      <h3>Community</h3>
+      <div class="price">$0</div>
+      <p class="planp">Build it yourself from the repo — exactly as it works today.</p>
+      <ul>
+        <li>123 widgets, 30 templates</li>
+        <li>USB and paired Wi-Fi</li>
+        <li>12 languages, no account</li>
+        <li>Community support</li>
+      </ul>
+      <button type="button" class="btn ghost" data-cta="Community plan — sample only">Start free</button>
+    </div>
+    <div class="plan featured">
+      <span class="ribbon">Most popular</span>
+      <h3>Pro</h3>
+      <div class="price">$5<span>/month per desk</span></div>
+      <p class="planp">One-click installer for Windows, macOS and Linux, plus the hosted marketplace.</p>
+      <ul>
+        <li>Signed installer and auto-updates</li>
+        <li>Hosted widget &amp; template marketplace</li>
+        <li>Install the phone app over USB</li>
+        <li>Multi-phone layouts and presets</li>
+      </ul>
+      <button type="button" class="btn solid" data-cta="Pro plan — sample only, nothing was charged">Join the waitlist</button>
+    </div>
+    <div class="plan">
+      <h3>Studio</h3>
+      <div class="price">$19<span>/month, 5 desks</span></div>
+      <p class="planp">For small teams that want shared decks and private templates.</p>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>5 paired desks and shared layouts</li>
+        <li>Private template library</li>
+        <li>Priority support</li>
+      </ul>
+      <button type="button" class="btn ghost" data-cta="Studio plan — sample only">Talk to us</button>
+    </div>
+  </div>
+
+  <div class="waitlist">
+    <div>
+      <b>Get the one-click beta</b>
+      <p>Early access to the installer and the first 10 marketplace templates. Demo form — nothing is sent anywhere.</p>
+    </div>
+    <form class="wl-form" id="wlForm" novalidate>
+      <input type="email" id="wlEmail" value="you@studio.dev" aria-label="Email address" placeholder="you@studio.dev">
+      <button type="submit" class="btn">Join waitlist</button>
+    </form>
+  </div>
+  <p class="note">Sample data only. No network requests are made by this page.</p>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    Concept demo, based on the open-source project <a href="https://github.com/ersinkoc/phonebox" target="_blank" rel="noopener">ersinkoc/phonebox</a> (MIT), unofficial, all data is sample data
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- helpers ---------------- */
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2200);
+  }
+  function clamp(v, lo, hi){ return v < lo ? lo : (v > hi ? hi : v); }
+  function rnd(a, b){ return a + Math.random() * (b - a); }
+
+  /* ---------------- simulated desktop agent ---------------- */
+  var sim = {
+    cpu: 34,
+    cpuHist: [],
+    ram: 58,
+    gpu: 22,
+    claude: 62,
+    codex: 38,
+    ping: 6,
+    down: 42,
+    lamp: false,
+    playing: true,
+    trackIndex: 0
+  };
+  (function seedHist(){
+    var v = 34;
+    for (var i = 0; i < 44; i++){
+      v = clamp(v + rnd(-8, 8), 8, 92);
+      sim.cpuHist.push(v);
+    }
+  })();
+
+  var TRACKS = [
+    { t: 'Lo-fi focus loop', a: 'Grey Room · Spotify' },
+    { t: 'Weightless', a: 'Marconi Union · Spotify' },
+    { t: 'Nightcall', a: 'Kavinsky · Local file' }
+  ];
+
+  var state = {
+    conn: 'usb',
+    template: 'system',
+    streaming: true,
+    order: []
+  };
+
+  /* ---------------- widget templates ---------------- */
+  function grip(key){
+    return '<span class="wgrip" data-drag="' + key + '" title="Drag to rearrange" aria-hidden="true">⠿</span>';
+  }
+
+  var WIDGETS = {
+    cpu: {
+      label: 'CPU', icon: '🧠',
+      html: function(){
+        return '<div class="w wide" data-w="cpu">' +
+          '<div class="whead"><span class="wlabel">CPU · 8 cores</span>' + grip('cpu') + '</div>' +
+          '<div class="wmain">' +
+            '<span class="wval" data-v="cpu">34</span><span class="wsub">%</span>' +
+            '<span class="wsub" style="margin-left:auto" data-v="cputemp">56°C</span>' +
+          '</div>' +
+          '<svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">' +
+            '<polyline data-v="cpuspark" fill="none" stroke="#38bdf8" stroke-width="1.6" stroke-linejoin="round" points=""></polyline>' +
+          '</svg>' +
+          '<div class="pb"><i data-v="cpubar"></i></div>' +
+        '</div>';
+      }
+    },
+    ram: {
+      label: 'RAM', icon: '💾',
+      html: function(){
+        return '<div class="w" data-w="ram">' +
+          '<div class="whead"><span class="wlabel">RAM</span>' + grip('ram') + '</div>' +
+          '<div class="wmain"><span class="wval" data-v="ram">58</span><span class="wsub">%</span></div>' +
+          '<div class="pb"><i data-v="rambar" style="background:#a78bfa"></i></div>' +
+        '</div>';
+      }
+    },
+    gpu: {
+      label: 'GPU', icon: '🎮',
+      html: function(){
+        return '<div class="w" data-w="gpu">' +
+          '<div class="whead"><span class="wlabel">GPU</span>' + grip('gpu') + '</div>' +
+          '<div class="wmain"><span class="wval" data-v="gpu">22</span><span class="wsub">%</span></div>' +
+          '<div class="pb"><i data-v="gpubar" style="background:#34d399"></i></div>' +
+          '<div class="wsub" style="margin-top:5px" data-v="gputemp">59°C · 41 W</div>' +
+        '</div>';
+      }
+    },
+    ai: {
+      label: 'AI quotas', icon: '🤖',
+      html: function(){
+        return '<div class="w wide" data-w="ai">' +
+          '<div class="whead"><span class="wlabel">AI quotas · resets in 2h 14m</span>' + grip('ai') + '</div>' +
+          '<div class="mrow">' +
+            '<div class="mcol">' +
+              '<div class="mh"><span>Claude</span><span data-v="claudepct">62%</span></div>' +
+              '<div class="pb"><i data-v="claudebar" style="background:#a78bfa"></i></div>' +
+            '</div>' +
+            '<div class="mcol">' +
+              '<div class="mh"><span>Codex</span><span data-v="codexpct">38%</span></div>' +
+              '<div class="pb"><i data-v="codexbar" style="background:#34d399"></i></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }
+    },
+    media: {
+      label: 'Now playing', icon: '🎵',
+      html: function(){
+        return '<div class="w wide" data-w="media">' +
+          '<div class="whead"><span class="wlabel">Now playing</span>' + grip('media') + '</div>' +
+          '<div class="media">' +
+            '<div class="art">♫</div>' +
+            '<div class="mtext"><b data-v="track">Lo-fi focus loop</b><span data-v="artist">Grey Room · Spotify</span></div>' +
+            '<button class="mbtn" type="button" data-act="playpause" aria-label="Play or pause">⏸</button>' +
+            '<button class="mbtn" type="button" data-act="next" aria-label="Next track">⏭</button>' +
+          '</div>' +
+        '</div>';
+      }
+    },
+    macros: {
+      label: 'Macros', icon: '⌨️',
+      html: function(){
+        return '<div class="w wide" data-w="macros">' +
+          '<div class="whead"><span class="wlabel">Macros</span>' + grip('macros') + '</div>' +
+          '<div class="macros">' +
+            '<button class="macro" type="button" data-act="macro" data-key="Ctrl+Shift+P">⌘ Palette</button>' +
+            '<button class="macro" type="button" data-act="macro" data-key="Ctrl+S">💾 Save</button>' +
+            '<button class="macro" type="button" data-act="macro" data-key="Mic mute">🎙 Mute</button>' +
+            '<button class="macro" type="button" data-act="macro" data-key="OBS scene">🎬 Scene</button>' +
+          '</div>' +
+        '</div>';
+      }
+    },
+    lamp: {
+      label: 'Desk lamp', icon: '💡',
+      html: function(){
+        return '<div class="w" data-w="lamp">' +
+          '<div class="whead"><span class="wlabel">Desk lamp</span>' + grip('lamp') + '</div>' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">' +
+            '<span class="wsub" data-v="lampstate">Off</span>' +
+            '<button class="sw" type="button" data-act="lamp" aria-label="Toggle desk lamp"></button>' +
+          '</div>' +
+        '</div>';
+      }
+    },
+    net: {
+      label: 'Network', icon: '📡',
+      html: function(){
+        return '<div class="w" data-w="net">' +
+          '<div class="whead"><span class="wlabel">Network</span>' + grip('net') + '</div>' +
+          '<div class="wmain"><span class="wval" data-v="ping">6</span><span class="wsub">ms</span></div>' +
+          '<div class="wsub" style="margin-top:5px" data-v="netrate">↓ 42 Mbps</div>' +
+        '</div>';
+      }
+    }
+  };
+
+  var TEMPLATES = {
+    system:   { name: 'System panel',  desc: 'Stats first',        order: ['cpu', 'ram', 'gpu', 'net'] },
+    ai:       { name: 'AI coding',     desc: 'Quotas + macros',    order: ['ai', 'cpu', 'macros', 'net'] },
+    control:  { name: 'Control deck',  desc: 'Touch buttons',      order: ['macros', 'lamp', 'media', 'net'] },
+    media:    { name: 'Media hub',     desc: 'Now playing focus',  order: ['media', 'cpu', 'ram', 'lamp'] }
+  };
+
+  var LIB_ORDER = ['cpu', 'ram', 'gpu', 'net', 'ai', 'media', 'macros', 'lamp'];
+
+  /* ---------------- DOM refs ---------------- */
+  var grid = document.getElementById('grid');
+  var tplGrid = document.getElementById('tplGrid');
+  var libGrid = document.getElementById('libGrid');
+  var connSeg = document.getElementById('connSeg');
+  var streamBtn = document.getElementById('streamBtn');
+  var panelTitle = document.getElementById('panelTitle');
+  var liveDot = document.getElementById('liveDot');
+
+  /* ---------------- rendering ---------------- */
+  function sparkPoints(hist){
+    if (!hist.length) return '';
+    var n = hist.length;
+    var out = [];
+    for (var i = 0; i < n; i++){
+      var x = (n === 1 ? 0 : (i / (n - 1)) * 100);
+      var y = 27 - (hist[i] / 100) * 24;
+      out.push(x.toFixed(2) + ',' + y.toFixed(2));
+    }
+    return out.join(' ');
+  }
+
+  function renderGrid(){
+    var html = '';
+    for (var i = 0; i < state.order.length; i++){
+      var key = state.order[i];
+      if (WIDGETS[key]) html += WIDGETS[key].html();
+    }
+    grid.innerHTML = html;
+    paint();
+  }
+
+  function paint(){
+    function q(sel){ return grid.querySelector(sel); }
+    function setText(name, val){
+      var n = q('[data-v="' + name + '"]');
+      if (n) n.textContent = val;
+    }
+    function setWidth(name, pct){
+      var n = q('[data-v="' + name + '"]');
+      if (n) n.style.width = clamp(pct, 0, 100) + '%';
+    }
+
+    var cpu = Math.round(sim.cpu);
+    setText('cpu', cpu);
+    setText('cputemp', Math.round(41 + sim.cpu * 0.45) + '°C');
+    setWidth('cpubar', sim.cpu);
+    var sp = q('[data-v="cpuspark"]');
+    if (sp) sp.setAttribute('points', sparkPoints(sim.cpuHist));
+
+    setText('ram', Math.round(sim.ram));
+    setWidth('rambar', sim.ram);
+
+    setText('gpu', Math.round(sim.gpu));
+    setWidth('gpubar', sim.gpu);
+    setText('gputemp', Math.round(48 + sim.gpu * 0.5) + '°C · ' + Math.round(30 + sim.gpu * 0.5) + ' W');
+
+    setText('claudepct', Math.round(sim.claude) + '%');
+    setWidth('claudebar', sim.claude);
+    setText('codexpct', Math.round(sim.codex) + '%');
+    setWidth('codexbar', sim.codex);
+
+    setText('ping', sim.ping);
+    setText('netrate', '↓ ' + sim.down + ' Mbps');
+
+    var tr = TRACKS[sim.trackIndex % TRACKS.length];
+    setText('track', tr.t);
+    setText('artist', tr.a);
+
+    setText('lampstate', sim.lamp ? 'On' : 'Off');
+    var sw = q('[data-act="lamp"]');
+    if (sw) sw.classList.toggle('on', sim.lamp);
+
+    var pp = q('[data-act="playpause"]');
+    if (pp) pp.textContent = sim.playing ? '⏸' : '▶';
+
+    document.querySelectorAll('[data-bind="latency"]').forEach(function(n){
+      n.textContent = (state.conn === 'usb' ? sim.ping : sim.ping + 11) + ' ms';
+    });
+    document.querySelectorAll('[data-bind="connLabel"]').forEach(function(n){
+      n.textContent = 'Pixel 4a · ' + (state.conn === 'usb' ? 'USB' : 'Wi-Fi');
+    });
+    liveDot.classList.toggle('off', !state.streaming);
+    liveDot.innerHTML = '<i></i>' + (state.streaming ? 'Live' : 'Paused');
+  }
+
+  function renderTemplates(){
+    var html = '';
+    Object.keys(TEMPLATES).forEach(function(key){
+      var t = TEMPLATES[key];
+      html += '<button type="button" class="tpl' + (state.template === key ? ' on' : '') + '" data-tpl="' + key + '">' +
+        '<b>' + t.name + '</b><span>' + t.desc + '</span></button>';
+    });
+    tplGrid.innerHTML = html;
+  }
+
+  function renderLibrary(){
+    var html = '';
+    LIB_ORDER.forEach(function(key){
+      var w = WIDGETS[key];
+      var on = state.order.indexOf(key) !== -1;
+      html += '<button type="button" class="libbtn' + (on ? ' on' : '') + '" data-lib="' + key + '">' +
+        '<span class="li">' + w.icon + '</span><span>' + w.label + '</span>' +
+        '<span class="lm">' + (on ? '−' : '+') + '</span></button>';
+    });
+    libGrid.innerHTML = html;
+  }
+
+  /* ---------------- tick ---------------- */
+  function tick(){
+    if (!state.streaming) return;
+
+    sim.cpu = clamp(sim.cpu + rnd(-9, 9), 8, 94);
+    sim.cpuHist.push(sim.cpu);
+    if (sim.cpuHist.length > 44) sim.cpuHist.shift();
+
+    sim.ram = clamp(sim.ram + rnd(-2, 2), 32, 92);
+    sim.gpu = clamp(sim.gpu + rnd(-6, 6), 5, 88);
+    sim.claude = sim.claude <= 6 ? 100 : clamp(sim.claude - rnd(0, 0.9), 5, 100);
+    sim.codex = sim.codex <= 6 ? 100 : clamp(sim.codex - rnd(0, 0.6), 5, 100);
+    sim.ping = Math.round(rnd(4, 13));
+    sim.down = Math.round(rnd(28, 74));
+
+    paint();
+  }
+  setInterval(tick, 1400);
+
+  /* ---------------- interactions: phone ---------------- */
+  grid.addEventListener('click', function(e){
+    var target = e.target.closest('[data-act]');
+    if (!target) return;
+    var act = target.getAttribute('data-act');
+
+    if (act === 'macro'){
+      var key = target.getAttribute('data-key');
+      target.classList.add('on');
+      setTimeout(function(){ target.classList.remove('on'); }, 520);
+      toast('Sent “' + key + '” to your PC through the desktop agent');
+    } else if (act === 'lamp'){
+      sim.lamp = !sim.lamp;
+      paint();
+      toast(sim.lamp ? 'Desk lamp on — sent via the agent' : 'Desk lamp off');
+    } else if (act === 'playpause'){
+      sim.playing = !sim.playing;
+      paint();
+      toast(sim.playing ? 'Resumed playback on the PC' : 'Paused playback on the PC');
+    } else if (act === 'next'){
+      sim.trackIndex = (sim.trackIndex + 1) % TRACKS.length;
+      paint();
+      toast('Skipped to the next track');
+    }
+  });
+
+  /* ---------------- drag to reorder ---------------- */
+  var dragEl = null;
+
+  grid.addEventListener('pointerdown', function(e){
+    var gripEl = e.target.closest('[data-drag]');
+    if (!gripEl) return;
+    var card = gripEl.closest('.w');
+    if (!card) return;
+    e.preventDefault();
+    dragEl = card;
+    dragEl.classList.add('dragging');
+    dragEl.style.pointerEvents = 'none';
+    if (gripEl.setPointerCapture){
+      try { gripEl.setPointerCapture(e.pointerId); } catch (err) { /* noop */ }
+    }
+  });
+
+  document.addEventListener('pointermove', function(e){
+    if (!dragEl) return;
+    var under = document.elementFromPoint(e.clientX, e.clientY);
+    var over = under && under.closest ? under.closest('.w') : null;
+    if (!over || over === dragEl || over.parentNode !== grid) return;
+    var rect = over.getBoundingClientRect();
+    var before = (e.clientY - rect.top) < rect.height / 2;
+    grid.insertBefore(dragEl, before ? over : over.nextSibling);
+  }, { passive: true });
+
+  document.addEventListener('pointerup', function(){
+    if (!dragEl) return;
+    dragEl.classList.remove('dragging');
+    dragEl.style.pointerEvents = '';
+    dragEl = null;
+    var next = [];
+    Array.prototype.forEach.call(grid.children, function(node){
+      if (node.dataset && node.dataset.w) next.push(node.dataset.w);
+    });
+    state.order = next;
+    state.template = '';
+    renderTemplates();
+    renderLibrary();
+    toast('Layout updated — sample only');
+  });
+
+  /* ---------------- interactions: controls ---------------- */
+  tplGrid.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-tpl]');
+    if (!btn) return;
+    var key = btn.getAttribute('data-tpl');
+    state.template = key;
+    state.order = TEMPLATES[key].order.slice();
+    panelTitle.textContent = TEMPLATES[key].name;
+    renderTemplates();
+    renderLibrary();
+    renderGrid();
+    toast('Loaded “' + TEMPLATES[key].name + '” template');
+  });
+
+  libGrid.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-lib]');
+    if (!btn) return;
+    var key = btn.getAttribute('data-lib');
+    var idx = state.order.indexOf(key);
+    if (idx === -1){
+      state.order.push(key);
+      toast('Added ' + WIDGETS[key].label + ' widget');
+    } else {
+      state.order.splice(idx, 1);
+      toast('Removed ' + WIDGETS[key].label + ' widget');
+    }
+    state.template = '';
+    renderTemplates();
+    renderLibrary();
+    renderGrid();
+  });
+
+  connSeg.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-conn]');
+    if (!btn) return;
+    state.conn = btn.getAttribute('data-conn');
+    Array.prototype.forEach.call(connSeg.querySelectorAll('button'), function(b){
+      b.classList.toggle('on', b === btn);
+    });
+    paint();
+    toast(state.conn === 'usb' ? 'Using USB with adb' : 'Using paired Wi-Fi — no adb needed');
+  });
+
+  streamBtn.addEventListener('click', function(){
+    state.streaming = !state.streaming;
+    streamBtn.classList.toggle('on', state.streaming);
+    streamBtn.textContent = state.streaming ? 'Live' : 'Paused';
+    paint();
+    toast(state.streaming ? 'Sample stream resumed' : 'Sample stream paused');
+  });
+
+  document.querySelectorAll('[data-cta]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      toast(btn.getAttribute('data-cta'));
+    });
+  });
+
+  var wlForm = document.getElementById('wlForm');
+  wlForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('wlEmail').value.trim();
+    toast(email ? 'Thanks — ' + email + ' is on the sample waitlist' : 'Enter an email to join the sample waitlist');
+  });
+
+  /* ---------------- boot ---------------- */
+  state.order = TEMPLATES[state.template].order.slice();
+  renderTemplates();
+  renderLibrary();
+  renderGrid();
+  panelTitle.textContent = TEMPLATES[state.template].name;
+})();
+</script>
+</body>
+</html>

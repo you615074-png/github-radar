@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-18",
+ "headline": "PhoneBox：把旧安卓变成桌面控制面板",
+ "summary_md": "PhoneBox (ersinkoc/phonebox) is an MIT-licensed project that turns an old Android phone into a full-screen desk panel for Windows, Linux, and macOS. It pairs an Android app with a small desktop agent, and you build layouts in a browser-based visual editor. Per the README, it ships with 123 widgets and 30 templates covering CPU/GPU/RAM stats, Claude and Codex usage quotas, media controls, Home Assistant, webhooks, and system shortcuts. The phone connects over USB with adb, or over Wi-Fi with a QR pairing flow. No root, no account, no cloud dependency.\n\nIt's taking off because it solves a real desk problem with hardware people already own: a Stream Deck alternative that costs nothing and shows live data a physical deck can't. The AI-coding widgets are well-timed — Claude Code and Codex users want quota, session, and permission-prompt visibility without alt-tabbing. The demo is visual and easy to share, which explains the recent star spike.\n\nWhere the product opportunity sits is in removing the rough edges. Right now the APK is sideload-only, the setup is curl | bash or irm | iex, and Windows builds are unsigned while a SignPath application is pending — SmartScreen will scare off non-developers. A signed installer, a curated template marketplace, and a hosted layout sync service could turn this into a paid product. The open-source core stays free; the money is in setup convenience and templates.",
+ "title_en": "PhoneBox turns an old Android phone into a PC control deck",
+ "tagline_en": "Use a spare Android phone as a touch panel for PC stats, AI coding sessions, and media controls.",
+ "pick": {
+  "full_name": "ersinkoc/phonebox",
+  "url": "https://github.com/ersinkoc/phonebox",
+  "description": "Turn an old Android phone into a customizable desk panel and touch control deck for Windows, Linux and macOS. 123 widgets and 30 templates for system stats, AI coding, media and automation, in 12 languages. USB or paired Wi-Fi. No cloud required.",
+  "license": "MIT",
+  "stars": 3010,
+  "daily_rate": 696.0,
+  "category": "效率工具",
+  "one_liner": "把闲置旧安卓手机变成电脑桌面副屏控制面板",
+  "one_liner_en": "Turn an old Android phone into a touch control deck for your PC",
+  "reason": "点子易懂、演示性强、话题热，MIT 许可友好；但盈利路径弱，靠模板与托管服务才有空间。",
+  "content": 8.33,
+  "startup": 6.6,
+  "final": 7.56,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-18-ersinkoc-phonebox",
+ "top": [
+  {
+   "full_name": "ersinkoc/phonebox",
+   "url": "https://github.com/ersinkoc/phonebox",
+   "one_liner": "把闲置旧安卓手机变成电脑桌面副屏控制面板",
+   "reason": "点子易懂、演示性强、话题热，MIT 许可友好；但盈利路径弱，靠模板与托管服务才有空间。",
+   "one_liner_en": "Turn an old Android phone into a touch control deck for your PC",
+   "content": 8.33,
+   "startup": 6.6,
+   "final": 7.56,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/craft-anything",
+   "url": "https://github.com/storytold/craft-anything",
+   "one_liner": "用AI观察任意网站或App，再帮你造一个类似版本",
+   "reason": "话题性与演示效果极强，Apache 许可友好，但复刻真实网站或游戏存在明显的版权与逆向合规风险，建议收窄到“自有资产复刻 + 教学演示”，并警惕其虚高热度是否由营销推动",
+   "one_liner_en": "Point AI at any site or app, see how it works, then build your own version",
+   "content": 8.67,
+   "startup": 6.85,
+   "final": 7.17,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "CzzzzzzJ/mdldm-maitian",
+   "url": "https://github.com/CzzzzzzJ/mdldm-maitian",
+   "one_liner": "自媒体人一次填好七个平台的发布中控和数据看板",
+   "reason": "痛点真实、包装空间大，但价值集中在中国平台自动化；面向美国市场需重做适配器和通知渠道，商业化可行但本地化成本高。",
+   "one_liner_en": "One dashboard to publish and track content across Bilibili, Douyin, Xiaohongshu, YouTube and X.",
+   "content": 6.33,
+   "startup": 7.7,
+   "final": 7.17,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Immortal-Protocols/lastbook",
+   "url": "https://github.com/Immortal-Protocols/lastbook",
+   "one_liner": "断网也能用的生存百科: 手册、视频、地图和本地AI问答",
+   "reason": "话题性靠灾难叙事和本地AI，演示直观；但版权内容再分发风险高，付费人群窄，商业化天花板明显。",
+   "one_liner_en": "Offline survival library with manuals, maps, videos and on-device AI chat",
+   "content": 7.67,
+   "startup": 6.0,
+   "final": 7.0,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "tangerineturtle1/NX2navi",
+   "url": "https://github.com/tangerineturtle1/NX2navi",
+   "one_liner": "把《塞尔达传说：时之笛》在 Switch 2 上的版本重编译成 PC 原生游戏，并支持 4K 和光追级画质",
+   "reason": "话题性和惊喜感极强，但天花板受任天堂版权限制，直接变现几乎不可行；适合做内容，不建议做付费产品。",
+   "one_liner_en": "Play Zelda: Ocarina of Time (Switch 2 version) as a native PC port with 4K, DLSS and HDR.",
+   "content": 8.33,
+   "startup": 5.9,
+   "final": 6.87,
+   "category_penalty": 0
+  }
+ ]
+}
