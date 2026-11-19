@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linework — one sentence in, a brand-perfect diagram out</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        paper: '#FBFAF7',
+        ink: '#14140F',
+        muted: '#6F6B62',
+        line: '#E4E1DA',
+        sand: '#F4F1EA',
+        ember: '#E4572E',
+        sea: '#1F4E5F'
+      },
+      fontFamily: {
+        serif: ['Georgia', 'Times New Roman', 'serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  ::selection { background: #14140F; color: #FBFAF7; }
+
+  .chip {
+    border: 1px solid #E4E1DA;
+    background: #fff;
+    border-radius: 999px;
+    padding: .45rem .85rem;
+    font-size: .8125rem;
+    color: #6F6B62;
+    transition: all .15s ease;
+    line-height: 1.1;
+  }
+  .chip:hover { border-color: #C9C5BB; color: #14140F; }
+  .chip[aria-pressed="true"] { background: #14140F; border-color: #14140F; color: #FBFAF7; }
+
+  .swatch {
+    display: flex; align-items: center; gap: .5rem;
+    border: 1px solid #E4E1DA; background: #fff;
+    border-radius: .6rem; padding: .45rem .55rem;
+    font-size: 11.5px; color: #6F6B62; text-align: left;
+    transition: all .15s ease; line-height: 1.1;
+  }
+  .swatch:hover { border-color: #C9C5BB; color: #14140F; }
+  .swatch[aria-pressed="true"] { border-color: #14140F; background: #F4F1EA; color: #14140F; }
+
+  .dot {
+    width: 20px; height: 20px; border-radius: 999px; flex: none;
+    background: linear-gradient(135deg, var(--a) 0 50%, var(--b) 50% 100%);
+    border: 1px solid rgba(0,0,0,.08);
+  }
+
+  .ex {
+    border: 1px solid #E4E1DA; background: #fff; border-radius: 999px;
+    padding: .45rem .9rem; font-size: .78rem; color: #14140F;
+    transition: all .15s ease;
+  }
+  .ex:hover { background: #F4F1EA; border-color: #C9C5BB; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 26px;
+    transform: translate(-50%, 14px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease;
+    background: #14140F; color: #FBFAF7;
+    font-size: 12.5px; padding: .65rem 1.1rem; border-radius: 999px;
+    z-index: 80; max-width: 90vw; text-align: center;
+  }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .fade { animation: fadeUp .45s ease both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body class="bg-paper text-ink font-sans">
+
+<!-- ───────── HEADER ───────── -->
+<header class="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur">
+  <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-2.5">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/>
+        <rect x="14.5" y="1.5" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/>
+        <rect x="8" y="14.5" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M5.5 9.5v2.6h13V9.5M12 12.1v2.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span class="font-serif text-[20px] tracking-tight">Linework</span>
+      <span class="hidden sm:inline font-mono text-[9px] uppercase tracking-[0.16em] text-muted border border-line rounded px-1.5 py-[3px]">concept</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-[13px] text-muted">
+      <a href="#studio" class="hover:text-ink transition">Studio</a>
+      <a href="#usecases" class="hover:text-ink transition">Use cases</a>
+      <a href="#pricing" class="hover:text-ink transition">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-full bg-ink text-paper text-[13px] px-4 py-2 hover:bg-[#2A2A22] transition">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ───────── HERO ───────── -->
+<section id="top" class="mx-auto max-w-6xl px-5 pt-14 sm:pt-16 pb-10">
+  <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-ember">Agent skill &nbsp;→&nbsp; product</p>
+  <h1 class="mt-4 font-serif text-[34px] leading-[1.06] sm:text-6xl tracking-tight max-w-3xl">
+    One sentence in.<br class="hidden sm:block"> A brand-perfect diagram out.
+  </h1>
+  <p class="mt-5 max-w-xl text-[15.5px] leading-relaxed text-muted">
+    Describe your system in plain language. Linework picks the diagram type, lays it out in your
+    palette, and hands you a single self-contained HTML file you can double-click. No Mermaid slop,
+    no shadows, no flat image you can't edit.
+  </p>
+  <div class="mt-7 flex flex-wrap items-center gap-2">
+    <code class="font-mono text-[11.5px] sm:text-xs bg-white border border-line rounded-lg px-3.5 py-2.5 text-ink/80">npx skills add cathrynlavery/diagram-design</code>
+    <button id="copyInstall" type="button" class="text-[12px] font-medium rounded-lg border border-line bg-white px-3 py-2.5 hover:bg-sand transition">Copy</button>
+    <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted ml-1">51 diagram types</span>
+  </div>
+</section>
+
+<!-- ───────── STUDIO ───────── -->
+<section id="studio" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-20">
+  <div class="rounded-2xl border border-line bg-white overflow-hidden">
+    <div class="grid lg:grid-cols-[380px_1fr]">
+
+      <!-- controls -->
+      <div class="p-5 sm:p-7 border-b lg:border-b-0 lg:border-r border-line">
+        <label for="prompt" class="block font-mono text-[10px] uppercase tracking-[0.18em] text-muted mb-2">01 · Describe the system</label>
+        <textarea id="prompt" rows="3" spellcheck="false" class="w-full resize-none rounded-lg border border-line bg-paper px-3.5 py-3 text-[13.5px] leading-relaxed text-ink outline-none focus:border-ink transition">Architecture of our app: Next.js frontend, Node API, Postgres database, Redis cache.</textarea>
+        <p class="mt-2 text-[11.5px] text-muted">Plain language. Commas become nodes.</p>
+
+        <p class="mt-6 mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">02 · Diagram type</p>
+        <div class="flex flex-wrap gap-2" id="typeGroup">
+          <button type="button" class="chip" data-type="architecture" aria-pressed="true">Architecture</button>
+          <button type="button" class="chip" data-type="sequence" aria-pressed="false">Sequence</button>
+          <button type="button" class="chip" data-type="quadrant" aria-pressed="false">Quadrant</button>
+          <button type="button" class="chip" data-type="flow" aria-pressed="false">Flow</button>
+        </div>
+
+        <p class="mt-6 mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">03 · Brand palette</p>
+        <div class="grid grid-cols-2 gap-2" id="palGroup">
+          <button type="button" class="swatch" data-pal="ember" aria-pressed="true"><span class="dot" style="--a:#E4572E;--b:#1F4E5F"></span>Ink &amp; Ember</button>
+          <button type="button" class="swatch" data-pal="cobalt" aria-pressed="false"><span class="dot" style="--a:#2B4BFF;--b:#7C3AED"></span>Cobalt</button>
+          <button type="button" class="swatch" data-pal="forest" aria-pressed="false"><span class="dot" style="--a:#2F7D53;--b:#A8763E"></span>Field Notes</button>
+          <button type="button" class="swatch" data-pal="rose" aria-pressed="false"><span class="dot" style="--a:#C4325B;--b:#2E4A6B"></span>Rosewood</button>
+          <button type="button" class="swatch col-span-2" data-pal="mono" aria-pressed="false"><span class="dot" style="--a:#171716;--b:#8A877E"></span>Monochrome</button>
+        </div>
+
+        <button id="renderBtn" type="button" class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-lg bg-ink px-4 py-3 text-[13.5px] font-medium text-paper hover:bg-[#2A2A22] transition">
+          Render diagram
+        </button>
+        <p class="mt-2.5 text-[11px] text-muted text-center">Runs entirely in your browser · no network requests</p>
+      </div>
+
+      <!-- preview -->
+      <div class="p-4 sm:p-6 bg-sand">
+        <div class="flex items-center justify-between gap-3 mb-3">
+          <span class="inline-flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.18em] text-muted">
+            <span class="w-1.5 h-1.5 rounded-full bg-ember inline-block"></span>Preview · Sample data
+          </span>
+          <span id="spec" class="font-mono text-[9.5px] text-muted text-right"></span>
+        </div>
+
+        <div class="rounded-xl border border-line bg-white overflow-hidden">
+          <div id="preview" class="w-full"></div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button type="button" id="copySvg" class="ex">Copy SVG</button>
+          <button type="button" id="dlSvg" class="ex">Download .svg</button>
+          <button type="button" id="copyPrompt" class="ex">Copy agent prompt</button>
+        </div>
+        <p class="mt-2.5 text-[11px] text-muted">Exports are generated locally from sample data — nothing is uploaded.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mt-6 grid sm:grid-cols-3 gap-px bg-line rounded-xl overflow-hidden border border-line">
+    <div class="bg-white px-5 py-4">
+      <p class="font-mono text-[9.5px] uppercase tracking-[0.18em] text-muted">Output</p>
+      <p class="mt-1 text-[13.5px]">One HTML + SVG file, double-click to open</p>
+    </div>
+    <div class="bg-white px-5 py-4">
+      <p class="font-mono text-[9.5px] uppercase tracking-[0.18em] text-muted">Brand</p>
+      <p class="mt-1 text-[13.5px]">Palette and type pulled from your site</p>
+    </div>
+    <div class="bg-white px-5 py-4">
+      <p class="font-mono text-[9.5px] uppercase tracking-[0.18em] text-muted">Style</p>
+      <p class="mt-1 text-[13.5px]">Editorial rules, flat fills, zero shadows</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── USE CASES ───────── -->
+<section id="usecases" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-24">
+  <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">Where it earns its keep</p>
+  <h2 class="mt-3 font-serif text-3xl sm:text-4xl tracking-tight max-w-2xl">Three moments where a diagram has to look like it came from you.</h2>
+
+  <div class="mt-9 grid md:grid-cols-3 gap-5">
+    <article class="rounded-xl border border-line bg-white p-6">
+      <div class="w-9 h-9 rounded-lg border border-line grid place-items-center text-[15px]">🏗️</div>
+      <h3 class="mt-4 font-serif text-[19px] tracking-tight">The RFC that needs one picture</h3>
+      <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+        You're writing a design doc at 11pm. Type "sequence of a bearer call with token refresh on 401"
+        and paste the result in. It already matches your docs theme.
+      </p>
+      <p class="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ember">Architecture · Sequence</p>
+    </article>
+
+    <article class="rounded-xl border border-line bg-white p-6">
+      <div class="w-9 h-9 rounded-lg border border-line grid place-items-center text-[15px]">🎨</div>
+      <h3 class="mt-4 font-serif text-[19px] tracking-tight">Onboard it to your brand once</h3>
+      <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+        Point it at your marketing site and it lifts the palette and type pairing. Every diagram after
+        that one is already on-brand — no designer round-trip for a sales deck.
+      </p>
+      <p class="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ember">Brand onboarding · Templates</p>
+    </article>
+
+    <article class="rounded-xl border border-line bg-white p-6">
+      <div class="w-9 h-9 rounded-lg border border-line grid place-items-center text-[15px]">📎</div>
+      <h3 class="mt-4 font-serif text-[19px] tracking-tight">Ship it as a single file</h3>
+      <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+        No build step, no CDN, no render service. One <span class="font-mono text-[12px]">.html</span>
+        file lands in Slack and opens crisply on a prospect's laptop.
+      </p>
+      <p class="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ember">Export · Handoff</p>
+    </article>
+  </div>
+</section>
+
+<!-- ───────── PRICING ───────── -->
+<section id="pricing" class="mx-auto max-w-6xl px-5 pb-16 sm:pb-24">
+  <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">Pricing</p>
+  <h2 class="mt-3 font-serif text-3xl sm:text-4xl tracking-tight max-w-2xl">Start free. Pay when the deck matters.</h2>
+
+  <div class="mt-9 grid md:grid-cols-3 gap-5">
+    <div class="rounded-xl border border-line bg-white p-6 flex flex-col">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Sketch</p>
+      <p class="mt-3 font-serif text-4xl tracking-tight">$0</p>
+      <p class="mt-1 text-[12.5px] text-muted">For trying it on a side project.</p>
+      <ul class="mt-5 space-y-2 text-[13.5px] text-muted flex-1">
+        <li>5 diagrams a month</li>
+        <li>5 built-in palettes</li>
+        <li>SVG export, no watermark</li>
+      </ul>
+      <button type="button" class="mt-6 w-full rounded-lg border border-line py-2.5 text-[13px] hover:bg-sand transition" data-demo="Free plan is a demo — no account created.">Start free</button>
+    </div>
+
+    <div class="rounded-xl border-2 border-ink bg-white p-6 flex flex-col relative">
+      <span class="absolute -top-2.5 left-6 rounded-full bg-ink text-paper font-mono text-[9px] uppercase tracking-[0.16em] px-2.5 py-1">Most picked</span>
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ember">Studio</p>
+      <p class="mt-3 font-serif text-4xl tracking-tight">$12<span class="text-base font-sans text-muted tracking-normal">/mo</span></p>
+      <p class="mt-1 text-[12.5px] text-muted">For founders and small product teams.</p>
+      <ul class="mt-5 space-y-2 text-[13.5px] text-muted flex-1">
+        <li>Unlimited diagrams, all 51 types</li>
+        <li>Brand onboarding from your URL</li>
+        <li>PNG + SVG + HTML export</li>
+        <li>Import from draw.io, Mermaid, PlantUML</li>
+      </ul>
+      <button type="button" class="mt-6 w-full rounded-lg bg-ink text-paper py-2.5 text-[13px] hover:bg-[#2A2A22] transition" data-demo="Studio checkout is a demo — nothing charged.">Choose Studio</button>
+    </div>
+
+    <div class="rounded-xl border border-line bg-white p-6 flex flex-col">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Team</p>
+      <p class="mt-3 font-serif text-4xl tracking-tight">$29<span class="text-base font-sans text-muted tracking-normal">/seat</span></p>
+      <p class="mt-1 text-[12.5px] text-muted">For teams that ship decks weekly.</p>
+      <ul class="mt-5 space-y-2 text-[13.5px] text-muted flex-1">
+        <li>Shared template library</li>
+        <li>Style lock across seats</li>
+        <li>SSO + audit log</li>
+        <li>Priority support</li>
+      </ul>
+      <button type="button" class="mt-6 w-full rounded-lg border border-line py-2.5 text-[13px] hover:bg-sand transition" data-demo="Team plan is a demo — no seats reserved.">Talk to us</button>
+    </div>
+  </div>
+
+  <div class="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8">
+    <div class="grid md:grid-cols-[1fr_auto] gap-5 md:items-center">
+      <div>
+        <h3 class="font-serif text-2xl tracking-tight">Get an invite when Studio opens</h3>
+        <p class="mt-2 text-[13.5px] text-muted">Sample data only — this page never sends anything anywhere.</p>
+      </div>
+      <form id="waitlistForm" class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+        <input id="email" type="email" value="you@studio.com" aria-label="Email address" class="rounded-lg border border-line bg-paper px-3.5 py-2.5 text-[13.5px] outline-none focus:border-ink transition sm:w-64">
+        <button type="submit" class="rounded-lg bg-ink text-paper px-4 py-2.5 text-[13.5px] hover:bg-[#2A2A22] transition whitespace-nowrap">Join the waitlist</button>
+      </form>
+    </div>
+    <p id="waitNote" class="hidden mt-4 rounded-lg border border-line bg-sand px-3.5 py-2.5 text-[12.5px] text-ink">
+      You're on the list ✓ — this is a concept demo, nothing was submitted or stored.
+    </p>
+  </div>
+</section>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="border-t border-line">
+  <div class="mx-auto max-w-6xl px-5 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+    <div class="flex items-center gap-2.5">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="text-muted">
+        <rect x="1.5" y="1.5" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/>
+        <rect x="14.5" y="1.5" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/>
+        <rect x="8" y="14.5" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M5.5 9.5v2.6h13V9.5M12 12.1v2.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      <span class="font-serif text-[15px] tracking-tight">Linework</span>
+    </div>
+    <p class="text-[12px] text-muted leading-relaxed">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/cathrynlavery/diagram-design" class="underline decoration-line underline-offset-2 hover:text-ink transition">cathrynlavery/diagram-design</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ───── palettes ───── */
+  var PALETTES = {
+    ember:  { name: 'Ink & Ember', bg: '#FBFAF7', surface: '#FFFFFF', ink: '#191813', muted: '#7B766C', line: '#DCD8CF', a: '#E4572E', b: '#1F4E5F' },
+    cobalt: { name: 'Cobalt',      bg: '#F7F8FC', surface: '#FFFFFF', ink: '#101828', muted: '#6B7280', line: '#DDE1EC', a: '#2B4BFF', b: '#7C3AED' },
+    forest: { name: 'Field Notes', bg: '#F6F8F2', surface: '#FFFFFF', ink: '#152219', muted: '#6E7A6E', line: '#DCE3D5', a: '#2F7D53', b: '#A8763E' },
+    rose:   { name: 'Rosewood',    bg: '#FCF6F5', surface: '#FFFFFF', ink: '#1B1214', muted: '#7C6C6E', line: '#E7DBDA', a: '#C4325B', b: '#2E4A6B' },
+    mono:   { name: 'Monochrome',  bg: '#F5F4F1', surface: '#FFFFFF', ink: '#171716', muted: '#77746D', line: '#DAD8D2', a: '#171716', b: '#8A877E' }
+  };
+
+  var MONO  = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+  var SANS  = "Inter, Helvetica, Arial, sans-serif";
+  var SERIF = "Georgia, 'Times New Roman', serif";
+
+  var state = { type: 'architecture', palette: 'ember' };
+  var lastSVG = '';
+
+  /* ───── dom ───── */
+  var previewEl = document.getElementById('preview');
+  var promptEl  = document.getElementById('prompt');
+  var specEl    = document.getElementById('spec');
+  var toastEl   = document.getElementById('toast');
+
+  /* ───── helpers ───── */
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var toastTimer = null;
+  function toast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2400);
+  }
+
+  function parseNodes(text) {
+    var s = String(text || '').trim();
+    var i = s.indexOf(':');
+    if (i > -1) s = s.slice(i + 1);
+    s = s.replace(/\.+\s*$/, '');
+    var parts = s.split(/,|;|\band\b/i).map(function (p) { return p.trim(); }).filter(Boolean);
+    if (!parts.length) parts = ['Frontend', 'Backend', 'Database', 'Cache'];
+    var fallback = ['client', 'service', 'store', 'edge'];
+    var out = [];
+    for (var k = 0; k < parts.length && out.length < 4; k++) {
+      var words = parts[k].split(/\s+/).filter(Boolean);
+      var title = words[0] || 'Node';
+      var sub = words.slice(1).join(' ');
+      if (!sub) sub = fallback[out.length] || '';
+      out.push({ title: title, sub: sub });
+    }
+    return out;
+  }
+
+  function svgOpen(label) {
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" ' +
+      'style="display:block;width:100%;height:auto" role="img" aria-label="' + esc(label) + '">' +
+      '<rect x="0" y="0" width="800" height="440" fill="BG"/>';
+  }
+
+  function wrap(inner, t, label) {
+    return svgOpen(label).replace('BG', t.bg) + inner + '</svg>';
+  }
+
+  function header(kind, sub, t) {
+    return '<text x="36" y="44" font-family="' + MONO + '" font-size="10" letter-spacing="2.4" fill="' + t.muted + '">' +
+        esc(String(kind).toUpperCase()) + '</text>' +
+      '<text x="36" y="68" font-family="' + SERIF + '" font-size="15" fill="' + t.ink + '">' + esc(sub) + '</text>' +
+      '<line x1="36" y1="86" x2="764" y2="86" stroke="' + t.line + '" stroke-width="1"/>';
+  }
+
+  function footerMark(t) {
+    return '<text x="764" y="418" text-anchor="end" font-family="' + MONO + '" font-size="9" letter-spacing="1.6" fill="' + t.muted + '">SAMPLE DATA</text>';
+  }
+
+  function arrowHead(x, y, dir, color) {
+    var s = 5, pts;
+    if (dir === 'r') pts = x + ',' + y + ' ' + (x - s) + ',' + (y - s) + ' ' + (x - s) + ',' + (y + s);
+    else if (dir === 'l') pts = x + ',' + y + ' ' + (x + s) + ',' + (y - s) + ' ' + (x + s) + ',' + (y + s);
+    else if (dir === 'u') pts = x + ',' + y + ' ' + (x - s) + ',' + (y + s) + ' ' + (x + s) + ',' + (y + s);
+    else pts = x + ',' + y + ' ' + (x - s) + ',' + (y - s) + ' ' + (x + s) + ',' + (y - s);
+    return '<polygon points="' + pts + '" fill="' + color + '"/>';
+  }
+
+  /* ───── diagram builders ───── */
+
+  function buildArchitecture(nodes, t) {
+    var n = nodes.length;
+    var gap = 52;
+    var usable = 800 - 72 - gap * (n - 1);
+    var bw = Math.max(112, Math.min(200, usable / n));
+    var totalW = n * bw + gap * (n - 1);
+    var x = (800 - totalW) / 2;
+    var by = 196, bh = 90, cy = by + bh / 2;
+    var labels = ['https', 'sql', 'cache', 'queue'];
+    var out = header('Architecture', 'system overview · ' + n + ' nodes', t);
+
+    for (var i = 0; i < n; i++) {
+      var col = (i % 2) ? t.b : t.a;
+      out += '<rect x="' + x + '" y="' + by + '" width="' + bw + '" height="' + bh + '" rx="10" fill="' + t.surface +
+             '" stroke="' + t.line + '" stroke-width="1.2"/>';
+      out += '<rect x="' + (x + 1) + '" y="' + (by + 20) + '" width="3" height="' + (bh - 40) + '" rx="1.5" fill="' + col + '"/>';
+      out += '<text x="' + (x + 18) + '" y="' + (by + 44) + '" font-family="' + SANS + '" font-size="15.5" font-weight="600" fill="' +
+             t.ink + '">' + esc(nodes[i].title) + '</text>';
+      out += '<text x="' + (x + 18) + '" y="' + (by + 64) + '" font-family="' + MONO + '" font-size="9" letter-spacing="1.4" fill="' +
+             t.muted + '">' + esc(String(nodes[i].sub || '').toUpperCase()) + '</text>';
+
+      if (i < n - 1) {
+        var sx = x + bw, ex = x + bw + gap;
+        out += '<line x1="' + sx + '" y1="' + cy + '" x2="' + (ex - 7) + '" y2="' + cy + '" stroke="' + t.b + '" stroke-width="1.4"/>';
+        out += arrowHead(ex - 2, cy, 'r', t.b);
+        out += '<text x="' + ((sx + ex) / 2) + '" y="' + (cy - 10) + '" text-anchor="middle" font-family="' + MONO +
+               '" font-size="9" fill="' + t.muted + '">' + labels[i] + '</text>';
+      }
+      x += bw + gap;
+    }
+
+    out += '<text x="36" y="360" font-family="' + MONO + '" font-size="9.5" letter-spacing="1.6" fill="' + t.muted + '">FLAT FILLS · NO SHADOWS · SINGLE FILE</text>';
+    return wrap(out + footerMark(t), t, 'Architecture diagram');
+  }
+
+  function buildSequence(nodes, t) {
+    var fb = ['Client', 'Service', 'Store', 'Queue'];
+    var actors = nodes.slice(0, 4).map(function (nd) { return nd; });
+    while (actors.length < 3) {
+      actors.push({ title: fb[actors.length], sub: 'actor' });
+    }
+    var n = actors.length;
+    function cx(i) { return n === 1 ? 400 : 120 + i * (560 / (n - 1)); }
+
+    var out = header('Sequence', 'bearer call · token refresh on 401', t);
+
+    for (var i = 0; i < n; i++) {
+      out += '<line x1="' + cx(i) + '" y1="168" x2="' + cx(i) + '" y2="376" stroke="' + t.line +
+             '" stroke-width="1.2" stroke-dasharray="4 5"/>';
+    }
+
+    for (var j = 0; j < n; j++) {
+      var w = 164, h = 56, bx = cx(j) - w / 2, byy = 112;
+      out += '<rect x="' + bx + '" y="' + byy + '" width="' + w + '" height="' + h + '" rx="9" fill="' + t.surface +
+             '" stroke="' + t.line + '" stroke-width="1.2"/>';
+      out += '<text x="' + cx(j) + '" y="' + (byy + 26) + '" text-anchor="middle" font-family="' + SANS +
+             '" font-size="13.5" font-weight="600" fill="' + t.ink + '">' + esc(actors[j].title) + '</text>';
+      out += '<text x="' + cx(j) + '" y="' + (byy + 44) + '" text-anchor="middle" font-family="' + MONO +
+             '" font-size="9" letter-spacing="1.3" fill="' + t.muted + '">' +
+             esc(String(actors[j].sub || 'actor').toUpperCase()) + '</text>';
+    }
+
+    var msgs = [
+      { f: 0, t: 1, label: 'GET /orders', dashed: false },
+      { f: 1, t: 2, label: 'SELECT rows', dashed: false },
+      { f: 2, t: 1, label: 'result set', dashed: true },
+      { f: 1, t: 0, label: '200 OK', dashed: false }
+    ];
+    var ys = [206, 254, 302, 350];
+
+    for (var m = 0; m < msgs.length && m < ys.length; m++) {
+      var mm = msgs[m];
+      var f = Math.min(mm.f, n - 1);
+      var to = Math.min(mm.t, n - 1);
+      if (f === to) continue;
+      var y = ys[m];
+      var x1 = cx(f), x2 = cx(to);
+      var dir = x2 > x1 ? 1 : -1;
+      var colr = mm.dashed ? t.muted : t.b;
+
+      out += '<line x1="' + x1 + '" y1="' + y + '" x2="' + (x2 - dir * 8) + '" y2="' + y + '" stroke="' + colr +
+             '" stroke-width="1.4"' + (mm.dashed ? ' stroke-dasharray="5 4"' : '') + '/>';
+      out += arrowHead(x2 - dir * 2, y, dir > 0 ? 'r' : 'l', colr);
+      out += '<text x="' + ((x1 + x2) / 2) + '" y="' + (y - 9) + '" text-anchor="middle" font-family="' + MONO +
+             '" font-size="10" fill="' + t.ink + '" opacity="0.75">' + esc(mm.label) + '</text>';
+    }
+
+    return wrap(out + footerMark(t), t, 'Sequence diagram');
+  }
+
+  function buildQuadrant(nodes, t) {
+    var x0 = 156, x1 = 744, y0 = 132, y1 = 384;
+    var mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+
+    var out = header('Quadrant', 'Q2 projects · impact vs effort', t);
+
+    out += '<rect x="' + x0 + '" y="' + y0 + '" width="' + (x1 - x0) + '" height="' + (y1 - y0) +
+           '" fill="' + t.surface + '" stroke="' + t.line + '" stroke-width="1.2"/>';
+    out += '<line x1="' + mx + '" y1="' + y0 + '" x2="' + mx + '" y2="' + y1 + '" stroke="' + t.line +
+           '" stroke-width="1.2" stroke-dasharray="3 4"/>';
+    out += '<line x1="' + x0 + '" y1="' + my + '" x2="' + x1 + '" y2="' + my + '" stroke="' + t.line +
+           '" stroke-width="1.2" stroke-dasharray="3 4"/>';
+
+    var qf = 'font-family="' + MONO + '" font-size="9.5" letter-spacing="1.6" fill="' + t.muted + '"';
+    out += '<text x="' + (x0 + 14) + '" y="' + (y0 + 22) + '" ' + qf + '>QUICK WINS</text>';
+    out += '<text x="' + (x1 - 14) + '" y="' + (y0 + 22) + '" text-anchor="end" ' + qf + '>BIG BETS</text>';
+    out += '<text x="' + (x0 + 14) + '" y="' + (y1 - 14) + '" ' + qf + '>FILL-INS</text>';
+    out += '<text x="' + (x1 - 14) + '" y="' + (y1 - 14) + '" text-anchor="end" ' + qf + '>MONEY PIT</text>';
+
+    out += '<text x="' + mx + '" y="' + (y1 + 32) + '" text-anchor="middle" font-family="' + MONO +
+           '" font-size="10" letter-spacing="2" fill="' + t.muted + '">EFFORT →</text>';
+    out += '<text transform="translate(' + (x0 - 34) + ',' + my + ') rotate(-90)" text-anchor="middle" font-family="' + MONO +
+           '" font-size="10" letter-spacing="2" fill="' + t.muted + '">IMPACT →</text>';
+
+    var pts = [
+      { x: 0.16, y: 0.80 }, { x: 0.62, y: 0.86 }, { x: 0.80, y: 0.38 },
+      { x: 0.34, y: 0.30 }, { x: 0.52, y: 0.56 }, { x: 0.90, y: 0.66 }
+    ];
+    var pool = ['Retention', 'Search', 'Billing', 'Onboarding', 'Mobile', 'Docs'];
+    var names = nodes.map(function (nd) { return nd.title; });
+    for (var p = 0; p < pool.length && names.length < 6; p++) names.push(pool[p]);
+    var count = Math.min(6, names.length);
+
+    for (var i = 0; i < count; i++) {
+      var pt = pts[i];
+      var px = x0 + pt.x * (x1 - x0);
+      var py = y1 - pt.y * (y1 - y0);
+      var col = (i % 2) ? t.b : t.a;
+      var anchorEnd = pt.x > 0.78;
+      out += '<circle cx="' + px + '" cy="' + py + '" r="6.5" fill="' + col + '"/>';
+      out += '<text x="' + (px + (anchorEnd ? -13 : 13)) + '" y="' + (py + 4) + '" text-anchor="' +
+             (anchorEnd ? 'end' : 'start') + '" font-family="' + SANS + '" font-size="12" fill="' + t.ink + '">' +
+             esc(names[i]) + '</text>';
+    }
+
+    return wrap(out + footerMark(t), t, 'Quadrant diagram');
+  }
+
+  function buildFlow(nodes, t) {
+    var fb = ['Brief', 'Draft', 'Review', 'Ship'];
+    var steps = nodes.slice(0, 4);
+    while (steps.length < 3) {
+      steps.push({ title: fb[steps.length], sub: 'step' });
+    }
+    var n = steps.length;
+    var y = 214;
+    var out = header('Flow', 'from brief to shipped · ' + n + ' steps', t);
+
+    var centers = [];
+    if (n === 1) {
+      centers.push(400);
+    } else {
+      var l = 136, r = 664;
+      for (var c = 0; c < n; c++) centers.push(l + c * (r - l) / (n - 1));
+    }
+
+    out += '<line x1="' + centers[0] + '" y1="' + y + '" x2="' + centers[n - 1] + '" y2="' + y +
+           '" stroke="' + t.line + '" stroke-width="1.4"/>';
+
+    for (var i = 0; i < n - 1; i++) {
+      out += arrowHead(centers[i + 1] - 34, y, 'r', t.b);
+    }
+
+    for (var j = 0; j < n; j++) {
+      var cxv = centers[j];
+      var col = (j % 2) ? t.b : t.a;
+      out += '<circle cx="' + cxv + '" cy="' + y + '" r="27" fill="' + t.surface + '" stroke="' + col + '" stroke-width="1.6"/>';
+      out += '<text x="' + cxv + '" y="' + (y + 5) + '" text-anchor="middle" font-family="' + MONO +
+             '" font-size="14" fill="' + col + '">' + (j + 1) + '</text>';
+      out += '<text x="' + cxv + '" y="' + (y + 64) + '" text-anchor="middle" font-family="' + SANS +
+             '" font-size="15" font-weight="600" fill="' + t.ink + '">' + esc(steps[j].title) + '</text>';
+      out += '<text x="' + cxv + '" y="' + (y + 84) + '" text-anchor="middle" font-family="' + MONO +
+             '" font-size="9.5" letter-spacing="1.5" fill="' + t.muted + '">' +
+             esc(String(steps[j].sub || 'step').toUpperCase()) + '</text>';
+    }
+
+    return wrap(out + footerMark(t), t, 'Flow diagram');
+  }
+
+  /* ───── render ───── */
+  function render() {
+    if (!previewEl) return;
+    var t = PALETTES[state.palette] || PALETTES.ember;
+    var nodes = parseNodes(promptEl ? promptEl.value : '');
+    var svg;
+
+    if (state.type === 'sequence') svg = buildSequence(nodes, t);
+    else if (state.type === 'quadrant') svg = buildQuadrant(nodes, t);
+    else if (state.type === 'flow') svg = buildFlow(nodes, t);
+    else svg = buildArchitecture(nodes, t);
+
+    lastSVG = svg;
+    previewEl.innerHTML = svg;
+    previewEl.classList.remove('fade');
+    void previewEl.offsetWidth;
+    previewEl.classList.add('fade');
+
+    if (specEl) {
+      specEl.textContent = nodes.length + ' nodes · ' + t.name;
+    }
+  }
+
+  /* ───── copy + download ───── */
+  function copyText(text, okMsg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        toast(okMsg);
+      }).catch(function () {
+        toast('Copy blocked by the browser — select and copy manually.');
+      });
+    } else {
+      toast('Clipboard is unavailable in this browser.');
+    }
+  }
+
+  function download(filename, text, mime) {
+    try {
+      var blob = new Blob([text], { type: mime });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1200);
+      toast('Downloaded ' + filename + ' (sample data).');
+    } catch (err) {
+      toast('Download is not available in this browser.');
+    }
+  }
+
+  /* ───── events ───── */
+  var typeGroup = document.getElementById('typeGroup');
+  if (typeGroup) {
+    typeGroup.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('[data-type]') : null;
+      if (!btn) return;
+      state.type = btn.getAttribute('data-type');
+      Array.prototype.forEach.call(typeGroup.querySelectorAll('[data-type]'), function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      render();
+    });
+  }
+
+  var palGroup = document.getElementById('palGroup');
+  if (palGroup) {
+    palGroup.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('[data-pal]') : null;
+      if (!btn) return;
+      state.palette = btn.getAttribute('data-pal');
+      Array.prototype.forEach.call(palGroup.querySelectorAll('[data-pal]'), function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      render();
+    });
+  }
+
+  var renderBtn = document.getElementById('renderBtn');
+  if (renderBtn) {
+    renderBtn.addEventListener('click', function () {
+      render();
+      toast('Diagram rendered from your description (sample data).');
+    });
+  }
+
+  if (promptEl) {
+    promptEl.addEventListener('input', function () {
+      if (promptEl.value.trim().length > 6) render();
+    });
+  }
+
+  var copySvgBtn = document.getElementById('copySvg');
+  if (copySvgBtn) {
+    copySvgBtn.addEventListener('click', function () {
+      copyText(lastSVG, 'SVG markup copied to clipboard.');
+    });
+  }
+
+  var dlSvgBtn = document.getElementById('dlSvg');
+  if (dlSvgBtn) {
+    dlSvgBtn.addEventListener('click', function () {
+      download('linework-' + state.type + '-' + state.palette + '.svg', lastSVG, 'image/svg+xml;charset=utf-8');
+    });
+  }
+
+  var copyPromptBtn = document.getElementById('copyPrompt');
+  if (copyPromptBtn) {
+    copyPromptBtn.addEventListener('click', function () {
+      var desc = promptEl ? promptEl.value.trim() : '';
+      var txt = 'Make me a ' + state.type + ' diagram with the ' + (PALETTES[state.palette] || PALETTES.ember).name +
+        ' palette. Description: ' + desc;
+      copyText(txt, 'Agent prompt copied — paste it into your coding agent.');
+    });
+  }
+
+  var copyInstallBtn = document.getElementById('copyInstall');
+  if (copyInstallBtn) {
+    copyInstallBtn.addEventListener('click', function () {
+      copyText('npx skills add cathrynlavery/diagram-design', 'Install command copied.');
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-demo]'), function (btn) {
+    btn.addEventListener('click', function () {
+      toast(btn.getAttribute('data-demo') || 'This is a concept demo.');
+    });
+  });
+
+  var waitForm = document.getElementById('waitlistForm');
+  if (waitForm) {
+    waitForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var note = document.getElementById('waitNote');
+      if (note) note.classList.remove('hidden');
+      toast('Waitlist is a demo — nothing was submitted.');
+    });
+  }
+
+  /* ───── init ───── */
+  render();
+})();
+</script>
+</body>
+</html>

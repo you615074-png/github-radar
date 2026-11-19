@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-19",
+ "headline": "AI 一句话画出品牌风信息图，但作者已有官网",
+ "summary_md": "**What it is.** diagram-design is an Agent Skill for Claude Code, Cursor, Codex, GitHub Copilot and other hosts that read SKILL.md. You describe the diagram in plain words — an architecture sketch, a 2x2 quadrant, a token-refresh sequence — and the agent picks the type, states its plan, and writes a single self-contained `.html` file with inline SVG. Per the README it ships 45+ diagram types (the repo description says 45, the README says 51), with no shadows and what the author calls \"no Mermaid slop.\" Install is one line: `npx skills add cathrynlavery/diagram-design`. Native plugin marketplaces exist for Claude Code and Codex.\n\n**Why it's taking off.** The output is a file you can double-click and hand to a client, not a screenshot of a chatbot. `Onboard diagram-design to https://yoursite.com` pulls your palette and fonts so every later diagram matches your brand. It can import from draw.io, Mermaid, Excalidraw and PlantUML, and export to PNG/SVG. For founders and pre-sales teams who need a slide by Thursday, that's a real shortcut, and it spread fast past 68k stars.\n\n**Where the product opportunity is.** Not in re-hosting the skill — the author, Cathryn Lavery, already runs diagramdesign.dev through her company LittleMight. The gap is the workflow around it: a hosted editor that takes pasted text or a repo, applies a saved brand kit, keeps a team template library, and sells seat-based export credits. Build that on top of the MIT skill rather than against it.\n\n**Caveat.** The core value rides on host agents; if Cursor or Anthropic ships first-party diagram output, the standalone skill gets squeezed.",
+ "title_en": "diagram-design: editorial HTML/SVG diagrams for AI coding agents",
+ "tagline_en": "An agent skill that turns one sentence into a brand-matched HTML/SVG diagram you can open by double-clicking.",
+ "pick": {
+  "full_name": "cathrynlavery/diagram-design",
+  "url": "https://github.com/cathrynlavery/diagram-design",
+  "description": "Editorial diagram design for Claude Code, Codex, GitHub Copilot, Cursor, Factory Droid, Qoder, and Pi. 45 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop.",
+  "license": "MIT",
+  "stars": 68369,
+  "daily_rate": 332,
+  "category": "开发者工具",
+  "one_liner": "让 AI 编程助手一句话画出可双击打开的品牌风信息图",
+  "one_liner_en": "An agent skill that draws on-brand diagrams as a single self-contained HTML + SVG file.",
+  "reason": "选题极强、演示效果好、MIT 安全；但已有官网和商业主体，且依赖代理生态，包装与变现空间中等。",
+  "content": 8.33,
+  "startup": 6.9,
+  "final": 7.69,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-19-cathrynlavery-diagram-design",
+ "top": [
+  {
+   "full_name": "cathrynlavery/diagram-design",
+   "url": "https://github.com/cathrynlavery/diagram-design",
+   "one_liner": "让 AI 编程助手一句话画出可双击打开的品牌风信息图",
+   "reason": "选题极强、演示效果好、MIT 安全；但已有官网和商业主体，且依赖代理生态，包装与变现空间中等。",
+   "one_liner_en": "An agent skill that draws on-brand diagrams as a single self-contained HTML + SVG file.",
+   "content": 8.33,
+   "startup": 6.9,
+   "final": 7.69,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "kajisho5/ffmpeg-skill",
+   "url": "https://github.com/kajisho5/ffmpeg-skill",
+   "one_liner": "给 AI 编程助手装一个本地视频剪辑器，用一句话就能剪片子",
+   "reason": "MIT 许可、星标增长快、演示直观，很适合做内容。但它本质是 Agent 技能层，商业壁垒偏低，需要把它包装成面向创作者的本地剪辑应用才能收费。",
+   "one_liner_en": "Give your coding agent a local video editor powered by FFmpeg",
+   "content": 7.33,
+   "startup": 6.9,
+   "final": 7.28,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "erkamyaman/rust-anything",
+   "url": "https://github.com/erkamyaman/rust-anything",
+   "one_liner": "逐块把现有代码重写成 Rust，每一步都用原始行为录像验证结果一致",
+   "reason": "蹭上 Rust 重写与 AI 代理两个热点，定位清晰、故事好讲；但产品价值依赖第三方代理，壁垒与留存存疑，适合做内容，产品化需再观察。",
+   "one_liner_en": "Rewrite your app in Rust piece by piece, verifying each step against recorded behavior of the original",
+   "content": 7.0,
+   "startup": 6.9,
+   "final": 7.15,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "firecrawl/firecrawl",
+   "url": "https://github.com/firecrawl/firecrawl",
+   "one_liner": "把任何网页变成AI能读懂的结构化数据",
+   "reason": "明星级AI基建项目，话题和需求都强，但商业化成熟、AGPL限制大，更适合做内容而非再包装产品",
+   "one_liner_en": "Turn any website into clean, LLM-ready data with one API",
+   "content": 7.33,
+   "startup": 5.55,
+   "final": 6.71,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "jhaizhou-ops/S2Arm",
+   "url": "https://github.com/jhaizhou-ops/S2Arm",
+   "one_liner": "把自己买的 Switch 游戏原生化移植到 iPhone、iPad 和 Mac 上玩",
+   "reason": "技术上很炸，话题和惊喜感强，但直指盗版生态，商业化几乎无路，只适合做内容，不适合包装成产品。",
+   "one_liner_en": "Run your own Switch games natively on iPhone, iPad and Mac",
+   "content": 8.67,
+   "startup": 5.95,
+   "final": 6.66,
+   "category_penalty": 0
+  }
+ ]
+}
