@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-20",
+ "headline": "AutoClip：贴链接自动剪短视频",
+ "summary_md": "**What it is.** AutoClip (zhouxiaoka/autoclip) is an MIT-licensed desktop app that takes a long video link — a podcast, interview, lecture, or course — and turns it into short vertical clips. Per the README, it renders locally on your machine and outputs the video, cover image, and posting copy, with targets for TikTok, Reels, YouTube Shorts, Douyin, Xiaohongshu, and Bilibili. There is also a CLI and an MCP endpoint, and you can open the editor when a cut needs fixing. The software is free; cloud models are billed per use.\n\n**Why it's taking off.** The repo has around 11.8k stars and has been adding roughly 900 a day. The demo reel is the reason: real clips cut from Bill Gates, Tony Robbins, Sam Altman, and Andrew Garfield interviews, in both interview-style and full-screen podcast layouts. For anyone who already publishes long episodes and wants Shorts without a VA, that is a concrete before/after rather than a promise.\n\n**Where the product opportunity is.** The obvious move is a hosted English version: paste a YouTube URL, pick the platform, and get a ready-to-post clip with captions and a cover in a few minutes, priced by minutes processed. The gap is real — clipping is a crowded category, and the core engine is open under MIT, so the differentiator has to be English-first output quality, editor UX, and publishing workflow rather than the model itself.\n\n**Caveats.** The README and case library lean heavily on Chinese platforms and Chinese-language subtitles, so an English product needs new presets, caption styles, and copy. Cloud model calls are third-party and metered, and scraping platform video sits in ToS and copyright grey areas.",
+ "title_en": "AutoClip: Open-source AI video clipper",
+ "tagline_en": "Paste a link and get subtitled vertical clips for Shorts, Reels and TikTok.",
+ "pick": {
+  "full_name": "zhouxiaoka/autoclip",
+  "url": "https://github.com/zhouxiaoka/autoclip",
+  "description": "AutoClip｜一个链接，一键出片。开源 AI 视频剪辑桌面工具，将播客、访谈、课程等长视频自动剪成短视频，生成字幕、封面和发布文案，适配抖音、小红书、TikTok、Reels 与 YouTube Shorts。Open-source AI video clipping & content repurposing.",
+  "license": "MIT",
+  "stars": 11822,
+  "daily_rate": 925.0,
+  "category": "多媒体创作",
+  "one_liner": "贴个链接，AI 把长视频自动剪成竖屏短视频",
+  "one_liner_en": "Paste a link, get ready-to-post short clips from any long video",
+  "reason": "痛点真实、演示效果强、MIT 许可友好；但剪片赛道已有 Opus Clip 等强敌，且原生偏中国平台，需重做英文包装。",
+  "content": 8.67,
+  "startup": 7.7,
+  "final": 8.15,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-20-zhouxiaoka-autoclip",
+ "top": [
+  {
+   "full_name": "zhouxiaoka/autoclip",
+   "url": "https://github.com/zhouxiaoka/autoclip",
+   "one_liner": "贴个链接，AI 把长视频自动剪成竖屏短视频",
+   "reason": "痛点真实、演示效果强、MIT 许可友好；但剪片赛道已有 Opus Clip 等强敌，且原生偏中国平台，需重做英文包装。",
+   "one_liner_en": "Paste a link, get ready-to-post short clips from any long video",
+   "content": 8.67,
+   "startup": 7.7,
+   "final": 8.15,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Tracer-Cloud/opensre",
+   "url": "https://github.com/Tracer-Cloud/opensre",
+   "one_liner": "AI 助手自动查清 CI 构建为什么失败并给出修复方案",
+   "reason": "痛点真实、话题度高，Apache 许可证友好；但仍是早期 alpha，且赛道有成熟竞品，包装空间和商业化需靠托管体验取胜",
+   "one_liner_en": "An AI agent that finds why your CI build broke and proposes a fix",
+   "content": 8.0,
+   "startup": 7.45,
+   "final": 7.41,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "wangzan101/Mika",
+   "url": "https://github.com/wangzan101/Mika",
+   "one_liner": "手机上能替你操作各种App的AI助手",
+   "reason": "话题性与演示效果极强，痛点真实，Apache协议友好；但变现路径与上架合规是主要障碍，适合先做内容再谨慎产品化",
+   "one_liner_en": "An AI agent on your Android phone that uses your apps for you",
+   "content": 9.0,
+   "startup": 7.4,
+   "final": 7.04,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "toyxyz/toyxyz_RGBMocap",
+   "url": "https://github.com/toyxyz/toyxyz_RGBMocap",
+   "one_liner": "把手机视频变成可编辑的3D人体动画，本地运行",
+   "reason": "痛点真实、演示震撼、增长快；但许可混乱和大模型依赖限制商业化，包装空间在于免装即用的模型托管桌面版。",
+   "one_liner_en": "Turn any video into editable 3D human animation, running locally on your GPU",
+   "content": 7.67,
+   "startup": 6.3,
+   "final": 7.03,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "iamajmeena/neonclipping",
+   "url": "https://github.com/iamajmeena/neonclipping",
+   "one_liner": "粘贴视频链接，自动剪出带字幕的竖屏短视频",
+   "reason": "痛点真实，剪片外包和短视频二创人群明确，纯本地免上传有卖点，MIT 许可证友好，门槛高恰好留出桌面端和订阅制的包装空间；版权与平台条款是主要风险",
+   "one_liner_en": "Paste a video link, get captioned vertical clips in minutes, fully local.",
+   "content": 8.0,
+   "startup": 7.95,
+   "final": 6.94,
+   "category_penalty": 0.8
+  }
+ ]
+}

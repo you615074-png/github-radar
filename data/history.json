@@ -185,15 +185,18 @@
    "full_name": "cathrynlavery/diagram-design",
    "category": "开发者工具",
    "final": 7.69
+  },
+  {
+   "date": "2026-11-20",
+   "full_name": "zhouxiaoka/autoclip",
+   "category": "多媒体创作",
+   "final": 8.15
   }
  ],
  "top": {
   "wheresryan22/anatomy": "2026-11-08",
-  "lemomo-ai/lemo-opuscar": "2026-10-20",
   "storytold/wordcraft": "2026-11-05",
   "KnifeLemon/Filee": "2026-10-28",
-  "Ansub/tv-detox": "2026-10-20",
-  "storytold/artcraft": "2026-10-20",
   "DietrichGebert/ponytail": "2026-10-21",
   "yetone/magpie": "2026-10-21",
   "headroomlabs-ai/headroom": "2026-10-21",
@@ -247,7 +250,7 @@
   "affaan-m/ECC": "2026-11-17",
   "patch-gg/pixelfx": "2026-11-01",
   "elvarofficial/teardown": "2026-11-01",
-  "wangzan101/Mika": "2026-11-12",
+  "wangzan101/Mika": "2026-11-20",
   "LNPANDY/NX2Apple": "2026-11-09",
   "pingdotgg/t3code": "2026-11-09",
   "haydenschmitty/floorplan": "2026-11-02",
@@ -309,7 +312,11 @@
   "cathrynlavery/diagram-design": "2026-11-19",
   "kajisho5/ffmpeg-skill": "2026-11-19",
   "erkamyaman/rust-anything": "2026-11-19",
-  "firecrawl/firecrawl": "2026-11-19"
+  "firecrawl/firecrawl": "2026-11-19",
+  "zhouxiaoka/autoclip": "2026-11-20",
+  "Tracer-Cloud/opensre": "2026-11-20",
+  "toyxyz/toyxyz_RGBMocap": "2026-11-20",
+  "iamajmeena/neonclipping": "2026-11-20"
  },
  "scores": {
   "deepseek-ai/DeepInfer": {
@@ -679,758 +686,6 @@
      "苹果封堵/法务风险可能导致产品一夜归零，收款和上架（App Store 不可能）渠道受限"
     ],
     "reason": "技术含量高、玩机圈传播性强，但依赖漏洞、受众窄且集中在中国市场，商业化与合规风险都大，更适合做内容而非产品。"
-   }
-  },
-  "Arda313131882/aion-2-trainer-tool": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "打着 AI 提示词工具旗号的游戏作弊器",
-    "one_liner_en": "A game trainer/cheat tool disguised as an AI prompt toolkit",
-    "target_user": "没有合法付费人群，只有少数想作弊的玩家",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 3,
-     "wow": 2,
-     "pain": 2,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 5,
-     "demoability": 1
-    },
-    "product_idea": "不建议产品化，这类工具违反游戏服务条款",
-    "demo_idea": "无法做合规演示，也不能放上视频平台",
-    "attack_tool": true,
-    "red_flags": [
-     "实为游戏 trainer、作弊工具，违反游戏服务条款，可能构成侵权或被封号",
-     "README 布满 AI 提示词话术，与游戏作弊用途不符，是典型的包装行为",
-     "通过 PowerShell 一键安装脚本分发，有分发恶意软件的风险",
-     "4 天涨 812 星，异常可疑",
-     "没有真实付费场景，商业化途径基本为零"
-    ],
-    "reason": "伪装成 AI 提示词工具的游戏作弊程序，存在合规与安全风险，无内容与产品价值，应直接排除。"
-   }
-  },
-  "HybridRobotics/supermimic": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "用世界模型训练人形机器人全身动作追踪",
-    "one_liner_en": "Train humanoid robots to mimic human whole-body motion with a world model",
-    "target_user": "人形机器人初创公司、机器人研究方向的研究生与实验室、具身智能开发者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 4,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "把训练好的动捕策略打包成网页仿真演示加云端训练服务",
-    "demo_idea": "网页里用预渲染视频或 MuJoCo WASM 展示机器人模仿人走路跳舞",
-    "attack_tool": false,
-    "red_flags": [
-     "论文附带代码，需要多卡 GPU 与兄弟仓库才能运行",
-     "核心价值依赖仿真环境和训练结果，30 秒网页 demo 很难呈现",
-     "需要购买 Unitree G1 硬件才有实际落地价值",
-     "商业化对象是少数机器人公司和实验室，付费面窄"
-    ],
-    "reason": "话题性强、许可宽松，但本质是论文代码，运行门槛高、付费人群窄，做内容优于做产品。"
-   }
-  },
-  "abdulmannanmalik13-wq/adobe-substance-3d-studio": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "打着Adobe Substance 3D旗号的预激活盗版安装包",
-    "one_liner_en": "A piracy installer posing as Adobe Substance 3D 2026",
-    "target_user": "无合法付费人群；实际受众是寻找盗版3D软件的个人用户",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 6,
-     "wow": 2,
-     "pain": 2,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 2
-    },
-    "product_idea": "无：这是盗版分发渠道，不能做成合法产品",
-    "demo_idea": "无可演示内容，展示安装即属于帮助侵权",
-    "attack_tool": false,
-    "red_flags": [
-     "冒用Adobe商标与产品名，属侵权与假冒",
-     "README明示“Pre-Activated”“licensing已应用”，即预激活盗版软件",
-     "诱导用户从网络下载并运行PowerShell脚本，典型恶意软件投递方式",
-     "4天1304星、日增823星，刷星与SEO投毒特征明显",
-     "README技术描述空泛，与HTML主语言不符，无真实代码",
-     "License标注MIT与盗版内容矛盾，许可声明不可信"
-    ],
-    "reason": "假冒Adobe品牌的预激活盗版安装器，涉及商标侵权、软件盗录和脚本投毒风险，无任何合法产品或内容价值。"
-   }
-  },
-  "IsaiaR09/daemon-pro-desktop": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "号称一键激活全部功能的Windows桌面软件整合包",
-    "one_liner_en": "A 'pre-activated' all-features Windows desktop bundle",
-    "target_user": "无明确付费人群；若为盗版/破解类工具，则用户为想绕过授权者",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 3,
-     "wow": 2,
-     "pain": 2,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 2,
-     "demoability": 2
-    },
-    "product_idea": "无可行产品形态：该项目本质是预激活整合包，无差异化空间",
-    "demo_idea": "无法演示：核心为本地安装包，且涉及预激活/授权绕过嫌疑",
-    "attack_tool": false,
-    "red_flags": [
-     "README 充斥“预激活/全功能解锁/免授权”，疑似破解或规避授权，法律与平台风险高",
-     "仓库 4 天涨 1295 星，增长异常，疑似刷星或营销号",
-     "内容为通用模板化描述，无真实功能与源码价值",
-     "HTML 项目无实质代码，依赖不可信 PowerShell 脚本",
-     "MIT 许可与预激活/破解性质矛盾，授权状态不清晰"
-    ],
-    "reason": "项目为可疑预激活整合包，无真实产品价值，法律风险高，不适合做内容或产品化。"
-   }
-  },
-  "AleRibeiro44/archicad-desktop-setup": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "盗版 Archicad 2026 预激活安装包，一键装完即可用",
-    "one_liner_en": "Pre-activated pirated Archicad 2026 desktop installer for Windows",
-    "target_user": "无合法付费人群，只有盗版软件使用者，不存在可商业化的用户",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 7,
-     "wow": 2,
-     "pain": 2,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 2
-    },
-    "product_idea": "无：这是盗版商业软件的破解再分发，无法产品化",
-    "demo_idea": "不可演示：展示安装盗版软件会直接涉及侵权和违法",
-    "attack_tool": false,
-    "red_flags": [
-     "实质是 Archicad（Graphisoft 商业软件）的预激活盗版分发，涉嫌侵犯著作权，DMCA 风险高",
-     "README 用 PowerShell 安装说明诱导执行脚本，存在恶意代码和供应链风险",
-     "仓库 4 天新增 1301 stars，增长异常，疑似刷量或引流",
-     "虽然写着 MIT，但项目本身分发的是盗版商业软件，MIT 声明无效",
-     "无法面向美国或全球市场商业化，Stripe、Product Hunt、App Store 等渠道均会封禁",
-     "账号若做内容会损害品牌信誉，并可能被平台封号"
-    ],
-    "reason": "盗版商业软件的破解分发包，不是开源项目。license 违规，没有可商业化的用户，也不该做内容，直接排除。"
-   }
-  },
-  "hembramneeraj3-create/aida-64-extreme": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "伪装成开源项目的盗版 AIDA64 破解安装包",
-    "one_liner_en": "A repackaged pirated build of AIDA64 Extreme disguised as an open-source installer",
-    "target_user": "无付费用户；盗版软件使用者，不构成商业市场",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 7,
-     "wow": 3,
-     "pain": 2,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 2
-    },
-    "product_idea": "无可做产品；该仓库只是盗版分发，不具备产品化基础",
-    "demo_idea": "不做演示；仅可作为反面教材说明开源仓库中的授权风险",
-    "attack_tool": false,
-    "red_flags": [
-     "仓库以开源名义分发盗版商业软件 AIDA64 Extreme，宣称已预先激活，属侵犯版权",
-     "README 提供通过 PowerShell 一键安装，执行不受信任的脚本，存在植入恶意软件的风险",
-     "4 天增长 1300 星，异常暴涨，疑似刷星或流量操纵",
-     "语言标为 HTML，无真实源码，README 描述与开源无关，名不副实",
-     "使用他人商标 AIDA64 冒名，有商标侵权与钓鱼风险",
-     "接入即用型破解，涉及绕过授权校验，可能违反 DMCA"
-    ],
-    "reason": "盗版软件重打包，不是可做产品的开源项目，商业与传播价值均极低，且有法律与安全风险。"
-   }
-  },
-  "CodeSouvik/clion-standalone-enhancement": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "号称免激活的 CLion 完整安装包",
-    "one_liner_en": "A supposedly pre-activated full CLion installer for Windows",
-    "target_user": "想免费使用 JetBrains IDE 的学生或个人开发者（绝大多数不会付费）",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 7,
-     "wow": 4,
-     "pain": 5,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 2,
-     "demoability": 2
-    },
-    "product_idea": "没有可做的产品，本质是盗版 JetBrains IDE 的分发包装",
-    "demo_idea": "无法演示，演示破解即宣传盗版，平台禁令风险极高",
-    "attack_tool": false,
-    "red_flags": [
-     "README 明确宣称 pre-activated / 无需 license，实为破解正版 JetBrains CLion 的盗版分发",
-     "README 内容前后矛盾，混入游戏外挂、注入、反作弊等段落，疑似模板拼接或恶意载荷引流",
-     "要求 PowerShell 一键执行，典型恶意脚本植入手法，存在木马风险",
-     "仓库 4 天内暴涨 1298 star，数据异常，疑似刷量或黑产推广",
-     "内容涉及绕过软件授权，违反 DMCA 与 JetBrains 许可协议，无法合法商业化",
-     "与 'CLion 安装包' 用途无关的 Topics 堆砌，SEO 垃圾仓库特征明显"
-    ],
-    "reason": "披着安装包外衣的 IDE 破解分发，法律与安全风险极高，既不可做内容也不可做产品。"
-   }
-  },
-  "we-promise/sure": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "可自托管的个人财务管家，开源版 Copilot Money",
-    "one_liner_en": "A self-hosted, open-source personal finance and wealth dashboard",
-    "target_user": "美国/全球注重隐私、愿意自托管的个人理财用户和技术型家庭财务管理者，以及想给客户提供托管财务仪表盘的小型理财顾问",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 5,
-     "license_safety": 2,
-     "demoability": 8
-    },
-    "product_idea": "托管版 Sure：一键接入银行账户，自动分类并给出月度财务健康报告，按月订阅",
-    "demo_idea": "网页加载演示数据，展示净资产曲线、自动分类交易和 AI 问答式财务建议",
-    "attack_tool": false,
-    "red_flags": [
-     "AGPL-3.0 许可证，商业闭源托管或改造有强传染性法律风险",
-     "前身 Maybe Finance 烧掉约百万美元后 B2C 订阅模式失败，商业模式已验证过一次不行",
-     "金融数据聚合依赖 Plaid 等付费服务，成本和合规门槛高",
-     "处理美国用户银行数据涉及 GLBA/州隐私法合规",
-     "性能问题已在 README 中被公开承认"
-    ],
-    "reason": "话题性和演示性都不错，痛点真实，但 AGPL 加前身商业失败使包装和变现空间受限，更适合做内容而非直接创业。"
-   }
-  },
-  "flgomes/dxo-photolab-10-desktop": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "盗版破解版付费修图软件安装包",
-    "one_liner_en": "A pre-activated pirated build of a paid RAW photo editor",
-    "target_user": "无合法付费人群；目标用户为寻找免费破解版的专业修图用户",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 6,
-     "wow": 2,
-     "pain": 3,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 2
-    },
-    "product_idea": "无：这是盗版商业软件的激活包，无法做成合法产品",
-    "demo_idea": "无：无法公开展示破解与激活流程",
-    "attack_tool": false,
-    "red_flags": [
-     "实为 DxO PhotoLab 10 的盗版/破解激活包，通过 PowerShell 脚本分发，侵犯商业软件版权",
-     "README 用 coupons、download 等关键词堆砌 SEO，是被 GitHub 误标的推广壳项目",
-     "星标 4 天暴涨、每日约 749、疑为刷量，内容与 MIT 许可证声明矛盾",
-     "分发预激活二进制有恶意软件与供应链风险",
-     "无任何可合法包装或商业化的空间"
-    ],
-    "reason": "盗版破解软件安装包，非真实开源项目；法律风险高，无可做内容与产品价值，直接排除。"
-   }
-  },
-  "SnehalSukale27/power-director": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "Windows 上的完整桌面视频剪辑套件，一键装好就能用",
-    "one_liner_en": "A complete desktop video editing suite for Windows, installed in one step",
-    "target_user": "需要本地离线剪辑的 Windows 视频创作者、学校、企业工作站",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 7,
-     "wow": 2,
-     "pain": 3,
-     "packaging_room": 2,
-     "monetization": 2,
-     "license_safety": 1,
-     "demoability": 3
-    },
-    "product_idea": "无产品化空间：本质是借 CyberLink PowerDirector 品牌名的安装脚本分发点。",
-    "demo_idea": "网页演示如何以剪辑时间轴为主界面？核心价值只能靠桌面端展示，网页 30 秒内演示不出来。",
-    "attack_tool": true,
-    "red_flags": [
-     "实际内容是 PowerShell 安装脚本，疑似盗版分发商业软件 CyberLink PowerDirector",
-     "冒用知名商业品牌，商标与版权风险极高",
-     "仓库 4 天涨 1200 星但语言标为 HTML，异常增长疑似刷星或推广",
-     "README 充满无意义营销话术，无真实开源代码",
-     "不是可用 MIT 授权开源的项目"
-    ],
-    "reason": "借商业软件品牌名分发安装脚本，有盗版与商标风险；没有真实源码，既不能做内容，也不能产品化。"
-   }
-  },
-  "muddinenilakshmilalithaksh-create/sp-flash-tool": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "Windows 电脑一键给安卓手机刷固件的桌面工具",
-    "one_liner_en": "A Windows desktop tool that flashes Android phone firmware in one click",
-    "target_user": "美国/全球的安卓维修店技师、刷机爱好者与二手手机翻新商",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 4,
-     "wow": 3,
-     "pain": 4,
-     "packaging_room": 3,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 2
-    },
-    "product_idea": "做成带设备引导、固件库和失败恢复向导的刷机桌面应用",
-    "demo_idea": "网页模拟设备连接、分区进度条和校验通过界面，展示一次成功刷机流程",
-    "attack_tool": false,
-    "red_flags": [
-     "仓库仅含 HTML 说明页，README 描述的是打包好的驱动和二进制工具，没有可审查的源码，存在分发恶意程序的风险",
-     "4 天 1200 star、日增 720，增长异常，疑似刷 star 的推广仓库",
-     "所谓『无需管理员权限』与后文『注册驱动需管理员』自相矛盾，文档可信度低",
-     "刷机工具涉及绕过 FRP 锁等话题，容易被用于设备解锁灰产",
-     "桌面 USB/驱动类工具无法在纯网页 demo 中演示"
-    ],
-    "reason": "文档自相矛盾且无源码，star 增长异常，本质是驱动打包分发，商业化与传播价值都低，不建议做内容或产品"
-   }
-  },
-  "woo20080623-cell/cinebench-desktop": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "假装开源的 Cinebench 破解安装包",
-    "one_liner_en": "A fake open-source 'pre-activated' Cinebench crack installer",
-    "target_user": "没有人应该为它付费；目标用户只有下载盗版基准软件的人",
-    "scores": {
-     "topicality": 3,
-     "accessibility": 5,
-     "wow": 1,
-     "pain": 1,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 1
-    },
-    "product_idea": "无：这是盗版软件分发，没有可产品化的形态",
-    "demo_idea": "不演示；不宜做成内容传播",
-    "attack_tool": true,
-    "red_flags": [
-     "实际是 Cinebench 的盗版/破解分发，'Pre-Activated' 即绕过授权，侵犯 Maxon 版权",
-     "仓库 4 天涨 1200 星、HTML 伪装成安装器，高度疑似恶意脚本/供应链投毒",
-     "Topics 自相矛盾（python、crack、windows-app），README 又是模板化 AI 文案",
-     "仓库名带 -cell 后缀，属于批量注册的假账号",
-     "MIT License 无法覆盖其分发的专有软件，许可证声明无效",
-     "可能捆绑木马或信息窃取脚本，用户运行即中招"
-    ],
-    "reason": "典型盗版破解仓库，涉嫌侵犯版权并可能投毒；没有产品价值，也不能作为内容素材。"
-   }
-  },
-  "SK-Dev666/rust-external-trainer-tool": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "生活娱乐",
-    "one_liner": "给《Rust》游戏用的外部透视和自动瞄准作弊工具",
-    "one_liner_en": "External cheat trainer for Rust with ESP and aim assist",
-    "target_user": "想作弊的《Rust》玩家（灰色市场，无法合法收款）",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 5,
-     "pain": 3,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 2
-    },
-    "product_idea": "不建议做成产品：这是破坏他人游戏公平的作弊器",
-    "demo_idea": "无法公开展示，演示即暴露作弊与封号风险",
-    "attack_tool": true,
-    "red_flags": [
-     "游戏外挂、攻击其他玩家公平性，属违反游戏 ToS 的灰产",
-     "README 以 PowerShell 一键安装为诱饵，是恶意软件分发常见模式",
-     "MIT 许可证与外挂性质不符，作者身份不明",
-     "4 天涨 1200 星，疑似刷星，内容账号引用有信誉风险",
-     "无法用 Stripe 等正规渠道收款，Visa/Mastercard 禁止"
-    ],
-    "reason": "游戏作弊器属灰产，法律与平台风险高，不可做产品；仅可当反面教材，不建议做内容。"
-   }
-  },
-  "shahnawaz0786/payday-3-enhancement-toolkit": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "《Payday 3》游戏的作弊修改器，一键解锁全部buff",
-    "one_liner_en": "A pre-activated cheat trainer that unlocks every advantage in Payday 3",
-    "target_user": "想快速通关或刷资源的 Payday 3 玩家；这类人群几乎不存在合规的付费意愿，因为游戏方会封号",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 7,
-     "wow": 3,
-     "pain": 2,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 3
-    },
-    "product_idea": "不建议做成产品：这是游戏作弊和外挂，会被游戏方封号且有法律风险",
-    "demo_idea": "不宜演示：演示作弊注入会直接触及封号和侵权风险",
-    "attack_tool": false,
-    "red_flags": [
-     "游戏作弊、绕过反作弊机制，违反 Payday 3 和 Starbreeze、Steam 的用户协议，有账号封禁与法律风险",
-     "创建仅 4 天、星数每天增长 720，疑似刷星，可能是恶意软件或挖矿木马的分发诱饵",
-     "README 描述自相矛盾，把'预激活游戏本体'和'trainer'混在一起，Download 链接可疑,不建议任何人安装",
-     "MIT License 与项目性质不符,license_safety 极低"
-    ],
-    "reason": "一款玩家人数少、依赖刷星可疑增长的游戏作弊工具，违反平台规则且无可正当商业化的空间，仅可作反面话题，不可包装成产品。"
-   }
-  },
-  "ilsa99/microsoft-365-desktop": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "号称一键安装微软 Office 全家的脚本,实为盗版分发",
-    "one_liner_en": "A script that claims one-click standalone Microsoft 365 install, actually pirated software",
-    "target_user": "无合法付费人群;真实用户是找免费 Office 的 Windows 用户",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 7,
-     "wow": 3,
-     "pain": 4,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 2
-    },
-    "product_idea": "无可行产品形态,分发盗版微软软件属侵权违法",
-    "demo_idea": "不适合演示;展示即等于推广盗版软件",
-    "attack_tool": false,
-    "red_flags": [
-     "实质是微软 Office 盗版/破解分发,侵犯微软版权与商标,违反 DMCA",
-     "README 用 'standalone''offline' 等话术包装,疑似钓鱼或恶意脚本载体",
-     "仓库 4 天获 1200 星且日增 720,刷星特征明显,可信度极低",
-     "宣称 MIT 许可证但无权分发微软商业软件,许可证声明无效",
-     "目标用户无付费意愿,无任何合法商业化路径",
-     "下载执行来源不明的 PowerShell 脚本存在恶意软件风险"
-    ],
-    "reason": "盗版 Office 分发,法律风险极高且无产品化空间,仅可作反面选题,不建议投入。"
-   }
-  },
-  "shayannazar84-hero/honkai-star-rail-companion-suite": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "《崩坏：星穹铁道》游戏修改器，一键解锁全部作弊功能",
-    "one_liner_en": "A game trainer that unlocks cheats for Honkai Star Rail on Windows",
-    "target_user": "没有可付费人群——游戏作弊工具无法合法商业化",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 7,
-     "wow": 4,
-     "pain": 3,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 2,
-     "demoability": 2
-    },
-    "product_idea": "不建议做产品：修改线上游戏违反服务条款，且需分发可执行文件，风险极高",
-    "demo_idea": "无法演示：核心是注入游戏进程，纯网页无法复现",
-    "attack_tool": false,
-    "red_flags": [
-     "修改线上游戏违反游戏服务条款，账号可能被封",
-     "README 要求用 PowerShell 下载并执行脚本，典型恶意软件分发手法",
-     "4 天涨 1200 星，疑似刷星，仓库可信度低",
-     "声称 2026 版但创建于 2026-11-06，内容与描述矛盾",
-     "无实际源码，HTML 主语言但宣称 Windows 可执行，疑似空壳或钓鱼",
-     "README 大量推销式话术，与开源项目不符",
-     "含 star-rail-bypass 等规避检测标签",
-     "商业模式为零，且分发此类工具有法律和平台风险"
-    ],
-    "reason": "疑似刷星的可疑游戏作弊工具，仅凭 PowerShell 脚本分发、无可信源码，商业化和内容价值都极低，建议直接跳过。"
-   }
-  },
-  "daiphu2708-crypto/melodyne-5-desktop-setup": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "盗版 Melodyne 5 音频编辑软件的伪装安装包",
-    "one_liner_en": "A pirated Melodyne 5 audio editor disguised as a setup package",
-    "target_user": "无合法付费意愿的人群，无法商业化",
-    "scores": {
-     "topicality": 2,
-     "accessibility": 4,
-     "wow": 1,
-     "pain": 1,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 1
-    },
-    "product_idea": "无——这是盗版商业软件的绕激活包，不可做产品",
-    "demo_idea": "不做演示，避免传播盗版与恶意脚本",
-    "attack_tool": false,
-    "red_flags": [
-     "实质是盗版/破解 Celemony Melodyne 商业软件的预激活安装包",
-     "README 引导用户从网络拉取 PowerShell 脚本并以管理员权限执行，疑似恶意脚本分发",
-     "冒用 MIT 许可证掩盖侵权",
-     "4 天涨 700+ star 属异常刷量，仓库可信度极低",
-     "侵犯版权，在美国属违法分发，存在法律与安全双重风险"
-    ],
-    "reason": "盗版破解加可疑脚本分发，既不能做内容也不能做产品，应直接拉黑。"
-   }
-  },
-  "Paulinho182/hitfilm-desktop-installer": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "预激活的 HitFilm 视频剪辑安装包，装完就能用全部付费功能。",
-    "one_liner_en": "A pre-activated HitFilm desktop installer that unlocks all paid features on install.",
-    "target_user": "想免费用专业剪辑软件、但不愿付费的个人创作者和学生",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 2
-    },
-    "product_idea": "无产品空间：本质是绕过付费墙的盗版分发，不能做成正规产品。",
-    "demo_idea": "不演示：内容是破解安装器，展示即等于传播盗版风险。",
-    "attack_tool": false,
-    "red_flags": [
-     "README 明确写 pre-activated、移除激活、binary 级解锁，属盗版分发，侵犯 FXhome/HitFilm 版权",
-     "仓库名与描述伪装成官方安装器，实际是 PowerShell 脚本下载器，有恶意脚本风险",
-     "虽标 MIT，但分发的软件本体是商业软件，许可证声明无效",
-     "4 天涨 1194 星，增速异常，疑似刷星或榜单操纵",
-     "内容话题虽热，但账号做它会带来平台封禁与法律风险"
-    ],
-    "reason": "本质是绕过激活的盗版安装脚本，无产品化空间且法律风险高，内容价值仅剩反面案例，不建议做。"
-   }
-  },
-  "thiagoaureliomartins-programador/chief-architect-premier": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "预激活的建筑设计软件打包版，宣传开源但实为盗版分发",
-    "one_liner_en": "A pre-activated 'open-source' bundle of commercial architecture software",
-    "target_user": "无合法付费人群：真正需要的是盗版用户，不属于可服务市场",
-    "scores": {
-     "topicality": 2,
-     "accessibility": 6,
-     "wow": 2,
-     "pain": 2,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 1
-    },
-    "product_idea": "没有可行产品形态：核心是分发盗版商业软件，无法合法包装成产品",
-    "demo_idea": "无法演示：展示即构成传播盗版软件",
-    "attack_tool": false,
-    "red_flags": [
-     "实为破解/预激活的盗版 Chief Architect Premier，与开源无关",
-     "滥用 MIT 许可和 Topics 做 SEO 引流，4 天涨 1197 星异常",
-     "分发受版权保护的商业软件激活令牌，违反 DMCA 与版权法",
-     "有恶意软件/木马风险，PowerShell 一键安装脚本来源不明",
-     "无真实开发者生态，无法作为内容或产品素材"
-    ],
-    "reason": "典型借开源之名分发盗版商业软件的仓库，法律与安全风险极高，不适合做内容或产品，应直接排除。"
-   }
-  },
-  "SirBonney/scrcpy-mirror-control": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "一键把安卓手机投屏到电脑并直接用鼠标键盘控制",
-    "one_liner_en": "Mirror and control any Android phone on your desktop in one click",
-    "target_user": "美国/全球的安卓开发者、QA 测试人员、应用演示者和需要手机投屏办公的技术用户",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 9,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "做成 Windows/macOS 桌面客户端，图形化一键投屏控制，含多设备管理和录屏导出",
-    "demo_idea": "网页动画模拟插线后手机屏幕秒变桌面窗口，鼠标点击即手机操作",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是 scrcpy/scrcpy GUI 的封装，差异化有限，官方 scrcpy 免费成熟",
-     "创建仅 4 天涨星异常，有刷星嫌疑",
-     "README 夸大自包含却依赖外部引擎",
-     "投屏控制需求偏技术人群，付费意愿低",
-     "免费替代品（scrcpy、Vysor 免费版、微软 Phone Link）众多"
-    ],
-    "reason": "易懂易演示有传播性，但实为 scrcpy 套壳，商业化和差异化薄弱，星标增长可疑，做内容尚可做产品难。"
-   }
-  },
-  "Donchitos/Claude-Code-Game-Studios": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "用一句话描述游戏，Claude Code 自动把它做成能玩的网页小游戏",
-    "one_liner_en": "Describe a game in one sentence and Claude Code builds a playable browser game",
-    "target_user": "全球独立游戏开发者、游戏设计爱好者、想做原型验证的独立开发者，以及教孩子的家长（美国市场）",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "一个网页版“一句话做游戏”工作台，内置提问、生成 brief、一键试玩和一键发布到 itch.io",
-    "demo_idea": "页面左侧输入“黄昏才钓到稀有鱼的钓鱼游戏”，30 秒后右侧出现可试玩的成品游戏",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖 Claude Code、Python、Bash、Chrome 等本地环境，Web 化门槛高",
-     "本质是 prompt 模板和 skill 集合，容易被复制，难以差异化",
-     "生成质量取决于模型和付费 Claude 额度，单位成本不低",
-     "核心资产是 Anthropic 生态，平台规则变更会直接带来风险"
-    ],
-    "reason": "话题热、演示效果好、MIT 安全；但本质是 prompt 框架，商业化和壁垒都偏弱，适合做内容而非重产品。"
-   }
-  },
-  "GUFRAN7998/passfab-unlocker-desktop": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "预装破解版的离线密码恢复工具，号称能解锁各类密码",
-    "one_liner_en": "A pre-activated offline password recovery tool for Windows that cracks accounts and files",
-    "target_user": "有合法密码恢复需求的IT运维人员，但实际更可能被灰色用途人群使用",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 7,
-     "wow": 4,
-     "pain": 3,
-     "packaging_room": 3,
-     "monetization": 2,
-     "license_safety": 2,
-     "demoability": 2
-    },
-    "product_idea": "不建议产品化：这是预激活破解包，不是可合法包装的开源项目",
-    "demo_idea": "无：核心演示即破解他人密码，不可公开演示",
-    "attack_tool": true,
-    "red_flags": [
-     "README明示为预激活、绕过授权校验的破解分发，属于盗版软件传播",
-     "功能是破解账户与文件密码，既可被用于非法入侵他人设备，也可能携带恶意代码",
-     "通过PowerShell远程拉取脚本执行，存在严重供应链与恶意载荷风险",
-     "仓库创建4天即获1100星且日增623，数据异常，疑似刷星或钓鱼仓库",
-     "仅4天历史却宣称完整产品，缺乏可信维护记录"
-    ],
-    "reason": "伪装成开源项目的预激活密码破解包，安全与法律风险极高，不应做内容或产品。"
-   }
-  },
-  "vishnu05-codes/ozone-12-advanced": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "一个声称能装专业音频软件 Ozone 12 的 Windows 一键安装包，实际是盗版下载器",
-    "one_liner_en": "A sketchy 'one-click installer' claiming to install iZotope Ozone 12 for Windows",
-    "target_user": "无合法付费人群；这是盗版软件分发",
-    "scores": {
-     "topicality": 2,
-     "accessibility": 5,
-     "wow": 2,
-     "pain": 2,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 1
-    },
-    "product_idea": "没有可做的产品——这是盗版商业音频软件的破解安装包，不能包装也不能商用",
-    "demo_idea": "无：演示即等于分发盗版软件，不可做",
-    "attack_tool": true,
-    "red_flags": [
-     "实为 iZotope Ozone 12（商业付费音频软件）的盗版/破解分发，'Pre-Activated Standalone Build'、'eliminates online license verification' 明确指向绕过授权",
-     "仓库参数与主题标签明显是 SEO 堆砌，4 天 1200 star、日增 720 属异常刷量，典型钓鱼/恶意分发仓库",
-     "HTML 仓库却声称是 PowerShell 安装器，README 与实现不符，存在投放恶意脚本风险",
-     "侵犯 iZotope 版权与商标，美国 DMCA 下架/法律风险高",
-     "MIT 许可证声明与盗版内容相矛盾，licence_safety 无意义",
-     "任何以它为素材的内容都会损害账号声誉并可能被平台封禁"
-    ],
-    "reason": "盗版软件破解安装包，含绕过授权与恶意分发风险，无产品化与内容价值，必须直接排除。"
-   }
-  },
-  "vigilantediurno2-del/microstation-2026-setup": {
-   "date": "2026-11-12",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "冒充专业软件的安装器，用来传播坏程序",
-    "one_liner_en": "A fake 'Microstation 2026' installer that bundles bad software",
-    "target_user": "没有合法付费用户；目标人群是被骗下载的 Windows 用户",
-    "scores": {
-     "topicality": 2,
-     "accessibility": 3,
-     "wow": 1,
-     "pain": 1,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 1
-    },
-    "product_idea": "无：这不是可包装的产品，只能作为安全案例分析",
-    "demo_idea": "无正面演示价值",
-    "attack_tool": true,
-    "red_flags": [
-     "README中的'MicroStation'是Bentley Systems的商业软件名，此仓库在未经授权的情况下冒用该品牌",
-     "该仓库创建仅4天，却声称有1090星，且每日增长约610星，星标数异常，疑似人为刷高",
-     "安装方式是在线获取后运行PowerShell脚本，符合恶意软件投递的典型模式",
-     "README内容前后矛盾：一处说运行不需要管理员权限，另一处又说需要本地管理员权限",
-     "这实际上是恶意软件的投递程序，不能采信它为开源项目，它也不是可包装的真实产品",
-     "冒用商业软件品牌，存在商标侵权风险"
-    ],
-    "reason": "疑似冒用 MicroStation 品牌的恶意 PowerShell 安装器，星标数异常、风险极高，完全不适合做内容或产品。"
    }
   },
   "openai/codex-security": {
@@ -4956,6 +4211,341 @@
      "机型脚本依赖具体系统版本，维护成本高、易失效"
     ],
     "reason": "痛点真实，但市场基本在国内；产品已很成熟，难以包装出差异化，商业化空间很小，适合做内容而非创业项目。"
+   }
+  },
+  "wangzan101/Mika": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "手机上能替你操作各种App的AI助手",
+    "one_liner_en": "An AI agent on your Android phone that uses your apps for you",
+    "target_user": "全球Android重度用户、效率极客、想自动处理App内重复任务的上班族与自由职业者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 9,
+     "wow": 9,
+     "pain": 7,
+     "packaging_room": 8,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做成开箱即用的手机AI代理App，预置模型订阅，按次或按月收费，主打后台自动操作App",
+    "demo_idea": "网页播放前后对半分屏录屏：左边聊天，右边手机自己点外卖、刷聊天记录并总结",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖无障碍服务与无线调试，Google Play上架政策风险高",
+     "模拟点击可能违反部分App服务条款，存在封号与法律灰区",
+     "用户需自备模型API Key，上手门槛高",
+     "处理聊天、支付等敏感数据有隐私合规风险",
+     "类似竞品已有(如Rabbit、AutoGLM等)，差异化压力大"
+    ],
+    "reason": "话题性与演示效果极强，痛点真实，Apache协议友好；但变现路径与上架合规是主要障碍，适合先做内容再谨慎产品化"
+   }
+  },
+  "zhouxiaoka/autoclip": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "贴个链接，AI 把长视频自动剪成竖屏短视频",
+    "one_liner_en": "Paste a link, get ready-to-post short clips from any long video",
+    "target_user": "英语市场的播客主、内容创作者、社媒代运营、课程讲师和 SaaS 营销团队",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 9,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 7,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "网页版：粘 YouTube 链接选平台，几分钟输出带字幕封面的成片，按分钟订阅",
+    "demo_idea": "上传一段播客，左右对比原片和自动生成的竖屏成片，并显示字幕和文案",
+    "attack_tool": false,
+    "red_flags": [
+     "README 主打抖音、小红书、B 站等中国市场，英文市场适配需重做渠道与文案",
+     "云端模型按量计费依赖第三方 API，成本与稳定性不可控",
+     "自动剪辑结果需人工复核，和 Opus Clip、Klap 等成熟竞品正面竞争",
+     "抓取 YouTube 等平台视频涉及版权与平台 ToS 风险"
+    ],
+    "reason": "痛点真实、演示效果强、MIT 许可友好；但剪片赛道已有 Opus Clip 等强敌，且原生偏中国平台，需重做英文包装。"
+   }
+  },
+  "toeverything/AFFiNE": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "开源版 Notion+Miro，文档、白板和数据库合在一个画布上",
+    "one_liner_en": "An open-source Notion + Miro hybrid: docs, whiteboards and databases on one canvas",
+    "target_user": "注重隐私的欧美创作者与知识工作者、以及对数据自主有要求的小团队",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 7,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 2,
+     "monetization": 3,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "不建议做成品，建议做本地优先的加密同步或插件生态的补充层",
+    "demo_idea": "网页里拖拽生成文档+白板+表格，并展示离线编辑与实时同步",
+    "attack_tool": false,
+    "red_flags": [
+     "已是成熟商业产品（affine.pro 有付费版和官方云），个人很难在其上做差异化",
+     "License 显示 NOASSERTION，实为自定义/混合许可，商用有法律不确定性",
+     "与 Notion、Miro、Coda 等巨头正面竞争，获客成本极高",
+     "代码库庞大复杂，二次开发门槛高"
+    ],
+    "reason": "话题性和演示性不错，但项目本身已商业化、许可不明、巨头环伺；作为内容素材可以，作为产品化标的包装空间小、风险高。"
+   }
+  },
+  "anefzaoui/misterdownloadmanager": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "免费开源的多线程下载管理器，还能下 BT 和视频",
+    "one_liner_en": "A free, open-source download manager that's faster than IDM",
+    "target_user": "全球英文市场里被 IDM 付费和广告困扰的普通用户、经常下大文件视频和 BT 资源的重度下载者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 3,
+     "demoability": 5
+    },
+    "product_idea": "做托管版下载服务或浏览器扩展订阅，帮用户云端下载并转存大文件",
+    "demo_idea": "网页里并排跑同一文件的两个下载进度条，实时显示 MDM 快 5 倍",
+    "attack_tool": false,
+    "red_flags": [
+     "纯桌面客户端，网页 demo 很难直接复现核心加速效果",
+     "GPL-3.0 许可证限制商业闭源包装",
+     "已有成熟官网和浏览器扩展，本身接近成品",
+     "支持 BT、debrid、yt-dlp，可能涉及盗版内容和平台条款风险",
+     "免费永久定位让用户付费意愿极低"
+    ],
+    "reason": "项目热度高、痛点真实，但已接近成熟成品、GPL 且主打免费，包装和商业化空间都很小，更适合做内容而非创业。"
+   }
+  },
+  "MSNightmare/FastUnlock": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "利用Windows讲述人功能绕过锁屏和BitLocker的漏洞演示",
+    "one_liner_en": "A Windows Narrator lock-screen bypass that can breach BitLocker-protected PCs",
+    "target_user": "不适用：攻击类漏洞利用代码，没有可付费的产品人群",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 1,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "不建议产品化；最多做面向IT管理员的锁屏安全自查清单",
+    "demo_idea": "用演示视频展示物理接触下通过讲述人绕过锁屏，无法网页化",
+    "attack_tool": true,
+    "red_flags": [
+     "这是0day漏洞利用步骤，公开传播可能帮助攻击他人设备",
+     "属于攻击工具，违反账号定位与平台规则",
+     "仅在获得物理接触时成立，商业价值几乎为零",
+     "README为英文且涉及未修复漏洞，发布内容有法律与道德风险"
+    ],
+    "reason": "典型0day锁屏绕过攻击演示，选题有热度但属攻击工具，无产品化与收费空间，不建议做内容或产品。"
+   }
+  },
+  "toyxyz/toyxyz_RGBMocap": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "把手机视频变成可编辑的3D人体动画，本地运行",
+    "one_liner_en": "Turn any video into editable 3D human animation, running locally on your GPU",
+    "target_user": "美国/全球的独立游戏开发者、3D动画师、VTuber、Unreal/Blender小团队与动捕外包工作室",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 7,
+     "monetization": 7,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "一键安装的桌面版：拖入视频→自动动捕→重定向到MetaHuman/Blender→导出FBX，模型托管托管省去折腾",
+    "demo_idea": "网页并排播放原视频与实时骨骼动画，滑块切换重定向角色，展示FBX一键导出",
+    "attack_tool": false,
+    "red_flags": [
+     "License 为 NOASSERTION，且捆绑 ExMR/FlowHMR/GVHMR 等多个模型权重，商用授权不明，是商业化最大障碍",
+     "依赖 CUDA 12.8、VS2022 C++ 构建工具、需手动注册下载商业/学术模型，安装门槛极高",
+     "生态上绑定 Unreal MetaHuman、Blender、PEAR，重依赖第三方，维护成本高",
+     "上游模型多为学术研究许可，二次分发与付费使用可能违规"
+    ],
+    "reason": "痛点真实、演示震撼、增长快；但许可混乱和大模型依赖限制商业化，包装空间在于免装即用的模型托管桌面版。"
+   }
+  },
+  "bookwjitchieni1986/blender-ai-mcp-addon": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "用聊天让AI在Blender里建模型、改材质、布场景",
+    "one_liner_en": "Chat with AI inside Blender to build objects, edit materials and set up scenes",
+    "target_user": "美国/全球的3D艺术家、独立游戏开发者、产品可视化与建筑预演工作室的技术美术（TA）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "打包成带引导安装的桌面应用：本地MCP网关、预置模型额度、模板化场景工作流，按月订阅",
+    "demo_idea": "网页里放一段真实操作录像：一句话生成产品展台场景，左聊天右视口实时联动，30秒出结果",
+    "attack_tool": false,
+    "red_flags": [
+     "仅提供Windows x64发行包，Mac用户（美国创作者主力）无法直接使用",
+     "新仓库1天涨1014星、命名与官方mcp-for-blender高度相似，可能存在刷星或蹭名风险",
+     "功能依赖付费第三方API与资产站密钥，成本转嫁用户",
+     "execute_code工具无真正沙箱，存在提示注入执行任意Python的安全隐患"
+    ],
+    "reason": "MCP+Blender组合话题性强、演示效果直观，痛点真实；但商业化需自建网关与模板库，且需防蹭名与跨平台补齐。"
+   }
+  },
+  "iamajmeena/neonclipping": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "粘贴视频链接，自动剪出带字幕的竖屏短视频",
+    "one_liner_en": "Paste a video link, get captioned vertical clips in minutes, fully local.",
+    "target_user": "美国/全球的 YouTube、Twitch、Kick 主播的剪辑外包人员，以及做 Shorts、TikTok、Reels 二次分发的自媒体运营和小型 MCN",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 8,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "把它做成桌面端一键应用：粘贴链接就出片，内置模板、云渲染和订阅制导出",
+    "demo_idea": "网页里输入一段长视频链接，30 秒后并排播放自动挑出的高光竖屏片段和自动字幕",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖 yt-dlp 抓取 YouTube 和 Twitch 的平台内容，可能违反平台服务条款与版权，面向美国市场发行需评估 DMCA 风险",
+     "视频下载和转写计算密集，纯前端无法完整演示，demo 需用预制结果",
+     "项目仅创建 1 天且 Star 增长异常，社区与代码质量尚未验证",
+     "README 包含大量作者个人 Instagram 导流和印地语相关功能，做英文产品需剥离",
+     "依赖本地 Ollama 和 Whisper 模型，普通用户装不上，产品化需要云服务或打包大模型"
+    ],
+    "reason": "痛点真实，剪片外包和短视频二创人群明确，纯本地免上传有卖点，MIT 许可证友好，门槛高恰好留出桌面端和订阅制的包装空间；版权与平台条款是主要风险"
+   }
+  },
+  "Lemxy/WinRust": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "用 Rust 重写 Windows 任务栏、资源管理器和搜索等系统组件",
+    "one_liner_en": "Blazing-fast Rust replacements for the Windows taskbar, file manager and search",
+    "target_user": "Windows 高级用户、开发者、追求性能和轻量的效率爱好者（美国 / 全球）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "把 WinRust 做成可签名的 Windows 性能增强套件，提供的沙箱安全安装与一键回滚",
+    "demo_idea": "在网页里用模拟数据对比任务栏和搜索的响应速度，并配上一段 30 秒的装机演示",
+    "attack_tool": false,
+    "red_flags": [
+     "需管理员权限并替换系统 shell，改动很大、依赖很深，容易让用户产生反感",
+     "安装包没有代码签名，会触发 SmartScreen 警告，可信度较低",
+     "项目创建仅 2 天、Star 短期暴涨近 600，有刷 Star 或炒作的嫌疑",
+     "Windows 系统本身免费，用户为此付费的意愿很低",
+     "demoability 弱：核心功能是桌面程序，需要真实系统环境，很难在网页 demo 里演示"
+    ],
+    "reason": "技术含量高，传播上很有话题性，Windows 系统工具类项目容易引发讨论和 Star；但需要管理员权限替换 shell 风险大，缺乏签名和信任背书，商业化路径模糊，更适合用来做内容而不是做产品。"
+   }
+  },
+  "JenkinWoo/sheeridVerify": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "自动化批量通过学生身份优惠验证的灰色工具",
+    "one_liner_en": "An automation workbench that mass-submits student discount verifications",
+    "target_user": "想薅学生优惠的普通消费者（灰色需求，不可商业化）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 8,
+     "demoability": 3
+    },
+    "product_idea": "无法做成正规产品；只能作为合规科普内容，讲验证机制如何被自动化滥用",
+    "demo_idea": "网页演示只能展示表单队列界面，核心提交涉欺诈，不宜演示",
+    "attack_tool": true,
+    "red_flags": [
+     "实质是绕过 SheerID 学生身份审核、批量骗取教育优惠，属于平台欺诈/滥用，涉嫌违反 CFAA 与平台条款",
+     "README 虽有免责声明，但功能就是自动填表+伪造学籍邮箱+上传材料，免责声明不成立",
+     "无法商业化：无正当付费人群，做产品即协助欺诈，Stripe/PH/HN 均不可用",
+     "依赖伪造 .edu 邮箱与代理轮换，合规风险极高",
+     "3853 stars 短期暴涨，投机热度，非真实产品价值"
+    ],
+    "reason": "本质是骗取教育优惠的自动化滥用工具，传播性有但不可产品化，只能作为反面合规案例做内容。"
+   }
+  },
+  "Tracer-Cloud/opensre": {
+   "date": "2026-11-20",
+   "v": 3,
+   "eval": {
+    "category": "运维部署",
+    "one_liner": "AI 助手自动查清 CI 构建为什么失败并给出修复方案",
+    "one_liner_en": "An AI agent that finds why your CI build broke and proposes a fix",
+    "target_user": "美国和全球的中型工程团队（20-200 人开发者）、DevOps/SRE 负责人、CI 维护者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 7,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "托管版 CI 可靠性助手：接入 GitHub Actions，失败后自动诊断原因、给出修复 PR，并展示 CI 失败率与耗时统计",
+    "demo_idea": "网页模拟一条红色 CI 流水线，点击后实时展开日志分析、定位根因、生成修复 diff 和度量报表",
+    "attack_tool": false,
+    "red_flags": [
+     "项目自述为 Public Alpha，核心工作流尚不稳定，API 与集成可能变动",
+     "依赖用户自有模型和托管模型账号，首次启动需登录激活，存在服务依赖",
+     "需访问 CI 日志和代码仓库，企业客户会关注权限与数据合规（SOC2 等）",
+     "已有 Datadog、Grafana、Greptile 等英文竞品，差异化要靠体验和价格"
+    ],
+    "reason": "痛点真实、话题度高，Apache 许可证友好；但仍是早期 alpha，且赛道有成熟竞品，包装空间和商业化需靠托管体验取胜"
    }
   }
  }
