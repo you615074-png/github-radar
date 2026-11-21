@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-21",
+ "headline": "让AI在Blender里聊着天建模型",
+ "summary_md": "**What it is:** `mcp-for-blender-pro` (repo: bookwjitchieni1986/blender-ai-mcp-addon) is a Blender extension that puts a chat-based AI assistant inside Blender. It can inspect your scene, add and move objects, assign materials, take viewport screenshots, look up the `bpy` API, and run multi-step agent workflows. It ships with a built-in MCP server, so other clients can drive Blender over an authenticated local endpoint.\n\n**Why it's taking off:** The demo is obvious in five seconds — ask for a product-display scene and watch cubes, lights, and a camera appear. The README lists 21 scene tools, support for OpenAI, Claude, Gemini, OpenRouter, Ollama and custom endpoints, plus a \"team chain\" of manager/worker/reviewer agents. That combination of visual feedback and real scene manipulation is what has pulled ~2,000 stars in a day, per repo metrics.\n\n**Where the product opportunity is:** Installation is still the hard part. The release targets Windows x64 and Blender 4.2+, and users must bring their own API keys. A paid desktop wrapper with a guided installer, bundled model credits, and a template library (product shots, archviz walkthroughs, game-ready props) could sell to small studios and technical artists. The agent-team feature also points to paid collaboration tiers.\n\n**Caveats:** Windows-only for now; the name is close to official MCP-for-Blender projects; and the `execute_code` tool runs Python without a true sandbox, so prompt-injection risk is real.",
+ "title_en": "mcp-for-blender-pro: Chat with AI inside Blender",
+ "tagline_en": "An AI assistant addon that inspects your Blender scene and builds, edits, and organizes 3D for you.",
+ "pick": {
+  "full_name": "bookwjitchieni1986/blender-ai-mcp-addon",
+  "url": "https://github.com/bookwjitchieni1986/blender-ai-mcp-addon",
+  "description": "AI assistant and MCP server for Blender: visual chat, scene tools, multi-agent workflows. Works with ChatGPT/GPT, Claude, Gemini, Ollama, OpenCode. Blender AI addon, copilot for 3D, bpy Python scripting, MCP integration.",
+  "license": "MIT",
+  "stars": 2061,
+  "daily_rate": 1047.0,
+  "category": "AI应用",
+  "one_liner": "用聊天让AI在Blender里建模型、改材质、布场景",
+  "one_liner_en": "Chat with AI inside Blender to build objects, edit materials and set up scenes",
+  "reason": "MCP+Blender组合话题性强、演示效果直观，痛点真实；但商业化需自建网关与模板库，且需防蹭名与跨平台补齐。",
+  "content": 7.67,
+  "startup": 7.15,
+  "final": 7.65,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-21-bookwjitchieni1986-blender-ai-mcp-addon",
+ "top": [
+  {
+   "full_name": "bookwjitchieni1986/blender-ai-mcp-addon",
+   "url": "https://github.com/bookwjitchieni1986/blender-ai-mcp-addon",
+   "one_liner": "用聊天让AI在Blender里建模型、改材质、布场景",
+   "reason": "MCP+Blender组合话题性强、演示效果直观，痛点真实；但商业化需自建网关与模板库，且需防蹭名与跨平台补齐。",
+   "one_liner_en": "Chat with AI inside Blender to build objects, edit materials and set up scenes",
+   "content": 7.67,
+   "startup": 7.15,
+   "final": 7.65,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "danielwh2/sprite-stacking",
+   "url": "https://github.com/danielwh2/sprite-stacking",
+   "one_liner": "四张像素图自动变成可旋转的伪3D精灵",
+   "reason": "演示效果强、纯前端可复现、MIT 可商用；但市场小而付费弱，适合做内容引流加轻量工具收费。",
+   "one_liner_en": "Turn four pixel art views into a spinnable fake-3D sprite",
+   "content": 7.33,
+   "startup": 7.05,
+   "final": 7.45,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "HKUDS/CLI-Anything",
+   "url": "https://github.com/HKUDS/CLI-Anything",
+   "one_liner": "把任何软件包装成命令行工具，让 AI 智能体直接操作",
+   "reason": "话题热度高、许可证宽松，但属于学术众包型基础设施，个人靠它做出差异化产品难度大，更适合做内容科普而非创业。",
+   "one_liner_en": "Turn any software into a CLI so AI agents can operate it directly",
+   "content": 6.67,
+   "startup": 6.1,
+   "final": 6.47,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "R0Y00/Xbox2Windows",
+   "url": "https://github.com/R0Y00/Xbox2Windows",
+   "one_liner": "把 Xbox 主机游戏代码翻译到 Windows 上运行的研究项目",
+   "reason": "话题性和惊喜感强，但项目尚未跑通完整游戏，法律风险和商业化难度大，适合做内容，不适合直接做成产品",
+   "one_liner_en": "A research project that recompiles Xbox Series X|S games to run on Windows",
+   "content": 7.67,
+   "startup": 5.7,
+   "final": 6.35,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "huami1314/GestaltX",
+   "url": "https://github.com/huami1314/GestaltX",
+   "one_liner": "改一下 iPhone 系统隐藏开关，给老机型解锁动态岛和 AI 功能",
+   "reason": "话题性和惊喜感极强，9 天 8000 星，演示效果直观；但依赖漏洞、GPL 限制、灰产边缘，难做成合规付费产品，适合做爆款内容而非创业项目。",
+   "one_liner_en": "Tweak hidden iPhone system flags to unlock Dynamic Island and Apple Intelligence",
+   "content": 8.33,
+   "startup": 4.65,
+   "final": 6.34,
+   "category_penalty": 0
+  }
+ ]
+}

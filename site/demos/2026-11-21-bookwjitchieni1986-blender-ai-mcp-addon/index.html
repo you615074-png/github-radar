@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gizmo Studio — AI copilot for Blender</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html{scroll-behavior:smooth}
+  [id]{scroll-margin-top:84px}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .msg-in{animation:msgIn .26s ease-out both}
+  @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  #chat::-webkit-scrollbar{width:8px}
+  #chat::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px}
+  #chat::-webkit-scrollbar-track{background:transparent}
+  #objList::-webkit-scrollbar,#objList::-webkit-scrollbar{display:none}
+  .no-bar::-webkit-scrollbar{display:none}
+  .chip{white-space:nowrap}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
+    <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-sm shadow-indigo-200">
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M12 3 20 7.5v9L12 21 4 16.5v-9L12 3Z"/><path d="M4 7.5 12 12l8-4.5"/><path d="M12 12v9"/>
+      </svg>
+    </div>
+    <div class="mr-auto leading-tight">
+      <div class="text-sm font-semibold tracking-tight">Gizmo Studio</div>
+      <div class="-mt-0.5 text-[11px] text-slate-500">AI copilot for Blender</div>
+    </div>
+    <nav class="hidden items-center gap-6 text-sm text-slate-600 md:flex">
+      <a href="#demo" class="hover:text-slate-900">Live demo</a>
+      <a href="#use-cases" class="hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-lg bg-slate-900 px-3.5 py-2 text-sm font-medium text-white transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="mx-auto max-w-6xl px-4 pb-8 pt-10 sm:px-6 sm:pt-14">
+  <div class="max-w-2xl">
+    <span class="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-medium text-indigo-700">
+      <span class="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
+      Concept demo · open-source core (MIT) · sample data
+    </span>
+    <h1 class="mt-4 text-4xl font-semibold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl">
+      Describe the scene.<br />
+      <span class="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Gizmo builds it in Blender.</span>
+    </h1>
+    <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-slate-600 sm:text-base">
+      A visual AI copilot that inspects your scene, creates objects, edits materials and runs multi-step
+      workflows — with your choice of model (GPT, Claude, Gemini, Ollama) and a local MCP gateway that
+      installs in one click.
+    </p>
+    <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] text-slate-500">
+      <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>21 scene tools</span>
+      <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>7 model providers</span>
+      <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Single assistant or agent team</span>
+    </div>
+  </div>
+</section>
+
+<!-- Demo -->
+<section id="demo" class="mx-auto max-w-6xl px-4 pb-6 sm:px-6">
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/60">
+    <div class="grid lg:grid-cols-[380px_1fr]">
+
+      <!-- Chat column -->
+      <div class="flex h-[540px] flex-col border-b border-slate-200 lg:h-[620px] lg:border-b-0 lg:border-r">
+        <div class="flex flex-wrap items-center gap-2 border-b border-slate-200 px-3 py-2.5">
+          <span class="text-xs font-semibold text-slate-800">Studio</span>
+          <span class="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">Sample data</span>
+          <div id="modeToggle" class="ml-auto flex rounded-lg bg-slate-100 p-0.5 text-[11px] font-medium">
+            <button type="button" data-mode="single" class="rounded-md bg-white px-2 py-1 text-slate-900 shadow-sm transition">Single assistant</button>
+            <button type="button" data-mode="team" class="rounded-md px-2 py-1 text-slate-500 transition">Team chain</button>
+          </div>
+        </div>
+
+        <div id="chat" class="flex-1 space-y-3 overflow-y-auto px-3 py-4"></div>
+
+        <div class="border-t border-slate-200 bg-slate-50/70 px-3 py-3">
+          <div class="no-bar mb-2 flex gap-1.5 overflow-x-auto pb-0.5">
+            <button type="button" data-wf="product" class="chip rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-600 transition hover:border-indigo-300 hover:text-indigo-700">🎬 Product display</button>
+            <button type="button" data-wf="row" class="chip rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-600 transition hover:border-indigo-300 hover:text-indigo-700">🔁 Row of five</button>
+            <button type="button" data-wf="clay" class="chip rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-600 transition hover:border-indigo-300 hover:text-indigo-700">🎨 Clay restyle</button>
+            <button type="button" data-wf="asset" class="chip rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-600 transition hover:border-indigo-300 hover:text-indigo-700">📦 Find an asset</button>
+          </div>
+          <form id="composer" class="flex items-center gap-2">
+            <input id="prompt" type="text" autocomplete="off"
+              class="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-3 py-2 text-[13px] text-slate-800 placeholder-slate-400 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+              value="Create a simple product-display scene with a pedestal, a camera and three lights. Give the pedestal a matte blue material." />
+            <button id="sendBtn" type="submit"
+              class="shrink-0 rounded-xl bg-slate-900 px-3.5 py-2 text-[13px] font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40">
+              Run
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Viewport column -->
+      <div class="flex h-[460px] flex-col bg-[#0a0f1a] lg:h-[620px]">
+        <div class="flex items-center gap-2 border-b border-white/10 px-4 py-2.5">
+          <span class="text-xs font-medium text-slate-300">Viewport</span>
+          <span class="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-400 ring-1 ring-white/10">live preview</span>
+          <span id="objCount" class="ml-auto text-[11px] text-slate-400">1 object · 1 light</span>
+        </div>
+        <div id="vpWrap" class="relative min-h-[240px] flex-1">
+          <canvas id="vp" class="absolute inset-0 h-full w-full"></canvas>
+          <div id="vpFlash" class="pointer-events-none absolute inset-0 ring-2 ring-inset ring-indigo-400/0 transition-all duration-500"></div>
+          <div class="pointer-events-none absolute left-3 top-3 rounded-md bg-black/30 px-2 py-1 text-[10px] font-medium text-slate-300 ring-1 ring-white/10">
+            Sample render
+          </div>
+        </div>
+        <div class="flex items-center gap-2 overflow-x-auto border-t border-white/10 px-4 py-2">
+          <span class="shrink-0 text-[10px] uppercase tracking-wider text-slate-500">Scene</span>
+          <div id="objList" class="no-bar flex gap-1.5 overflow-x-auto text-[11px] text-slate-300"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <p class="mt-3 px-1 text-[11px] text-slate-500">
+    The scene list, tool calls and viewport above are a front-end simulation with sample data. No Blender process is running.
+  </p>
+</section>
+
+<!-- Use cases -->
+<section id="use-cases" class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+  <h2 class="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Three ways people use it</h2>
+  <p class="mt-2 max-w-xl text-sm text-slate-600">Same workspace, different jobs. Each card maps to a live workflow in the demo above.</p>
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div class="grid h-9 w-9 place-items-center rounded-xl bg-indigo-50 text-lg">🎮</div>
+      <h3 class="mt-4 text-base font-semibold text-slate-900">Indie game devs</h3>
+      <p class="mt-1.5 flex-1 text-[13px] leading-relaxed text-slate-600">
+        Blockout props, duplicate into evenly spaced rows and dress a set piece without breaking flow.
+        Every action is a real Blender operator you can undo.
+      </p>
+      <button type="button" data-wf="row" class="mt-4 self-start text-[12px] font-medium text-indigo-600 hover:text-indigo-800">Run “Row of five” →</button>
+    </div>
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div class="grid h-9 w-9 place-items-center rounded-xl bg-violet-50 text-lg">📦</div>
+      <h3 class="mt-4 text-base font-semibold text-slate-900">Product visualization</h3>
+      <p class="mt-1.5 flex-1 text-[13px] leading-relaxed text-slate-600">
+        Turn a client brief into a pedestal, matte material, three-point lighting and a framed camera in
+        under a minute — then iterate on variants.
+      </p>
+      <button type="button" data-wf="product" class="mt-4 self-start text-[12px] font-medium text-indigo-600 hover:text-indigo-800">Run “Product display” →</button>
+    </div>
+
+    <div class="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-50 text-lg">🛠️</div>
+      <h3 class="mt-4 text-base font-semibold text-slate-900">Technical artists</h3>
+      <p class="mt-1.5 flex-1 text-[13px] leading-relaxed text-slate-600">
+        Route the same local MCP endpoint into OpenCode or your own agent, and keep humans in the loop with
+        approval gates before any import or destructive step.
+      </p>
+      <button type="button" data-wf="asset" class="mt-4 self-start text-[12px] font-medium text-indigo-600 hover:text-indigo-800">Run “Find an asset” →</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="border-y border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <h2 class="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Simple pricing</h2>
+    <p class="mt-2 max-w-xl text-sm text-slate-600">Bring your own API key, or let us bundle model credit and the local gateway.</p>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+
+      <div class="flex flex-col rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-sm font-semibold text-slate-900">Open source</h3>
+        <div class="mt-3 flex items-baseline gap-1">
+          <span class="text-3xl font-semibold tracking-tight">$0</span>
+          <span class="text-xs text-slate-500">forever</span>
+        </div>
+        <ul class="mt-4 flex-1 space-y-2 text-[13px] text-slate-600">
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Blender add-on + built-in MCP server</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> 21 scene tools</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Bring your own API key or local Ollama</li>
+        </ul>
+        <button type="button" data-waitlist="Open-source core — same download as the upstream repo. Demo only." class="mt-6 rounded-xl border border-slate-300 px-4 py-2 text-[13px] font-medium text-slate-700 transition hover:bg-slate-50">Use the open-source core</button>
+      </div>
+
+      <div class="relative flex flex-col rounded-2xl border-2 border-indigo-500 bg-white p-6 shadow-lg shadow-indigo-100">
+        <span class="absolute -top-2.5 left-6 rounded-full bg-indigo-600 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Most popular</span>
+        <h3 class="text-sm font-semibold text-slate-900">Studio</h3>
+        <div class="mt-3 flex items-baseline gap-1">
+          <span class="text-3xl font-semibold tracking-tight">$19</span>
+          <span class="text-xs text-slate-500">/ month</span>
+        </div>
+        <ul class="mt-4 flex-1 space-y-2 text-[13px] text-slate-600">
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Guided desktop install, local MCP gateway</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> 3M tokens of bundled model credit</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Template scene workflows</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Team chain (manager / worker / reviewer)</li>
+        </ul>
+        <button type="button" data-waitlist="You're on the list for Studio (demo only — nothing was sent)." class="mt-6 rounded-xl bg-slate-900 px-4 py-2 text-[13px] font-medium text-white transition hover:bg-slate-800">Join the waitlist</button>
+      </div>
+
+      <div class="flex flex-col rounded-2xl border border-slate-200 p-6">
+        <h3 class="text-sm font-semibold text-slate-900">Team</h3>
+        <div class="mt-3 flex items-baseline gap-1">
+          <span class="text-3xl font-semibold tracking-tight">$49</span>
+          <span class="text-xs text-slate-500">/ seat / month</span>
+        </div>
+        <ul class="mt-4 flex-1 space-y-2 text-[13px] text-slate-600">
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Everything in Studio</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Shared connection vault, per-seat keys</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Review gates + task board history</li>
+          <li class="flex gap-2"><span class="text-emerald-600">✓</span> Priority support</li>
+        </ul>
+        <button type="button" data-waitlist="Team plan is invite-only in this concept. Demo only — nothing was sent." class="mt-6 rounded-xl border border-slate-300 px-4 py-2 text-[13px] font-medium text-slate-700 transition hover:bg-slate-50">Talk to us</button>
+      </div>
+
+    </div>
+
+    <div class="mt-8 flex flex-col gap-3 rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-200 sm:flex-row sm:items-center">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-slate-900">Get early access</div>
+        <div class="text-[12px] text-slate-600">Windows x64 · Blender 4.2+ · macOS in beta. This form is a demo — nothing is sent anywhere.</div>
+      </div>
+      <form id="waitlistForm" class="flex gap-2">
+        <input id="email" type="email" required placeholder="you@studio.com"
+          class="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-3 py-2 text-[13px] outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 sm:w-56" />
+        <button type="submit" class="rounded-xl bg-indigo-600 px-4 py-2 text-[13px] font-medium text-white transition hover:bg-indigo-700">Join</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+    <div class="flex items-center gap-2 text-sm font-semibold text-slate-800">
+      <span class="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-[11px] text-white">G</span>
+      Gizmo Studio
+    </div>
+    <p class="text-[11px] leading-relaxed text-slate-500 sm:ml-auto sm:max-w-2xl sm:text-right">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/bookwjitchieni1986/blender-ai-mcp-addon" class="font-medium text-indigo-600 underline decoration-indigo-200 underline-offset-2 hover:text-indigo-800">bookwjitchieni1986/blender-ai-mcp-addon</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-50 -translate-x-1/2 translate-y-3 rounded-xl bg-slate-900 px-4 py-2.5 text-[13px] font-medium text-white opacity-0 shadow-lg transition-all duration-300"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- helpers ---------------- */
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
+    });
+  };
+  var C = function (h, s, l) { return "hsl(" + h + ", " + s + "%, " + l + "%)"; };
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+
+  var toastTimer = null;
+  function toast(msg) {
+    var t = $("#toast");
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.remove("opacity-0", "translate-y-3");
+    t.classList.add("opacity-100", "translate-y-0");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      t.classList.add("opacity-0", "translate-y-3");
+      t.classList.remove("opacity-100", "translate-y-0");
+    }, 2600);
+  }
+
+  /* ---------------- scene state ---------------- */
+  var scene = { objects: [], lights: [], camera: null };
+  var uid = 1;
+  var now = function () { return (window.performance && performance.now) ? performance.now() : Date.now(); };
+
+  function addObj(o) {
+    o.id = "o" + (uid++);
+    o.t0 = now();
+    scene.objects.push(o);
+    return o;
+  }
+  function findByName(n) {
+    for (var i = 0; i < scene.objects.length; i++) {
+      if (scene.objects[i].name === n) return scene.objects[i];
+    }
+    return null;
+  }
+
+  // seed scene: default cube + one light + camera
+  addObj({ type: "box", name: "Cube", x: 0, y: 0, z: 0, w: 1.1, d: 1.1, h: 1.1, c: [220, 12, 56] });
+  scene.lights.push({ x: -1.7, y: -1.5, z: 2.2, t0: now() });
+  scene.camera = { x: 2.5, y: -2.6, z: 1.9, t0: now() };
+
+  /* ---------------- canvas ---------------- */
+  var cv = $("#vp");
+  var ctx = cv.getContext("2d");
+  var W = 0, H = 0, S = 60, CX = 0, CY = 0;
+
+  function resizeCanvas() {
+    var r = cv.getBoundingClientRect();
+    if (r.width < 4 || r.height < 4) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(r.width * dpr);
+    cv.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    W = r.width;
+    H = r.height;
+    S = Math.min(W / 5.2, H / 5.6);
+    CX = W / 2;
+    CY = H * 0.6;
+  }
+
+  function P(x, y, z) {
+    return { x: CX + (x - y) * 0.8660254 * S, y: CY + (x + y) * 0.5 * S - z * S };
+  }
+
+  function poly(pts, fill, alpha, stroke) {
+    if (!pts.length) return;
+    ctx.globalAlpha = (alpha == null) ? 1 : alpha;
+    ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) {
+      if (i === 0) ctx.moveTo(pts[i].x, pts[i].y);
+      else ctx.lineTo(pts[i].x, pts[i].y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+    if (stroke) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawBox(o, e) {
+    if (e <= 0.001) return;
+    var hw = o.w / 2, hd = o.d / 2;
+    var zb = o.z, zt = o.z + o.h * e;
+    var edge = "rgba(255,255,255,0.09)";
+
+    var py = [
+      P(o.x - hw, o.y + hd, zb),
+      P(o.x + hw, o.y + hd, zb),
+      P(o.x + hw, o.y + hd, zt),
+      P(o.x - hw, o.y + hd, zt)
+    ];
+    var px = [
+      P(o.x + hw, o.y - hd, zb),
+      P(o.x + hw, o.y + hd, zb),
+      P(o.x + hw, o.y + hd, zt),
+      P(o.x + hw, o.y - hd, zt)
+    ];
+    var top = [
+      P(o.x - hw, o.y - hd, zt),
+      P(o.x + hw, o.y - hd, zt),
+      P(o.x + hw, o.y + hd, zt),
+      P(o.x - hw, o.y + hd, zt)
+    ];
+
+    poly(py, C(o.c[0], o.c[1], Math.max(6, o.c[2] - 16)), 1, edge);
+    poly(px, C(o.c[0], o.c[1], Math.max(6, o.c[2] - 6)), 1, edge);
+    poly(top, C(o.c[0], o.c[1], Math.min(94, o.c[2] + 12)), 1, edge);
+  }
+
+  function drawSphere(o, e) {
+    if (e <= 0.001) return;
+    var c = P(o.x, o.y, o.z);
+    var r = Math.max(2, o.r * S * e);
+    var g = ctx.createRadialGradient(c.x - r * 0.35, c.y - r * 0.42, r * 0.08, c.x, c.y, r);
+    g.addColorStop(0, C(o.c[0], o.c[1], Math.min(97, o.c[2] + 24)));
+    g.addColorStop(0.62, C(o.c[0], o.c[1], o.c[2]));
+    g.addColorStop(1, C(o.c[0], o.c[1], Math.max(8, o.c[2] - 20)));
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.10)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  function drawObj(o, ts) {
+    var p = clamp((ts - (o.t0 || 0)) / 420, 0, 1);
+    var e = 1 - Math.pow(1 - p, 3);
+    if (o.type === "sphere") drawSphere(o, e);
+    else drawBox(o, e);
+  }
+
+  function drawCamera(c, ts) {
+    var p = clamp((ts - (c.t0 || 0)) / 420, 0, 1);
+    if (p <= 0) return;
+    var a = 0.22 * p;
+    var apex = P(c.x, c.y, c.z);
+    var corners = [[-1.7, -1.7], [1.7, -1.7], [1.7, 1.7], [-1.7, 1.7]].map(function (q) {
+      return P(q[0], q[1], 0);
+    });
+
+    ctx.save();
+    ctx.setLineDash([4, 5]);
+    ctx.strokeStyle = "rgba(129,140,248," + a + ")";
+    ctx.lineWidth = 1;
+    for (var i = 0; i < corners.length; i++) {
+      ctx.beginPath();
+      ctx.moveTo(apex.x, apex.y);
+      ctx.lineTo(corners[i].x, corners[i].y);
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    for (var j = 0; j < corners.length; j++) {
+      if (j === 0) ctx.moveTo(corners[j].x, corners[j].y);
+      else ctx.lineTo(corners[j].x, corners[j].y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+
+    drawBox({ x: c.x, y: c.y, z: c.z, w: 0.34, d: 0.26, h: 0.22, c: [228, 14, 62] }, p);
+  }
+
+  function drawLight(l, ts) {
+    var p = clamp((ts - (l.t0 || 0)) / 420, 0, 1);
+    if (p <= 0) return;
+    var pt = P(l.x, l.y, l.z);
+    var rad = Math.max(16, S * 0.42);
+    var g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, rad);
+    g.addColorStop(0, "rgba(253,230,138," + (0.5 * p) + ")");
+    g.addColorStop(0.35, "rgba(251,191,36," + (0.14 * p) + ")");
+    g.addColorStop(1, "rgba(251,191,36,0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, rad, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "rgba(254,243,199," + (0.9 * p) + ")";
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, 2.6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function shadow(x, y, r) {
+    var p = P(x, y, 0);
+    var rad = Math.max(8, r * S * 1.15);
+    var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad);
+    g.addColorStop(0, "rgba(0,0,0,0.55)");
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.scale(1, 0.5);
+    ctx.translate(-p.x, -p.y);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, rad, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function render(ts) {
+    if (W > 0 && H > 0) {
+      ctx.clearRect(0, 0, W, H);
+
+      var bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, "#0d1524");
+      bg.addColorStop(1, "#080d16");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      // floor grid
+      ctx.lineWidth = 1;
+      for (var i = -3; i <= 3; i++) {
+        var a = P(i, -3, 0), b = P(i, 3, 0);
+        var c = P(-3, i, 0), d = P(3, i, 0);
+        ctx.strokeStyle = (i === 0) ? "rgba(99,102,241,0.30)" : "rgba(148,163,184,0.11)";
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(c.x, c.y); ctx.lineTo(d.x, d.y); ctx.stroke();
+      }
+
+      // contact shadows
+      for (var k = 0; k < scene.objects.length; k++) {
+        var o = scene.objects[k];
+        var r = (o.type === "sphere") ? o.r * 1.4 : Math.max(o.w, o.d) * 0.7;
+        shadow(o.x, o.y, r);
+      }
+
+      // depth-sorted objects
+      var items = scene.objects.map(function (ob) {
+        return { d: ob.x + ob.y, f: function () { drawObj(ob, ts); } };
+      });
+      items.sort(function (m, n) { return m.d - n.d; });
+      for (var q = 0; q < items.length; q++) items[q].f();
+
+      if (scene.camera) drawCamera(scene.camera, ts);
+      for (var L = 0; L < scene.lights.length; L++) drawLight(scene.lights[L], ts);
+    }
+    requestAnimationFrame(render);
+  }
+
+  /* ---------------- chat UI ---------------- */
+  var chatEl = $("#chat");
+  var inputEl = $("#prompt");
+  var sendBtn = $("#sendBtn");
+
+  function scrollChat() {
+    chatEl.scrollTop = chatEl.scrollHeight + 400;
+  }
+
+  function addUser(text) {
+    var w = document.createElement("div");
+    w.className = "msg-in flex justify-end";
+    w.innerHTML = '<div class="max-w-[86%] rounded-2xl rounded-br-sm bg-slate-900 px-3.5 py-2 text-[13px] leading-snug text-white">' + esc(text) + "</div>";
+    chatEl.appendChild(w);
+    scrollChat();
+  }
+
+  function addAssistant(html) {
+    var w = document.createElement("div");
+    w.className = "msg-in flex items-start gap-2";
+    w.innerHTML =
+      '<div class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 text-[10px] font-bold text-white">&#9672;</div>' +
+      '<div class="max-w-[86%] rounded-2xl rounded-tl-sm bg-slate-100 px-3.5 py-2 text-[13px] leading-relaxed text-slate-700">' + html + "</div>";
+    chatEl.appendChild(w);
+    scrollChat();
+  }
+
+  var ownerClass = {
+    Manager: "bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200",
+    Worker: "bg-slate-100 text-slate-600 ring-1 ring-slate-200",
+    Reviewer: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
+  };
+
+  function addToolCard(tool, detail, owner) {
+    var w = document.createElement("div");
+    w.className = "msg-in flex items-start gap-2";
+    var badge = owner
+      ? '<span class="rounded px-1.5 py-0.5 text-[10px] font-medium ' + (ownerClass[owner] || ownerClass.Worker) + '">' + esc(owner) + "</span>"
+      : "";
+    w.innerHTML =
+      '<div class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white text-[11px] text-slate-500 ring-1 ring-slate-200">&#9881;</div>' +
+      '<div class="max-w-[86%] rounded-2xl rounded-tl-sm border border-slate-200 bg-white px-3 py-2 shadow-sm">' +
+        '<div class="flex flex-wrap items-center gap-1.5">' +
+          '<code class="text-[11px] font-semibold tracking-tight text-indigo-600">' + esc(tool) + "</code>" +
+          badge +
+          '<span data-st class="ml-auto text-[10px] font-medium text-amber-500">running</span>' +
+        "</div>" +
+        '<div class="mt-0.5 text-[12px] leading-snug text-slate-600">' + esc(detail) + "</div>" +
+      "</div>";
+    chatEl.appendChild(w);
+    scrollChat();
+    var st = w.querySelector("[data-st]");
+    return {
+      done: function () {
+        if (!st) return;
+        st.textContent = "done";
+        st.className = "ml-auto text-[10px] font-medium text-emerald-500";
+      }
+    };
+  }
+
+  function askApproval(question) {
+    return new Promise(function (resolve) {
+      var w = document.createElement("div");
+      w.className = "msg-in flex items-start gap-2";
+      w.innerHTML =
+        '<div class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-amber-100 text-[11px] font-bold text-amber-700">!</div>' +
+        '<div class="max-w-[86%] rounded-2xl rounded-tl-sm border border-amber-200 bg-amber-50 px-3 py-2">' +
+          '<div class="text-[11px] font-semibold uppercase tracking-wide text-amber-800">Approval needed</div>' +
+          '<div class="mt-1 text-[12px] leading-snug text-amber-900">' + esc(question) + "</div>" +
+          '<div class="mt-2 flex gap-2">' +
+            '<button type="button" data-yes class="rounded-md bg-slate-900 px-2.5 py-1 text-[11px] font-medium text-white transition hover:bg-slate-800">Import</button>' +
+            '<button type="button" data-no class="rounded-md bg-white px-2.5 py-1 text-[11px] font-medium text-slate-600 ring-1 ring-slate-300 transition hover:bg-slate-50">Skip</button>' +
+          "</div>" +
+        "</div>";
+      chatEl.appendChild(w);
+      scrollChat();
+      var yes = w.querySelector("[data-yes]");
+      var no = w.querySelector("[data-no]");
+      function lock() {
+        [yes, no].forEach(function (b) {
+          b.disabled = true;
+          b.classList.add("opacity-40", "cursor-not-allowed");
+        });
+      }
+      yes.addEventListener("click", function () { lock(); yes.textContent = "Imported"; resolve(true); });
+      no.addEventListener("click", function () { lock(); no.textContent = "Skipped"; resolve(false); });
+    });
+  }
+
+  /* ---------------- scene chrome ---------------- */
+  function updateChrome() {
+    var n = scene.objects.length;
+    $("#objCount").textContent = n + " object" + (n === 1 ? "" : "s") + " \u00b7 " + scene.lights.length + " light" + (scene.lights.length === 1 ? "" : "s");
+
+    var list = $("#objList");
+    list.innerHTML = "";
+    scene.objects.forEach(function (o) {
+      var s = document.createElement("span");
+      s.className = "shrink-0 rounded-md bg-white/5 px-2 py-0.5 ring-1 ring-white/10";
+      s.textContent = o.name || o.type;
+      list.appendChild(s);
+    });
+    if (scene.camera) {
+      var sc = document.createElement("span");
+      sc.className = "shrink-0 rounded-md bg-indigo-500/10 px-2 py-0.5 text-indigo-300 ring-1 ring-indigo-400/20";
+      sc.textContent = "Camera";
+      list.appendChild(sc);
+    }
+    if (scene.lights.length) {
+      var sl = document.createElement("span");
+      sl.className = "shrink-0 rounded-md bg-amber-400/10 px-2 py-0.5 text-amber-300 ring-1 ring-amber-400/20";
+      sl.textContent = scene.lights.length + " lights";
+      list.appendChild(sl);
+    }
+  }
+
+  function flashViewport() {
+    var f = $("#vpFlash");
+    if (!f) return;
+    f.className = "pointer-events-none absolute inset-0 ring-2 ring-inset ring-indigo-400/80 transition-all duration-200";
+    setTimeout(function () {
+      f.className = "pointer-events-none absolute inset-0 ring-2 ring-inset ring-indigo-400/0 transition-all duration-700";
+    }, 340);
+  }
+
+  /* ---------------- workflows ---------------- */
+  var WF = {
+    product: {
+      prompt: "Create a simple product-display scene with a pedestal, a camera and three lights. Give the pedestal a matte blue material.",
+      build: function () {
+        return [
+          { tool: "get_scene_info", owner: "Manager", ms: 520,
+            detail: function () { return scene.objects.length + " object(s) \u00b7 " + scene.lights.length + " light(s) \u00b7 reading bounds and camera"; } },
+          { tool: "delete_object", ms: 380, detail: "Clearing default cube and stale lights",
+            apply: function () { scene.objects = []; scene.lights = []; scene.camera = null; } },
+          { tool: "add_cube", ms: 520, detail: "Pedestal \u00b7 1.7 \u00d7 1.7 \u00d7 0.8 m at origin",
+            apply: function () { addObj({ type: "box", name: "Pedestal", x: 0, y: 0, z: 0, w: 1.7, d: 1.7, h: 0.8, c: [214, 26, 48] }); } },
+          { tool: "set_material", ms: 460, detail: "Pedestal \u2192 \u201cMatte Blue\u201d, roughness 0.85",
+            apply: function () { var p = findByName("Pedestal"); if (p) p.c = [216, 46, 44]; } },
+          { tool: "add_cube", ms: 480, detail: "Hero product \u00b7 0.55 m, seated on pedestal",
+            apply: function () { addObj({ type: "box", name: "Hero", x: 0, y: 0, z: 0.8, w: 0.55, d: 0.55, h: 0.62, c: [32, 72, 58] }); } },
+          { tool: "add_light", ms: 300, detail: "Key \u00b7 900 W area, front-left, 45\u00b0 high",
+            apply: function () { scene.lights.push({ x: -1.7, y: -1.5, z: 2.2, t0: now() }); } },
+          { tool: "add_light", ms: 280, detail: "Fill \u00b7 350 W, camera-right",
+            apply: function () { scene.lights.push({ x: 1.9, y: -1.2, z: 1.4, t0: now() }); } },
+          { tool: "add_light", ms: 280, detail: "Rim \u00b7 600 W, behind subject",
+            apply: function () { scene.lights.push({ x: 0.2, y: 2.0, z: 1.9, t0: now() }); } },
+          { tool: "add_camera", ms: 420, detail: "50 mm \u00b7 3/4 view, subject centered",
+            apply: function () { scene.camera = { x: 2.5, y: -2.6, z: 1.9, t0: now() }; } },
+          { tool: "viewport_screenshot", owner: "Reviewer", ms: 520, detail: "Preview captured and sent back for verification",
+            apply: function () { flashViewport(); } },
+          { assistant: "Scene is built: matte-blue pedestal, hero object, three-point lighting and a framed camera. Try \u201cduplicate into a row of five\u201d or \u201cmake everything clay\u201d to keep going." }
+        ];
+      }
+    },
+
+    row: {
+      prompt: "Duplicate the selected object into a neatly spaced row of five and show the viewport.",
+      build: function () {
+        var xs = [-1.2, -0.6, 0, 0.6, 1.2];
+        var steps = [
+          { tool: "get_scene_info", owner: "Manager", ms: 460,
+            detail: function () { return scene.objects.length + " object(s) selected \u00b7 spacing target 0.6 m"; } },
+          { tool: "delete_object", ms: 340, detail: "Clearing scene before the array",
+            apply: function () { scene.objects = []; } },
+          { tool: "add_cube", ms: 440, detail: "Source object \u00b7 0.6 m at x = \u22121.2",
+            apply: function () { addObj({ type: "box", name: "Copy 1", x: xs[0], y: 0, z: 0, w: 0.6, d: 0.6, h: 0.6, c: [268, 52, 62] }); } }
+        ];
+        for (var i = 1; i < 5; i++) {
+          (function (i) {
+            steps.push({
+              tool: "duplicate_object", ms: 300,
+              detail: "Copy " + (i + 1) + " of 5 \u2192 x = " + xs[i].toFixed(1) + " m",
+              apply: function () {
+                addObj({ type: "box", name: "Copy " + (i + 1), x: xs[i], y: 0, z: 0, w: 0.6, d: 0.6, h: 0.6, c: [268 - i * 10, 52, 62] });
+              }
+            });
+          })(i);
+        }
+        steps.push({
+          tool: "viewport_screenshot", owner: "Reviewer", ms: 500, detail: "Framing the row and capturing the viewport",
+          apply: function () { scene.camera = { x: 2.8, y: -2.9, z: 2.0, t0: now() }; flashViewport(); }
+        });
+        steps.push({ assistant: "Five copies at exactly 0.6 m spacing, all linked to the source object. Change the source and the whole row follows." });
+        return steps;
+      }
+    },
+
+    clay: {
+      prompt: "Give everything a matte clay material and soften the lighting.",
+      build: function () {
+        return [
+          { tool: "get_scene_info", owner: "Manager", ms: 440,
+            detail: function () { return scene.objects.length + " object(s) \u00b7 " + scene.lights.length + " light(s) \u00b7 scanning materials"; } },
+          { tool: "set_material", ms: 620,
+            detail: function () { return "Applying \u201cWarm Clay\u201d to " + scene.objects.length + " object(s)"; },
+            apply: function () {
+              if (scene.objects.length === 0) addObj({ type: "box", name: "Form", x: 0, y: 0, z: 0, w: 1.2, d: 1.2, h: 1.2, c: [26, 38, 56] });
+              scene.objects.forEach(function (o) { o.c = [26, 38, 56]; });
+            } },
+          { tool: "set_material", ms: 460, detail: "Roughness 0.95 \u00b7 specular 0.1 \u00b7 clearcoat off",
+            apply: function () { scene.objects.forEach(function (o) { o.c = [28, 42, 58]; }); } },
+          { tool: "add_light", ms: 340, detail: "Large soft fill above the subject, 1200 W",
+            apply: function () { scene.lights.push({ x: 0.4, y: -0.2, z: 2.6, t0: now() }); } },
+          { tool: "viewport_screenshot", owner: "Reviewer", ms: 480, detail: "Verifying the new look against the brief",
+            apply: function () { flashViewport(); } },
+          { assistant: "Everything is warm clay now with a big soft fill \u2014 the hard specular highlights are gone. Say the word if you want it cooler or glossier." }
+        ];
+      }
+    },
+
+    asset: {
+      prompt: "Find an appropriate Poly Haven asset for this scene and ask before importing it.",
+      build: function () {
+        return [
+          { tool: "get_scene_info", owner: "Manager", ms: 460,
+            detail: function () { return "Reading scene scale and available pedestal area"; } },
+          { tool: "search_assets", ms: 780, detail: "Poly Haven \u00b7 query \u201cstudio marble prop\u201d \u00b7 3 results, best fit scored 0.91" },
+          { type: "approval", question: "Import \u201cStudio Marble Sphere\u201d (2.4 MB \u00b7 CC0) and place it on the pedestal?" },
+          { tool: "execute_code", ms: 700, detail: "bpy: import glTF, scale to 0.34 m, snap to pedestal top",
+            apply: function () {
+              var ped = findByName("Pedestal");
+              var baseZ = ped ? 0.8 : 0.0;
+              addObj({ type: "sphere", name: "Marble prop", x: 0, y: 0, z: baseZ + 0.34, r: 0.34, c: [210, 16, 84] });
+            } },
+          { tool: "viewport_screenshot", owner: "Reviewer", ms: 520, detail: "Checking contact shadows and scale",
+            apply: function () { flashViewport(); } },
+          { assistant: "Imported and seated on the pedestal. It sits inside its own collection, so you can delete it in one click if the client disagrees." }
+        ];
+      }
+    }
+  };
+
+  /* ---------------- runner ---------------- */
+  var running = false;
+  var mode = "single";
+
+  function setBusy(b) {
+    sendBtn.disabled = b;
+    inputEl.disabled = b;
+    sendBtn.textContent = b ? "\u2026" : "Run";
+  }
+
+  function detect(text) {
+    var t = String(text || "").toLowerCase();
+    if (/(row|duplicate|array|copies|five)/.test(t)) return "row";
+    if (/(clay|material|matte|restyle|recolou?r|colour)/.test(t)) return "clay";
+    if (/(asset|poly ?haven|import|download|model)/.test(t)) return "asset";
+    return "product";
+  }
+
+  async function run(key, userText) {
+    if (running) return;
+    var wf = WF[key] || WF.product;
+    running = true;
+    setBusy(true);
+
+    addUser(userText || wf.prompt);
+    await sleep(320);
+
+    var steps = wf.build();
+    var team = (mode === "team");
+
+    if (team) {
+      addAssistant("<b>Manager</b> \u00b7 breaking the request into assignments and acceptance criteria.");
+      await sleep(300);
+    }
+
+    for (var i = 0; i < steps.length; i++) {
+      var st = steps[i];
+
+      if (st.type === "approval") {
+        var ok = await askApproval(st.question);
+        if (!ok) {
+          addAssistant("Skipped the import \u2014 nothing was added to the scene. The scene state is unchanged.");
+          running = false;
+          setBusy(false);
+          return;
+        }
+        await sleep(160);
+        continue;
+      }
+
+      if (st.assistant) {
+        addAssistant(st.assistant);
+        await sleep(140);
+        continue;
+      }
+
+      var owner = team ? (st.owner || (i === 0 ? "Manager" : "Worker")) : null;
+      var detail = (typeof st.detail === "function") ? st.detail() : st.detail;
+      var card = addToolCard(st.tool, detail, owner);
+      await sleep(st.ms || 400);
+      if (typeof st.apply === "function") {
+        try { st.apply(); } catch (e) { /* never break the demo */ }
+      }
+      card.done();
+      updateChrome();
+      await sleep(90);
+    }
+
+    if (team) {
+      var review = addToolCard("review_result", "Reviewer inspected the result \u00b7 0 blocking findings", "Reviewer");
+      await sleep(540);
+      review.done();
+      addAssistant("<b>Reviewer</b> approved the result. Nothing was written to disk \u2014 save when you are happy.");
+    }
+
+    running = false;
+    setBusy(false);
+  }
+
+  /* ---------------- wiring ---------------- */
+  $("#composer").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (running) return;
+    var text = inputEl.value.trim();
+    if (!text) return;
+    run(detect(text), text);
+  });
+
+  $$("[data-wf]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (running) { toast("One workflow at a time \u2014 hang on."); return; }
+      var key = btn.getAttribute("data-wf");
+      var wf = WF[key];
+      if (!wf) return;
+      inputEl.value = wf.prompt;
+      var demo = document.getElementById("demo");
+      if (demo && demo.getBoundingClientRect().top < -200) {
+        demo.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      setTimeout(function () { run(key, wf.prompt); }, 260);
+    });
+  });
+
+  $$("#modeToggle [data-mode]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      mode = btn.getAttribute("data-mode");
+      $$("#modeToggle [data-mode]").forEach(function (b) {
+        var on = (b === btn);
+        b.classList.toggle("bg-white", on);
+        b.classList.toggle("text-slate-900", on);
+        b.classList.toggle("shadow-sm", on);
+        b.classList.toggle("text-slate-500", !on);
+      });
+      toast(mode === "team"
+        ? "Team chain on: manager, workers and a reviewer will report in the log."
+        : "Single assistant on: one model handles every step.");
+    });
+  });
+
+  $$("[data-waitlist]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      toast(btn.getAttribute("data-waitlist") || "Demo only \u2014 nothing was sent.");
+    });
+  });
+
+  $("#waitlistForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var em = $("#email");
+    var v = (em.value || "").trim();
+    if (!v) return;
+    toast("Thanks! You're on the waitlist (demo only \u2014 nothing was sent).");
+    em.value = "";
+  });
+
+  /* ---------------- boot ---------------- */
+  addAssistant("Hi \u2014 I can inspect this scene, build objects, edit materials and run multi-step workflows. Type a request or pick a workflow below. <span class=\"text-[11px] text-slate-400\">Sample data \u00b7 no Blender connected</span>");
+
+  resizeCanvas();
+  updateChrome();
+  requestAnimationFrame(render);
+
+  if (window.ResizeObserver && $("#vpWrap")) {
+    var ro = new ResizeObserver(function () { resizeCanvas(); });
+    ro.observe($("#vpWrap"));
+  } else {
+    window.addEventListener("resize", resizeCanvas);
+  }
+  window.addEventListener("load", resizeCanvas);
+  setTimeout(resizeCanvas, 120);
+})();
+</script>
+</body>
+</html>
