@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-22",
+ "headline": "Switch 2 模拟器 21 天破万星，但别做产品",
+ "summary_md": "**What it is.** Lichii (zortos293/Lichii) is a C++ Nintendo Switch and Switch 2 emulator that started 21 days ago and already has ~10k stars. It is a fork that builds on Eglantine, Eden, yuzu and Sudachi, per the README, and the author calls it \"VERY experimental.\" You need your own dumped games, keys and firmware — none of that ships with it.\n\n**Why it's taking off.** A Switch 2 emulator that runs at all is news, and a working build spreads fast on X and Reddit. The repo also ships a small idea that matters: a community compatibility site (lichii.zortos.me) where players post per-game reports, plus an in-client \"Submit compatibility report\" flow that pre-fills your machine, GPU and settings but uploads nothing without consent. That's the right instinct for emulator tooling — real hardware data, opt-in.\n\n**Where the product opportunity is.** Not in the emulator itself. GPL-3.0 inherited from yuzu/Eden, plus Nintendo's well-documented litigation history against emulator projects, makes paid or closed distribution a bad bet. The safer angle is the layer around it: a launcher that detects your games, picks sane graphics and controller defaults, shows a compatibility score before you spend 20 minutes booting, and links to the exact build that works. Charge for convenience and support, not for the emulator. Even then, treat it as a content play first and a product second.",
+ "title_en": "Lichii: an experimental Switch 2 emulator, 10k stars in 3 weeks",
+ "tagline_en": "An open-source emulator that lets you play your Switch 2 games on a PC.",
+ "pick": {
+  "full_name": "zortos293/Lichii",
+  "url": "https://github.com/zortos293/Lichii",
+  "description": "VERY experimental Nintendo Switch 2 emulator",
+  "license": "GPL-3.0",
+  "stars": 10025,
+  "daily_rate": 477.4,
+  "category": "生活娱乐",
+  "one_liner": "一个能在电脑上玩 Switch 2 游戏的开源模拟器",
+  "one_liner_en": "An open-source emulator that runs Nintendo Switch 2 games on your PC",
+  "reason": "话题性与演示性极强，但 GPL-3.0 与任天堂法务风险几乎封死了收费路径，更适合做内容而非产品。",
+  "content": 9.0,
+  "startup": 5.45,
+  "final": 7.08,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-22-zortos293-lichii",
+ "top": [
+  {
+   "full_name": "zortos293/Lichii",
+   "url": "https://github.com/zortos293/Lichii",
+   "one_liner": "一个能在电脑上玩 Switch 2 游戏的开源模拟器",
+   "reason": "话题性与演示性极强，但 GPL-3.0 与任天堂法务风险几乎封死了收费路径，更适合做内容而非产品。",
+   "one_liner_en": "An open-source emulator that runs Nintendo Switch 2 games on your PC",
+   "content": 9.0,
+   "startup": 5.45,
+   "final": 7.08,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "sybil-solutions/skill-distill",
+   "url": "https://github.com/sybil-solutions/skill-distill",
+   "one_liner": "把强模型的成功对话自动蒸馏成让小模型也能照做的技能说明书",
+   "reason": "思路新颖、痛点真实、MIT 宽松，但安装重、演示偏工程化，适合先做内容再做托管化产品。",
+   "one_liner_en": "Turn a strong model's successful session into a skill an open-weight model can follow",
+   "content": 6.33,
+   "startup": 7.35,
+   "final": 6.57,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "obra/superpowers",
+   "url": "https://github.com/obra/superpowers",
+   "one_liner": "让AI编程助手先想清楚再动手的开发方法说明书",
+   "reason": "传播性强、痛点真实、MIT 干净，但作者已占住商业位，包装成独立产品空间有限，更适合做深度内容选题。",
+   "one_liner_en": "A skills pack that teaches coding agents to plan before they code",
+   "content": 7.33,
+   "startup": 7.15,
+   "final": 6.42,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "EL4CTEO/fast-anything",
+   "url": "https://github.com/EL4CTEO/fast-anything",
+   "one_liner": "只把应用里最慢的5%函数用Rust重写，自动验证结果一致再替换",
+   "reason": "点子和叙事都很强，AI代理加Rust热点移植踩中当下话题，许可证宽松且可演示；但项目过新、收益证据单一、个人付费意愿弱，适合先做内容再验证团队级订阅",
+   "one_liner_en": "Profile your app, port only the slowest 5% to Rust, and prove it behaves the same",
+   "content": 7.0,
+   "startup": 6.85,
+   "final": 6.29,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "ccch1mneyyy/dsh-Go",
+   "url": "https://github.com/ccch1mneyyy/dsh-Go",
+   "one_liner": "在手机上跑 AI 编程助手，还能远程遥控电脑",
+   "reason": "话题度和包装空间很强，移动端跑编码代理确实抓人；但 AGPL 加第三方依赖，把商业化天花板和授权风险都压得很低。",
+   "one_liner_en": "Run an AI coding agent on your phone, or remote-control your PC",
+   "content": 7.67,
+   "startup": 5.95,
+   "final": 6.23,
+   "category_penalty": 0.8
+  }
+ ]
+}

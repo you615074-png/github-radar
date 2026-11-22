@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lichii One — Switch 2 games on your PC, in one click</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#0b0f14; -webkit-font-smoothing: antialiased; }
+  ::selection { background:#34d399; color:#08111a; }
+  #cmp { touch-action: pan-y; cursor: ew-resize; user-select:none; }
+  .low-layer { filter: blur(1.6px) saturate(.8) brightness(.92) contrast(.95); }
+  .low-layer .only-high { display:none; }
+  #toast {
+    position: fixed; left: 50%; bottom: 26px; z-index: 60;
+    transform: translateX(-50%) translateY(16px); opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease;
+    background:#0f172a; border:1px solid rgba(255,255,255,.14); color:#e2e8f0;
+    padding: 12px 18px; border-radius: 12px; font-size: 14px; line-height:1.3;
+    box-shadow: 0 18px 40px rgba(0,0,0,.55); max-width: 90vw; text-align: center;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .chip { transition: background .15s ease, border-color .15s ease, color .15s ease; }
+  .chip:hover { background: rgba(255,255,255,.07) !important; }
+</style>
+</head>
+<body class="text-slate-200">
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- Header -->
+<header class="sticky top-0 z-40 border-b border-white/5 bg-[#0b0f14]/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <div class="flex items-center gap-2.5">
+      <span class="grid h-8 w-8 place-items-center rounded-lg text-base" style="background:linear-gradient(135deg,#34d399,#38bdf8)">🎮</span>
+      <span class="font-semibold tracking-tight text-white">Lichii<span class="text-emerald-400">One</span></span>
+      <span class="hidden rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-slate-400 sm:inline">unofficial concept</span>
+    </div>
+    <nav class="hidden items-center gap-6 text-sm text-slate-400 md:flex">
+      <a href="#demo" class="hover:text-white">Demo</a>
+      <a href="#compat" class="hover:text-white">Compatibility</a>
+      <a href="#pricing" class="hover:text-white">Pricing</a>
+    </nav>
+    <a href="#demo" class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-slate-900 hover:bg-slate-200">Try the demo</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:pt-20">
+  <div class="max-w-3xl">
+    <p class="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
+      One-click launcher for the Lichii emulator · sample data
+    </p>
+    <h1 class="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl">
+      Your Switch 2 library,<br />
+      <span class="bg-clip-text text-transparent" style="background-image:linear-gradient(90deg,#34d399,#38bdf8)">in one click on PC.</span>
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg text-slate-400">
+      Lichii One scans your game folder, picks the graphics and controller settings for each title,
+      and shows the community compatibility score before you press Play. No config files, no guesswork.
+    </p>
+    <div class="mt-7 flex flex-wrap gap-3">
+      <a href="#demo" class="rounded-xl bg-emerald-400 px-5 py-2.5 font-semibold text-slate-900 hover:bg-emerald-300">Scan my library</a>
+      <a href="#compat" class="rounded-xl border border-white/15 px-5 py-2.5 text-slate-200 hover:bg-white/5">See compatibility</a>
+    </div>
+  </div>
+</section>
+
+<!-- Core demo: library scan -->
+<section id="demo" class="mx-auto max-w-6xl px-5 pb-6">
+  <div class="rounded-2xl border border-white/10 bg-[#0f151c] p-5 sm:p-7">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <h2 class="text-xl font-semibold text-white">Library scan</h2>
+      <span class="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-400">Sample data</span>
+    </div>
+
+    <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+      <div class="flex-1">
+        <label for="path" class="text-xs uppercase tracking-widest text-slate-500">Games folder</label>
+        <input id="path" value="D:\Games\Switch2" spellcheck="false"
+               class="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 font-mono text-sm text-slate-100 focus:border-emerald-400/60 focus:outline-none" />
+      </div>
+      <button id="scan" class="rounded-xl bg-emerald-400 px-5 py-3 font-semibold text-slate-900 hover:bg-emerald-300 sm:self-end">Scan library</button>
+    </div>
+
+    <div class="mt-3 h-1 overflow-hidden rounded bg-white/5">
+      <div id="scanbar" class="h-full w-0 bg-emerald-400 transition-all duration-1000 ease-out"></div>
+    </div>
+    <p id="scanstatus" class="mt-2 text-xs text-slate-500">6 titles detected · 4 auto-configured · last scan 2 minutes ago</p>
+
+    <div id="chips" class="mt-5 flex gap-2 overflow-x-auto pb-1"></div>
+  </div>
+</section>
+
+<!-- Core demo: comparison -->
+<section class="mx-auto max-w-6xl px-5 pb-16">
+  <div class="grid gap-5 lg:grid-cols-3">
+    <div class="rounded-2xl border border-white/10 bg-[#0f151c] p-4 sm:p-5 lg:col-span-2">
+      <div class="mb-3 flex items-center justify-between gap-3">
+        <div>
+          <div class="text-xs uppercase tracking-widest text-slate-500">Rendering comparison</div>
+          <div id="cmpTitle" class="font-semibold text-white">Turbo Kart Grand Prix</div>
+        </div>
+        <span class="whitespace-nowrap rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-400">Drag the handle</span>
+      </div>
+
+      <div id="cmp" class="relative overflow-hidden rounded-xl" style="aspect-ratio:16/9; --split:50%">
+        <div id="scenePC" class="absolute inset-0"></div>
+        <div id="sceneHH" class="low-layer absolute inset-0" style="clip-path:inset(0 calc(100% - var(--split)) 0 0)"></div>
+
+        <div class="pointer-events-none absolute left-3 top-3 rounded-full border border-white/10 bg-black/55 px-2.5 py-1 text-[11px] text-slate-200 sm:text-xs">Handheld · 720p · 30 FPS</div>
+        <div class="pointer-events-none absolute right-3 top-3 rounded-full border border-emerald-300/30 bg-emerald-500/20 px-2.5 py-1 text-[11px] text-emerald-100 sm:text-xs">PC · Lichii One · 4K · 60 FPS</div>
+
+        <div class="pointer-events-none absolute bottom-3 left-3 rounded-full border border-white/10 bg-black/55 px-2.5 py-1 text-[10px] text-slate-300">Sample render</div>
+
+        <div class="pointer-events-none absolute bottom-0 top-0 w-px bg-white/80" style="left:var(--split)"></div>
+        <div class="pointer-events-none absolute top-1/2 -ml-5 -mt-5 grid h-10 w-10 place-items-center rounded-full bg-white text-slate-900 shadow-lg" style="left:var(--split)">⇄</div>
+      </div>
+
+      <p class="mt-3 text-xs leading-relaxed text-slate-500">
+        Left: handheld profile — native 720p, 30 FPS, battery saver. Right: desktop profile auto-configured by Lichii One —
+        4K, 60 FPS, FSR 3. Illustrative render, sample data.
+      </p>
+    </div>
+
+    <aside class="rounded-2xl border border-white/10 bg-[#0f151c] p-5">
+      <div id="stats"></div>
+    </aside>
+  </div>
+</section>
+
+<!-- Compatibility -->
+<section id="compat" class="mx-auto max-w-6xl px-5 pb-16">
+  <div class="mb-5 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h2 class="text-2xl font-semibold text-white">Community compatibility</h2>
+      <p class="mt-1 text-sm text-slate-400">Crowd-sourced reports from the Lichii compatibility site. Sample data.</p>
+    </div>
+    <input id="search" placeholder="Search games or genres…" spellcheck="false"
+           class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-slate-100 focus:border-emerald-400/60 focus:outline-none sm:w-64" />
+  </div>
+  <div id="list" class="divide-y divide-white/5 overflow-hidden rounded-2xl border border-white/10"></div>
+</section>
+
+<!-- Scenarios -->
+<section class="mx-auto max-w-6xl px-5 pb-16">
+  <h2 class="text-2xl font-semibold text-white">Three ways people actually use it</h2>
+  <div class="mt-6 grid gap-5 md:grid-cols-3">
+    <div class="rounded-2xl border border-white/10 bg-[#0f151c] p-6">
+      <div class="text-2xl">🖥️</div>
+      <h3 class="mt-3 font-semibold text-white">Couch, but in 4K</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">Plug the laptop into the TV. Lichii One switches to the 4K preset and maps two Pro Controllers in the right order — no menus.</p>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-[#0f151c] p-6">
+      <div class="text-2xl">✈️</div>
+      <h3 class="mt-3 font-semibold text-white">Travel light</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">Leave the console at home. Your own dumped library and saves live on the laptop, and the launcher rebuilds the profile on any machine.</p>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-[#0f151c] p-6">
+      <div class="text-2xl">🌐</div>
+      <h3 class="mt-3 font-semibold text-white">Borrow the crowd's settings</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">Before you press Play you see the score and the exact preset other players used to hit a stable frame rate on similar hardware.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing + waitlist -->
+<section id="pricing" class="mx-auto max-w-6xl px-5 pb-16">
+  <h2 class="text-2xl font-semibold text-white">Simple pricing</h2>
+  <p class="mt-1 text-sm text-slate-400">The emulator stays free and open source. Pro is for the convenience layer. Sample data.</p>
+
+  <div class="mt-6 grid gap-5 md:grid-cols-2">
+    <div class="rounded-2xl border border-white/10 bg-[#0f151c] p-6">
+      <div class="text-sm font-medium text-slate-400">Free</div>
+      <div class="mt-2 text-4xl font-semibold text-white">$0</div>
+      <div class="mt-1 text-xs text-slate-500">forever, GPL-3.0</div>
+      <ul class="mt-5 space-y-2.5 text-sm text-slate-300">
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Library scan and auto-config presets</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Community compatibility scores</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Unlimited games, unlimited profiles</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Manual override for every setting</li>
+      </ul>
+    </div>
+    <div class="rounded-2xl border border-emerald-400/40 bg-emerald-400/[0.06] p-6">
+      <div class="flex items-center justify-between">
+        <div class="text-sm font-medium text-emerald-300">Lichii One Pro</div>
+        <span class="rounded-full bg-emerald-400 px-2 py-0.5 text-[11px] font-semibold text-slate-900">Coming soon</span>
+      </div>
+      <div class="mt-2 text-4xl font-semibold text-white">$4.99<span class="text-base font-normal text-slate-400">/mo</span></div>
+      <div class="mt-1 text-xs text-slate-400">or $39 / year — save 35%</div>
+      <ul class="mt-5 space-y-2.5 text-sm text-slate-200">
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Cloud sync for presets and controller maps</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Shared shader caches — less first-lap stutter</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Early build channel for new fixes</li>
+        <li class="flex gap-2"><span class="text-emerald-400">✓</span> Priority triage on your compatibility reports</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-6 flex flex-col items-stretch gap-3 rounded-2xl border border-white/10 bg-[#0f151c] p-6 sm:flex-row sm:items-end">
+    <div class="flex-1">
+      <label for="email" class="text-xs uppercase tracking-widest text-slate-500">Email</label>
+      <input id="email" value="player@example.com" spellcheck="false"
+             class="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-slate-100 focus:border-emerald-400/60 focus:outline-none" />
+    </div>
+    <button id="waitlist" class="rounded-xl bg-white px-5 py-3 font-semibold text-slate-900 hover:bg-slate-200">Join the waitlist</button>
+  </div>
+  <p class="mt-2 text-xs text-slate-500">Demo only — nothing is submitted or stored.</p>
+</section>
+
+<!-- Legal note -->
+<section class="mx-auto max-w-6xl px-5 pb-14">
+  <div class="rounded-2xl border border-white/10 bg-black/30 p-5 text-xs leading-relaxed text-slate-500">
+    <strong class="text-slate-300">What Lichii One does not ship:</strong>
+    no games, no title keys, no firmware. Use games and system files you dumped from a console you own,
+    where permitted by applicable law. Compatibility and performance vary by game, hardware and driver.
+    Not affiliated with Nintendo.
+  </div>
+</section>
+
+<footer class="border-t border-white/5 py-8">
+  <div class="mx-auto max-w-6xl space-y-2 px-5 text-xs text-slate-500">
+    <p>Concept demo, based on the open-source project <a class="text-emerald-400 hover:underline" href="https://github.com/zortos293/Lichii">zortos293/Lichii</a> (GPL-3.0), unofficial, all data is sample data</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var GAMES = [
+    {
+      id: "turbo", title: "Turbo Kart Grand Prix", genre: "Racing", mode: "kart",
+      status: "Perfect", score: 4.8, reports: 1284, res: "4K · 2160p", fps: 60, up: "FSR 3 · Balanced",
+      note: "Locked 60 FPS after the first shader pass. Minor bloom flicker in photo mode.",
+      c: { sky1: "#ffd79b", sky2: "#ff8f6b", sun: "#fff4c9", m1: "#8f6b9c", m2: "#5c4270", g1: "#2a2440", g2: "#141026", hero: "#38bdf8", accent: "#fbbf24" }
+    },
+    {
+      id: "void", title: "Void Runner", genre: "Shooter", mode: "ship",
+      status: "Perfect", score: 4.9, reports: 2411, res: "4K · 2160p", fps: 120, up: "DLSS · Quality",
+      note: "120 FPS on a mid-range GPU. Motion blur is off by default for clarity.",
+      c: { sky1: "#0f2350", sky2: "#3b1a63", sun: "#a5b4fc", m1: "#2b3f7a", m2: "#1b2450", g1: "#0b1226", g2: "#05070f", hero: "#a78bfa", accent: "#22d3ee" }
+    },
+    {
+      id: "astral", title: "Astral Blade II", genre: "Action RPG", mode: "hero",
+      status: "Great", score: 4.4, reports: 906, res: "1440p · 60", fps: 60, up: "FSR 3 · Quality",
+      note: "Stable 60 FPS in towns. A brief stutter the first time a new area loads.",
+      c: { sky1: "#c7e9ff", sky2: "#8fd3c7", sun: "#ffffff", m1: "#3f6f6a", m2: "#274b4f", g1: "#1b3a2f", g2: "#0d1c19", hero: "#f472b6", accent: "#facc15" }
+    },
+    {
+      id: "rally", title: "Rally Storm", genre: "Racing", mode: "kart",
+      status: "Great", score: 4.2, reports: 641, res: "4K · 2160p", fps: 60, up: "FSR 3 · Balanced",
+      note: "Rain stages need the GPU accuracy: normal preset to avoid ghosting.",
+      c: { sky1: "#9fb4c7", sky2: "#5b7183", sun: "#e2e8f0", m1: "#3d5163", m2: "#2a3a49", g1: "#1d2730", g2: "#0c1218", hero: "#f97316", accent: "#38bdf8" }
+    },
+    {
+      id: "pixel", title: "Pixel Kingdom Deluxe", genre: "Platformer", mode: "hero",
+      status: "Playable", score: 3.9, reports: 388, res: "1080p · 60", fps: 60, up: "None · native",
+      note: "Textures flicker on some AMD drivers. Cap the frame rate to 60 to avoid speedups.",
+      c: { sky1: "#bfe3ff", sky2: "#e8f4ff", sun: "#fffbe6", m1: "#6dc27a", m2: "#3f8a52", g1: "#2f6b3a", g2: "#173a20", hero: "#ef4444", accent: "#facc15" }
+    },
+    {
+      id: "skies", title: "Skyshard Legends", genre: "Adventure", mode: "hero",
+      status: "Boots only", score: 2.1, reports: 157, res: "—", fps: 0, up: "Not configured",
+      note: "Reaches the title screen, then crashes. A community patch is expected in build 91.",
+      c: { sky1: "#3b2b4d", sky2: "#7a4a6b", sun: "#f0abfc", m1: "#4a3560", m2: "#2c1f3d", g1: "#1a1226", g2: "#0a0710", hero: "#64748b", accent: "#94a3b8" }
+    }
+  ];
+
+  function $(id) { return document.getElementById(id); }
+
+  function statusStyle(s) {
+    if (s === "Perfect") return { bg: "rgba(16,185,129,.15)", fg: "#34d399" };
+    if (s === "Great") return { bg: "rgba(56,189,248,.15)", fg: "#38bdf8" };
+    if (s === "Playable") return { bg: "rgba(251,191,36,.15)", fg: "#fbbf24" };
+    return { bg: "rgba(244,63,94,.15)", fg: "#fb7185" };
+  }
+
+  /* ---------- scene ---------- */
+
+  function heroShape(g) {
+    var c = g.c;
+    if (g.mode === "ship") {
+      return '<g transform="translate(400 372)">' +
+        '<ellipse cx="0" cy="52" rx="62" ry="11" fill="#000" opacity="0.3"/>' +
+        '<path d="M-62,8 L38,-20 L62,12 L-18,32 Z" fill="' + c.hero + '"/>' +
+        '<path d="M-62,8 L-104,24 L-58,30 Z" fill="' + c.accent + '"/>' +
+        '<circle cx="16" cy="4" r="9" fill="#0b0f14" opacity="0.55"/>' +
+        '<g class="only-high"><path d="M-104,24 L-152,38 L-104,42 Z" fill="' + c.accent + '" opacity="0.45"/></g>' +
+        '</g>';
+    }
+    if (g.mode === "hero") {
+      return '<g transform="translate(400 366)">' +
+        '<ellipse cx="0" cy="46" rx="44" ry="10" fill="#000" opacity="0.35"/>' +
+        '<rect x="18" y="-30" width="7" height="72" rx="3.5" fill="#e5e7eb"/>' +
+        '<rect x="10" y="-4" width="22" height="6" rx="3" fill="' + c.accent + '"/>' +
+        '<rect x="-17" y="-20" width="34" height="62" rx="13" fill="' + c.hero + '"/>' +
+        '<circle cx="0" cy="-38" r="17" fill="#f6d3a8"/>' +
+        '<path d="M-18,-40 a18,18 0 0 1 36,0 z" fill="' + c.accent + '" opacity="0.9"/>' +
+        '</g>';
+    }
+    return '<g transform="translate(400 366)">' +
+      '<ellipse cx="0" cy="34" rx="72" ry="13" fill="#000" opacity="0.35"/>' +
+      '<rect x="-58" y="-2" width="116" height="26" rx="12" fill="' + c.hero + '"/>' +
+      '<circle cx="-38" cy="26" r="16" fill="#1b1b22"/><circle cx="38" cy="26" r="16" fill="#1b1b22"/>' +
+      '<circle cx="-38" cy="26" r="7" fill="#9ca3af"/><circle cx="38" cy="26" r="7" fill="#9ca3af"/>' +
+      '<circle cx="0" cy="-16" r="17" fill="#f6d3a8"/>' +
+      '<ellipse cx="0" cy="-26" rx="19" ry="9" fill="' + c.accent + '"/>' +
+      '</g>';
+  }
+
+  function sceneSVG(g, uid) {
+    var c = g.c;
+    return '<svg viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block" aria-hidden="true">' +
+      '<defs>' +
+        '<linearGradient id="sky' + uid + '" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="' + c.sky1 + '"/><stop offset="1" stop-color="' + c.sky2 + '"/>' +
+        '</linearGradient>' +
+        '<radialGradient id="sun' + uid + '">' +
+          '<stop offset="0" stop-color="' + c.sun + '" stop-opacity="0.95"/>' +
+          '<stop offset="1" stop-color="' + c.sun + '" stop-opacity="0"/>' +
+        '</radialGradient>' +
+        '<linearGradient id="gr' + uid + '" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="' + c.g1 + '"/><stop offset="1" stop-color="' + c.g2 + '"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="rd' + uid + '" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="' + c.accent + '" stop-opacity="0.5"/>' +
+          '<stop offset="1" stop-color="' + c.accent + '" stop-opacity="0.05"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+
+      '<rect width="800" height="450" fill="url(#sky' + uid + ')"/>' +
+      '<circle cx="630" cy="118" r="175" fill="url(#sun' + uid + ')" class="only-high"/>' +
+      '<circle cx="630" cy="118" r="44" fill="' + c.sun + '" opacity="0.95"/>' +
+
+      '<g fill="#ffffff" opacity="0.16">' +
+        '<ellipse cx="140" cy="92" rx="70" ry="17"/><ellipse cx="192" cy="80" rx="46" ry="13"/>' +
+        '<ellipse cx="470" cy="62" rx="54" ry="14"/>' +
+      '</g>' +
+
+      '<polygon points="-40,298 170,138 380,298" fill="' + c.m1 + '" opacity="0.9"/>' +
+      '<polygon points="240,298 470,108 700,298" fill="' + c.m1 + '"/>' +
+      '<polygon points="560,298 720,174 880,298" fill="' + c.m2 + '"/>' +
+      '<polygon points="-60,298 60,214 220,298" fill="' + c.m2 + '"/>' +
+
+      '<g class="only-high" fill="#ffffff" opacity="0.5">' +
+        '<polygon points="440,140 470,108 500,140"/>' +
+        '<polygon points="150,168 170,138 192,168"/>' +
+      '</g>' +
+
+      '<rect y="296" width="800" height="154" fill="url(#gr' + uid + ')"/>' +
+      '<rect y="294" width="800" height="4" fill="' + c.accent + '" opacity="0.55" class="only-high"/>' +
+
+      '<path d="M400,292 L560,450 L240,450 Z" fill="url(#rd' + uid + ')"/>' +
+      '<g stroke="#ffffff" stroke-opacity="0.35" stroke-width="6" stroke-dasharray="20 26">' +
+        '<line x1="400" y1="296" x2="400" y2="450"/>' +
+      '</g>' +
+
+      '<g class="only-high" fill="#ffffff" opacity="0.7">' +
+        '<circle cx="120" cy="180" r="2.6"/><circle cx="212" cy="122" r="1.8"/>' +
+        '<circle cx="520" cy="196" r="2.2"/><circle cx="686" cy="248" r="1.6"/>' +
+        '<circle cx="330" cy="88" r="2"/><circle cx="600" cy="70" r="1.7"/>' +
+      '</g>' +
+
+      heroShape(g) +
+
+      '<g opacity="0.85">' +
+        '<rect x="22" y="378" width="152" height="48" rx="10" fill="#000" opacity="0.4"/>' +
+        '<text x="38" y="400" fill="#ffffff" font-family="system-ui,sans-serif" font-size="13" opacity="0.85">LAP 2 / 3</text>' +
+        '<text x="38" y="417" fill="#ffffff" font-family="system-ui,sans-serif" font-size="13" opacity="0.55">01:24.55</text>' +
+      '</g>' +
+      '</svg>';
+  }
+
+  /* ---------- comparison slider ---------- */
+
+  var cmpEl = $("cmp");
+  var layerPC = $("scenePC");
+  var layerHH = $("sceneHH");
+  var current = GAMES[0];
+  var dragging = false;
+
+  function setSplit(clientX) {
+    var r = cmpEl.getBoundingClientRect();
+    if (!r.width) return;
+    var p = ((clientX - r.left) / r.width) * 100;
+    if (p < 0) p = 0;
+    if (p > 100) p = 100;
+    cmpEl.style.setProperty("--split", p + "%");
+  }
+
+  cmpEl.addEventListener("pointerdown", function (e) {
+    dragging = true;
+    try { cmpEl.setPointerCapture(e.pointerId); } catch (err) {}
+    setSplit(e.clientX);
+  });
+  cmpEl.addEventListener("pointermove", function (e) {
+    if (dragging) setSplit(e.clientX);
+  });
+  cmpEl.addEventListener("pointerup", function (e) {
+    dragging = false;
+    try { cmpEl.releasePointerCapture(e.pointerId); } catch (err) {}
+  });
+  cmpEl.addEventListener("pointercancel", function () { dragging = false; });
+
+  /* ---------- stats panel ---------- */
+
+  function statRow(label, value) {
+    return '<div class="flex items-start justify-between gap-3 py-2">' +
+      '<span class="text-slate-500">' + label + '</span>' +
+      '<span class="text-right font-medium text-slate-200">' + value + '</span>' +
+      '</div>';
+  }
+
+  function renderStats() {
+    var g = current;
+    var st = statusStyle(g.status);
+    var pct = Math.max(4, Math.round((g.score / 5) * 100));
+
+    $("stats").innerHTML =
+      '<div class="flex items-start justify-between gap-3">' +
+        '<div>' +
+          '<div class="text-[11px] uppercase tracking-widest text-slate-500">Auto-config preset</div>' +
+          '<div class="mt-0.5 font-semibold text-white">' + g.title + '</div>' +
+          '<div class="text-xs text-slate-500">' + g.genre + '</div>' +
+        '</div>' +
+        '<span class="whitespace-nowrap rounded-full px-2.5 py-1 text-[11px]" style="background:' + st.bg + ';color:' + st.fg + '">' + g.status + '</span>' +
+      '</div>' +
+
+      '<div class="mt-4 divide-y divide-white/5 text-sm">' +
+        statRow("Render resolution", g.fps ? g.res : "—") +
+        statRow("Frame target", g.fps ? g.fps + " FPS" : "—") +
+        statRow("Upscaling", g.up) +
+        statRow("Handheld profile", "720p · 30 FPS · battery saver") +
+        statRow("Controller", "Auto-mapped · Pro Controller") +
+      '</div>' +
+
+      '<div class="mt-4">' +
+        '<div class="mb-1 flex justify-between text-[11px] text-slate-400">' +
+          '<span>Community score</span>' +
+          '<span>' + g.score.toFixed(1) + ' / 5 · ' + g.reports.toLocaleString() + ' reports</span>' +
+        '</div>' +
+        '<div class="h-2 overflow-hidden rounded-full bg-white/10">' +
+          '<div class="h-full rounded-full" style="width:' + pct + '%;background:linear-gradient(90deg,#34d399,#38bdf8)"></div>' +
+        '</div>' +
+        '<p class="mt-3 text-xs leading-relaxed text-slate-500">' + g.note + '</p>' +
+      '</div>' +
+
+      '<button id="apply" class="mt-5 w-full rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-900 hover:bg-slate-200">Apply recommended settings</button>' +
+      '<p class="mt-2 text-center text-[11px] text-slate-600">Sample data — nothing is downloaded or changed.</p>';
+  }
+
+  $("stats").addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest("#apply")) {
+      toast("Preset applied to " + current.title + " (demo)");
+    }
+  });
+
+  /* ---------- selection ---------- */
+
+  function selectGame(id) {
+    var g = null;
+    for (var i = 0; i < GAMES.length; i++) { if (GAMES[i].id === id) { g = GAMES[i]; break; } }
+    if (!g) g = GAMES[0];
+    current = g;
+
+    layerPC.innerHTML = sceneSVG(g, "pc");
+    layerHH.innerHTML = sceneSVG(g, "hh");
+    $("cmpTitle").textContent = g.title;
+
+    var chips = document.querySelectorAll("[data-chip]");
+    for (var j = 0; j < chips.length; j++) {
+      var on = chips[j].getAttribute("data-chip") === g.id;
+      chips[j].style.borderColor = on ? "rgba(52,211,153,.8)" : "rgba(255,255,255,.08)";
+      chips[j].style.background = on ? "rgba(52,211,153,.12)" : "rgba(255,255,255,.03)";
+      chips[j].style.color = on ? "#a7f3d0" : "#cbd5e1";
+    }
+
+    renderStats();
+  }
+
+  /* ---------- chips ---------- */
+
+  function renderChips() {
+    var html = "";
+    for (var i = 0; i < GAMES.length; i++) {
+      html += '<button data-chip="' + GAMES[i].id + '" class="chip whitespace-nowrap rounded-xl border px-3.5 py-2 text-sm" ' +
+        'style="border-color:rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#cbd5e1">' + GAMES[i].title + '</button>';
+    }
+    $("chips").innerHTML = html;
+  }
+
+  $("chips").addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("[data-chip]") : null;
+    if (b) selectGame(b.getAttribute("data-chip"));
+  });
+
+  /* ---------- compatibility list ---------- */
+
+  function renderList() {
+    var q = ($("search").value || "").trim().toLowerCase();
+    var items = [];
+    for (var i = 0; i < GAMES.length; i++) {
+      var g = GAMES[i];
+      if (!q || g.title.toLowerCase().indexOf(q) !== -1 || g.genre.toLowerCase().indexOf(q) !== -1) items.push(g);
+    }
+
+    if (!items.length) {
+      $("list").innerHTML = '<div class="p-6 text-sm text-slate-500">No sample titles match that search.</div>';
+      return;
+    }
+
+    var html = "";
+    for (var k = 0; k < items.length; k++) {
+      var it = items[k];
+      var st = statusStyle(it.status);
+      var bar = Math.max(4, Math.round((it.score / 5) * 100));
+      html +=
+        '<div class="flex flex-col gap-3 p-4 sm:flex-row sm:items-center">' +
+          '<div class="min-w-0 flex-1">' +
+            '<div class="flex flex-wrap items-center gap-2">' +
+              '<span class="font-medium text-white">' + it.title + '</span>' +
+              '<span class="rounded-full px-2 py-0.5 text-[11px]" style="background:' + st.bg + ';color:' + st.fg + '">' + it.status + '</span>' +
+            '</div>' +
+            '<div class="mt-1 text-xs text-slate-500">' + it.genre + ' · ' + it.reports.toLocaleString() + ' community reports</div>' +
+          '</div>' +
+          '<div class="w-full sm:w-44">' +
+            '<div class="mb-1 flex justify-between text-[11px] text-slate-400"><span>Community score</span><span>' + it.score.toFixed(1) + '/5</span></div>' +
+            '<div class="h-1.5 overflow-hidden rounded-full bg-white/10">' +
+              '<div class="h-full rounded-full" style="width:' + bar + '%;background:linear-gradient(90deg,#34d399,#38bdf8)"></div>' +
+            '</div>' +
+          '</div>' +
+          '<button data-preview="' + it.id + '" class="self-start whitespace-nowrap rounded-lg border border-white/10 px-3.5 py-2 text-sm text-slate-200 hover:bg-white/5 sm:self-auto">Preview</button>' +
+        '</div>';
+    }
+    $("list").innerHTML = html;
+  }
+
+  $("search").addEventListener("input", renderList);
+
+  $("list").addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest("[data-preview]") : null;
+    if (!b) return;
+    selectGame(b.getAttribute("data-preview"));
+    $("demo").scrollIntoView({ behavior: "smooth", block: "start" });
+    toast("Loaded " + current.title + " into the comparison");
+  });
+
+  /* ---------- library scan ---------- */
+
+  $("scan").addEventListener("click", function () {
+    var btn = $("scan");
+    var bar = $("scanbar");
+    var status = $("scanstatus");
+    var path = ($("path").value || "").trim() || "D:\\Games\\Switch2";
+
+    btn.disabled = true;
+    btn.textContent = "Scanning…";
+    btn.classList.add("opacity-60");
+
+    bar.style.width = "0%";
+    void bar.offsetWidth;
+    bar.style.width = "100%";
+
+    status.textContent = "Reading " + path + " …";
+    status.style.color = "#38bdf8";
+
+    setTimeout(function () {
+      btn.disabled = false;
+      btn.textContent = "Scan library";
+      btn.classList.remove("opacity-60");
+      status.textContent = GAMES.length + " titles found · 4 auto-configured · sample scan complete";
+      status.style.color = "#64748b";
+      toast(GAMES.length + " games detected — 4 presets applied (demo)");
+    }, 1200);
+  });
+
+  /* ---------- waitlist ---------- */
+
+  $("waitlist").addEventListener("click", function () {
+    var v = ($("email").value || "").trim();
+    if (!v || v.indexOf("@") === -1) {
+      toast("Enter an email address to continue (demo)");
+      return;
+    }
+    toast("You are on the waitlist — demo only, nothing was sent.");
+  });
+
+  /* ---------- toast ---------- */
+
+  var toastTimer = null;
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2800);
+  }
+
+  /* ---------- init ---------- */
+
+  renderChips();
+  selectGame("turbo");
+  renderList();
+})();
+</script>
+</body>
+</html>

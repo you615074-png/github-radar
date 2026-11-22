@@ -197,6 +197,12 @@
    "full_name": "bookwjitchieni1986/blender-ai-mcp-addon",
    "category": "AI应用",
    "final": 7.65
+  },
+  {
+   "date": "2026-11-22",
+   "full_name": "zortos293/Lichii",
+   "category": "生活娱乐",
+   "final": 7.08
   }
  ],
  "top": {
@@ -204,11 +210,9 @@
   "storytold/wordcraft": "2026-11-05",
   "KnifeLemon/Filee": "2026-10-28",
   "cloudflare/security-audit-skill": "2026-11-07",
-  "pengchujin/aerial-tv": "2026-10-22",
   "simbasjungles/free-my-tv": "2026-11-04",
   "Gathin23/cleanyourtv": "2026-10-30",
   "tangency-labs/solidcraft": "2026-11-07",
-  "ikow/php2shell-poc": "2026-10-22",
   "storytold/photocraft": "2026-10-23",
   "debpalash/VoiceStudio": "2026-10-23",
   "heygen-com/hyperframes": "2026-10-23",
@@ -239,7 +243,7 @@
   "Jakeschincariol/day-trader-skill": "2026-11-14",
   "Leonxlnx/taste-skill": "2026-10-29",
   "pbakaus/impeccable": "2026-11-06",
-  "obra/superpowers": "2026-10-29",
+  "obra/superpowers": "2026-11-22",
   "t3dotgg/tstack": "2026-10-29",
   "ly05010419/MacNativeGames": "2026-11-07",
   "storytold/gridcraft": "2026-10-30",
@@ -323,70 +327,13 @@
   "danielwh2/sprite-stacking": "2026-11-21",
   "HKUDS/CLI-Anything": "2026-11-21",
   "R0Y00/Xbox2Windows": "2026-11-21",
-  "huami1314/GestaltX": "2026-11-21"
+  "huami1314/GestaltX": "2026-11-21",
+  "zortos293/Lichii": "2026-11-22",
+  "sybil-solutions/skill-distill": "2026-11-22",
+  "EL4CTEO/fast-anything": "2026-11-22",
+  "ccch1mneyyy/dsh-Go": "2026-11-22"
  },
  "scores": {
-  "deepseek-ai/DeepInfer": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "DeepSeek 官方开源的大模型推理引擎，让 V4.1 模型跑得更快更省",
-    "one_liner_en": "DeepSeek's official open-source inference engine that serves its V4.1 model faster and cheaper",
-    "target_user": "跑自建 LLM 推理的 ML 平台团队和 GPU 云服务商（美国/全球），需 SM100 或昇腾 950 硬件",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 3,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 2,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 2
-    },
-    "product_idea": "没有可行的独立产品形态，只能做托管推理 API 或围绕部署的咨询",
-    "demo_idea": "网页上无法演示，最多放一张吞吐对比表",
-    "attack_tool": false,
-    "red_flags": [
-     "大厂（DeepSeek）官方基础设施，个人难以在其上做差异化产品",
-     "只支持 DeepSeek-V4.1-Flash 单一模型，且仅限 SM100 / 昇腾 950 等顶级硬件",
-     "README 自述还需 KV cache、PD 分离、负载均衡等大量未开源组件，开箱不可用",
-     "主要面向中国厂商硬件的项目，与美国市场契合度低"
-    ],
-    "reason": "话题热度高但属于大厂底层基础设施，门槛极高、无法包装成消费级产品，做内容可讲、做产品基本无空间。"
-   }
-  },
-  "anhao/ai-pose-gallery-zh": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "中文 AI 绘画姿势、服装、人像参考图库，带合成工作台",
-    "one_liner_en": "A Chinese-language AI art reference library for poses, outfits, and portraits with a character studio.",
-    "target_user": "使用 ComfyUI 或 Midjourney 生成人物图的 AI 绘画爱好者、插画师和自媒体创作者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 7,
-     "wow": 6,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 2,
-     "demoability": 8
-    },
-    "product_idea": "做成在线 AI 角色参考库加生成工作台，用订阅制让用户选姿势、服装、人像后直接出图。",
-    "demo_idea": "在网页上随机抽一个人像、一套服装和一个姿势，自动拼成参考图并调 API 生成成品角色图。",
-    "attack_tool": false,
-    "red_flags": [
-     "许可证为 NOASSERTION，图片素材来自第三方作者，有版权风险；仓库自称是中文翻译整理存档，禁止转卖。",
-     "图库包含 18+ 素体和内衣内容，在面向美国市场时需要处理内容分级和支付渠道问题",
-     "核心价值是图库数据本身，属于资源镜像，不是原创技术",
-     "中文元数据对英文市场吸引力有限，需要英文化才有商业价值",
-     "阿里、字节等国内模型直连对海外用户价值低"
-    ],
-    "reason": "图库规模和 ComfyUI 集成有一定需求，适合做内容；但版权不清晰、素材非原创、商业化要靠订阅且风险高，包装空间有限。"
-   }
-  },
   "heydamir/unslop": {
    "date": "2026-11-16",
    "v": 3,
@@ -480,35 +427,35 @@
    }
   },
   "zortos293/Lichii": {
-   "date": "2026-11-14",
+   "date": "2026-11-22",
    "v": 3,
    "eval": {
     "category": "生活娱乐",
-    "one_liner": "实验性开源 Switch 2 模拟器，可在电脑上跑 Switch 游戏",
-    "one_liner_en": "An experimental open-source Nintendo Switch 2 emulator for PC",
-    "target_user": "美国/全球的 PC 玩家、复古游戏爱好者、想玩 Switch 独占游戏但不愿买主机的人",
+    "one_liner": "一个能在电脑上玩 Switch 2 游戏的开源模拟器",
+    "one_liner_en": "An open-source emulator that runs Nintendo Switch 2 games on your PC",
+    "target_user": "全球拥有 Switch 2 实体游戏、希望在 PC 上高帧率或高清游玩的玩家（英语市场）",
     "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 3,
-     "monetization": 2,
+     "topicality": 9,
+     "accessibility": 9,
+     "wow": 9,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 3,
      "license_safety": 4,
-     "demoability": 5
+     "demoability": 7
     },
-    "product_idea": "做成一键安装的图形化模拟器客户端，内置兼容性列表和配置向导，按游戏推荐最优设置",
-    "demo_idea": "网页播放同一款 Switch 游戏在模拟器上的实机运行画面，并对比帧率与画质选项",
+    "product_idea": "一键安装的模拟器启动器：自动检测游戏、自动配置图形与手柄、社区兼容性评分",
+    "demo_idea": "网页左右对比：同一款 Switch 2 游戏在掌机画面与 PC 4K 60 帧画面的差异，配兼容性列表",
     "attack_tool": false,
     "red_flags": [
-     "README 明确警告存在冒充官网的钓鱼/恶意软件站点，品牌信任风险高",
-     "项目基于 yuzu/Sudachi 分叉，而 yuzu 已被任天堂诉讼和解，法律风险极大",
-     "模拟器涉及游戏 ROM、密钥和固件，版权合规风险高",
-     "项目仅 13 天、用 AI 工具开发，极其实验性，稳定性差",
-     "捐赠走加密货币，且明示不换取任何服务，商业化路径基本被封死",
-     "GPL-3.0 且无任何官方商业分发渠道"
+     "GPL-3.0：继承 yuzu、Eden 代码，商用闭源或订阅收费的法律空间极小",
+     "Nintendo 对模拟器诉讼历史悠久（Yuzu 案），分发和变现都有高法律风险",
+     "依赖用户自行 dump 游戏、密钥与固件，普通用户门槛高",
+     "官方下载网址被仿冒并挂马，品牌信任脆弱",
+     "项目自称 VERY experimental、创建仅 21 天，稳定性与维护持续性存疑",
+     "捐款走加密货币，商业化路径回避了主流支付"
     ],
-    "reason": "话题性极强、易懂，但法律与版权风险致命，几乎没有可持续商业化空间，只适合做爆款内容而非产品。"
+    "reason": "话题性与演示性极强，但 GPL-3.0 与任天堂法务风险几乎封死了收费路径，更适合做内容而非产品。"
    }
   },
   "sherlock-project/sherlock": {
@@ -755,338 +702,33 @@
    }
   },
   "deepseek-ai/chat-demo": {
-   "date": "2026-11-14",
+   "date": "2026-11-22",
    "v": 3,
    "eval": {
     "category": "AI应用",
-    "one_liner": "DeepSeek 官方开源的浏览器端 AI 聊天界面",
-    "one_liner_en": "DeepSeek's official open-source chat UI that runs in your browser",
-    "target_user": "想自托管 AI 聊天界面、避免锁定在 ChatGPT 上的开发者与小团队，以及愿带自己 API key 的普通用户",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 6,
-     "pain": 5,
-     "packaging_room": 2,
-     "monetization": 2,
-     "license_safety": 10,
-     "demoability": 9
-    },
-    "product_idea": "几乎无法做成创业产品，它本身就是大厂官方成品，最多做私有部署托管或企业版。",
-    "demo_idea": "网页直接打开官方 demo，输入 API key 对话，展示流式回复、思维链、附件与语音。",
-    "attack_tool": false,
-    "red_flags": [
-     "DeepSeek 官方大厂项目，个人无法在其上做出差异化产品",
-     "功能已完整成熟，无安装门槛，packaging_room 极低",
-     "商业化基本不存在：免费、官方维护、依赖第三方 API key",
-     "创建仅 1 天近千星，热度疑似营销驱动，话题生命周期短"
-    ],
-    "reason": "传播性不错、易演示、MIT 协议安全，但它是大厂官方成品，几乎没包装和变现空间，只适合当内容素材而非创业项目。"
-   }
-  },
-  "AIRzZ90/study-materials-fork": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "基于 Tauri 的跨平台影音聚合播放器",
-    "one_liner_en": "A cross-platform desktop video aggregator and player built with Tauri",
-    "target_user": "想要一站式聚合在线视频源的极客用户（但本项目禁商用，几乎无法变现）",
-    "scores": {
-     "topicality": 5,
-     "accessibility": 6,
-     "wow": 4,
-     "pain": 4,
-     "packaging_room": 3,
-     "monetization": 1,
-     "license_safety": 1,
-     "demoability": 4
-    },
-    "product_idea": "无明显可包装空间：核心价值在于抓取第三方片源，法律与许可双重受限，难以产品化。",
-    "demo_idea": "网页演示一个仿播放器 UI，用公开示例 HLS 流播放，展示跨平台界面与播放交互。",
-    "attack_tool": false,
-    "red_flags": [
-     "PolyForm 非商业许可证，明确禁止任何商业用途、广告和付费，无法变现",
-     "属于视频聚合/抓取第三方片源类项目，存在版权与 DMCA 风险，美国市场不可碰",
-     "是 fork 的转载仓库，并非原始项目，star 增长异常（1 天 499）疑似刷量",
-     "README 自述不再维护数据获取链路，功能可持续性差",
-     "依赖外部站点接口，随时失效"
-    ],
-    "reason": "非商业许可加版权灰区，无法变现也不宜做产品；仅有一点技术演示价值。"
-   }
-  },
-  "google/elephant-goldfish-model": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "让AI先帮你写设计文档，再用'失忆'的AI挑刺",
-    "one_liner_en": "Draft specs with your AI agent, then have a fresh-context AI review them.",
-    "target_user": "用 Claude Code / Codex 写代码的欧美软件工程师和工程团队，尤其是看重设计与规范流程的资深开发者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 3,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "把插件流程做成网页版规格评审工作台，粘贴文档即得盲评清单",
-    "demo_idea": "左边贴一段设计文档，右边'金鱼'AI秒出盲点与矛盾清单，附带修复建议",
-    "attack_tool": false,
-    "red_flags": [
-     "Google 官方项目，自带分发渠道，个人难以差异化",
-     "本质是提示词/技能集合，依赖宿主 agent 能力，产品壁垒低",
-     "已有 egm.dev 官方站点，商业化空间被官方占据",
-     "目标用户已付费给 Claude Code 等，单独收费意愿存疑"
-    ],
-    "reason": "话题热度高、痛点真实，但大厂官方项目、包装空间与商业化空间都受限，更适合做内容而非创业。"
-   }
-  },
-  "faizfahmi77/ScanDot": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "用安卓手机扫描现实物体并生成可旋转查看的3D点云。",
-    "one_liner_en": "Scan real objects with an Android phone and view them as 3D point clouds.",
-    "target_user": "需要快速扫描实物用于可视化展示的3D爱好者、小型电商卖家、AR/模型创作者",
+    "one_liner": "DeepSeek 官方出的网页版聊天界面，填自己的 API key 就能用",
+    "one_liner_en": "DeepSeek's official open-source chat UI that runs in your browser with your own API key",
+    "target_user": "想自建私有 AI 聊天界面的开发者、小型团队（美国/全球英文市场）",
     "scores": {
      "topicality": 6,
-     "accessibility": 8,
-     "wow": 6,
-     "pain": 4,
-     "packaging_room": 7,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做成一个安卓App：用手机扫描实物，一键生成可分享的3D点云链接，支持网页嵌入。",
-    "demo_idea": "网页里放一段已扫描好的点云，用户拖动旋转缩放，旁边播放手机扫描过程的录屏。",
-    "attack_tool": false,
-    "red_flags": [
-     "扫描依赖ARCore Depth，兼容机型有限",
-     "原型阶段，结果有空洞、漂移和噪声，非可用网格模型",
-     "点云生成无法纯前端演示，demoability受限",
-     "手机端不做视频摄影测量，工作流割裂",
-     "3D扫描消费级付费意愿弱，变现路径不清"
-    ],
-    "reason": "易懂、有视觉惊喜、MIT许可干净，但原型粗糙、设备受限、付费场景弱，更适合做内容而非直接产品化。"
-   }
-  },
-  "DevedevT/FFmpeg-GUI-Editor-Windows": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "给 FFmpeg 套上图形界面的免费视频剪辑工具，下载即用",
-    "one_liner_en": "A free, no-install GUI for FFmpeg that trims, crops, and converts video on Windows",
-    "target_user": "美国/全球的普通 Windows 用户、内容创作者、需要批量压缩或转换视频的小团队",
-    "scores": {
-     "topicality": 5,
-     "accessibility": 8,
+     "accessibility": 7,
      "wow": 4,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 6,
-     "demoability": 6
-    },
-    "product_idea": "做成免安装的网页版或桌面版 FFmpeg 前端，提供一键无损剪切、压缩、转 GIF，并内置上传直链",
-    "demo_idea": "网页里拖入一段视频，30 秒内无损裁切并压缩出适合发 Discord 的小文件，前后体积对比明显",
-    "attack_tool": false,
-    "red_flags": [
-     "README 写 GPL v3，仓库元数据却标 MIT，许可证自相矛盾，商用有风险",
-     "依赖 libvlc.dll，并非纯单文件，分发和信任有门槛",
-     "已存在 HandBrake、Shutter Encoder、LosslessCut 等成熟英文竞品，差异化空间小",
-     "541 star 与 1 天创建时间不符，疑似刷星或搬运",
-     "VB.NET Windows 独占，跨平台和移动端受限"
-    ],
-    "reason": "门槛低、易懂，但竞品强、许可混乱、商业化路径弱，适合做内容而非产品。"
-   }
-  },
-  "tailscale/tailcat": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "不用装 Tailscale 也能打洞直连的 netcat",
-    "one_liner_en": "Netcat over WireGuard NAT traversal, no account or root needed",
-    "target_user": "全球自托管开发者、SRE、家庭实验室爱好者和需要临时安全传文件的运维人员",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 5,
-     "wow": 6,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "做网页版一次性安全传文件/开端口小工具，扫码即用，Stripe 按次或订阅收费",
-    "demo_idea": "两个浏览器标签页互传文件与文本，展示 WireGuard 端到端加密和即时地址",
-    "attack_tool": false,
-    "red_flags": [
-     "大厂 Tailscale 官方项目，个人难在其上做差异化",
-     "依赖其免费限速 DERP 中继，自建 derper 有运维成本",
-     "CLI 已成熟、多包管理器覆盖，包装空间小",
-     "浏览器端仅 DERP 中继，无直连，隐私与性能受限"
-    ],
-    "reason": "官方开源、许可证干净且有网页 demo，适合做内容；但产品化空间被大厂自身产品挤压，商业化偏弱。"
-   }
-  },
-  "mromidev/claude-animated-shorts": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "用 Claude 在你的电脑上生成带 3D 场景的竖屏动画短片",
-    "one_liner_en": "A Claude skill that renders vertical animated story shorts with 2D characters in a 3D world",
-    "target_user": "做 YouTube Shorts / TikTok 的独立内容创作者和增长营销人员",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "做一个网页版工作室：用户输入主题，自动生成脚本、场景和配音，并提供一键导出竖屏视频",
-    "demo_idea": "在网页里输入一段故事梗概，30 秒内渲染出带镜头运动的 3D 卡通片段，并与参考帧对比",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖本地 Remotion + Node + ffmpeg，且 public 占 1.3GB，网页化和云端渲染的成本高",
-     "参考帧仅限风格研究，商用素材版权需自查",
-     "题材为历史故事，事实与配音内容需用户自备，生成质量不稳定",
-     "同类 AI 视频工具（Sora、Runway、Pika）竞争激烈，差异化依赖风格模板"
-    ],
-    "reason": "使用 MIT 许可证，近期热度增长快，动画风格模板可复用；但本地渲染与素材版权门槛高，需要做云端封装和模板订阅才能商业化。"
-   }
-  },
-  "opencoredev/islandcn": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "用 shadcn 一行命令装进 React 应用的灵动岛式顶部状态组件",
-    "one_liner_en": "An open-source Dynamic Island-style activity component for React, installed with shadcn.",
-    "target_user": "做 Web 应用 / SaaS 前端、追求精致交互的 React / Next.js 开发者与独立产品团队（美国与全球）",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 8,
-     "pain": 4,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 9
-    },
-    "product_idea": "做成可视化配置器 + 高级预设与模板库，免费开源核心、付费主题和团队授权",
-    "demo_idea": "网页里并排展示上传、计时、来电三种灵动岛动效，点击即可切换、拖拽调节参数",
-    "attack_tool": false,
-    "red_flags": [
-     "属于 UI 组件库/代码分发，shadcn 注册表模式天然免费，付费转化难",
-     "与 Apple Dynamic Island 外观/商标高度相似，存在 Apple 商标与商业外观风险",
-     "项目仅 1 天、340 星，作者与维护可持续性未知，录制素材未开源",
-     "痛点弱：是锦上添花的美化组件，不是刚需",
-     "二次分发即源码开放，难以阻止复制"
-    ],
-    "reason": "视觉惊艳、演示性极强，适合做内容爆款；但本质免费 UI 组件、痛点弱、变现天花板低，商标风险需留意。"
-   }
-  },
-  "Likely7/Veyra-NRVideo": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "Windows 上的实时 GPU 视频增强播放器，把游戏画面和视频变高清高帧率",
-    "one_liner_en": "Real-time GPU video enhancer for Windows that upscales and boosts FPS",
-    "target_user": "美国/全球的 PC 游戏玩家、直播主、视频发烧友，尤其是用 PS5/Xbox 采集卡或串流到 PC 的人群",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 6,
-     "license_safety": 4,
-     "demoability": 5
-    },
-    "product_idea": "做成 Windows 桌面应用，一键采集/播放实时超分补帧，预设分成游戏、直播、影视场景",
-    "demo_idea": "网页左右对比播放同一段游戏视频的原始与 120FPS 增强效果，附硬件加速指标",
-    "attack_tool": false,
-    "red_flags": [
-     "标题蹭 GTA6、DLSS 5 等未发布概念，涉嫌夸大宣传",
-     "GPL-3.0 许可，商业分发需开源衍生代码",
-     "依赖 NVIDIA/AMD 专有驱动与 SDK，跨平台和合规受限",
-     "需高性能显卡，普通用户门槛高，网页端无法真实演示",
-     "项目更新频繁，功能描述混乱，成熟度与稳定性存疑"
-    ],
-    "reason": "话题强、效果直观，但 GPL 与硬件依赖限制商业化和网页演示，蹭热点有风险，包装空间中等。"
-   }
-  },
-  "modelflare-ai/AnyModelBot": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "在自己电脑上跑的多模型AI机器人团队，能干活、有记忆",
-    "one_liner_en": "Your own local AI bots on any model, with memory and real computer actions",
-    "target_user": "美国/全球的独立开发者、重度AI用户、想把AI代理私有化部署在本地的小团队和中小企业主",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "本地优先的多模型AI代理桌面端，主打隐私+跨渠道接入+计算机操作，按量付费模型网关",
-    "demo_idea": "网页里让一个机器人读文件、跑命令、写结果到工作区，全程可视化步骤和审批卡片",
-    "attack_tool": false,
-    "red_flags": [
-     "官方商业项目+自带Modelflare付费网关，开源只是获客渠道，二次包装空间小",
-     "微信/飞书渠道在国内才成立，对英文市场无价值",
-     "商业化本质是转售模型API，毛利和差异化受制于上游",
-     "computer-use涉及本地权限，macOS/Windows权限与安全合规需说明"
-    ],
-    "reason": "话题性强、本地优先与多模型代理是热点，但本质是大厂式官方商业产品，付费闭环已由自家网关掌握，外部包装和变现空间有限"
-   }
-  },
-  "Verlintas/NOIR": {
-   "date": "2026-11-14",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "用电脑扫一遍你的安卓手机，查清哪些应用在偷偷外传你的数据",
-    "one_liner_en": "Plug in your Android phone and see which apps leak your data, with safe one-click fixes",
-    "target_user": "注重隐私的安卓用户、安全研究者、给员工做手机合规审计的小团队（美国/欧洲/全球英文市场）",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 5,
+     "pain": 3,
+     "packaging_room": 2,
+     "monetization": 2,
      "license_safety": 9,
      "demoability": 6
     },
-    "product_idea": "把 CLI 包成桌面 GUI 加一份可视化隐私报告，按设备订阅或一次性买断",
-    "demo_idea": "网页里用模拟手机数据展示仪表盘：权限、外传域名、数据流向连线图和一键回滚",
+    "product_idea": "没有包装空间——它本身就是 DeepSeek 官方做好的成品界面",
+    "demo_idea": "网页直接打开，填入 key 发一条消息，展示流式回复和思考过程",
     "attack_tool": false,
     "red_flags": [
-     "必须插真机 + 开 USB 调试，普通用户门槛高、演示只能靠模拟数据",
-     "adb 加 jadx 反编译，容易被滥用为窥探他人手机的工具，需强调自我审计",
-     "核心用户付费意愿偏弱，安卓隐私工具多为免费或开源",
-     "未来若做云服务需注意美国各州隐私法规与新加坡 PDPA"
+     "DeepSeek 官方项目，属于大厂出品，个人几乎无法在其上做出差异化",
+     "本质是官方聊天前端的演示，依赖国内公司 DeepSeek 的 API 与模型",
+     "功能完整、体验成熟，无安装门槛可言，包装空间极低",
+     "本身就是一个通用 ChatGPT 类界面，竞争极度饱和（ChatGPT/Claude/OpenWebUI/LobeChat）"
     ],
-    "reason": "话题性强、差评少、MIT 许可宽松，包装成可视化桌面工具的想象空间大；但门槛高、付费场景不清，商业化偏弱。"
+    "reason": "DeepSeek 官方聊天 demo，完成度高但正是缺点：大厂成品、无包装空间、依赖国内 API、赛道饱和，只适合作热点解读，不宜创业。"
    }
   },
   "ChromeDevTools/chrome-devtools-mcp": {
@@ -4401,6 +4043,478 @@
      "剪贴板管理器赛道已高度饱和：Ditto、ClipClip、Windows 自带历史、Paste、Maccy 都有成熟产品"
     ],
     "reason": "易懂、许可证友好，但赛道已经饱和，项目本身的真实性也存疑，商业化空间有限，更适合拿来做内容讨论，不太适合直接包装成产品。"
+   }
+  },
+  "antonhall-x91s9/discord-local-uncensored-ai-activity-utility-quest-auto-po": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "自动刷 Discord 任务和徽章的 Windows 工具",
+    "one_liner_en": "Auto-completes Discord quests and badges on Windows",
+    "target_user": "想快速刷 Discord 徽章/任务的年轻用户（但付费意愿低、平台封禁风险高）",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 6,
+     "wow": 3,
+     "pain": 3,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 3
+    },
+    "product_idea": "几乎没有正当产品空间，本质是违反平台规则的自动刷取脚本。",
+    "demo_idea": "无，展示即等于宣传绕过平台规则。",
+    "attack_tool": false,
+    "red_flags": [
+     "违反 Discord 服务条款，涉嫌绕过平台规则/自动化滥用",
+     "仓库名和行为像典型恶意引流/打包下载器，Release 二进制来源不可信",
+     "许可证 NOASSERTION，授权不明",
+     "1 天 342 星增长异常，疑似刷星或营销号仓库",
+     "topic 混入 deep-live-cam/facefusion/RVC 等无关热词，疑似 SEO 堆砌",
+     "商业模式只能在灰产/账号封禁风险下成立"
+    ],
+    "reason": "违反平台规则的自动刷取工具，授权不明、下载包可疑，无正当产品化与传播价值，只适合做风险科普反面案例。"
+   }
+  },
+  "omonkeyz/xbox-emulator": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "让 Xbox Series X|S 游戏在 PC 上运行的模拟器",
+    "one_liner_en": "An emulator that runs Xbox Series X|S games on PC",
+    "target_user": "拥有 Xbox 游戏转储文件、希望用 PC 高配硬件玩主机游戏的硬核玩家；在主机模拟社区活跃的英文用户",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "面向模拟器社区的开源运行时，提供一键安装器、游戏兼容性列表和配置向导",
+    "demo_idea": "网页展示 Fortnite 启动到登录大厅的录屏，以及着色器和 API 覆盖进度条",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖用户自备已解密的主机游戏转储（dump），分发和变现极易触碰版权、DMCA 问题",
+     "项目只有 1 天、1000 多 star，增长异常，真实性待查",
+     "仅能启动一个游戏界面，3D 场景不正确，无输入、无音频，不可玩",
+     "GPL-3.0 传染性许可证，商业化受限",
+     "模拟器商业收钱在美国诉讼风险高（参考 Ryujinx、Yuzu 先例）"
+    ],
+    "reason": "话题性和惊喜感强，做内容很好；但可玩性接近零、版权和 GPL 风险高，几乎无法包装成付费产品，只适合做内容而非创业。"
+   }
+  },
+  "sybil-solutions/skill-distill": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "把强模型的成功对话自动蒸馏成让小模型也能照做的技能说明书",
+    "one_liner_en": "Turn a strong model's successful session into a skill an open-weight model can follow",
+    "target_user": "使用 Claude Code / Codex 的 AI 工程师、小团队技术负责人、想降低推理成本的 AI 产品团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 4,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 4
+    },
+    "product_idea": "托管版技能蒸馏服务:上传会话,自动生成并验证小模型可复现的技能包,按次或订阅收费",
+    "demo_idea": "网页并排播放同一任务:强模型产出 vs 蒸馏后小模型三次运行的产出对比与收敛曲线",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖 tmux、本地 harness 和自建模型端点，网页端难以复现核心循环",
+     "核心是本地命令行工具，不是纯前端可演示",
+     "适配器多数未测试（pi、opencode、Claude Code 开放模型需代理）",
+     "大模型厂商若内置类似能力，独立产品空间会被压缩"
+    ],
+    "reason": "思路新颖、痛点真实、MIT 宽松，但安装重、演示偏工程化，适合先做内容再做托管化产品。"
+   }
+  },
+  "danx1905k8/war-thunder-realistic-tank-outline-thermal-portable-x64": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "一款游戏外挂工具，可在对战中显示透视轮廓和自动瞄准辅助",
+    "one_liner_en": "A game cheat tool that adds wallhack outlines, thermal vision, and aim assist to War Thunder",
+    "target_user": "不适用：这是作弊工具，不是可正当销售的产品",
+    "scores": {
+     "topicality": 3,
+     "accessibility": 6,
+     "wow": 4,
+     "pain": 1,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 2
+    },
+    "product_idea": "不做成产品：这是破坏在线游戏公平性的外挂，商业化会带来法律与账号封禁风险",
+    "demo_idea": "不做演示：展示透视外挂等于宣传作弊",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是游戏外挂：通过DX11/12叠加层绘制敌人轮廓、热成像和物品雷达，并提供自瞄平滑（aim assist、FOV），属于破坏在线对战公平性的作弊工具",
+     "README中的“input_filter”平滑和FOV参数，就是自瞄辅助的功能描述",
+     "分发预编译exe并提示“以管理员身份运行”，有恶意软件和被盗号风险",
+     "License为NOASSERTION且新建1天即342星，疑似刷星和推广垃圾仓库",
+     "违反War Thunder（Gaijin）服务条款，存在法律与账号封禁风险，无法在任何主流渠道正当商业化"
+    ],
+    "reason": "这是游戏作弊外挂而非可创业产品：技术上是叠加层自瞄工具，商业模式只能走灰色地带，传播和商业化都不可取，建议不做。"
+   }
+  },
+  "kyle-millerx2098t3/daw-synth-fl-studio-2026-producer-portable-x64": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "声称免费提供 FL Studio 2026 全套插件的伪装安装包，实为可疑下载",
+    "one_liner_en": "A sketchy 'portable FL Studio 2026 with all plugins' download that is almost certainly fake",
+    "target_user": "无合法付费人群；这是盗版软件诱导下载，不是可商业化产品",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 1,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 2
+    },
+    "product_idea": "不建议做成产品；该项目本身就是盗版软件包分发诱导下载，无任何合法最小可行形态",
+    "demo_idea": "不做 demo；仅可作为内容素材：拆解此类“免费全套 DAW”仓库的钓鱼与恶意下载套路",
+    "attack_tool": false,
+    "red_flags": [
+     "盗版商业软件 FL Studio / Serum / FabFilter / Kontakt 的分发伪装，侵犯版权",
+     "仓库名与 README 声称的功能严重不符，README 实际讲的是“便携运行时/注册表/遥测优化”，典型恶意软件诱导套路",
+     "要求以管理员权限运行来源不明的 exe，极高恶意软件风险",
+     "创建仅 1 天、stars 日增 350 且全部短时间涌入，刷星特征明显",
+     "NOASSERTION 许可证，无合法授权",
+     "无真实代码（主要语言标记为 Jupyter Notebook，与内容不符），只有 Releases 下载链接",
+     "内容账号若推荐会损害账号信誉，且可能违反平台政策"
+    ],
+    "reason": "这是伪装成免费 DAW 全套插件的可疑下载诱导仓库，刷星、名实不符、要求管理员权限，无任何合法商业或内容价值，只适合作为反诈科普反面案例。"
+   }
+  },
+  "EL4CTEO/fast-anything": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "只把应用里最慢的5%函数用Rust重写，自动验证结果一致再替换",
+    "one_liner_en": "Profile your app, port only the slowest 5% to Rust, and prove it behaves the same",
+    "target_user": "美国和全球的中小团队后端/性能工程师，以及用 Claude Code、Codex 的资深独立开发者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 5,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "做云端性能热点扫描与自动Rust移植服务，按仓库订阅收费，输出经行为验证的加速PR",
+    "demo_idea": "网页上传一段慢Python函数，现场跑出热点排行，展示移植前后同样的输入输出和耗时对比条",
+    "attack_tool": false,
+    "red_flags": [
+     "项目仅创建1天、618星、单作者，真实性无法验证，依赖用户本机Rust工具链和多个运行时",
+     "支持语言广但作者自测数据出自同一台机器与合成benchmark，真实项目收益未证实",
+     "需接入AI编码代理改动生产代码，企业采购会关注代码外泄与供应链风险",
+     "单靠npm包难向个人收费，商业化需转向团队/CI订阅",
+     "agent/LLM调用成本会让免费层难以持续"
+    ],
+    "reason": "点子和叙事都很强，AI代理加Rust热点移植踩中当下话题，许可证宽松且可演示；但项目过新、收益证据单一、个人付费意愿弱，适合先做内容再验证团队级订阅"
+   }
+  },
+  "CETPROAR/rob-run-ares-enhancer": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "游戏外挂注入工具，自动瞄准并透视看穿地图",
+    "one_liner_en": "Game cheat injector with aimbot and wallhack for a shooter",
+    "target_user": "作弊玩家（不是可合法付费的人群）",
+    "scores": {
+     "topicality": 3,
+     "accessibility": 6,
+     "wow": 4,
+     "pain": 2,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 2,
+     "demoability": 2
+    },
+    "product_idea": "无：这是破坏他人游戏公平性的作弊工具，不能包装成产品",
+    "demo_idea": "无：演示作弊效果即帮助作弊，不可做",
+    "attack_tool": true,
+    "red_flags": [
+     "主要功能是 aimbot、ESP、内存注入和游戏文件 hook，属于攻击/作弊工具，违反游戏服务条款",
+     "可能侵犯游戏版权、规避反作弊系统，面临法律风险和平台封禁风险",
+     "仓库建立仅 1 天即获 340 stars，增长异常，疑似刷星营销或分发恶意代码",
+     "PowerShell 安装脚本有恶意软件风险",
+     "License 虽为 MIT，但用途本身违规，不建议做内容或产品"
+    ],
+    "reason": "游戏作弊注入器，用途违规且不道德，不具备内容或产品价值，应直接拒绝"
+   }
+  },
+  "juniordroid/better-discord-client": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "给Discord桌面版加插件主题的客户端改装层",
+    "one_liner_en": "A patcher that unlocks plugins and themes for the Discord desktop client",
+    "target_user": "喜欢折腾客户端外观的Discord重度玩家和modder，主要在Reddit和GitHub活跃",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 5,
+     "wow": 4,
+     "pain": 4,
+     "packaging_room": 5,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "做成带插件市场的Discord主题客户端，一键安装、自动更新、安全回滚",
+    "demo_idea": "网页对比原版和改装后的聊天界面，点一下切换主题和插件面板",
+    "attack_tool": false,
+    "red_flags": [
+     "README引导用户关闭Windows实时防护，安全风险高",
+     "属于修改第三方客户端（Discord），违反其ToS，存在封号风险",
+     "README用大量空泛营销语言，功能描述不清，形似低质量或可疑项目",
+     "创建仅1天、Star增长异常，可信度低",
+     "依赖Windows/PowerShell，纯前端无法真实演示"
+    ],
+    "reason": "改装第三方客户端的做法有ToS和封号风险，商业化空间小，叙述空泛且有安全隐患，内容价值有限。"
+   }
+  },
+  "leonmiller-io01l1/gta-6-vice-city-ps5-remote-play-60fps-portable-x64": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "号称能让 GTA 6 在 PS5 串流时跑 60 帧的 Windows 小工具",
+    "one_liner_en": "A portable Windows tool claiming to boost GTA 6 PS5 Remote Play to 60FPS",
+    "target_user": "没人为这种灰色工具付费；目标用户是求免费外挂的玩家，不是付费群体",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 7,
+     "wow": 5,
+     "pain": 3,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 2
+    },
+    "product_idea": "不建议做产品，属于游戏作弊/灰色分发，法律风险极高",
+    "demo_idea": "无法演示：核心功能涉嫌游戏作弊与虚假宣传",
+    "attack_tool": false,
+    "red_flags": [
+     "README 与描述严重不符：宣称 FPS 增强，配置却是 ESP 透视、物品雷达、自动瞄准（fov_radius/smoothing），实为游戏外挂",
+     "GTA 6 尚未发售（创建于 2026-11-21 且仅 1 天），项目真实性存疑，疑似钓鱼/恶意软件分发",
+     "要求以管理员运行解压的 exe，典型的恶意软件投递手法",
+     "License 为 NOASSERTION，无开源授权保障",
+     "335 星一天暴涨属刷星，不可信",
+     "违反 Rockstar/Take-Two 服务条款，面临 DMCA 与法律诉讼风险",
+     "非真正开源项目，属于规避平台规则的灰产"
+    ],
+    "reason": "名为性能增强实为游戏外挂，且游戏未发售，高度疑似恶意软件钓鱼，商业与内容价值都极低，建议避开。"
+   }
+  },
+  "dillithdillith4-cell/autodesk-cfd": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "伪装成开源 CFD 工具的盗版 Autodesk 软件安装脚本",
+    "one_liner_en": "A pirated Autodesk CFD installer disguised as an open-source CFD toolkit",
+    "target_user": "无付费人群；目标为盗版软件使用者，不具备正规商业化路径",
+    "scores": {
+     "topicality": 2,
+     "accessibility": 4,
+     "wow": 1,
+     "pain": 1,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 1
+    },
+    "product_idea": "无：本质为盗版商业软件分发脚本，无法包装成合法产品",
+    "demo_idea": "不可演示：展示盗版安装流程既有法律风险又有道德风险",
+    "attack_tool": false,
+    "red_flags": [
+     "实为盗版 Autodesk CFD 分发，非真正开源项目，MIT 标签属误导",
+     "伪装成开源工具骗取 star，1 天 339 star 异常增长，疑似刷量",
+     "含 PowerShell 一键安装，来源不明可执行脚本，存在恶意代码与供应链风险",
+     "侵犯 Autodesk 商业软件版权，美国 DMCA 与诉讼风险高",
+     "README 用营销话术包装规避激活，实为绕过授权，属灰产"
+    ],
+    "reason": "这是打着开源旗号的盗版 Autodesk CFD 安装脚本，存在版权与安全双重风险，没有任何做内容或做产品的价值。"
+   }
+  },
+  "markdevx1901r4/shadps4-bloodborne-pc-60fps-patch-vertex-explosion-portabl": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "冒充血源60帧补丁的作弊外挂，实际是透视和自动瞄准程序",
+    "one_liner_en": "A fake Bloodborne 60FPS patch that is actually a wallhack and aimbot cheat tool",
+    "target_user": "没有合法付费人群；上传者是恶意软件分发者，买家的真实诉求是作弊，不是付费需求",
+    "scores": {
+     "topicality": 3,
+     "accessibility": 3,
+     "wow": 2,
+     "pain": 1,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 1
+    },
+    "product_idea": "无。这是挂羊头卖狗肉的作弊软件，不具备任何正当产品化路径。",
+    "demo_idea": "无。不能演示，也不应演示。",
+    "attack_tool": true,
+    "red_flags": [
+     "标题包装成血源60帧补丁，但README实际内容是ESP透视、物品雷达和aimbot输入平滑，用游戏补丁的名义做游戏作弊工具",
+     "指导用户以管理员权限运行不明来源的预编译zip，这是典型的恶意软件分发方式",
+     "许可证为NOASSERTION，且一天内新增339星，有明显刷星和投毒特征",
+     "README声称绕过高频反作弊检测，属于规避平台规则",
+     "需要运行未签名的exe，存在木马和窃取账号的风险",
+     "涉及版权游戏《血源》的补丁和模组，在美国DMC A下存在法律风险"
+    ],
+    "reason": "伪装成游戏补丁的作弊和恶意软件，属于攻击工具，应立即拉黑，不拿来做内容也不做产品。"
+   }
+  },
+  "Dhruv2710-hub/cellebrite-ufed": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "盗版取证软件安装包，冒充开源安全工具",
+    "one_liner_en": "A pirated forensic toolkit packaged as a free open-source download",
+    "target_user": "无合法付费人群；实为盗版软件传播，不构成可创业市场",
+    "scores": {
+     "topicality": 3,
+     "accessibility": 4,
+     "wow": 2,
+     "pain": 1,
+     "packaging_room": 1,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 1
+    },
+    "product_idea": "无：本质是破解版商业取证软件的传播仓库，无法包装成合法产品",
+    "demo_idea": "不适用：无合法可演示价值",
+    "attack_tool": true,
+    "red_flags": [
+     "实为 Cellebrite UFED 破解/盗版分发（topics 含 crack/cracked），侵犯商业软件版权",
+     "README 用 PowerShell 一键安装脚本分发，典型恶意软件投递手法",
+     "伪装成开源项目蹭星，1 天 339 星异常增长，疑似刷量",
+     "名称冒用 Cellebrite 品牌，存在商标侵权与法律风险",
+     "取证工具被非授权使用涉及隐私与执法合规问题"
+    ],
+    "reason": "盗版取证软件分发，侵权且高风险，无产品化与传播价值，应直接规避"
+   }
+  },
+  "nickcode-01e6/samsung-android-mtp-unlocktool-portable-loader-xiaomi-port": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "号称一键解锁三星和小米手机的工具，但更可能是诱导下载的可疑软件",
+    "one_liner_en": "A 'portable loader' claiming to unlock Samsung and Xiaomi phones, likely a shady download bait",
+    "target_user": "无正当付费人群；真实付费者几乎不存在",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 6,
+     "wow": 3,
+     "pain": 3,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 1,
+     "demoability": 2
+    },
+    "product_idea": "不建议做成产品，这类工具处在灰色地带，且信任成本极高",
+    "demo_idea": "无法做纯前端演示，核心行为在本地对设备操作，不适合展示",
+    "attack_tool": true,
+    "red_flags": [
+     "名称与描述堆砌大量解锁和绕过类关键词（unlocktool、samfw-tool、qualcomm-edl），并引导下载来源不明的 exe 二进制文件，这是典型的可疑分发特征",
+     "仓库创建仅 1 天，Star 数却异常暴涨，疑似刷量、SEO 引流",
+     "License 为 NOASSERTION，授权不明",
+     "主要用途疑似绕过手机厂商的 bootloader、账号锁定等机制，属于灰产或违规操作",
+     "要求以管理员身份运行，存在植入恶意软件、窃取数据的风险",
+     "实际看不到源码，README 与 Jupyter Notebook 的主语言标注严重不符"
+    ],
+    "reason": "疑似以解锁、绕过为噱头、用于推广可执行文件的可疑仓库，既不值得做内容，也不值得包装成产品，风险极高。"
+   }
+  },
+  "vinujak/phantom-blade-zero-modifier": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "给《影之刃零》玩家开挂的单机修改器",
+    "one_liner_en": "A Windows trainer that gives Phantom Blade Zero cheats like god mode and infinite health",
+    "target_user": "单机动作游戏玩家（美国/全球 Steam 用户），尤其是想跳过刷素材、快速通关的人",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 8,
+     "wow": 4,
+     "pain": 4,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 3
+    },
+    "attack_tool": false,
+    "red_flags": [
+     "游戏作弊/修改器，违反 Steam/Epic 服务条款，分发有账号封禁与法务风险",
+     "README 要求用户从网络下载并运行 PowerShell 脚本，典型恶意软件投递模式，仓库仅 1 天、Stars 异常暴涨，疑似刷星或挂马",
+     "直接读写游戏内存、注入进程，属注入类工具，安全与信任风险高",
+     "仅支持 Windows 单机游戏，无长期可维护的产品基础",
+     "内容平台（Product Hunt/X）对作弊工具接受度低，易被封禁"
+    ],
+    "product_idea": "不建议产品化；最多做成游戏作弊检测科普或反作弊工具对比内容",
+    "demo_idea": "无法做安全的网页 demo；只能演示查毒与识别可疑 PowerShell 下载脚本",
+    "reason": "游戏内存修改器，触犯平台规则且疑似恶意脚本分发，商业化与包装空间几乎为零，仅适合做反面安全案例内容"
+   }
+  },
+  "Redwannn/avid-media-composer": {
+   "date": "2026-11-22",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "绕过 Avid Media Composer 付费授权、免激活下载安装的 Windows 工具包",
+    "one_liner_en": "A Windows kit that installs a pre-activated, license-free copy of Avid Media Composer.",
+    "target_user": "预算有限的独立剪辑师、影视专业学生、后期实验室管理员（全球英文市场）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 4,
+     "pain": 5,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 2,
+     "demoability": 3
+    },
+    "product_idea": "不建议产品化：核心卖点是绕过付费授权，无法以合法商业形式收费或分发。",
+    "demo_idea": "无法做合规演示，任何展示都等于公开传播盗版软件的安装方法。",
+    "attack_tool": false,
+    "red_flags": [
+     "README 明说是 Avid Media Composer 的去激活/免订阅版本，属于盗版分发，侵犯 Avid 版权，美国 DMCA 风险极高",
+     "仓库名与描述把'盗版下载器'包装成'Alternative Access Tool'，本质是 license bypass，不是真正的开源软件",
+     "创建仅 1 天暴涨 338 stars，疑似刷星和 SEO 堆砌关键词（avid-media-composer-download 等），可信度低",
+     "HTML 仓库配 PowerShell 一键安装，是典型的恶意脚本分发外壳，存在捆绑木马风险",
+     "无任何合法商业模式：不能向用户收钱卖盗版，Stripe/App Store 会直接封禁",
+     "仓库自身 License 声称 MIT，但对 Avid 专有软件的授权绕过不受 MIT 保护"
+    ],
+    "reason": "这是盗版授权绕过工具而非真正开源项目，涉嫌侵权且疑刷星，只能作为负面案例/避坑内容，不可产品化。"
    }
   }
  }
