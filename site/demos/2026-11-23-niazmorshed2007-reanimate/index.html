@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>reanimate — clone the motion, then prove it matches</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(148,163,184,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148,163,184,0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .card {
+    width: 58px;
+    height: 68px;
+  }
+  @media (min-width: 640px) {
+    .card { width: 72px; height: 84px; }
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 999px;
+    background: #1e293b;
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: #818cf8;
+    border: 2px solid #08080c;
+    cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #818cf8;
+    border: 2px solid #08080c;
+    cursor: pointer;
+  }
+  pre::-webkit-scrollbar { height: 6px; }
+  pre::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+</style>
+</head>
+<body class="bg-[#08080c] text-slate-100 antialiased selection:bg-indigo-500/30">
+
+<div class="pointer-events-none fixed inset-x-0 top-0 h-[440px]" style="background: radial-gradient(ellipse at top, rgba(99,102,241,0.18), transparent 62%)"></div>
+
+<!-- ───────────────────────── header ───────────────────────── -->
+<header class="relative max-w-6xl mx-auto px-5 pt-7 flex items-center justify-between">
+  <div class="flex items-center gap-2.5">
+    <div class="w-8 h-8 rounded-lg grid place-items-center text-white font-bold text-sm" style="background:linear-gradient(135deg,#818cf8,#a855f7,#ec4899)">&#8635;</div>
+    <span class="font-semibold tracking-tight text-[17px]">reanimate</span>
+    <span class="hidden sm:inline text-[10px] uppercase tracking-[0.15em] text-slate-400 border border-slate-700/80 rounded px-1.5 py-[3px]">concept demo</span>
+  </div>
+  <nav class="flex items-center gap-5 text-sm text-slate-400">
+    <a href="#scenarios" class="hover:text-white hidden sm:inline transition">Use cases</a>
+    <a href="#pricing" class="hover:text-white hidden sm:inline transition">Pricing</a>
+    <a href="#waitlist" class="rounded-lg border border-slate-700 px-3 py-1.5 text-slate-200 hover:border-slate-500 hover:text-white transition">Join waitlist</a>
+  </nav>
+</header>
+
+<main class="relative max-w-6xl mx-auto px-5">
+
+  <!-- ───────────────────────── hero ───────────────────────── -->
+  <section class="pt-12 sm:pt-20 pb-6">
+    <p class="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-indigo-300/90">
+      <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> frame-by-frame motion matching
+    </p>
+    <h1 class="mt-4 text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl">
+      Clone the motion.<br />
+      <span class="bg-gradient-to-r from-indigo-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Then prove it matches.</span>
+    </h1>
+    <p class="mt-5 text-slate-400 text-base sm:text-lg max-w-2xl leading-relaxed">
+      Point reanimate at a live URL, a screen recording, a GIF or a Lottie file. It records the animation frame by
+      frame, rebuilds it in your stack, films the copy the same way &mdash; and keeps iterating until the numbers line up.
+    </p>
+
+    <div class="mt-8 rounded-2xl border border-slate-800 bg-slate-900/50 p-2 backdrop-blur max-w-3xl">
+      <div class="flex flex-col sm:flex-row gap-2">
+        <div class="flex-1 flex items-center gap-2 px-3">
+          <span class="text-slate-500 text-sm" aria-hidden="true">&#128279;</span>
+          <input id="srcUrl" value="https://stripe.com" spellcheck="false" aria-label="Animation source"
+            class="w-full bg-transparent py-3 text-sm text-slate-100 outline-none placeholder:text-slate-500" />
+        </div>
+        <select id="srcKind" aria-label="Source type"
+          class="bg-slate-800/70 border border-slate-700/70 text-slate-200 text-sm rounded-xl px-3 py-3 outline-none focus:border-indigo-400">
+          <option>Live URL</option>
+          <option>Screen recording</option>
+          <option>GIF</option>
+          <option>Lottie JSON</option>
+        </select>
+        <button id="runBtn" class="rounded-xl bg-indigo-500 hover:bg-indigo-400 transition text-white text-sm font-medium px-5 py-3">Reanimate</button>
+      </div>
+    </div>
+
+    <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+      <span>or try:</span>
+      <button data-preset="stripe" class="preset-chip rounded-full border px-3 py-1 text-xs transition">stripe.com hero cards</button>
+      <button data-preset="vercel" class="preset-chip rounded-full border px-3 py-1 text-xs transition">vercel.com toolbar tag</button>
+      <button data-preset="linear" class="preset-chip rounded-full border px-3 py-1 text-xs transition">linear.app feature grid</button>
+    </div>
+
+    <div id="pipeline" class="mt-5 hidden max-w-3xl">
+      <div class="flex items-center justify-between text-xs text-slate-400 mb-1.5 gap-3">
+        <span id="pipeStep">Recording reference&hellip;</span>
+        <span class="mono shrink-0" id="pipePct">0%</span>
+      </div>
+      <div class="h-1 rounded-full bg-slate-800 overflow-hidden">
+        <div id="pipeBar" class="h-full w-0 bg-gradient-to-r from-indigo-400 to-fuchsia-400 transition-all duration-200"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── workspace ─────────────────────── -->
+  <section class="mt-8">
+    <div class="rounded-3xl border border-slate-800 bg-slate-900/40 overflow-hidden" style="box-shadow: 0 0 90px -30px rgba(99,102,241,0.5)">
+
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2 px-5 py-3.5 border-b border-slate-800 bg-slate-900/50">
+        <span class="relative flex w-2 h-2">
+          <span class="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-70 animate-ping"></span>
+          <span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-400"></span>
+        </span>
+        <span class="text-sm text-slate-300">comparing <span id="wsSource" class="text-white font-medium">https://stripe.com</span></span>
+        <span id="wsAnim" class="text-xs text-slate-500">&middot; hero card entrance</span>
+        <span class="ml-auto text-[10px] uppercase tracking-[0.14em] rounded-full bg-slate-800 text-slate-400 px-2 py-1">Sample data</span>
+      </div>
+
+      <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-800">
+        <div class="p-4 sm:p-5">
+          <div class="flex items-center justify-between mb-2 gap-2">
+            <span class="text-[10px] uppercase tracking-[0.14em] text-slate-400">original &middot; reference capture</span>
+            <span class="text-[10px] text-slate-500 mono">30 fps</span>
+          </div>
+          <div id="stageOriginal" class="grid-bg relative h-44 sm:h-52 rounded-xl border border-slate-800 bg-slate-950/60 flex items-end justify-center gap-3 pb-4 overflow-hidden"></div>
+        </div>
+        <div class="p-4 sm:p-5">
+          <div class="flex items-center justify-between mb-2 gap-2">
+            <span class="text-[10px] uppercase tracking-[0.14em] text-indigo-300">your clone</span>
+            <div id="fwChips" class="flex flex-wrap gap-1 justify-end">
+              <button data-fw="CSS" class="fw-chip rounded-md px-1.5 py-0.5 text-[10px] border transition">CSS</button>
+              <button data-fw="Framer Motion" class="fw-chip rounded-md px-1.5 py-0.5 text-[10px] border transition">Framer</button>
+              <button data-fw="GSAP" class="fw-chip rounded-md px-1.5 py-0.5 text-[10px] border transition">GSAP</button>
+              <button data-fw="three.js" class="fw-chip rounded-md px-1.5 py-0.5 text-[10px] border transition">three.js</button>
+            </div>
+          </div>
+          <div id="stageClone" class="grid-bg relative h-44 sm:h-52 rounded-xl border border-indigo-500/30 bg-slate-950/60 flex items-end justify-center gap-3 pb-4 overflow-hidden"></div>
+          <pre id="codeOut" class="mono mt-2 text-[10.5px] leading-relaxed text-slate-400 rounded-lg bg-slate-950/60 border border-slate-800 p-2.5 overflow-x-auto whitespace-pre"></pre>
+        </div>
+      </div>
+
+      <div class="px-4 sm:px-5 py-5 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center gap-5">
+        <div class="sm:w-44 shrink-0">
+          <div id="scoreVal" class="text-5xl font-semibold tracking-tight tabular-nums text-rose-300">0.0<span class="text-2xl align-top text-slate-500">%</span></div>
+          <div class="text-[10px] uppercase tracking-[0.16em] text-slate-500 mt-1">motion match</div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 mb-2 gap-3 flex-wrap">
+            <span id="framesText">0 of 24 frames identical</span>
+            <span id="roundText" class="text-slate-500">round 1 &middot; 2&ndash;5 rounds typical</span>
+          </div>
+          <div id="strip" class="flex items-end gap-[3px] h-12"></div>
+          <div id="deltas" class="mt-2 text-[11px] text-slate-500 leading-relaxed">&mdash;</div>
+        </div>
+      </div>
+
+      <div class="px-4 sm:px-5 py-5 border-t border-slate-800 bg-slate-950/40">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-5">
+          <label class="block">
+            <div class="flex justify-between text-[11px] text-slate-400 mb-2"><span>duration</span><span id="durVal" class="mono text-slate-300">0 ms</span></div>
+            <input id="dur" type="range" min="100" max="1400" step="10" value="520" aria-label="Duration" />
+          </label>
+          <label class="block">
+            <div class="flex justify-between text-[11px] text-slate-400 mb-2"><span>stagger</span><span id="stagVal" class="mono text-slate-300">0 ms</span></div>
+            <input id="stag" type="range" min="0" max="220" step="5" value="45" aria-label="Stagger" />
+          </label>
+          <label class="block">
+            <div class="flex justify-between text-[11px] text-slate-400 mb-2"><span>travel</span><span id="distVal" class="mono text-slate-300">0 px</span></div>
+            <input id="dist" type="range" min="0" max="60" step="1" value="36" aria-label="Travel distance" />
+          </label>
+          <label class="block">
+            <div class="flex justify-between text-[11px] text-slate-400 mb-2"><span>easing</span></div>
+            <select id="ease" aria-label="Easing" class="w-full bg-slate-800/70 border border-slate-700/70 text-slate-200 text-sm rounded-lg px-3 py-2 outline-none focus:border-indigo-400">
+              <option value="linear">linear</option>
+              <option value="easeout">ease-out</option>
+              <option value="easeinout">ease-in-out</option>
+              <option value="quint">ease-out-quint</option>
+              <option value="back">back-out</option>
+            </select>
+          </label>
+        </div>
+        <div class="mt-5 flex flex-wrap items-center gap-2.5">
+          <button id="fixBtn" class="rounded-lg bg-indigo-500/90 hover:bg-indigo-400 text-white text-sm font-medium px-4 py-2 transition">Apply suggested fix</button>
+          <button id="resetBtn" class="rounded-lg border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 text-sm px-4 py-2 transition">Reset attempt</button>
+          <span class="text-[11px] text-slate-500 sm:ml-auto">Drag a slider &mdash; both panels re-render from the same clock.</span>
+        </div>
+      </div>
+
+    </div>
+    <p class="mt-3 text-[11px] text-slate-600 px-1">Both panels are driven by one animation clock, like two recordings of the same 30&nbsp;fps capture. The score and diff bars are computed in the browser from the four properties above.</p>
+  </section>
+
+  <!-- ─────────────────────── scenarios ─────────────────────── -->
+  <section id="scenarios" class="mt-20">
+    <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Where it earns its keep</h2>
+    <p class="mt-2 text-slate-400 max-w-2xl">Three jobs people ask for most &mdash; each one mirrors a real prompt from the skill&rsquo;s docs.</p>
+    <div class="mt-8 grid sm:grid-cols-3 gap-4">
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 hover:border-slate-700 transition">
+        <div class="text-xl" aria-hidden="true">&#127916;</div>
+        <h3 class="mt-3 font-medium">Hero entrances on landing pages</h3>
+        <p class="mt-2 text-sm text-slate-400 leading-relaxed">Paste the URL of a hero you like. It reads the stagger, easing and travel of every element, then writes it into the component you point at.</p>
+        <div class="mt-4 rounded-lg bg-slate-950/70 border border-slate-800 p-3 mono text-[11px] text-slate-400 leading-relaxed break-words">/reanimate the hero entrance on https://example.com, into components/Hero.tsx</div>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 hover:border-slate-700 transition">
+        <div class="text-xl" aria-hidden="true">&#128252;</div>
+        <h3 class="mt-3 font-medium">Clips, GIFs and Lottie files</h3>
+        <p class="mt-2 text-sm text-slate-400 leading-relaxed">When there is no DOM to inspect, it reads the frames instead. Give it a time range from a screen recording and it works the timing out from pixels.</p>
+        <div class="mt-4 rounded-lg bg-slate-950/70 border border-slate-800 p-3 mono text-[11px] text-slate-400 leading-relaxed break-words">/reanimate this loader, 0:03 to 0:05 of ~/Downloads/loader.mov</div>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 hover:border-slate-700 transition">
+        <div class="text-xl" aria-hidden="true">&#129482;</div>
+        <h3 class="mt-3 font-medium">Canvas and WebGL</h3>
+        <p class="mt-2 text-sm text-slate-400 leading-relaxed">For shader work it traces the GPU calls on a virtual clock, so every capture is identical &mdash; then diffs yours against the original frame by frame.</p>
+        <div class="mt-4 rounded-lg bg-slate-950/70 border border-slate-800 p-3 mono text-[11px] text-slate-400 leading-relaxed break-words">/reanimate the cube in the resend.com hero, match it exactly</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── pricing ─────────────────────── -->
+  <section id="pricing" class="mt-20">
+    <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Pricing that starts free</h2>
+    <p class="mt-2 text-slate-400 max-w-2xl">The skill itself stays open source. The hosted studio is for people who would rather not install Bun, ffmpeg and Playwright on their laptop.</p>
+
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 flex flex-col">
+        <div class="text-sm text-slate-400">Hobby</div>
+        <div class="mt-2 text-3xl font-semibold">$0<span class="text-sm text-slate-500 font-normal"> / forever</span></div>
+        <p class="mt-2 text-sm text-slate-400">Local runs, unlimited &mdash; the open-source skill with no account.</p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-300 flex-1">
+          <li>&#10003; 3 hosted captures / month</li>
+          <li>&#10003; 24-frame diff sheets</li>
+          <li>&#10003; CSS + Framer Motion output</li>
+          <li>&#10003; Moves-the-same matching</li>
+        </ul>
+        <button data-plan="Hobby" class="plan-btn mt-6 w-full rounded-xl border border-slate-700 py-2.5 text-sm hover:border-slate-500 transition">Join waitlist</button>
+      </div>
+
+      <div class="rounded-2xl border border-indigo-500/50 bg-gradient-to-b from-indigo-500/10 to-slate-900/40 p-6 flex flex-col relative">
+        <span class="absolute -top-2.5 left-6 text-[10px] uppercase tracking-[0.14em] bg-indigo-500 text-white rounded-full px-2 py-0.5">most popular</span>
+        <div class="text-sm text-indigo-200">Pro</div>
+        <div class="mt-2 text-3xl font-semibold">$19<span class="text-sm text-slate-500 font-normal"> / month</span></div>
+        <p class="mt-2 text-sm text-slate-400">For design engineers shipping motion on more than one page a week.</p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-300 flex-1">
+          <li>&#10003; Unlimited hosted captures</li>
+          <li>&#10003; Pixel-perfect mode (&le; 2% mismatch)</li>
+          <li>&#10003; Canvas / WebGL tracing</li>
+          <li>&#10003; GSAP + three.js output</li>
+          <li>&#10003; Priority render queue</li>
+        </ul>
+        <button data-plan="Pro" class="plan-btn mt-6 w-full rounded-xl bg-indigo-500 hover:bg-indigo-400 py-2.5 text-sm font-medium transition">Join waitlist</button>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 flex flex-col">
+        <div class="text-sm text-slate-400">Team</div>
+        <div class="mt-2 text-3xl font-semibold">$49<span class="text-sm text-slate-500 font-normal"> / month</span></div>
+        <p class="mt-2 text-sm text-slate-400">A shared library of verified motion, reviewed like code.</p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-300 flex-1">
+          <li>&#10003; Everything in Pro</li>
+          <li>&#10003; 5 seats included</li>
+          <li>&#10003; Shared verified-component library</li>
+          <li>&#10003; Review links with frame evidence</li>
+          <li>&#10003; SSO</li>
+        </ul>
+        <button data-plan="Team" class="plan-btn mt-6 w-full rounded-xl border border-slate-700 py-2.5 text-sm hover:border-slate-500 transition">Join waitlist</button>
+      </div>
+    </div>
+
+    <div id="waitlist" class="mt-6 rounded-2xl border border-slate-800 p-5 sm:p-7" style="background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(236,72,153,0.05))">
+      <div class="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+        <div>
+          <h3 class="font-medium">Early access opens in waves</h3>
+          <p class="text-sm text-slate-400 mt-1">Leave an email and we&rsquo;ll ping you when the recorder is out of beta.</p>
+        </div>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <input id="email" value="you@studio.com" spellcheck="false" aria-label="Email address"
+            class="flex-1 sm:w-64 rounded-xl bg-slate-950/60 border border-slate-700 px-3 py-2.5 text-sm outline-none focus:border-indigo-400" />
+          <button id="joinBtn" class="rounded-xl bg-white text-slate-900 text-sm font-medium px-4 py-2.5 hover:bg-slate-200 transition">Join</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mt-16 border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+    <p class="max-w-3xl mx-auto px-2 leading-relaxed">Concept demo, based on the open-source project <a class="text-slate-300 underline decoration-slate-600 hover:text-white transition" href="https://github.com/NiazMorshed2007/reanimate">NiazMorshed2007/reanimate</a> (MIT), unofficial, all data is sample data</p>
+  </footer>
+</main>
+
+<div id="toast" class="hidden fixed left-1/2 -translate-x-1/2 bottom-6 z-50 rounded-xl border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-slate-100 shadow-2xl max-w-[90vw] text-center"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  function $(id) { return document.getElementById(id); }
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+  /* ────────────────────── easing ────────────────────── */
+  function makeBezier(x1, y1, x2, y2) {
+    function A(a1, a2) { return 1 - 3 * a2 + 3 * a1; }
+    function B(a1, a2) { return 3 * a2 - 6 * a1; }
+    function C(a1) { return 3 * a1; }
+    function calc(t, a1, a2) { return ((A(a1, a2) * t + B(a1, a2)) * t + C(a1)) * t; }
+    function slope(t, a1, a2) { return 3 * A(a1, a2) * t * t + 2 * B(a1, a2) * t + C(a1); }
+
+    return function (x) {
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
+      var t = x, i, xv, d;
+      for (i = 0; i < 8; i++) {
+        xv = calc(t, x1, x2) - x;
+        if (Math.abs(xv) < 1e-6) return calc(t, y1, y2);
+        d = slope(t, x1, x2);
+        if (Math.abs(d) < 1e-6) break;
+        t -= xv / d;
+        if (t < 0) t = 0; else if (t > 1) t = 1;
+      }
+      var lo = 0, hi = 1;
+      t = x;
+      for (i = 0; i < 40; i++) {
+        var v = calc(t, x1, x2);
+        if (Math.abs(v - x) < 1e-6) break;
+        if (v < x) lo = t; else hi = t;
+        t = (lo + hi) / 2;
+      }
+      return calc(t, y1, y2);
+    };
+  }
+
+  var EASINGS = {
+    linear:    { label: 'linear',         pts: [0, 0, 1, 1],          gsap: 'none' },
+    easeout:   { label: 'ease-out',       pts: [0, 0, 0.58, 1],       gsap: 'power1.out' },
+    easeinout: { label: 'ease-in-out',    pts: [0.42, 0, 0.58, 1],    gsap: 'power1.inOut' },
+    quint:     { label: 'ease-out-quint', pts: [0.22, 1, 0.36, 1],    gsap: 'expo.out' },
+    back:      { label: 'back-out',       pts: [0.34, 1.56, 0.64, 1], gsap: 'back.out(1.7)' }
+  };
+
+  var FN = {};
+  (function () {
+    for (var k in EASINGS) {
+      if (!Object.prototype.hasOwnProperty.call(EASINGS, k)) continue;
+      var p = EASINGS[k].pts;
+      FN[k] = makeBezier(p[0], p[1], p[2], p[3]);
+    }
+  })();
+
+  function easingSim(a, b) {
+    if (a === b) return 1;
+    var fa = FN[a] || FN.linear;
+    var fb = FN[b] || FN.linear;
+    var sum = 0, n = 32, i;
+    for (i = 0; i <= n; i++) {
+      var x = i / n;
+      sum += Math.abs(fa(x) - fb(x));
+    }
+    var mean = sum / (n + 1);
+    return clamp(1 - mean / 0.5, 0, 1);
+  }
+
+  /* ────────────────────── presets ────────────────────── */
+  var PRESETS = {
+    stripe: {
+      url: 'https://stripe.com',
+      anim: 'hero card entrance',
+      labels: ['Payments', 'Billing', 'Connect'],
+      gt: { dur: 640, stag: 90, dist: 28, ease: 'quint' }
+    },
+    vercel: {
+      url: 'https://vercel.com/products/previews',
+      anim: 'toolbar tag hover',
+      labels: ['Previews', 'Logs', 'Speed'],
+      gt: { dur: 320, stag: 50, dist: 16, ease: 'back' }
+    },
+    linear: {
+      url: 'https://linear.app',
+      anim: 'feature grid reveal',
+      labels: ['Issues', 'Cycles', 'Roadmap'],
+      gt: { dur: 820, stag: 120, dist: 42, ease: 'easeout' }
+    }
+  };
+
+  var state = {
+    preset: 'stripe',
+    gt: { dur: 640, stag: 90, dist: 28, ease: 'quint' },
+    clone: { dur: 400, stag: 35, dist: 40, ease: 'easeout' },
+    framework: 'CSS',
+    round: 1
+  };
+
+  function firstAttempt(gt) {
+    return {
+      dur: Math.max(120, Math.round(gt.dur * 0.62 / 10) * 10),
+      stag: Math.max(0, Math.round(gt.stag * 0.4 / 5) * 5),
+      dist: clamp(gt.dist + 12, 0, 60),
+      ease: gt.ease === 'easeout' ? 'easeinout' : 'easeout'
+    };
+  }
+
+  /* ────────────────────── metrics ────────────────────── */
+  function metrics() {
+    var g = state.gt, c = state.clone;
+    var tSim = clamp(1 - Math.abs(c.dur - g.dur) / 400, 0, 1);
+    var sSim = clamp(1 - Math.abs(c.stag - g.stag) / 150, 0, 1);
+    var dSim = clamp(1 - Math.abs(c.dist - g.dist) / 50, 0, 1);
+    var eSim = easingSim(c.ease, g.ease);
+    var score = 0.30 * tSim + 0.30 * eSim + 0.20 * sSim + 0.20 * dSim;
+    return { score: Math.round(score * 1000) / 10, tSim: tSim, sSim: sSim, dSim: dSim, eSim: eSim };
+  }
+
+  function progAt(t, j, p) {
+    var x = (t - j * p.stag) / Math.max(p.dur, 1);
+    return (FN[p.ease] || FN.linear)(clamp(x, 0, 1));
+  }
+
+  function frameList() {
+    var g = state.gt, c = state.clone;
+    var T = Math.max(g.dur + g.stag * 2, c.dur + c.stag * 2, 1);
+    var N = 24, out = [], i, j;
+    for (i = 0; i < N; i++) {
+      var t = (i / (N - 1)) * T;
+      var d = 0;
+      for (j = 0; j < 3; j++) {
+        var po = progAt(t, j, g);
+        var pc = progAt(t, j, c);
+        d += Math.abs((1 - po) * g.dist - (1 - pc) * c.dist);
+      }
+      out.push({ t: t, diff: d / 3 });
+    }
+    return out;
+  }
+
+  /* ────────────────────── dom refs ────────────────────── */
+  var els = {
+    url: $('srcUrl'), kind: $('srcKind'), run: $('runBtn'),
+    pipe: $('pipeline'), pipeBar: $('pipeBar'), pipeStep: $('pipeStep'), pipePct: $('pipePct'),
+    wsSource: $('wsSource'), wsAnim: $('wsAnim'),
+    stageO: $('stageOriginal'), stageC: $('stageClone'),
+    score: $('scoreVal'), framesText: $('framesText'), roundText: $('roundText'),
+    strip: $('strip'), deltas: $('deltas'), code: $('codeOut'),
+    dur: $('dur'), stag: $('stag'), dist: $('dist'), ease: $('ease'),
+    durVal: $('durVal'), stagVal: $('stagVal'), distVal: $('distVal'),
+    fix: $('fixBtn'), reset: $('resetBtn'), toast: $('toast'),
+    email: $('email'), join: $('joinBtn')
+  };
+
+  /* ────────────────────── stages ────────────────────── */
+  var cardsO = [], cardsC = [];
+
+  function makeCard(label, i, parent) {
+    var d = document.createElement('div');
+    d.className = 'card rounded-xl grid place-items-center text-[10px] font-medium text-white shadow-lg relative overflow-hidden';
+    d.style.background = 'linear-gradient(155deg, hsl(' + (246 + i * 26) + ' 88% 64%), hsl(' + (276 + i * 26) + ' 82% 52%))';
+    d.style.opacity = '0';
+    d.style.willChange = 'transform, opacity';
+    var s = document.createElement('span');
+    s.className = 'relative z-10 px-1 text-center leading-tight';
+    s.textContent = label;
+    d.appendChild(s);
+    parent.appendChild(d);
+    return d;
+  }
+
+  function buildStages() {
+    var labels = PRESETS[state.preset].labels;
+    els.stageO.innerHTML = '';
+    els.stageC.innerHTML = '';
+    cardsO = [];
+    cardsC = [];
+    for (var i = 0; i < labels.length; i++) {
+      cardsO.push(makeCard(labels[i], i, els.stageO));
+      cardsC.push(makeCard(labels[i], i, els.stageC));
+    }
+  }
+
+  function paintCard(el, p, dist) {
+    if (!el) return;
+    var off = (1 - p) * dist;
+    var s = 0.94 + 0.06 * p;
+    el.style.transform = 'translate3d(0,' + off.toFixed(2) + 'px,0) scale(' + s.toFixed(3) + ')';
+    el.style.opacity = clamp(p, 0, 1).toFixed(3);
+  }
+
+  function paint(t) {
+    var g = state.gt, c = state.clone, j;
+    for (j = 0; j < cardsO.length; j++) {
+      paintCard(cardsO[j], progAt(t, j, g), g.dist);
+      paintCard(cardsC[j], progAt(t, j, c), c.dist);
+    }
+  }
+
+  /* ────────────────────── frame strip ────────────────────── */
+  var bars = [];
+  function buildStrip() {
+    els.strip.innerHTML = '';
+    bars = [];
+    for (var i = 0; i < 24; i++) {
+      var b = document.createElement('div');
+      b.className = 'flex-1 rounded-[2px]';
+      b.style.height = '8px';
+      b.style.backgroundColor = '#334155';
+      b.style.transition = 'height .18s ease, background-color .18s ease';
+      els.strip.appendChild(b);
+      bars.push(b);
+    }
+  }
+
+  /* ────────────────────── code output ────────────────────── */
+  function codeFor() {
+    var c = state.clone;
+    var d = (c.dur / 1000).toFixed(2);
+    var s = (c.stag / 1000).toFixed(3);
+    var bez = EASINGS[c.ease].pts.map(function (v) {
+      return String(v).replace(/^0\./, '.');
+    }).join(',');
+
+    if (state.framework === 'CSS') {
+      return '.card {\n  animation: rise ' + c.dur + 'ms cubic-bezier(' + bez + ') both;\n  animation-delay: calc(var(--i) * ' + c.stag + 'ms);\n}';
+    }
+    if (state.framework === 'Framer Motion') {
+      return '<motion.div\n  initial={{ y: ' + c.dist + ', opacity: 0 }}\n  animate={{ y: 0, opacity: 1 }}\n  transition={{ duration: ' + d + ', delay: i * ' + s + ',\n    ease: [' + bez + '] }} />';
+    }
+    if (state.framework === 'GSAP') {
+      return 'gsap.from(".card", {\n  y: ' + c.dist + ', opacity: 0,\n  duration: ' + d + ', stagger: ' + s + ',\n  ease: "' + EASINGS[c.ease].gsap + '"\n});';
+    }
+    return '// in vertex shader\nfloat p = easeOut(clamp(\n  (uTime - float(i) * ' + s + ') / ' + d + ', 0.0, 1.0));\nvec3 offset = vec3(0.0, (' + c.dist + '.0 / 100.0) * (1.0 - p), 0.0);';
+  }
+
+  /* ────────────────────── render ────────────────────── */
+  function update() {
+    var m = metrics();
+    var f = frameList();
+    var identical = 0, i;
+
+    for (i = 0; i < f.length; i++) {
+      if (f[i].diff < 0.8) identical++;
+    }
+
+    els.score.innerHTML = m.score.toFixed(1) + '<span class="text-2xl align-top text-slate-500">%</span>';
+    els.score.className = 'text-5xl font-semibold tracking-tight tabular-nums ' +
+      (m.score >= 95 ? 'text-emerald-300' : (m.score >= 80 ? 'text-amber-300' : 'text-rose-300'));
+
+    els.framesText.textContent = identical + ' of 24 frames identical';
+    els.roundText.textContent = 'round ' + state.round + ' \u00b7 2\u20135 rounds typical';
+
+    for (i = 0; i < f.length; i++) {
+      var b = bars[i];
+      if (!b) continue;
+      var dv = f[i].diff;
+      b.style.height = Math.min(46, 7 + dv * 1.6).toFixed(1) + 'px';
+      b.style.backgroundColor = dv < 0.8 ? '#34d399' : (dv < 3.5 ? '#fbbf24' : '#f43f5e');
+    }
+
+    var g = state.gt, c = state.clone;
+    function sd(v) {
+      return (v > 0 ? '+' : (v < 0 ? '\u2212' : '\u00b1')) + Math.abs(v);
+    }
+    var parts = [];
+    if (c.dur !== g.dur) parts.push('duration ' + sd(c.dur - g.dur) + ' ms');
+    if (c.stag !== g.stag) parts.push('stagger ' + sd(c.stag - g.stag) + ' ms');
+    if (c.dist !== g.dist) parts.push('travel ' + sd(c.dist - g.dist) + ' px');
+    if (c.ease !== g.ease) parts.push('easing ' + EASINGS[c.ease].label + ' (want ' + EASINGS[g.ease].label + ')');
+    els.deltas.textContent = parts.length
+      ? 'Still off: ' + parts.join('   \u00b7   ')
+      : 'All four properties match the reference \u2014 nothing left to fix.';
+
+    els.code.textContent = codeFor();
+  }
+
+  function syncControls() {
+    els.dur.value = state.clone.dur;
+    els.durVal.textContent = state.clone.dur + ' ms';
+    els.stag.value = state.clone.stag;
+    els.stagVal.textContent = state.clone.stag + ' ms';
+    els.dist.value = state.clone.dist;
+    els.distVal.textContent = state.clone.dist + ' px';
+    els.ease.value = state.clone.ease;
+  }
+
+  function syncFwChips() {
+    var chips = document.querySelectorAll('.fw-chip');
+    for (var i = 0; i < chips.length; i++) {
+      var b = chips[i];
+      var on = b.getAttribute('data-fw') === state.framework;
+      b.className = 'fw-chip rounded-md px-1.5 py-0.5 text-[10px] border transition ' +
+        (on ? 'border-indigo-400/70 text-indigo-200 bg-indigo-500/10'
+            : 'border-slate-700 text-slate-400 hover:text-slate-200');
+    }
+  }
+
+  function syncPresetChips() {
+    var chips = document.querySelectorAll('.preset-chip');
+    for (var i = 0; i < chips.length; i++) {
+      var b = chips[i];
+      var on = b.getAttribute('data-preset') === state.preset;
+      b.className = 'preset-chip rounded-full border px-3 py-1 text-xs transition ' +
+        (on ? 'border-indigo-400/70 text-indigo-200 bg-indigo-500/10'
+            : 'border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200');
+    }
+  }
+
+  /* ────────────────────── toast ────────────────────── */
+  var toastTimer = null;
+  function showToast(msg) {
+    els.toast.textContent = msg;
+    els.toast.classList.remove('hidden');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      els.toast.classList.add('hidden');
+    }, 3000);
+  }
+
+  /* ────────────────────── playback clock ────────────────────── */
+  var clockStart = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+  var lastFrameIdx = -1;
+
+  function nowMs() {
+    return (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+  }
+
+  function loop() {
+    var g = state.gt, c = state.clone;
+    var T = Math.max(g.dur + g.stag * 2, c.dur + c.stag * 2, 1);
+    var cycle = T + 900;
+    var elapsed = (nowMs() - clockStart) % cycle;
+    var t = elapsed > T ? T : elapsed;
+
+    paint(t);
+
+    var idx = Math.round((t / T) * 23);
+    if (idx < 0) idx = 0;
+    if (idx > 23) idx = 23;
+
+    if (idx !== lastFrameIdx) {
+      if (lastFrameIdx >= 0 && bars[lastFrameIdx]) {
+        bars[lastFrameIdx].style.outline = 'none';
+      }
+      if (bars[idx]) {
+        bars[idx].style.outline = '2px solid rgba(255,255,255,0.45)';
+        bars[idx].style.outlineOffset = '1px';
+      }
+      lastFrameIdx = idx;
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  /* ────────────────────── presets / pipeline ────────────────────── */
+  function loadPreset(key) {
+    if (!PRESETS[key]) key = 'stripe';
+    state.preset = key;
+    state.gt = { dur: PRESETS[key].gt.dur, stag: PRESETS[key].gt.stag, dist: PRESETS[key].gt.dist, ease: PRESETS[key].gt.ease };
+    state.clone = firstAttempt(state.gt);
+    state.round = 1;
+
+    els.wsSource.textContent = PRESETS[key].url;
+    els.wsAnim.textContent = '\u00b7 ' + PRESETS[key].anim;
+
+    buildStages();
+    syncControls();
+    syncPresetChips();
+    update();
+    clockStart = nowMs();
+  }
+
+  function pickPresetFromUrl(url) {
+    var u = String(url || '').toLowerCase();
+    if (u.indexOf('vercel') !== -1) return 'vercel';
+    if (u.indexOf('linear') !== -1) return 'linear';
+    return 'stripe';
+  }
+
+  var running = false;
+
+  function runPipeline(key) {
+    if (running || !els.pipe) return;
+    running = true;
+
+    var steps = ['Recording reference\u2026', 'Reading frames\u2026', 'Writing motion spec\u2026', 'Filming the copy\u2026', 'Comparing frames\u2026'];
+    var p = 0, si = 0;
+
+    els.pipe.classList.remove('hidden');
+    els.pipeBar.style.width = '0%';
+    els.pipeStep.textContent = steps[0];
+    els.pipePct.textContent = '0%';
+    els.run.disabled = true;
+    els.run.style.opacity = '.6';
+    els.run.style.cursor = 'progress';
+
+    var iv = setInterval(function () {
+      p += 4;
+      if (p > 100) p = 100;
+      els.pipeBar.style.width = p + '%';
+      els.pipePct.textContent = p + '%';
+
+      var ni = Math.min(steps.length - 1, Math.floor(p / 20));
+      if (ni !== si) {
+        si = ni;
+        els.pipeStep.textContent = steps[si];
+      }
+
+      if (p >= 100) {
+        clearInterval(iv);
+        running = false;
+        els.run.disabled = false;
+        els.run.style.opacity = '1';
+        els.run.style.cursor = 'pointer';
+        els.pipeStep.textContent = 'Capture ready \u2014 tune the clone and watch the score.';
+
+        loadPreset(key);
+
+        setTimeout(function () {
+          els.pipe.classList.add('hidden');
+        }, 1500);
+      }
+    }, 40);
+  }
+
+  /* ────────────────────── events ────────────────────── */
+  els.run.addEventListener('click', function () {
+    var key = pickPresetFromUrl(els.url.value);
+    var host = String(els.url.value || '').trim() || PRESETS[key].url;
+    els.wsSource.textContent = host;
+    runPipeline(key);
+  });
+
+  els.url.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      els.run.click();
+    }
+  });
+
+  var presetChips = document.querySelectorAll('.preset-chip');
+  for (var pc = 0; pc < presetChips.length; pc++) {
+    presetChips[pc].addEventListener('click', function (e) {
+      var key = e.currentTarget.getAttribute('data-preset');
+      els.url.value = PRESETS[key].url;
+      runPipeline(key);
+    });
+  }
+
+  var fwChips = document.querySelectorAll('.fw-chip');
+  for (var fc = 0; fc < fwChips.length; fc++) {
+    fwChips[fc].addEventListener('click', function (e) {
+      state.framework = e.currentTarget.getAttribute('data-fw');
+      syncFwChips();
+      update();
+    });
+  }
+
+  els.dur.addEventListener('input', function () {
+    state.clone.dur = parseInt(els.dur.value, 10) || 0;
+    els.durVal.textContent = state.clone.dur + ' ms';
+    update();
+    clockStart = nowMs();
+  });
+
+  els.stag.addEventListener('input', function () {
+    state.clone.stag = parseInt(els.stag.value, 10) || 0;
+    els.stagVal.textContent = state.clone.stag + ' ms';
+    update();
+    clockStart = nowMs();
+  });
+
+  els.dist.addEventListener('input', function () {
+    state.clone.dist = parseInt(els.dist.value, 10) || 0;
+    els.distVal.textContent = state.clone.dist + ' px';
+    update();
+    clockStart = nowMs();
+  });
+
+  els.ease.addEventListener('change', function () {
+    state.clone.ease = els.ease.value;
+    update();
+    clockStart = nowMs();
+  });
+
+  els.fix.addEventListener('click', function () {
+    if (state.round >= 5) {
+      showToast('5 rounds reached \u2014 remaining differences are listed in the report.');
+      return;
+    }
+    state.round += 1;
+    state.clone = { dur: state.gt.dur, stag: state.gt.stag, dist: state.gt.dist, ease: state.gt.ease };
+    syncControls();
+    update();
+    clockStart = nowMs();
+    showToast('Round ' + state.round + ': applied the largest remaining delta, then re-filmed.');
+  });
+
+  els.reset.addEventListener('click', function () {
+    state.round = 1;
+    state.clone = firstAttempt(state.gt);
+    syncControls();
+    update();
+    clockStart = nowMs();
+  });
+
+  var planBtns = document.querySelectorAll('.plan-btn');
+  for (var pb = 0; pb < planBtns.length; pb++) {
+    planBtns[pb].addEventListener('click', function (e) {
+      var plan = e.currentTarget.getAttribute('data-plan');
+      showToast(plan + ' plan selected \u2014 nothing was submitted (demo).');
+      var wl = document.getElementById('waitlist');
+      if (wl && wl.scrollIntoView) {
+        wl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
+
+  els.join.addEventListener('click', function () {
+    var v = String(els.email.value || '').trim();
+    if (!v) {
+      showToast('Add an email first \u2014 nothing leaves this page (demo).');
+      return;
+    }
+    showToast('You are on the list, ' + v.split('@')[0] + ' \u2014 nothing was sent (demo).');
+  });
+
+  els.email.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') els.join.click();
+  });
+
+  /* ────────────────────── init ────────────────────── */
+  buildStages();
+  buildStrip();
+  syncFwChips();
+  syncPresetChips();
+  syncControls();
+  update();
+  requestAnimationFrame(loop);
+
+})();
+</script>
+</body>
+</html>

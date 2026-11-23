@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-23",
+ "headline": "逐帧逆向网站动画的 Claude Code skill",
+ "summary_md": "**What it is.** Reanimate (NiazMorshed2007/reanimate) is a Claude Code skill that records an animation — from a live URL, screen recording, MP4, GIF or Lottie file — rebuilds it in your project's own stack, then films the rebuild the same way and compares the two until the numbers line up.\n\n**Why it's taking off.** Agents usually recreate an animation in one pass and stop, because they can't see motion or measure how far off they are. Reanimate closes that loop: fixed-viewport headless capture, a per-element spec table (trigger, duration, from → to, easing, stagger), then 2–5 verify rounds with a real pixel/timing diff. The README shows 417/417 frames identical on a Vercel Toolbar clone, and a WebGPU ocean at 0 px difference over 12 seconds. It's MIT-licensed, needs no API keys, and the demo sites (Stripe, Clerk, Linear-adjacent) are exactly the animations devs already want.\n\n**Where the product opportunity is.** Today it's a skill script, not a product. A hosted version — paste a link or drop a recording, pick a target (CSS, Framer Motion, GSAP, three.js), get code plus a side-by-side proof video — would make it usable by designers and coding-in-public founders who don't run Claude Code. Other plausible hooks: a paid preset library of hand-verified clones, a regression check that flags when your hero animation drifts after a CSS change, and a Figma/Webflow export path. The install weight (~250 MB of ffmpeg + Playwright Chromium on first run) and the Claude Code + Bun requirement are the main reasons a wrapper adds real value rather than just polish.",
+ "title_en": "Reanimate: reverse-engineer any web animation",
+ "tagline_en": "A Claude Code skill that clones animations from any site or video and proves the match frame by frame.",
+ "pick": {
+  "full_name": "NiazMorshed2007/reanimate",
+  "url": "https://github.com/NiazMorshed2007/reanimate",
+  "description": "A Claude Code skill that reverse-engineers any animation frame by frame, then proves the copy moves the same.",
+  "license": "MIT",
+  "stars": 2389,
+  "daily_rate": 271.0,
+  "category": "开发者工具",
+  "one_liner": "让AI逐帧逆向网站动画，克隆到你的代码里并验证一致",
+  "one_liner_en": "A Claude Code skill that reverse-engineers any web animation and proves your copy matches",
+  "reason": "逆向动效并逐帧自证一致是少见的亮点，传播性强；但当前形态是 skill 而非产品，收费人群窄，需包装成网页工具才有空间。",
+  "content": 7.67,
+  "startup": 6.9,
+  "final": 7.3,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-23-niazmorshed2007-reanimate",
+ "top": [
+  {
+   "full_name": "NiazMorshed2007/reanimate",
+   "url": "https://github.com/NiazMorshed2007/reanimate",
+   "one_liner": "让AI逐帧逆向网站动画，克隆到你的代码里并验证一致",
+   "reason": "逆向动效并逐帧自证一致是少见的亮点，传播性强；但当前形态是 skill 而非产品，收费人群窄，需包装成网页工具才有空间。",
+   "one_liner_en": "A Claude Code skill that reverse-engineers any web animation and proves your copy matches",
+   "content": 7.67,
+   "startup": 6.9,
+   "final": 7.3,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "backnotprop/plannotator",
+   "url": "https://github.com/backnotprop/plannotator",
+   "one_liner": "给 AI 编码代理做批注和审查的本地浏览器工作台",
+   "reason": "切中 AI 代理'人在回路'真实痛点，话题性和增长强劲，许可证友好；但已商业化、受众偏开发者，变现要靠团队版。",
+   "one_liner_en": "A local browser workspace to annotate and review AI coding agents' work",
+   "content": 7.33,
+   "startup": 7.2,
+   "final": 7.25,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "os6/nospeaker",
+   "url": "https://github.com/os6/nospeaker",
+   "one_liner": "让 MacBook 触控板用震动马达“发声”说话唱歌，不用扬声器",
+   "reason": "惊艳的硬件玩法内容性强、易传播，但痛点弱、依赖私有 API、缺少可持续付费场景，更适合做爆款视频而非独立产品",
+   "one_liner_en": "Make your MacBook trackpad talk and sing using its haptic motor, no speaker needed",
+   "content": 8.33,
+   "startup": 5.65,
+   "final": 7.15,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "ivall/xcl",
+   "url": "https://github.com/ivall/xcl",
+   "one_liner": "在 Windows 上直接运行 Xbox Series 主机的游戏",
+   "reason": "技术上很惊艳，传播潜力大，但 GPL 许可、DMCA 反规避和主机厂商维权带来很高法律风险，商业空间也受限。",
+   "one_liner_en": "Run Xbox Series console games natively on your Windows PC",
+   "content": 8.67,
+   "startup": 5.65,
+   "final": 6.83,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "erkamyaman/safe-anything",
+   "url": "https://github.com/erkamyaman/safe-anything",
+   "one_liner": "一条命令扫出代码漏洞、泄露密钥和AI代理配置风险",
+   "reason": "定位清晰、MIT许可、痛点真实且可演示；但赛道拥挤、规则型扫描难建立信任壁垒，包装与变现需靠GitHub App分发和误报控制做差异化。",
+   "one_liner_en": "One command finds vulns, leaked secrets, and risky AI agent configs in your repo",
+   "content": 7.0,
+   "startup": 6.1,
+   "final": 6.73,
+   "category_penalty": 0
+  }
+ ]
+}
