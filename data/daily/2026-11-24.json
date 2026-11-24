@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-24",
+ "headline": "知了 Cicada：会议同传开源了",
+ "summary_md": "**What it is.** [wquguru/cicada](https://github.com/wquguru/cicada) (Cicada · 知了) captures your system audio directly — no meeting bot joins the call — and shows live subtitles, detects the spoken language, and translates it into your system language within seconds. As it listens, it builds a running meeting record: summary, topics, key points, conclusions, to-dos, and a glossary of names and terms. Press a talk key (right ⌥ on Mac, right Ctrl on Windows) and speak; the other side hears your translated voice inside the meeting app.\n\n**Why it's taking off.** It works wherever sound plays — Zoom, Teams, Google Meet, Webex, Discord, Telegram voice chats, X Spaces, YouTube, Twitch, podcasts — so the same tool covers remote work, livestreams and in-person conversation. On Apple silicon Macs, speech recognition runs fully on device, so audio never leaves the machine. The repo is Apache-2.0, supports four platforms under one version number and record format, and has been growing fast (about 507 stars a day recently, per the listing).\n\n**Where the product opportunity is.** The install story is the weak point for non-technical users: Windows and Linux require your own AI service key, and virtual-audio routing on Mac is fiddly. A hosted build with bundled translation minutes, speaker separation, cross-device sync and a one-click installer would map cleanly to a subscription for US and global remote workers, sales teams and non-native English speakers. Two things to respect: bio-metric consent rules (Illinois BIPA, CCPA, Singapore PDPA) if voice cloning ships, and the README's note that phone OSes block call-audio capture — Android only supports videos and in-person mode.",
+ "title_en": "Cicada: Open-source live subtitles and interpreting for any meeting",
+ "tagline_en": "Open-source live subtitles, interpreting and notes for any call or stream, on Mac, Windows, Linux and Android.",
+ "pick": {
+  "full_name": "wquguru/cicada",
+  "url": "https://github.com/wquguru/cicada",
+  "description": "知了 Cicada · 任何会议和直播的实时字幕、同声传译、AI 会议纪要，Mac、Windows、Linux、Android 免费开源。Live subtitles, interpreting and meeting notes for any call or stream, on Mac, Windows, Linux and Android.",
+  "license": "Apache-2.0",
+  "stars": 3060,
+  "daily_rate": 507.0,
+  "category": "效率工具",
+  "one_liner": "任何会议和直播的实时双语字幕与同声传译",
+  "one_liner_en": "Live bilingual subtitles and AI meeting notes for any call or stream",
+  "reason": "痛点真实、演示直观、Apache 2.0 干净，商业化路径清晰；但虚拟声卡门槛与跨平台体验一致性是产品化最大障碍。",
+  "content": 8.33,
+  "startup": 7.7,
+  "final": 7.79,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-24-wquguru-cicada",
+ "top": [
+  {
+   "full_name": "wquguru/cicada",
+   "url": "https://github.com/wquguru/cicada",
+   "one_liner": "任何会议和直播的实时双语字幕与同声传译",
+   "reason": "痛点真实、演示直观、Apache 2.0 干净，商业化路径清晰；但虚拟声卡门槛与跨平台体验一致性是产品化最大障碍。",
+   "one_liner_en": "Live bilingual subtitles and AI meeting notes for any call or stream",
+   "content": 8.33,
+   "startup": 7.7,
+   "final": 7.79,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Noniv/abyssal-garden",
+   "url": "https://github.com/Noniv/abyssal-garden",
+   "one_liner": "一个用代码生成、可在浏览器里漫游的梦幻海底世界",
+   "reason": "视觉惊艳、传播力强、来由干净，但定位偏展示型玩具，商业化需靠贴牌或体验类落地页切入，痛点较弱",
+   "one_liner_en": "A dreamy underwater world you can swim through in your browser, generated entirely by code",
+   "content": 8.67,
+   "startup": 6.0,
+   "final": 7.22,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "RoutineMiku/apkstart",
+   "url": "https://github.com/RoutineMiku/apkstart",
+   "one_liner": "让Windows电脑双击安卓APK就能像装软件一样用安卓应用",
+   "reason": "传播价值不错，双击即用概念直观；但依赖官方模拟器、竞品强、商业化路径弱，包装空间中等。",
+   "one_liner_en": "Run Android apps on Windows like native software: double-click an APK and it just works",
+   "content": 7.33,
+   "startup": 6.6,
+   "final": 6.69,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "FrigadeHQ/yogurt",
+   "url": "https://github.com/FrigadeHQ/yogurt",
+   "one_liner": "在你电脑本地运行的私密AI会议记录，不需要会议机器人",
+   "reason": "隐私本地化会议助手正当红，MIT 许可、演示直观、痛点真实；但已自带商业站，变现需靠团队版差异化。",
+   "one_liner_en": "Private AI meeting notes that run entirely on your computer, no bot in your call",
+   "content": 8.0,
+   "startup": 7.4,
+   "final": 6.63,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "heydamir/unslop",
+   "url": "https://github.com/heydamir/unslop",
+   "one_liner": "把AI生成的千篇一律界面改造成有设计感的界面",
+   "reason": "话题性强、痛点真实、演示效果出色，但形态是提示词技能包，包装空间和收费能力有限，且许可证会带来署名麻烦。",
+   "one_liner_en": "Turns generic AI-looking UIs into interfaces that feel actually designed",
+   "content": 8.33,
+   "startup": 6.15,
+   "final": 6.46,
+   "category_penalty": 0.8
+  }
+ ]
+}

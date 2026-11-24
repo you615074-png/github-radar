@@ -209,6 +209,12 @@
    "full_name": "NiazMorshed2007/reanimate",
    "category": "开发者工具",
    "final": 7.3
+  },
+  {
+   "date": "2026-11-24",
+   "full_name": "wquguru/cicada",
+   "category": "效率工具",
+   "final": 7.79
   }
  ],
  "top": {
@@ -219,11 +225,6 @@
   "simbasjungles/free-my-tv": "2026-11-04",
   "Gathin23/cleanyourtv": "2026-10-30",
   "tangency-labs/solidcraft": "2026-11-07",
-  "rehan-remade/universal-modder": "2026-10-24",
-  "Renhuai123/ziwei-doushu": "2026-10-24",
-  "xiaoyang111222/cn-math-taxonomy": "2026-10-24",
-  "xevrion/hatchzip": "2026-10-24",
-  "storytold/vectorcraft": "2026-10-24",
   "morluto/rea": "2026-10-25",
   "storytold/cadcraft": "2026-10-25",
   "Nutlope/hallmark": "2026-11-02",
@@ -251,7 +252,7 @@
   "storytold/effectcraft": "2026-10-30",
   "hugohe3/ppt-master": "2026-10-30",
   "thedotmack/claude-mem": "2026-10-31",
-  "heydamir/unslop": "2026-11-16",
+  "heydamir/unslop": "2026-11-24",
   "jhaizhou-ops/d2r-mobile": "2026-10-31",
   "qybaihe/bla": "2026-11-11",
   "affaan-m/ECC": "2026-11-17",
@@ -305,9 +306,9 @@
   "backnotprop/plannotator": "2026-11-23",
   "Topkiflare74/ai--manus2.0": "2026-11-15",
   "Likely7/Veyra-NRVideo": "2026-11-15",
-  "RoutineMiku/apkstart": "2026-11-16",
+  "RoutineMiku/apkstart": "2026-11-24",
   "n4ze3m/tiny-voca": "2026-11-16",
-  "Noniv/abyssal-garden": "2026-11-16",
+  "Noniv/abyssal-garden": "2026-11-24",
   "mvanhorn/last30days-skill": "2026-11-17",
   "google-research/paper-orchestra": "2026-11-17",
   "vercel-labs/agent-browser": "2026-11-17",
@@ -336,68 +337,39 @@
   "NiazMorshed2007/reanimate": "2026-11-23",
   "os6/nospeaker": "2026-11-23",
   "ivall/xcl": "2026-11-23",
-  "erkamyaman/safe-anything": "2026-11-23"
+  "erkamyaman/safe-anything": "2026-11-23",
+  "wquguru/cicada": "2026-11-24",
+  "FrigadeHQ/yogurt": "2026-11-24"
  },
  "scores": {
   "heydamir/unslop": {
-   "date": "2026-11-16",
+   "date": "2026-11-24",
    "v": 3,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "把AI生成的丑界面改成有设计感的界面",
-    "one_liner_en": "Turns vibecoded, AI-looking UI into a designed interface",
-    "target_user": "用 Claude Code / Cursor 快速搭原型的独立开发者、vibe coding 爱好者、小型产品团队",
+    "one_liner": "把AI生成的千篇一律界面改造成有设计感的界面",
+    "one_liner_en": "Turns generic AI-looking UIs into interfaces that feel actually designed",
+    "target_user": "美国/全球的独立开发者、vibe coding 用户、早期创业团队创始人",
     "scores": {
      "topicality": 9,
-     "accessibility": 7,
+     "accessibility": 8,
      "wow": 8,
      "pain": 8,
-     "packaging_room": 7,
+     "packaging_room": 6,
      "monetization": 5,
-     "license_safety": 4,
-     "demoability": 9
-    },
-    "product_idea": "上传截图或输入网址，一键生成设计审计报告和改版前后的对比视频",
-    "demo_idea": "网页左边放AI味紫色渐变的丑界面，点一下就对比改版后的效果",
-    "attack_tool": false,
-    "red_flags": [
-     "只是一个 Skill 提示词包，没有技术壁垒，很容易被复制",
-     "CC BY 4.0 要求署名并保留对作者的链接，这会给商业产品带来合规负担，作者本人也已经在卖设计服务，两者存在利益冲突",
-     "依赖 Claude、Codex 等第三方 agent 平台，随时可能被官方功能覆盖",
-     "核心价值是审美判断，难以稳定量化，因此付费意愿有限"
-    ],
-    "reason": "话题性和演示效果都非常强，正好赶上 vibe coding 的审美疲劳；但项目本质是提示词，License 也限制商业化，因此更适合做内容传播，变现要靠服务，而非做 SaaS 订阅"
-   }
-  },
-  "ccch1mneyyy/dsh-Go": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "在手机上跑 AI 编程助手，还能远程遥控电脑",
-    "one_liner_en": "Run an AI coding agent on your phone, or remote-control your PC",
-    "target_user": "经常不在电脑旁的独立开发者、远程工作者、AI 编程重度用户（美国 / 全球英文市场，愿意为 Claude Code / Codex 类工具付费的人群）",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 6,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 9,
-     "monetization": 6,
-     "license_safety": 2,
+     "license_safety": 5,
      "demoability": 7
     },
-    "product_idea": "做托管式移动端 AI 编码代理 App：免装 Linux 环境，订阅制，云端或远程主机接力执行任务",
-    "demo_idea": "网页模拟手机屏幕：一句话让代理改代码、插入打断消息、实时看终端输出，再一键切到远程电脑",
+    "product_idea": "做一个网页版 AI 界面美化器：输入链接或截图，自动输出前后对比和一键修复",
+    "demo_idea": "左右拖动对比同一个 AI 界面的美化前后，配 10 秒自动改造视频",
     "attack_tool": false,
     "red_flags": [
-     "AGPL-3.0 加商标/吉祥物保留条款，商业二开和闭源分发受限",
-     "第三方非官方客户端，依赖 DeepSeek Harness，上游 API 与授权随时可能变",
-     "依赖 PRoot 内置 Linux 环境，体积约 1GB，后台被杀、Android 版本兼容问题多",
-     "与 DeepSeek 无关联，命名和品牌存在商标风险",
-     "重心明显偏中国开发者社区（QQ 群、中文优先文档），英文市场需重建渠道"
+     "CC-BY-4.0 并非标准软件许可证，商用需要署名和回链，会带来商标与打标摩擦",
+     "本质是依赖 Claude Code、Codex 和 Antigravity 的提示词技能包，没有技术护城河且容易被复制",
+     "名称和技能定位绑定单一模型厂商，模型能力升级后可能被官方原生能力替代",
+     "视频和图片生成依赖外部付费服务"
     ],
-    "reason": "话题度和包装空间很强，移动端跑编码代理确实抓人；但 AGPL 加第三方依赖，把商业化天花板和授权风险都压得很低。"
+    "reason": "话题性强、痛点真实、演示效果出色，但形态是提示词技能包，包装空间和收费能力有限，且许可证会带来署名麻烦。"
    }
   },
   "storytold/craft-anything": {
@@ -461,36 +433,6 @@
      "捐款走加密货币，商业化路径回避了主流支付"
     ],
     "reason": "话题性与演示性极强，但 GPL-3.0 与任天堂法务风险几乎封死了收费路径，更适合做内容而非产品。"
-   }
-  },
-  "sherlock-project/sherlock": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "输入一个用户名，一键查出这个人在400多个社交平台的账号",
-    "one_liner_en": "Find a person's accounts across 400+ social networks from one username",
-    "target_user": "美国/全球的 OSINT 调查员、渗透测试团队、招聘与背调机构、品牌保护与法务团队",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "做 OSINT 调查 SaaS 网页：用户名追踪 + 报告导出 + 监控告警，按 $29-99/月订阅",
-    "demo_idea": "网页输入一个用户名，30 秒内实时弹出 20+ 平台匹配账号截图，并生成一份可下载的调查报告",
-    "attack_tool": false,
-    "red_flags": [
-     "CLI 工具已很成熟且免费、Docker/pip 安装简单，产品化加价空间有限",
-     "查询他人账号涉及隐私与平台反爬（ToS、GDPR/PDPA、加州隐私法），搜别人的账号易被滥用",
-     "商业 OSINT 竞品多（Maltego、BeenVerified、Pipl），个人做差异化难",
-     "已有官网和赞助商，官方运营成熟"
-    ],
-    "reason": "话题性强、演示直观、MIT 协议干净，但项目本身已是成熟免费工具，产品化和付费转化空间有限，且隐私合规风险需重点提示。"
    }
   },
   "meta/astryx": {
@@ -888,748 +830,124 @@
    }
   },
   "ag-ui-protocol/ag-ui": {
-   "date": "2026-11-16",
+   "date": "2026-11-24",
    "v": 3,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "让 AI 智能体能直接接入网页前端的标准协议",
-    "one_liner_en": "An open protocol that lets AI agents plug into web frontends",
-    "target_user": "构建 AI 应用的前端工程师与 AI 产品团队（CopilotKit 生态内的开发者）",
+    "one_liner": "让AI智能体的回答能实时显示在App里的统一协议",
+    "one_liner_en": "An open protocol that streams AI agent events into any app frontend.",
+    "target_user": "做AI Agent产品的美国/全球前端与全栈开发者、AI初创工程团队",
     "scores": {
      "topicality": 8,
      "accessibility": 4,
-     "wow": 6,
+     "wow": 5,
      "pain": 7,
-     "packaging_room": 3,
-     "monetization": 4,
+     "packaging_room": 4,
+     "monetization": 3,
      "license_safety": 9,
-     "demoability": 6
+     "demoability": 5
     },
-    "product_idea": "做托管式 agent-前端连接服务，含调试面板和托管网关",
-    "demo_idea": "网页里输入指令，实时看到 agent 流式输出并反过来更新页面状态",
+    "product_idea": "做开箱即用的AG-UI托管网关+React组件库，让团队几行代码接入任意Agent",
+    "demo_idea": "网页并排演示：同一Agent事件流同时渲染成聊天、进度条、工具调用卡片三种UI",
     "attack_tool": false,
     "red_flags": [
-     "这是由 CopilotKit 主导的厂商协议标准，已有官方 CLI 和 Dojo，个人很难做出差异化的产品",
-     "属于协议层基础设施，不是可以直接面向终端用户销售的成品",
-     "大厂（微软、谷歌、AWS）已加入生态，后续产品空间会被官方整合掉"
+     "大厂背书（Google/Microsoft/Amazon/Oracle）的官方标准协议，个人难以在协议层做差异化",
+     "本质是SDK/规范基础设施，非终端产品，商业模式薄弱",
+     "已有CopilotKit等成熟商业公司在其上做产品",
+     "协议类项目，普通用户难理解，传播面窄",
+     "技术变化快，1.0刚冻结，生态仍在早期"
     ],
-    "reason": "协议定义清晰、生态强劲，话题度高，但它是巨头与厂商共同推进的标准和基础设施，包装成独立产品的空间很小，更适合作为内容选题而非创业项目。"
-   }
-  },
-  "hitkeeen/blender-ai-mcp-addon": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "在 Blender 里用聊天让 AI 帮你搭场景、改材质、自动建模",
-    "one_liner_en": "Chat with AI inside Blender to build scenes, edit materials and automate 3D work.",
-    "target_user": "美国的 3D 艺术家、技术美术、独立游戏和产品渲染从业者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "带可视化聊天面板的 Blender AI 插件，内置多模型连接和预设工作流模板",
-    "demo_idea": "网页分屏播放：左边输入一句 brief，右边 Blender 视口实时生成展台、灯光和材质",
-    "attack_tool": false,
-    "red_flags": [
-     "仓库创建仅 3 天，Star 增长异常（日增 1478），疑似刷量，真实性待核实",
-     "release 仅支持 Windows x64 和 Blender 4.2 及以上版本，跨平台覆盖不足",
-     "execute_code 官方说明不是安全沙箱，存在运行任意 Python 代码的风险",
-     "依赖第三方模型 API key，用户成本和使用门槛偏高",
-     "同类 Blender MCP 项目已有多个，差异化不足"
-    ],
-    "reason": "话题热、演示效果好，但项目非常新、Star 数据可疑，且同类竞品多、产品化空间有限。"
+    "reason": "协议标准类项目，话题热但属基础设施、大厂主导，包装与变现空间小，适合做技术科普内容而非产品。"
    }
   },
   "dream-num/univer": {
-   "date": "2026-11-16",
+   "date": "2026-11-24",
    "v": 3,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "把电子表格和文档编辑器嵌进自己产品的开源 Office SDK",
-    "one_liner_en": "An open-source Office SDK to embed spreadsheets and docs into your own app",
-    "target_user": "SaaS 产品团队、内部工具开发者、想把表格/文档能力嵌入产品的美国创业公司",
+    "one_liner": "在自己产品里嵌入 Excel 和 Word 编辑器的开源办公 SDK",
+    "one_liner_en": "Open-source Office SDK to embed spreadsheet and document editing in your app",
+    "target_user": "美国/全球的 SaaS 团队、B2B 软件开发者、需要在产品里内嵌表格或文档编辑的工程团队",
     "scores": {
      "topicality": 7,
      "accessibility": 5,
      "wow": 6,
      "pain": 7,
-     "packaging_room": 4,
-     "monetization": 5,
+     "packaging_room": 5,
+     "monetization": 6,
      "license_safety": 9,
      "demoability": 6
     },
-    "product_idea": "基于 Univer 做一个面向小团队的在线表格协作 SaaS，开箱即用、免自建后端",
-    "demo_idea": "网页嵌入一个可编辑表格，输入公式实时计算并展示多人光标同步",
+    "product_idea": "做一个开箱即用的嵌入式表格/文档白标编辑器，带托管协作与文件导入导出",
+    "demo_idea": "网页里并排展示可编辑表格与文档，实时改公式和格式，30 秒展示嵌入效果",
     "attack_tool": false,
     "red_flags": [
-     "核心商业插件、Server SDK、AI SDK 均闭源收费，开源部分只是引擎",
-     "官方已有成熟商业产品和文档体系，个人在其上做差异化空间小",
-     "定位是 SDK 而非终端产品，普通用户难感知价值"
+     "核心商业插件、Server SDK、AI SDK 需单独付费授权，开源只是引擎底座",
+     "项目已是成熟公司产品（univer.ai），个人做差异化空间小",
+     "SDK 面向开发者，普通用户不易理解，传播门槛高",
+     "后端协作/导入导出是商业闭源部分，自建成本高"
     ],
-    "reason": "引擎质量高、许可证友好，但商业价值集中在闭源部分，适合做技术科普内容而非独立产品。"
-   }
-  },
-  "Tencent/LoopForge": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "把 AI 写代码的流程固化成带人工审批的可重复工作流",
-    "one_liner_en": "Turn AI coding agents into repeatable, human-approved delivery workflows",
-    "target_user": "美国和全球的中小型工程团队、平台/DevOps 负责人、AI 编码工具重度使用的技术主管",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 5,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 3,
-     "monetization": 6,
-     "license_safety": 8,
-     "demoability": 5
-    },
-    "product_idea": "托管版 AI 编码流水线：模板化 SOP、审批门、按团队席位订阅",
-    "demo_idea": "网页模拟一次需求：AI 分角色改代码，中途弹出审批卡，点通过后自动开 PR",
-    "attack_tool": false,
-    "red_flags": [
-     "腾讯官方出品，个人难以在上面做出差异化产品",
-     "License 标为 NOASSERTION，需确认是否真为 MIT",
-     "依赖 Docker 自托管，安装和运维门槛高，不适合纯网页产品化",
-     "默认集成 CodeBuddy 等国内工具，海外用户生态不匹配"
-    ],
-    "reason": "话题性强、痛点真实，但大厂自托管重资产，包装空间小，适合做内容而非独立创业。"
+    "reason": "GitHub 增长快、许可友好，但它是成熟公司的 SDK 底座，商业化核心闭源，适合做技术内容而非独立包装产品。"
    }
   },
   "RoutineMiku/apkstart": {
-   "date": "2026-11-16",
+   "date": "2026-11-24",
    "v": 3,
    "eval": {
     "category": "效率工具",
-    "one_liner": "在Windows上双击APK就能像装原生软件一样运行安卓应用",
-    "one_liner_en": "Run Android apps on Windows like native apps: double-click any APK to install and launch.",
-    "target_user": "在Windows电脑上想用安卓App（手游、国内/小众安卓应用、营销工具、测试人员）的美国与全球用户，以及需要安卓App分发测试的独立开发者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "免费开源壳+Pro订阅：一键装APK、免配置运行时、多开分屏、企业内测分发。",
-    "demo_idea": "网页播放双击APK→自动生成桌面图标→点击全屏跑起安卓App的录屏，对比WSA繁琐配置。",
-    "attack_tool": false,
-    "red_flags": [
-     "1.3GB安装包和系统镜像分发成本高，含Google Play GMS镜像，重分发可能违反Google SDK/Play条款",
-     "依赖Android Emulator与GMS镜像，供应链并非完全自主",
-     "海外市场已有WSA、BlueStacks、Google Play Games、Genymotion等强竞品，免费开源难直接收费",
-     "作者明显面向国内用户（Gitee源、中文README），海外获客需重做",
-     "QEMU运行时对普通用户仍有性能与硬件加速门槛",
-     "README含多处指向本仓库的指令式内容，已忽略"
-    ],
-    "reason": "演示直观、话题性强，但1.3GB包体、GMS条款和WSA/BlueStacks夹击下商业化空间窄，更适合做爆款内容而非独立产品。"
-   }
-  },
-  "yetanotherbrowser/yab": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "极简原生 macOS 浏览器，内置广告拦截与 AI 代理标签页",
-    "one_liner_en": "A quiet native Mac browser with built-in ad blocking and AI agent tabs",
-    "target_user": "macOS power users and privacy-conscious prosumers in the US/EU who pay for Safari/Chrome alternatives like Arc, SigmaOS, or Orion",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 8,
-     "wow": 6,
-     "pain": 5,
-     "packaging_room": 3,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "把 Yab 做成面向美国 Mac 用户的付费浏览器，卖点是隐私、广告拦截和 AI 代理标签页",
-    "demo_idea": "用一段屏幕录像展示：一个地址栏、双内核切换、AI 代理在隔离标签页里自动填表并请求确认发送",
-    "attack_tool": false,
-    "red_flags": [
-     "项目本身已经是带官网、下载包和 iPhone 伴侣应用的成熟产品，几乎没有‘开源粗糙版’的包装空间",
-     "浏览器是重工程赛道，Safari/Chrome/Arc/Orion/Dia 强敌环伺，个人很难做出差异化",
-     "创建仅 1 天就 484 star，增长曲线可疑，需警惕刷星或营销号",
-     "AI 代理操作浏览器涉及凭证与支付，责任与信任门槛高"
-    ],
-    "reason": "项目质量高但已是成品，包装与商业化空间小，浏览器赛道重且拥挤，更适合做内容选题而非创业标的。"
-   }
-  },
-  "YellowLaborerMarket/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "检测哪些免费代理配置能真正解锁 Gemini 和 Google AI Studio",
-    "one_liner_en": "Find free proxy configs that actually unlock Gemini and Google AI Studio",
-    "target_user": "美国及全球需要绕过地区限制使用 Gemini 的自由职业者、跨境开发者、VPN/代理重度用户",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 5,
-     "wow": 4,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 8,
-     "demoability": 3
-    },
-    "product_idea": "多账号会话批量检测 Gemini 可用地区，输出可用地区与账号清单",
-    "demo_idea": "网页并行跑多个模拟出口，实时显示 AI Studio 重定向与 Gemini 不支持提示对比",
-    "attack_tool": false,
-    "red_flags": [
-     "核心用途是绕过 Google 地区限制和 DPI 检测，违反 Google 服务条款，存在法律与封号风险",
-     "客户群体属于规避平台限制的用户，支付渠道（Stripe）对代理/翻墙类业务风控严格，商业化几乎走不通",
-     "README 自带 Dropbox 的 .rar 直链和电报频道来源，供应链与安全性存疑",
-     "macOS/Linux/Android 未实机验证，仅 Windows 跑通，产品质量粗",
-     "项目创建 1 天即 474 星，增长曲线异常，疑似刷星或营销炒作",
-     "依赖第三方免费配置列表与 Xray 分叉，上游随时可能变更或失效"
-    ],
-    "reason": "话题有热度、痛点真实，但本质是规避地区封锁的灰色工具，商业化受阻、合规风险高，内容可做但不宜包装成产品。"
-   }
-  },
-  "weldbladesmithwharf/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "批量测试代理配置能否访问 Gemini 的检测工具",
-    "one_liner_en": "Batch-test proxy configs to see which ones get you into Gemini.",
-    "target_user": "需要访问 Google AI Studio 或 Gemini 受限地区的用户（伊朗、俄罗斯等），并非美国主流用户",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 4,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "做成 SaaS 版代理配置可用性检测，但要自行找到合规的变现路径",
-    "demo_idea": "网页输入一个代理链接，模拟登录态检查能否进入 Gemini",
-    "attack_tool": false,
-    "red_flags": [
-     "核心用途是绕过地域封锁访问 Google，属于规避平台规则",
-     "目标用户主要是受限地区网民，不是美国/全球英文付费市场",
-     "商业变现困难，几乎无人愿意为绕过封锁付美元订阅",
-     "下载走 Dropbox 中国区无关但分发随意，安全性存疑",
-     "仓库仅 1 天、Star 数异常暴涨，疑似刷量"
-    ],
-    "reason": "传播有噱头但受众偏离美国市场，绕过封锁性质合规风险高，缺乏健康付费模式，不适合产品化。"
-   }
-  },
-  "n4ze3m/tiny-voca": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "4.5M参数超小英文语音合成模型，能在浏览器和CPU上跑",
-    "one_liner_en": "A tiny 4.5M-parameter English text-to-speech model that runs in the browser or on a CPU",
-    "target_user": "独立开发者、做无障碍/朗读功能的SaaS团队、浏览器端AI应用开发者",
+    "one_liner": "让Windows电脑双击安卓APK就能像装软件一样用安卓应用",
+    "one_liner_en": "Run Android apps on Windows like native software: double-click an APK and it just works",
+    "target_user": "想在Windows上跑安卓应用/手游的普通用户，尤其是嫌BlueStacks广告多、WSA已停服的美国与全球桌面用户",
     "scores": {
      "topicality": 7,
      "accessibility": 8,
      "wow": 7,
-     "pain": 5,
+     "pain": 6,
      "packaging_room": 7,
-     "monetization": 4,
-     "license_safety": 10,
-     "demoability": 9
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 5
     },
-    "product_idea": "把模型做成零配置的浏览器TTS API/组件，按调用量收费，服务于需要低成本朗读的应用",
-    "demo_idea": "网页里输入任意英文句子，点击即用F2/M2两个声音秒级朗读，对比大模型延迟与体积",
+    "product_idea": "做付费版一键安卓应用运行器，去广告、免命令行、内置运行时、自动配置驱动与网络",
+    "demo_idea": "网页录屏：双击APK，桌面上直接出现应用图标，点开就是独立窗口跑起来",
     "attack_tool": false,
     "red_flags": [
-     "模型权重与数据集的开放模型，个人很难在其上做出差异化护城河",
-     "仅两个固定音色、纯英文、不支持克隆，商业能力弱",
-     "TTS赛道被ElevenLabs、OpenAI、浏览器自带Web Speech API挤压，付费意愿低",
-     "模型本身而非产品，商业化需额外工程投入"
+     "核心依赖Google Android Emulator与系统镜像，受其许可与分发条款约束，商业再分发有法律风险",
+     "微软WSA已停更，但BlueStacks/Genymotion/MuMu等成熟竞品占据美国市场，差异化空间有限",
+     "作者自述早期版本、自娱自乐、体验不佳，产品化需大量打磨",
+     "内置完整运行时安装包1.3GB，分发与更新成本高",
+     "运行安卓应用可能涉及应用商店条款与版权灰区，面向美国市场需注意"
     ],
-    "reason": "演示效果出色且极易传播，但模型小、能力窄、巨头挤压，适合做内容选题，产品化天花板较低"
+    "reason": "传播价值不错，双击即用概念直观；但依赖官方模拟器、竞品强、商业化路径弱，包装空间中等。"
    }
   },
   "Noniv/abyssal-garden": {
-   "date": "2026-11-16",
+   "date": "2026-11-24",
    "v": 3,
    "eval": {
     "category": "多媒体创作",
-    "one_liner": "一个97KB的单HTML文件，用WebGPU纯代码生成可游泳的梦幻海底世界",
-    "one_liner_en": "A dreamy swimmable underwater world generated entirely by code in a single 97KB HTML file.",
-    "target_user": "面向全球英文市场的创意开发者、WebGPU/图形技术爱好者、以及想用互动3D场景做营销或教学展示的品牌方",
+    "one_liner": "一个用代码生成、可在浏览器里漫游的梦幻海底世界",
+    "one_liner_en": "A dreamy underwater world you can swim through in your browser, generated entirely by code",
+    "target_user": "数字艺术家、创意工作室、海洋教育机构、以及想要沉浸式品牌落地页的营销团队",
     "scores": {
      "topicality": 8,
      "accessibility": 9,
      "wow": 9,
      "pain": 4,
-     "packaging_room": 8,
-     "monetization": 4,
+     "packaging_room": 7,
+     "monetization": 5,
      "license_safety": 9,
-     "demoability": 9
+     "demoability": 8
     },
-    "product_idea": "做成免代码的互动3D场景生成器：上传文案或选主题，一键导出可嵌入官网/落地页的沉浸式WebGPU世界",
-    "demo_idea": "网页上直接打开即游：点Dive in用键鼠穿梭海藻林、沉船与蝠鲼之间，展示纯代码生成与离线运行",
+    "product_idea": "把海底世界做成可嵌入的品牌落地页或沉浸式冥想/教育体验，支持自定义场景和贴牌",
+    "demo_idea": "网页直接加载进入第一人称海底漫游，几秒内展示海带森林、光线和魔鬼鱼，无需安装",
     "attack_tool": false,
     "red_flags": [
-     "纯视觉炫技项目，缺少明确的高频付费场景，商业化路径需自行构建",
-     "WebGPU对浏览器/设备有要求，移动端体验与性能受限",
-     "需要节点构建、改源码有门槛，普通用户难上手",
-     "当前为演示型单场景，差异化产品化需大量定制工作"
+     "需要 WebGPU，兼容性有限",
+     "纯视觉演示类，付费场景不清晰",
+     "作者单人项目，可持续性未知"
     ],
-    "reason": "传播性极强、演示惊艳、MIT许可安全，适合做内容；但商业化偏弱，需包装成场景生成/营销嵌入工具才有付费空间。"
-   }
-  },
-  "WindGatorRise37/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "一个扫描并筛选能访问 Google AI Studio 和 Gemini 的代理配置的工具",
-    "one_liner_en": "A scanner that finds proxy configs which actually get you into Google AI Studio and Gemini",
-    "target_user": "在 Gemini 受限地区、需要稳定访问 Google AI 的开发者和研究者（主要分布在中东、亚洲等地），全球英文市场为其次要市场",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 5,
-     "wow": 4,
-     "pain": 4,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "轻量的 SaaS 或桌面工具，能一键验证任一代理配置是否可登录访问 Gemini/AI Studio，并给出替代方案",
-    "demo_idea": "网页里输入一个代理配置，模拟浏览器用登录态访问 AI Studio，展示它是否被地区屏蔽",
-    "attack_tool": false,
-    "red_flags": [
-     "实质是规避 Google 地区限制、绕过平台风控的工具，处于灰产、ToS 违规边界",
-     "依赖抓取免费 v2ray 配置列表和免责 DPI 方案，供应链与法律风险高",
-     "用户群是受限地区个人用户，付费意愿和支付渠道都很弱，美国/全球英文市场几乎无需求",
-     "README 主要是波斯语社群生态（Telegram 链接、伊朗项目），与目标市场错位",
-     "核心价值依赖 Google 登录态检测，纯前端 demo 很难复现，且易被 Google 风控识别"
-    ],
-    "reason": "蹭 AI 地区限制话题有点热度，但本质是绕过平台限制的灰产工具，付费人群不清晰，难以在美国/全球市场做成合规产品，传播和变现都受限。"
-   }
-  },
-  "WireProvostPucker/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "检测哪些代理配置能真正打开谷歌AI Studio和Gemini",
-    "one_liner_en": "Test which proxy configs actually get you into Google AI Studio and Gemini",
-    "target_user": "需要稳定访问 Google AI（Gemini、AI Studio）的伊朗等受限地区用户、跨境远程工作者、以及批量售卖代理订阅的小商家",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 4,
-     "wow": 4,
-     "pain": 5,
-     "packaging_room": 4,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 2
-    },
-    "product_idea": "做成按次或订阅制的“Gemini可用性检测”网页服务，用户粘贴配置即出可用/不可用结果",
-    "demo_idea": "网页里贴入几条模拟代理配置，实时显示哪些能进AI Studio、哪些被跳转到受限地区页",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是绕过Google地区限制的代理/翻墙工具，属于规避平台规则，商业化易被Google、Cloudflare、Stripe等风控封禁",
-     "依赖第三方免费v2ray配置列表与反DPI配方，来源灰色、稳定性不可控",
-     "唯一README语言为波斯语并有Dropbox rar分发，主用户群在伊朗而非美国市场，与目标市场错配",
-     "创建仅1天就474星，增长异常，疑似刷星，可信度存疑",
-     "需要本地安装桌面App并调用已登录Chrome，网页demo几乎无法还原真实判定逻辑",
-     "下载链接指向.rar格式文件且无签名，安全风险高"
-    ],
-    "reason": "绕Google地区封锁的代理检测工具，痛点真实但属规避规则灰色地带，主战场在受限地区而非美国市场，商业化与传播风险都高，不建议做产品，仅可做猎奇向内容。"
-   }
-  },
-  "WyrmClimberManacle/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "批量测试哪些代理节点能真正登录使用 Gemini 和 AI Studio",
-    "one_liner_en": "Batch-test which proxy configs actually let you sign in to Gemini and AI Studio",
-    "target_user": "需要稳定访问 Google AI 服务的海外开发者、AI 工具重度用户、做多地区出口配置的网络爱好者",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 4,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "做成订阅制网页/桌面工具，一键批量检测代理节点对 Gemini、ChatGPT 等服务的真实可用性并给出可用节点清单",
-    "demo_idea": "页面上传一串节点链接，实时跑一批状态条，标出哪些能进 AI Studio、哪些被地区拦截",
-    "attack_tool": false,
-    "red_flags": [
-     "核心用途是绕过地区限制和网络审查，处在 Google 服务条款和平台规则的灰色地带",
-     "依赖 v2ray、Xray、Cloudflare Worker 等代理生态，属于规避性工具，政治/合规风险高",
-     "只有 Windows 真机验证过，macOS/Linux/Android 未实测，成品度低",
-     "创建仅 1 天即 473 星，疑似刷星或营销驱动，可信度待查",
-     "Makefile 为主语言、README 混杂多语言，项目结构不像正经产品",
-     "目标用户多是免费节点白嫖人群，付费意愿弱"
-    ],
-    "reason": "需求真实但属于规避地区限制的灰色工具，难以公开商业化，传播有话题性但付费和合规空间都窄，适合做内容不适合做产品。"
-   }
-  },
-  "WindowStaffGate11/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "检测哪些代理配置能真正打开谷歌Gemini",
-    "one_liner_en": "Test which proxy configs actually work for Google Gemini",
-    "target_user": "需要稳定访问 Google AI 服务的美国和全球开发者、AI 重度用户",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 4,
-     "wow": 4,
-     "pain": 3,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "面向美国市场的代理配置健康检查 SaaS，按月订阅",
-    "demo_idea": "网页输入几条代理链接，实时显示哪些能登录 Gemini",
-    "attack_tool": false,
-    "red_flags": [
-     "主要用途是绕过 Google 地区限制，违反 Google 服务条款，可能在主要平台被下架或封号",
-     "依赖免费 v2ray 配置列表和 Telegram 渠道，供应链和可信度风险高",
-     "README 称仅 Windows 实际跑通，其余平台未验证，质量存疑",
-     "一星内暴涨 473 星，疑似刷星，数据不可信",
-     "变现路径灰色，难以通过 Stripe 等正规支付",
-     "面向伊朗用户的双语 README 说明真实受众不在目标市场"
-    ],
-    "reason": "绕区工具，合规风险高，付费意愿弱，仅适合作为内容选题，做产品空间很小"
-   }
-  },
-  "TurtleReside/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "测试哪些代理配置能真正打开 Gemini 和 AI Studio 的扫描工具",
-    "one_liner_en": "Find which proxy configs actually get you into Gemini and Google AI Studio",
-    "target_user": "需要访问受限地区 AI 服务的用户、做代理/VPN 配置分发的站长",
-    "scores": {
-     "topicality": 5,
-     "accessibility": 4,
-     "wow": 4,
-     "pain": 5,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "面向代理配置用户的在线检测面板：粘贴配置，用自己的登录浏览器实测能否进 Gemini",
-    "demo_idea": "网页里模拟一次配置扫描，展示每条配置的可用/被封状态与地区结论（用假数据）",
-    "attack_tool": false,
-    "red_flags": [
-     "核心用途是绕过地区封锁，涉及绕过 Google 服务条款，不适合公开运营和收款",
-     "依赖第三方免费 v2ray 配置列表和 anti-DPI 方案，灰产色彩重",
-     "README 含 Dropbox 打包下载、Telegram 链接，有分发恶意文件的信任风险",
-     "仅 Windows 实测，其他平台未验证；项目一天内涨 473 星，数据可疑",
-     "变现几乎只能走灰产/订阅，海外正规收款渠道（Stripe）风险高"
-    ],
-    "reason": "绕过地区限制的代理检测工具，痛点真实但商业模式和合规都站不住，做内容有话题性，做产品风险过大。"
-   }
-  },
-  "WerewolfEmuHub/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "批量检测哪些代理配置能连上 Gemini 和 AI Studio",
-    "one_liner_en": "Scan proxy configs to see which ones get you into Gemini and AI Studio",
-    "target_user": "需要稳定访问 Google AI 服务的海外开发者、AI 工具重度用户和跨境数据工作者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做成桌面版代理测速与区域可达性检测工具，提供订阅制付费",
-    "demo_idea": "网页模拟多个代理节点，一键检测并标出能打开 Gemini 的节点",
-    "attack_tool": false,
-    "red_flags": [
-     "项目本质是绕过区域限制和网络审查（anti-DPI、代理链）的工具，在美国和全球市场都涉及平台条款与出口管制方面的风险",
-     "依赖 Telegram 频道和非官方 Xray 分支，供应链存在风险",
-     "发布包没有代码签名，而且是早期预发布，macOS、Linux 和 Android 都未充分测试",
-     "商业模式模糊，用户倾向使用免费代理列表，付费意愿低",
-     "代理和翻墙这个赛道本身就让大厂、正规公司和应用商店难以接受，商业化空间有限"
-    ],
-    "reason": "技术上可行且开源许可证友好，但核心价值是规避区域限制，合规和商业化空间受限，适合做话题内容，不适合认真做成产品。"
-   }
-  },
-  "Violetnyudress/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "找出能真正登录使用 Gemini 的代理配置",
-    "one_liner_en": "Find proxy configs that actually get you into Gemini and AI Studio",
-    "target_user": "需要跨境访问 Gemini 的开发者、AI 重度用户，以及代理服务经销商",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 3,
-     "wow": 4,
-     "pain": 5,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "做一个代理配置可用性检测的小型订阅工具",
-    "demo_idea": "在网页里模拟登录后检测几个假配置能否进入 Gemini",
-    "attack_tool": false,
-    "red_flags": [
-     "核心用途是规避地区限制和网络审查，这个领域在美国市场灰色且敏感；如果做成产品，会被云平台和应用商店封禁",
-     "依赖免费 v2ray 配置列表和 Cloudflare Worker 面板，版权、滥用与供应链风险都很高",
-     "只能通过 Dropbox 的 rar 包分发，CI 构建的平台尚未真机验证，工程成熟度极低",
-     "安装需要 Chrome、WebKitGTK 等重型依赖，没有可靠的付费意愿，商业化基本走不通",
-     "仓库刚建 1 天就获得 473 颗星，可疑增长，话题标签堆砌 SEO 词"
-    ],
-    "reason": "规避审查的灰色工具，传播有争议、商业化几乎不可能，仅适合做围观型内容且要注意合规。"
-   }
-  },
-  "TrooperFilter/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "批量测试代理配置，找出能登录 Google Gemini 和 AI Studio 的那一个",
-    "one_liner_en": "Batch-test proxy configs to find which ones get you into Google Gemini and AI Studio",
-    "target_user": "需要访问 Google Gemini 和 AI Studio、但所在地区被封的海外开发者、独立开发者、跨境远程工作者（伊朗等被制裁地区用户为主，也能覆盖部分海外华人）",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 5,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "做一个托管在云端的检测服务：粘贴代理配置或订阅链接，自动在真实登录状态下测试 Gemini 可用性并给出结果。",
-    "demo_idea": "网页上用一组假的配置列表跑一遍扫描，进度条逐条变绿或变红，并标出\"可登录 Gemini\"。",
-    "attack_tool": false,
-    "red_flags": [
-     "项目本质是绕过地区访问限制的工具，涉及 Google 服务条款和反规避条款，商用有被下架、封号的风险",
-     "依赖第三方免费公开的 v2ray 配置列表，有供应链和投毒风险",
-     "分发方式是 Dropbox 打包的 rar 文件和未签名的 exe，这类形式在美国主流渠道很难建立信任",
-     "仍然处于 0.1.0 早期版本，只有 Windows 实际验证过，Android 不支持地区检测",
-     "README 有波斯语版本，作者和社区明显面向伊朗用户，账号主人很难触达这部分付费人群",
-     "在美国或全球英文市场，愿意为\"翻墙访问 Gemini\"付费的合规需求很弱，和产品化的叙事之间有冲突"
-    ],
-    "reason": "痛点真实，但集中在受限制地区，合规敏感、变现路径狭窄，在美国和全球英文市场很难做成正规付费产品，更适合当话题内容而不是创业项目。"
-   }
-  },
-  "Watchlespeed/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "批量测试免费代理配置能否通过谷歌 Gemini 的区域封锁",
-    "one_liner_en": "Batch-test free proxy configs to see which ones get past Google Gemini region blocks",
-    "target_user": "需要绕过地区限制使用 Gemini 的全球用户，基本没有合法付费意愿",
-    "scores": {
-     "topicality": 5,
-     "accessibility": 5,
-     "wow": 4,
-     "pain": 4,
-     "packaging_room": 4,
-     "monetization": 1,
-     "license_safety": 9,
-     "demoability": 3
-    },
-    "product_idea": "没有可合法持续的产品形态，绕区访问违反 Google 服务条款",
-    "demo_idea": "纯前端无法演示，因为需要真实代理和已登录的谷歌账号",
-    "attack_tool": false,
-    "red_flags": [
-     "主要用途是绕过 Google 的区域访问限制，违反其服务条款，属于规避平台规则",
-     "商业模式和下载渠道（Dropbox 压缩包、Telegram 链接）都可疑，有分发恶意软件的风险",
-     "混淆代理配置和反 DPI 工具的供应链，可被用于钓鱼或窃取凭据",
-     "无真实用户付费场景，违规则下架风险极高",
-     "README 夹杂波斯语并引用 Telegram，目标受众不是美国市场",
-     "star 一天暴涨 473，疑似刷星"
-    ],
-    "reason": "绕区代理扫描工具，法律和平台条款风险高，缺乏商业空间，不建议做内容或产品"
-   }
-  },
-  "wisemeadowlarkspike/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "检测哪些代理节点能真正登录使用 Gemini 和 AI Studio",
-    "one_liner_en": "Test which proxy configs actually let you sign in to Gemini and AI Studio",
-    "target_user": "需要科学上网访问 Gemini 的海外伊朗、俄罗斯等受限地区用户，以及跨境团队/开发者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 5,
-     "wow": 5,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "一个桌面小工具，一键批量测试代理节点能否真正打开 Gemini，并自动挑选可用出口",
-    "demo_idea": "模拟节点列表，点击测试后逐个显示被封锁/可用的浏览器截图结论",
-    "attack_tool": false,
-    "red_flags": [
-     "核心用途是绕过地区封锁访问 Google 服务，违反 Google 服务条款，商业模式难成立",
-     "依赖第三方免费节点列表和 Cloudflare Worker 面板，供应链不稳定",
-     "内置 anti-DPI 翻墙配方，在美区上架/收款有合规与平台政策风险",
-     "桌面应用发布未签名，macOS/Windows 安装摩擦大",
-     "Demo 需真实浏览器登录态，纯前端 30 秒演示做不到"
-    ],
-    "reason": "实用但面向翻墙人群，变现路径窄且触碰平台条款；传播有话题但产品化空间和付费意愿有限，许可证是亮点。"
-   }
-  },
-  "VortexHostFeel/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "帮你找出能访问Gemini的代理配置，在登录状态下真实测试",
-    "one_liner_en": "Test which proxy configs actually get you into Gemini, in a signed-in browser.",
-    "target_user": "受地区限制、需要用代理访问 Google AI Studio 和 Gemini 的开发者、AI 爱好者和跨境从业者",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 5,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "一个可以直接下载使用的桌面应用，自动扫描并验证代理配置能否在登录状态下正常访问 Gemini。",
-    "demo_idea": "网页里模拟检测流程：找出几个代理配置，逐个在登录状态下测试，标出能用和不能用的结果。",
-    "attack_tool": false,
-    "red_flags": [
-     "项目用途绕开 Google 的地区限制，违反 Google 服务条款，存在被封号和分发渠道封禁的风险",
-     "核心依赖大量第三方免费代理配置，合法性、稳定性和隐私都很可疑",
-     "README 和 Release 都指向 Dropbox 上的 RAR 下载包，而且安装包没有签名，存在供应链和恶意软件风险",
-     "目前只支持 Windows 这一个平台，其他平台还没有经过真机验证，属于预发布版本",
-     "商业化很困难：用户群主要是为了免费获取地区限制内容的人，付费意愿低，而且这种能力很容易被大厂产品替代",
-     "涉及抓取登录浏览器状态，可能触及隐私与用户协议的边界"
-    ],
-    "reason": "主题有话题性，许可证也宽松，但用途是绕过平台地区限制，合规和渠道风险很大，付费意愿低，分发依赖不明安装包，不适合做成付费产品，只适合当内容素材。"
-   }
-  },
-  "WingDataVacuum/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "批量检测哪些代理配置能打开 Gemini 和 AI Studio",
-    "one_liner_en": "Find which proxy configs actually unlock Gemini and AI Studio",
-    "target_user": "需要稳定访问 Google AI 的海外开发者、AI 重度用户和跨境团队",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 5,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "一个带订阅的桌面小工具，自动检测代理配置能否登录使用 Gemini",
-    "demo_idea": "网页里模拟几组代理配置，点击检测后显示被地区限制或被放行",
-    "attack_tool": false,
-    "red_flags": [
-     "项目本质是绕过 Google 的地区限制，涉及平台规则灰色地带，产品化有被封禁风险",
-     "依赖免费代理配置列表与 Xray，存在合规和法律风险",
-     "Makefile 为主，实际是打包的桌面应用，网页 demo 难复现核心效果",
-     "商业化路径模糊，用户多为想白嫖免费代理的人群"
-    ],
-    "reason": "工具实用但处于灰色地带，话题性和痛点尚可，商业化与演示性较弱，适合做内容不适合做产品"
-   }
-  },
-  "TypeTyrantScheme/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "找出能登录 Google AI Studio 和 Gemini 的可用代理配置",
-    "one_liner_en": "Find proxy configs that actually get you signed into Google AI Studio and Gemini",
-    "target_user": "受地区限制、需要访问 Google AI 服务的海外开发者、AI 重度用户和代理玩家",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 4,
-     "wow": 5,
-     "pain": 5,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 5,
-     "demoability": 3
-    },
-    "product_idea": "做成订阅制的代理线路体检 SaaS，按月收费自动推送可用线路",
-    "demo_idea": "网页上贴一条代理配置，30 秒内显示它能否登录 Gemini 的判定",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是绕过 Google 地区限制、规避服务风控，违反 Google ToS，属灰产边缘",
-     "主用途为翻墙/规避审查，商业化与收款有被 Stripe/App Store 封禁风险",
-     "核心依赖第三方免费代理列表，供应链不稳定、随时失效",
-     "项目仅 1 天且 Stars 异常暴涨，疑刷星，真实性存疑",
-     "macOS/Linux/Android 未在真机验证，质量未证实",
-     "仅 Windows 实际可跑，可演示性弱"
-    ],
-    "reason": "绕地区限制的代理扫描工具，有真实痛点但踩 Google ToS 红线，商业化与传播风险高，故事有话题但不好做成正当生意。"
-   }
-  },
-  "VisionWormStudio/Gemini-Config-Checker-": {
-   "date": "2026-11-16",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "批量检测代理配置能否登录 Gemini 和 AI Studio 的区域限制工具",
-    "one_liner_en": "Scan proxy configs to find which ones let you sign in to Gemini and AI Studio",
-    "target_user": "需要稳定访问 Gemini / AI Studio 的海外开发者、AI 重度用户、跨境团队；以及出售代理订阅的小型服务商",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 4,
-     "wow": 4,
-     "pain": 4,
-     "packaging_room": 5,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做一个代理可用性检测 SaaS 或桌面 App，按目标服务（Gemini、ChatGPT 等）检测出口是否被区域封锁，输出可用配置清单",
-    "demo_idea": "网页模拟三个代理出口，分别显示 AI Studio 登录成功或跳转到 region 页，30 秒看出哪个可用",
-    "attack_tool": false,
-    "red_flags": [
-     "核心作用是绕过 Google 的区域限制，属于规避平台规则，商用存在 ToS 风险",
-     "依赖免费 v2ray 节点列表和 anti-DPI 配方，灰产色彩浓，美国主流渠道（Product Hunt / App Store）难上架",
-     "需要用户提供真实代理配置并嵌入 Xray 引擎，有法律和信任风险",
-     "README 有波斯语版本，来源社区偏伊朗地区社区，与目标市场用户画像不符",
-     "早期 pre-release，只有 Windows 实际跑过，多平台未验证",
-     "项目名和 Topics 堆砌 seo、mcp 等无关关键词，有刷榜、骗 star 嫌疑"
-    ],
-    "reason": "痛点真实但受众窄且带规避平台规则色彩，难做成合规付费产品；许可证宽松，适合做内容而非产品"
+    "reason": "视觉惊艳、传播力强、来由干净，但定位偏展示型玩具，商业化需靠贴牌或体验类落地页切入，痛点较弱"
    }
   },
   "joshpuckett/allo": {
@@ -4139,6 +3457,315 @@
      "开源免费且上游主导，商业化路径几乎不存在"
     ],
     "reason": "大厂官方推理优化基础设施，内容可讲但不适合做产品化，包装与商业价值都很低。"
+   }
+  },
+  "Avaneesh-Inamdar/Stream-Tube-Desktop": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "Windows 上的原生 YouTube 客户端，无广告、自动跳过赞助片段",
+    "one_liner_en": "A native YouTube desktop app with no ads and automatic sponsor skipping",
+    "target_user": "美国/全球重度 YouTube 用户、讨厌广告和赞助片段的人、喜欢桌面原生应用的技术爱好者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "打包成傻瓜式 Windows 桌面播放器，一键安装、免登录去广告跳赞助",
+    "demo_idea": "网页模拟播放器界面，点击后广告消失、赞助片段自动跳过、DeArrow 标题生效",
+    "attack_tool": false,
+    "red_flags": [
+     "违反 YouTube 服务条款，核心功能依赖绕过广告和官方播放器，随时可能被 YouTube 技术封堵或收到法律警告，商业化风险极高",
+     "依赖第三方服务（SponsorBlock、DeArrow、Return YouTube Dislike）的公开 API，稳定性不可控",
+     "仅支持 Windows/Linux，README 虽提到 Linux 但主体是 Windows，跨平台和 Mac 用户缺失",
+     "无法通过官方应用商店分发，只能靠官网/GitHub 下载，获客和信任成本高",
+     "去广告本质上是规避平台收入，难以向用户收费且易被告"
+    ],
+    "reason": "痛点真实、易理解、MIT 许可友好，但商业化几乎只能靠捐赠或增值功能，且面临 YouTube 条款和法律风险，适合做内容不适合做付费产品。"
+   }
+  },
+  "ubiquitarianism/leonida": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "让 GTA VI 在 Windows PC 上原生运行的转译项目（尚不能启动）",
+    "one_liner_en": "A project to run GTA VI natively on Windows PC from your own Xbox copy",
+    "target_user": "硬核 GTA 玩家与模拟器/逆向工程爱好者（不付费，靠捐赠或 Patreon）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 9,
+     "wow": 9,
+     "pain": 6,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 2
+    },
+    "product_idea": "几乎无法产品化：只能做内容、社区，或一个合规的进度追踪看板",
+    "demo_idea": "网页展示 26503 个着色器转译进度条与模型导出统计，无实机画面",
+    "attack_tool": false,
+    "red_flags": [
+     "涉及绕过主机独占、DRM 与版权，Take-Two 历来强力维权，法律风险极高",
+     "项目明确不能启动游戏，技术数据显示多来自未验证来源",
+     "GPL-3.0 且含游戏资源管线，商业包装几乎不可能",
+     "仓库仅创建 1 天即 1546 星，数据真实性存疑，可能是刷星或炒作",
+     "README 宣称不含游戏本体，但实际用途仍围绕破解主机独占内容"
+    ],
+    "reason": "话题性极强但价值在传播不在产品：法律风险高、无法启动、无收费路径，只适合做内容。"
+   }
+  },
+  "Marvisak/VIctory": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在 PC 上运行 GTA VI 的开源兼容层，还跑不动",
+    "one_liner_en": "An open-source layer that tries to run GTA VI on PC, still unplayable",
+    "target_user": "目前没有付费人群：项目处于实验阶段、跑不动游戏，且游戏本身尚未发售，做产品缺乏合法与商业基础",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 4,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "不适合做产品；最多做成技术拆解的科普内容，或一个展示模拟器原理的网页小演示",
+    "demo_idea": "网页上用简化示意图演示主机代码被转译后在 PC 上跑起来的过程，不做真实游戏画面",
+    "attack_tool": false,
+    "red_flags": [
+     "项目实际是把未发售游戏（GTA VI）跑在 PC 上，涉及版权和 DMCA 风险，Rockstar/Take-Two 极可能发律师函",
+     "README 明确写着 30 fps 菜单能跑、进入世界渲染失败、可能让显卡驱动崩溃，演示效果很差",
+     "游戏 2026-11 尚未发售，项目依赖用户自备游戏文件，法律地位很不稳",
+     "GPL-3.0 许可证限制商业闭源包装",
+     "一天内涨了 1 万星，更像话题热度，缺少稳定社区和可交付成果"
+    ],
+    "reason": "话题性极强、容易传播，但版权雷区、跑不动、无法合法收费，只适合做内容，不适合做成产品。"
+   }
+  },
+  "LeonidaReforge/Leonida": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在个人电脑上用自己的游戏副本模拟运行 Xbox 版《GTA6》的实验项目",
+    "one_liner_en": "An experimental project that tries to run the Xbox version of GTA VI on your own PC, using your own copy.",
+    "target_user": "关注 GTA6、模拟器、逆向工程的技术爱好者与游戏玩家（目前只提供情怀和话题，没有可付费产品）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 2,
+     "packaging_room": 5,
+     "monetization": 1,
+     "license_safety": 4,
+     "demoability": 2
+    },
+    "product_idea": "这个开源项目本身无法做成产品，只能做成\"GTA6 主机模拟进展追踪\"的内容栏目或社区门户，附带教程和捐赠。",
+    "demo_idea": "网页演示 26503 个着色器从 RDNA2 翻译成 SPIR-V 的流程对比动画和进度表，但无法展示可玩画面。",
+    "attack_tool": false,
+    "red_flags": [
+     "明确使用 Rockstar Games 和 Take-Two 的《GTA6》游戏资产，有极高的版权和 DMCA 风险",
+     "未获得 Rockstar 和 Take-Two 官方授权，项目自称与它们无关",
+     "项目方自己承认没有验证过真实零售版启动，也没有可玩内容",
+     "仓库不含游戏本体、密钥或可执行文件，用户需要自备受保护的游戏文件，法律边界模糊",
+     "GPL-3.0 许可证，商业化受限",
+     "Stars 增长异常（1 天 427 星），属于话题热度而非产品成熟度"
+    ],
+    "reason": "话题性极强但不可产品化：版权风险高、无可玩内容、商业化路径几乎为零，只适合做内容选题。"
+   }
+  },
+  "xcl-dev/xcl": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "让 Xbox 主机游戏能在 Windows 电脑上原生运行的兼容层",
+    "one_liner_en": "A compatibility layer that runs Xbox Series X|S console games natively on Windows PCs",
+    "target_user": "拥有 Xbox 主机游戏、想在高配 PC 上以更好画质和帧率重玩的硬核玩家，以及 RetroArch、Proton 这类模拟器与兼容层社区的技术爱好者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 9,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 4,
+     "demoability": 4
+    },
+    "product_idea": "做成一个带图形界面的启动器：自动识别用户已购买的游戏，一键启动并管理显卡驱动和着色器缓存。",
+    "demo_idea": "播放一段并排视频：左侧实拍主机画面，右侧是在 PC 上运行同一游戏的实拍画面，并显示 shader 翻译计数。",
+    "attack_tool": false,
+    "red_flags": [
+     "GPL-2.0 传染性许可证限制了闭源商业发行",
+     "需要用户自行从微软商店导出未加密的游戏文件，这属于灰色地带，容易被 DMCA 下架或被律师函警告",
+     "依赖微软的 XGameRuntime 和 GDK 私有行为，随时可能被官方补丁封堵",
+     "目前只验证了 4-5 款游戏，且不少是已停服或预览版，覆盖面还不足以支撑产品",
+     "项目创建才 3 天，星标增长异常快，可能是刷榜，团队稳定性未知"
+    ],
+    "reason": "技术上非常惊艳，做内容会爆，但法律风险高，可用游戏少，GPL 许可证封死商业路，所以更适合做内容，不适合做产品。"
+   }
+  },
+  "wquguru/cicada": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "任何会议和直播的实时双语字幕与同声传译",
+    "one_liner_en": "Live bilingual subtitles and AI meeting notes for any call or stream",
+    "target_user": "跨国远程工作者、英语非母语的美国职场人士、需要跨语言会议的销售与客服团队、留学与移民人群",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 8,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "把 Cicada 包装成面向英文市场的订阅制会议助手：一键安装，订阅内含翻译额度、说话人分离、跨设备同步",
+    "demo_idea": "网页上放一段带口音的英文会议音频，实时生成双语字幕并自动输出结构化会议纪要与待办",
+    "attack_tool": false,
+    "red_flags": [
+     "Android 端受系统限制无法录制通话音频，体验有落差",
+     "同声传译依赖 BlackHole 虚拟声卡，安装门槛高，非技术用户易放弃",
+     "语音克隆与声纹分离涉及生物识别数据，美国 Illinois BIPA、加州 CCPA 及新加坡 PDPA 需明确同意流程",
+     "非 Apple 芯片平台必须自带第三方 AI key，体验断裂，影响续费",
+     "项目同时面向微信、钉钉、飞书等中国会议场景，需确认是否只在国内才跑得通",
+     "增长过快，作者是单人还是团队、能否持续维护需核实"
+    ],
+    "reason": "痛点真实、演示直观、Apache 2.0 干净，商业化路径清晰；但虚拟声卡门槛与跨平台体验一致性是产品化最大障碍。"
+   }
+  },
+  "deterministic-machines/deslop-please": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "检查代码结构是否臃肿、接口是否太散的代码质量检查工具",
+    "one_liner_en": "An opinionated linter that flags sloppy code structure and leaks",
+    "target_user": "重视代码质量的工程团队、Tech Lead，以及用 AI 编程代理的开发者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 5,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "做 GitHub App 和 CI 插件，在 PR 里评论结构问题，并附带 AI 修复建议",
+    "demo_idea": "网页左侧粘贴一段烂代码，右侧实时高亮 field-leak 和循环依赖图",
+    "attack_tool": false,
+    "red_flags": [
+     "README 太简略，四类检测规则都没有具体说明",
+     "两天就涨 599 stars，有炒作嫌疑，热度未必能持续",
+     "只支持 Rust，受众窄于通用 linter",
+     "和 clippy、SonarQube 等成熟工具功能重叠"
+    ],
+    "reason": "概念好、易演示、MIT 许可证友好，但语言单一、规则说明少，还需验证真实痛点强度"
+   }
+  },
+  "INK-Q/agy-fast": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给 Google Antigravity 编程助手提速省 token 的本地插件",
+    "one_liner_en": "A local plugin that cuts Google Antigravity coding agent's latency and token use by ~30%",
+    "target_user": "使用 Google Antigravity 的专业开发者与 AI 编程重度用户、小团队技术负责人",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做成一键安装、带省 token/省时仪表盘的 Antigravity 性能插件，团队版可统一配置。",
+    "demo_idea": "网页对比同一任务的对话回合数、token 消耗和耗时，插件开/关两组数据实时并列展示。",
+    "attack_tool": false,
+    "red_flags": [
+     "强依赖 Google Antigravity 生态，平台一变即失效，天花板受制于第三方",
+     "README 用大量自测数据，缺乏第三方独立验证，可信度存疑",
+     "目标用户是开发者，付费意愿偏向一次性买断或订阅，ARPU 有限",
+     "仓库仅 5 天、增长异常快，需警惕刷 star 与营销水分"
+    ],
+    "reason": "痛点真实、话题热、MIT 友好，但绑定单一平台生态，产品化与收费空间受限，适合做内容而非独立生意。"
+   }
+  },
+  "FrigadeHQ/yogurt": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "在你电脑本地运行的私密AI会议记录，不需要会议机器人",
+    "one_liner_en": "Private AI meeting notes that run entirely on your computer, no bot in your call",
+    "target_user": "注重隐私的专业人士：律师、心理咨询师、企业高管、医疗顾问，以及受合规约束的团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 8,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "保留免费开源核心，推出付费的团队版，包含共享笔记库、统一部署和优先支持",
+    "demo_idea": "网页模拟一场会议，实时生成转写和摘要，再开关网络，证明它完全离线运行",
+    "attack_tool": false,
+    "red_flags": [
+     "项目已有官网 yogurt.so 和成熟桌面安装包，包装空间有限",
+     "本地大模型对 8GB 内存设备不友好，体验门槛高",
+     "会议录音涉及各州两方同意录音法律及 GDPR/PDPA 隐私合规",
+     "面临 Granola、Otter、Fireflies 等成熟英文竞品"
+    ],
+    "reason": "隐私本地化会议助手正当红，MIT 许可、演示直观、痛点真实；但已自带商业站，变现需靠团队版差异化。"
+   }
+  },
+  "chanke17/KuroCat": {
+   "date": "2026-11-24",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "一只会跟着你敲键盘、转头看鼠标的桌面宠物猫",
+    "one_liner_en": "A desktop cat pet that reacts to every keystroke and mouse move",
+    "target_user": "喜欢萌宠桌搭的年轻开发者、游戏玩家、学生和美国 macOS/Windows 桌面美化爱好者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 3,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "打包成桌面宠物订阅应用，做皮肤商店+多宠物角色，一次性解锁或买断皮肤包",
+    "demo_idea": "网页上让猫头跟随光标转动，按键盘时猫爪跟着抬起敲击，展示2.5D转头与捕猎瞳孔",
+    "attack_tool": false,
+    "red_flags": [
+     "核心卖点是娱乐桌面宠物，属于玩具而非解决真实痛点的工具，用户付费意愿弱",
+     "键盘鼠标全局监听虽是卖点，但会让美国用户担心隐私，需在商店说明中强调本地不记录",
+     "同类免费竞品多（Bongo Cat、Oneko、Shimeji），商业化空间有限",
+     "项目一天内暴增360星，热度来源可疑，需警惕刷星",
+     "Linux/统信UOS适配偏向国内市场，对全球英文用户意义有限"
+    ],
+    "reason": "可爱、易懂、演示性强，适合做内容；但作为产品痛点弱、免费竞品多、付费意愿低，包装和商业化空间有限，更适合当传播素材而非创业项目。"
    }
   }
  }
