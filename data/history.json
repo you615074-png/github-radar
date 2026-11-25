@@ -215,6 +215,12 @@
    "full_name": "wquguru/cicada",
    "category": "效率工具",
    "final": 7.79
+  },
+  {
+   "date": "2026-11-25",
+   "full_name": "Indigo-0167/universal-game-mod-manager",
+   "category": "其他",
+   "final": 6.77
   }
  ],
  "top": {
@@ -225,11 +231,7 @@
   "simbasjungles/free-my-tv": "2026-11-04",
   "Gathin23/cleanyourtv": "2026-10-30",
   "tangency-labs/solidcraft": "2026-11-07",
-  "morluto/rea": "2026-10-25",
-  "storytold/cadcraft": "2026-10-25",
   "Nutlope/hallmark": "2026-11-02",
-  "ARahim3/DigUp": "2026-10-25",
-  "pollen-robotics/microduck": "2026-10-25",
   "HeyPuter/everything": "2026-10-26",
   "rddmwmddr/android-ad-cleaner": "2026-11-11",
   "designfuchen/word-atlas": "2026-11-04",
@@ -339,7 +341,12 @@
   "ivall/xcl": "2026-11-23",
   "erkamyaman/safe-anything": "2026-11-23",
   "wquguru/cicada": "2026-11-24",
-  "FrigadeHQ/yogurt": "2026-11-24"
+  "FrigadeHQ/yogurt": "2026-11-24",
+  "Indigo-0167/universal-game-mod-manager": "2026-11-25",
+  "Nebula4207/av1-video-encoder-gui": "2026-11-25",
+  "kai415-debug/ffmpeg-video-audio-converter": "2026-11-25",
+  "xcl-dev/xcl": "2026-11-25",
+  "mdiri-ai/SoduWork": "2026-11-25"
  },
  "scores": {
   "heydamir/unslop": {
@@ -436,64 +443,33 @@
    }
   },
   "meta/astryx": {
-   "date": "2026-11-17",
+   "date": "2026-11-25",
    "v": 3,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "Meta 开源的 React 设计系统，专为人类和 AI 一起写界面",
-    "one_liner_en": "Meta's open-source React design system built for humans and AI agents",
-    "target_user": "美国及全球的 React 前端团队、独立 SaaS 开发者、用 AI 编码工具做原型的产品团队",
+    "one_liner": "Meta 开源的 React 设计系统，人和 AI 用同一套组件写界面",
+    "one_liner_en": "Meta's open source React design system built for humans and AI agents alike",
+    "target_user": "美国/全球的中小前端团队与独立开发者、以及用 AI 写 UI 的 SaaS 创业者",
     "scores": {
-     "topicality": 8,
+     "topicality": 7,
      "accessibility": 4,
      "wow": 5,
      "pain": 5,
      "packaging_room": 2,
-     "monetization": 2,
+     "monetization": 3,
      "license_safety": 10,
-     "demoability": 6
+     "demoability": 8
     },
-    "product_idea": "在 Astryx 上做 AI 友好的品牌主题包或组件模板市场，卖给小团队",
-    "demo_idea": "网页里并排切换七套主题和暗色模式，展示 150 个组件实时换皮",
+    "product_idea": "基于 Astryx 的付费主题商店 + AI 友好的定制模板生成器",
+    "demo_idea": "网页沙盒里实时切换主题色与暗色模式，30 秒看到整套组件换肤",
     "attack_tool": false,
     "red_flags": [
-     "Meta 官方大厂项目，个人很难在它上面做出差异化产品",
-     "自身已是成熟设计系统，packaging_room 低",
-     "设计系统本身没有清晰收费点，商业化困难",
-     "Beta 阶段且有 StyleX/React 19 依赖门槛",
-     "与 shadcn/ui、MUI、Chakra 等英文市场成熟竞品正面竞争"
+     "Meta 官方开源项目，大厂基础设施，个人难做差异化",
+     "已是成熟完整的设计系统，包装空间极小",
+     "Beta 阶段且依赖 StyleX/React 19，生态锁定",
+     "设计系统本身难以直接向终端付费"
     ],
-    "reason": "话题性强、许可证干净，但这是 Meta 官方成熟设计系统，包装与变现空间都很小，更适合做内容而非做产品。"
-   }
-  },
-  "vercel-labs/agent-browser": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "给AI智能体用的浏览器自动化命令行工具",
-    "one_liner_en": "A CLI that gives AI agents a browser they can drive step by step",
-    "target_user": "构建浏览器自动化智能体的开发者、AI 创业团队、需要做网页操作自动化的 SaaS 公司",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 3,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "面向非技术团队的托管版网页自动化智能体平台，按任务或坐席订阅收费",
-    "demo_idea": "网页里输入一句指令，实时显示浏览器逐步点击、填表、截图的过程",
-    "attack_tool": false,
-    "red_flags": [
-     "Vercel Labs 官方项目，个人很难在它之上做差异化产品",
-     "本身已是成熟的 CLI，产品化包装空间小",
-     "商业化路径依赖托管和云浏览器，易与 Browserbase 等基础设施竞争",
-     "浏览器自动化易被滥用做爬虫，需留意目标站点条款"
-    ],
-    "reason": "话题热、痛点真实、许可证宽松，但出身大厂且已是成熟工具，可包装与收费空间有限，更适合做内容而非独立产品。"
+    "reason": "大厂官方设计系统，演示性强、话题尚可，但个人几乎无法在其上包装出差异化付费产品，商业化弱，更适合做内容而非创业。"
    }
   },
   "jhaizhou-ops/S2Arm": {
@@ -950,304 +926,34 @@
     "reason": "视觉惊艳、传播力强、来由干净，但定位偏展示型玩具，商业化需靠贴牌或体验类落地页切入，痛点较弱"
    }
   },
-  "joshpuckett/allo": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "一款免费开源、可调粗细和圆润度的屏幕字体",
-    "one_liner_en": "A free open-source variable typeface built for screens and interfaces",
-    "target_user": "美国/全球的独立开发者、设计师、独立 SaaS 与 App 团队",
-    "scores": {
-     "topicality": 4,
-     "accessibility": 7,
-     "wow": 5,
-     "pain": 4,
-     "packaging_room": 3,
-     "monetization": 3,
-     "license_safety": 7,
-     "demoability": 7
-    },
-    "product_idea": "做网页版字体试玩与授权配置器，实时调轴生成自定义字体包",
-    "demo_idea": "网页上实时拖动粗细与圆润滑块，同一段文案即刻换字并展示箭头、分数等特性",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是字体资源文件（OFL 字体），属于资源型项目，产品化空间有限",
-     "OFL 明确禁止单独售卖字体本身，只能捆绑服务收费",
-     "项目基于 Inter 重绘，差异化靠设计品味，难形成技术壁垒"
-    ],
-    "reason": "设计质量高、演示直观，但字体本身免费且禁止单独售卖，商业与包装空间小，适合做内容不适合做产品。"
-   }
-  },
-  "google-research/paper-orchestra": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "多智能体自动把研究素材写成投稿级LaTeX论文",
-    "one_liner_en": "Multi-agent AI that turns raw research notes into a submission-ready LaTeX paper.",
-    "target_user": "全球AI/ML方向研究生、博后、发论文压力大的工业研究员",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "上传想法与实验日志，30分钟生成可直接投稿的LaTeX初稿，按篇或订阅收费。",
-    "demo_idea": "网页输入两段粗糙实验记录，实时生成带图表和参考文献的论文PDF预览。",
-    "attack_tool": false,
-    "red_flags": [
-     "Google官方研究项目，非官方产品但大厂背景，个人差异化空间受限",
-     "数据集未开源，README称将单独发布",
-     "需自备Gemini/OpenAI与Semantic Scholar密钥，安装门槛高",
-     "学术诚信争议：代写论文可能触碰会议与期刊政策",
-     "依赖Vertex AI等Google云服务"
-    ],
-    "reason": "话题性和惊喜感强，Stripe可收费，但大厂出身、数据集缺失、学术伦理争议限制包装与商业化。"
-   }
-  },
-  "affaan-m/ECC": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "给你的AI编程助手装上一套工程流程和技能库",
-    "one_liner_en": "Give your AI coding agent a built-in engineering workflow and skill library",
-    "target_user": "用 Claude Code、Cursor 写代码的欧美独立开发者、小型工程团队和技术负责人",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "托管版 AI 编程助手审计与技能市场的订阅服务，含私有仓库扫描与团队看板",
-    "demo_idea": "网页模拟一次需求从规划、测试到自审记忆的流程，对比无流程乱写",
-    "attack_tool": false,
-    "red_flags": [
-     "项目本身已有商业版 ECC Pro（$19/seat/mo）和官网，包装空间有限",
-     "30 万 star 与每日 900 增长可疑，疑似刷量或营销驱动，内容可信度有风险",
-     "核心是 agent、skill 配置集合，偏 prompt 工程，容易被大厂原生能力吞并",
-     "README 大量赞助与安装渠道说明，信息密度低，教程属性偏强"
-    ],
-    "reason": "话题热、MIT 友好、痛点真实，但已有商业化和刷量疑云，适合做内容，不宜当作空白产品去包装。"
-   }
-  },
-  "krisgfx9/Wireless-Device-Battery-Monitor": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "在 Windows 任务栏一眼看外设电量的小工具",
-    "one_liner_en": "See battery levels of your wireless mouse, headset and keyboard right on the Windows taskbar",
-    "target_user": "美国/全球的 Windows 游戏玩家、主播和重度外设用户，常备多款无线外设、讨厌装厂商驱动的 PC 用户",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 9,
-     "wow": 5,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 4,
-     "license_safety": 4,
-     "demoability": 6
-    },
-    "product_idea": "做成付费 Windows 商店小应用：一键安装、多设备电量面板、低电提醒、主题定制",
-    "demo_idea": "网页模拟 Windows 任务栏，图标旁实时显示鼠标/耳机电量，掉到 15% 变红并弹提醒",
-    "attack_tool": false,
-    "red_flags": [
-     "GPL-3.0 让闭源商业化和买断付费版本存在法律风险",
-     "核心是逆向厂商 HID 协议，固件更新后易失效，维护成本高",
-     "只支持 Windows，天然排除 Mac/iPhone 用户",
-     "开源版已是可下载安装包，包装空间有限",
-     "商业模式只能靠捐赠或极低价买断，付费意愿弱"
-    ],
-    "reason": "痛点是真实的小众刚需，易懂易传播，但 GPL 限制商业化、平台局限 Windows、开源安装版已成熟，产品空间小。"
-   }
-  },
-  "obra/superpowers": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让AI编程助手先想清楚再动手的开发方法说明书",
-    "one_liner_en": "A skills pack that teaches coding agents to plan before they code",
-    "target_user": "重度使用 Claude Code / Cursor / Codex 的个人开发者和追求交付质量的工程团队负责人",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 8,
-     "packaging_room": 5,
-     "monetization": 6,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "把 skills 打包成带可视化管理面板的团队版：统一策略、审计 agent 行为、按席位订阅",
-    "demo_idea": "对比演示：同一个需求，普通 agent 直接写代码出 bug，装了 Superpowers 先出规格再 TDD 通过",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是 prompt/skills 集合，易被官方 marketplace 或模型自身能力迭代吞掉",
-     "已进 Anthropic / OpenAI / xAI 官方插件市场，作者已提供商业服务，第三方差异化空间小",
-     "核心价值依赖宿主 agent，纯前端 demo 只能模拟，难以真实复现效果",
-     "skills 内容开源可复制，付费点必须靠团队管控而非工具本身"
-    ],
-    "reason": "传播性强、痛点真实、MIT 干净，但作者已占住商业位，包装成独立产品空间有限，更适合做深度内容选题。"
-   }
-  },
   "elementalsouls/Claude-BugHunter": {
-   "date": "2026-11-17",
+   "date": "2026-11-25",
    "v": 3,
    "eval": {
     "category": "安全",
-    "one_liner": "给 Claude Code 装上的漏洞挖掘与红队技能包",
-    "one_liner_en": "A Claude Code skill pack that turns it into a bug-hunting and red-team assistant",
-    "target_user": "美国/全球的独立 bug bounty 猎手、渗透测试顾问、小型安全创业团队",
+    "one_liner": "让 Claude 变成会挖漏洞的安全测试员",
+    "one_liner_en": "Turns Claude into a senior bug-hunting and red-team operator",
+    "target_user": "美国/全球的漏洞赏金猎人、渗透测试顾问、安全创业公司、需要 red-team 的合规团队",
     "scores": {
      "topicality": 8,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "托管版 Claude 安全研究员：授权目标一键侦察、漏洞链推荐、报告生成与 VRT 定级",
-    "demo_idea": "网页输入一个授权测试域名，模拟展示侦察结果、命中漏洞类型与自动生成报告草稿",
-    "attack_tool": false,
-    "red_flags": [
-     "内容偏进攻性，误用于未授权目标会引发法律风险，需强制加授权范围确认",
-     "重度依赖 Claude Code 与 Anthropic 定价/能力，平台风险高",
-     "本质是提示词/知识包，竞品易复制，护城河弱",
-     "bug bounty 用户付费意愿偏低，且已有商业平台（如 XBOW 等）竞争",
-     "技能内容时效性强，CVE 链需持续维护"
-    ],
-    "reason": "话题热、增长猛、MIT 许可友好；但属进攻性知识包，商业化要往授权合规与托管服务走，付费转化是最大不确定点。"
-   }
-  },
-  "mvanhorn/last30days-skill": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "一个能跨 Reddit、X、YouTube 等平台做近 30 天深度调研的 AI 助手技能",
-    "one_liner_en": "An AI agent skill that researches any topic across Reddit, X, YouTube, HN and more in one brief.",
-    "target_user": "需要做销售尽调、人物调研、竞品追踪和 AI 前沿跟进的美国 B2B 从业者、咨询顾问、投资人和开发者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 7,
-     "monetization": 7,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "做成一个网页版的人物/公司/话题 30 天情报简报生成器：用户付费订阅，输入名字即可拿到跨平台汇总。",
-    "demo_idea": "在网页输入一个人名或公司名，30 秒内流式展示它从 X、Reddit、YouTube 抓到的近期要点和情绪，并高亮 Polymarket 赔率。",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖用户自备各平台 API key 或浏览器登录会话，普通用户操作门槛高且有封号与平台 ToS 风险",
-     "抓取 X、TikTok、Instagram 属平台规则灰色地带，产品化后可能被限流或法务施压",
-     "安装形态是 Claude Code / Agent Skills 插件，本身分发渠道完善，独立包装空间被压缩",
-     "开源免费且口碑已强（6.8 万星），用户可能直接用开源版而非付费"
-    ],
-    "reason": "需求真实、话题热度高、MIT 友好；但抓取依赖第三方平台授权、合规与稳定性风险大，产品化需自己扛住数据源成本与法律风险。"
-   }
-  },
-  "sybil-solutions/inference-optimisation-skill": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "让AI代理自动调优本地大模型推理速度",
-    "one_liner_en": "An agent skill that auto-tunes local LLM serving speed on any hardware",
-    "target_user": "在本地跑开源大模型的 AI 工程师、自建推理服务的初创团队、做本地 LLM 部署的技术爱好者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 3,
+     "accessibility": 5,
      "wow": 6,
      "pain": 6,
-     "packaging_room": 6,
+     "packaging_room": 5,
      "monetization": 5,
-     "license_safety": 10,
+     "license_safety": 9,
      "demoability": 3
     },
-    "product_idea": "做成托管的本地推理自动调优服务：上传硬件与模型配置，自动跑基准并输出最优参数，按月订阅",
-    "demo_idea": "网页演示：左右对比同一台机器调优前后 token/s 与首字延迟的实时曲线",
+    "product_idea": "把技能包做成付费订阅的 Web Agent：选目标、自动做侦察与漏洞链规划、生成可交付报告",
+    "demo_idea": "用 DVWA/Juice Shop 靶场，在网页里输入目标，30 秒展示自动侦察→排名攻击面→生成报告",
     "attack_tool": false,
     "red_flags": [
-     "目标用户极窄，非技术用户完全看不懂",
-     "核心价值依赖真实硬件跑基准，网页 demo 难以复现",
-     "仓库仅 1 天历史，star 增长异常需警惕数据真实性",
-     "README 引用大量自家未验证的私有仓库与数据，可信度待核实"
+     "主要面向攻击/渗透能力，虽声明授权范围内，但被滥用于未授权攻击的风险高",
+     "本质是 prompt/技能包合集，非工程化产品，易被复制，护城河弱",
+     "依赖 Claude Code 生态与 Anthropic 账号，平台规则变化风险",
+     "买家集中在 bug bounty / red-team 小众圈层，付费意愿受限于已有人工流程"
     ],
-    "reason": "方法论扎实、MIT 许可友好，但受众窄、演示门槛高、商业化路径模糊，更适合做技术内容而非独立产品。"
-   }
-  },
-  "sveltejs/svelte": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "一个把组件编译成高性能原生JS的前端框架",
-    "one_liner_en": "A compiler that turns declarative components into tiny, fast vanilla JavaScript",
-    "target_user": "前端开发者、独立开发者、想快速做产品原型的创业团队",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 3,
-     "wow": 4,
-     "pain": 5,
-     "packaging_room": 2,
-     "monetization": 2,
-     "license_safety": 10,
-     "demoability": 4
-    },
-    "product_idea": "基于 Svelte 的零配置建站模板，一���上线落地页",
-    "demo_idea": "左右分屏对比：React 与 Svelte 同组件的打包体积和渲染速度",
-    "attack_tool": false,
-    "red_flags": [
-     "知名成熟框架，非个人可包装的产品",
-     "纯技术基础设施，无付费转化路径",
-     "作为内容题材缺乏新鲜度"
-    ],
-    "reason": "顶级工程但已是成熟大厂级框架，包装空间和商业化几乎为零，只适合做技术科普选题。"
-   }
-  },
-  "getarcaneapp/arcane": {
-   "date": "2026-11-17",
-   "v": 3,
-   "eval": {
-    "category": "运维部署",
-    "one_liner": "给普通人的Docker图形管理面板，点点鼠标就能管容器",
-    "one_liner_en": "A modern web UI to manage Docker containers without the command line",
-    "target_user": "自托管爱好者、家庭实验室用户、小型开发团队和独立开发者",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 6,
-     "wow": 5,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "提供一键部署的托管版Docker管理面板，附模板市场和自动更新，按月订阅",
-    "demo_idea": "网页模拟容器列表，一键启停、查看日志和Compose部署，30秒看懂",
-    "attack_tool": false,
-    "red_flags": [
-     "自托管用户付费意愿低，同类免费替代多（Portainer、Dockge）",
-     "目标用户偏技术，普通消费者不碰Docker",
-     "商业化路径模糊，易被开源免费版分流"
-    ],
-    "reason": "项目热门、许可证宽松、界面友好，但变现难，适合做内容引流而非独立产品。"
+    "reason": "话题热、许可证友好，但属于授权渗透进攻类，包装成产品需强合规背书，商业化路径窄且易被山寨。"
    }
   },
   "ersinkoc/phonebox": {
@@ -3766,6 +3472,500 @@
      "Linux/统信UOS适配偏向国内市场，对全球英文用户意义有限"
     ],
     "reason": "可爱、易懂、演示性强，适合做内容；但作为产品痛点弱、免费竞品多、付费意愿低，包装和商业化空间有限，更适合当传播素材而非创业项目。"
+   }
+  },
+  "fxceless/victory-fork": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在 Windows 上运行某款 Xbox Series 游戏的兼容层实验分支",
+    "one_liner_en": "A WIP compatibility layer that tries to run an Xbox Series game on Windows PCs.",
+    "target_user": "复古游戏模拟器爱好者、Xbox 游戏存档玩家、系统兼容层研究者（极小众）",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 4,
+     "wow": 7,
+     "pain": 3,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "做多游戏兼容层仪表盘，自动下载配置、检测帧率与渲染问题并给出参数建议。",
+    "demo_idea": "网页模拟展示兼容层加载游戏、阴影缺失与 2fps 卡顿的对比画面（使用模拟数据）。",
+    "attack_tool": false,
+    "red_flags": [
+     "含版权游戏运行时逆向与兼容层，法律风险高，可能涉及 DMCA 避风港争议",
+     "依赖用户自备游戏文件，无游戏内容但可被用于游戏绕过",
+     "GPL-3.0 传染性，商业使用受限",
+     "仅一台机器测试，帧率 2-5fps 不可玩，产品化空间有限",
+     "无明确付费人群，商业化路径极窄"
+    ],
+    "reason": "技术极客项目，话题有热度但法律风险高、帧率不可玩、商业化几乎不可行；适合做内容但不宜包装成产品。"
+   }
+  },
+  "kai415-debug/ffmpeg-video-audio-converter": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "给 FFmpeg 套上图形界面的 Windows 免费转码工具",
+    "one_liner_en": "A free Windows GUI that makes FFmpeg video and audio conversion point-and-click",
+    "target_user": "需要批量转换视频/音频格式的美国普通用户、自媒体创作者、小型工作室、教师",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 9,
+     "wow": 3,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "网页版拖拽转码器，云端排队处理，按分钟或订阅收费，免安装",
+    "demo_idea": "上传一段视频，选个格式，进度条跑完直接下载，30 秒看懂",
+    "attack_tool": false,
+    "red_flags": [
+     "几乎零代码可验证：仓库创建仅 1 天、star 日增 1024 极度异常，疑似刷星或引流",
+     "纯桌面 GUI 包装 FFmpeg，同类免费工具（HandBrake、Shutter Encoder）已非常成熟，差异化空间小",
+     "无主页、无真实产品截图，README 内容泛泛，可信度存疑",
+     "Windows 专有桌面程序，网页 demo 需要自建云端转码，成本高"
+    ],
+    "reason": "易懂易演示，但赛道拥挤、免费替代品多，仓库数据异常需警惕，商业化偏弱。"
+   }
+  },
+  "Zettrox/ztrx": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在 Windows 电脑上用模拟器跑 Xbox 版 3A 大作，帧率只有 1-3 帧",
+    "one_liner_en": "Run the Xbox Series build of a AAA game natively on Windows PCs, at 1-3 fps",
+    "target_user": "想在 PC 上折腾主机独占游戏的技术极客、怀旧玩家和模拟器爱好者；他们几乎不会为付费产品买单。",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 3,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "没有可商业化的产品形态：帧率只有 1-3 fps，并且涉及游戏版权，只能做技术演示内容。",
+    "demo_idea": "网页上无法运行；只能录一段 1 fps 的实机视频，展示 30 秒已能跑通序章。",
+    "attack_tool": false,
+    "red_flags": [
+     "GPL-3.0 要求派生作品同样开源，因此很难封闭商业化",
+     "没有附带游戏文件，但运行上下文涉及版权和 DMCA，任天堂、微软等厂商常发出下架通知",
+     "帧率 1-3 fps、阴影全黑，完全不可用，离产品形态极远",
+     "模拟器、兼容层品类的变现路径依赖游戏本体，付费意愿和付费能力都很低"
+    ],
+    "reason": "技术 demo 的话题性很强，但稳定性和版权风险都很严重，而且 GPL 许可无法封闭商业化，只适合做成内容，不适合做成产品。"
+   }
+  },
+  "Indigo-0167/universal-game-mod-manager": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "一个能自动找到电脑里的游戏并一键安装模组的Windows工具",
+    "one_liner_en": "A free Windows app that finds your installed games and manages universal mods in one click",
+    "target_user": "经常给 Unity / Unreal 游戏装模组的美国 PC 玩家和 VR 爱好者，尤其是同时玩多款游戏的用户",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做一个跨游戏模组管理器：自动扫描游戏库、检测引擎版本、一键安装并更新模组，提供免费基础版和订阅制高级功能",
+    "demo_idea": "网页模拟扫描本地游戏库，依次展示识别结果和模组列表，点击一键安装按钮后展示进度动画和成功状态",
+    "attack_tool": false,
+    "red_flags": [
+     "项目创建仅 1 天，却已有 1299 stars，增长数据异常，可能是刷量，也可能被平台限流",
+     "模组来源、下载渠道和安装脚本的安全性无法验证，对用户来说是实质风险",
+     "没有公开主页，社区和作者背景也无法核实",
+     "现有成熟竞品（Vortex、Mod Organizer、Thunderstore Mod Manager）免费且生态完善，用户很难迁移",
+     "订阅制变现难度大，玩家群体对付费模组管理器接受度低"
+    ],
+    "reason": "产品定位清晰、易懂，但属于已有成熟免费竞品覆盖的红海；star 数据可疑，商业化路径弱，适合做内容做演示，不适合作为主力创业项目"
+   }
+  },
+  "solv4626/steam-achievement-manager-windows": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "一键修改 Steam 游戏成就和统计数据的桌面工具",
+    "one_liner_en": "A desktop tool to unlock, relock and edit Steam achievements and game stats",
+    "target_user": "Steam 成就党、速通/白金玩家、想补全成就的游戏收藏者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 5,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做成浏览器端的 Steam 成就进度看板，带一键统计和社交分享卡片",
+    "demo_idea": "网页模拟 Steam 库，点一下成就从灰变亮、进度条瞬间拉满",
+    "attack_tool": false,
+    "red_flags": [
+     "核心功能是伪造游戏成就与统计数据，违反 Steam 用户协议，可能导致封号或成就被清除",
+     "直接修改第三方平台数据，属于绕过平台规则，商业化成产品风险极高",
+     "README 提及 libvlc.dll 等打包细节，来源可信度存疑",
+     "仓库仅 1 天却已有 1000+ stars，增长异常，疑似刷星",
+     "变现几乎不可能：愿意为作弊工具付费的用户少，且支付渠道（Stripe/PayPal）会因违反平台政策而拒付"
+    ],
+    "reason": "噱头足、易懂，但本质是违反 Steam 协议的数据篡改工具，包装和变现空间极小，风险高。"
+   }
+  },
+  "zero5122/offline-file-converter-windows": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "Windows 离线文件转换器，PDF、图片、音视频本地批量转换不上传",
+    "one_liner_en": "Offline Windows file converter for PDF, images, audio and video with no uploads",
+    "target_user": "注重隐私的美国/全球中小企业办公用户、法律/医疗/财务从业者、处理敏感文档的自由职业者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 9,
+     "wow": 5,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "打包成签名 Windows 安装包，主打隐私转换，按年订阅卖 Pro 版和批量授权",
+    "demo_idea": "网页模拟拖入 PDF/图片，秒出转换结果并显示\"文件从未离开你的电脑\"对比图",
+    "attack_tool": false,
+    "red_flags": [
+     "创建仅 1 天即 1060 stars，增长异常，疑似刷星，可信度存疑",
+     "README 对支持格式含糊其辞，'取决于已安装的转换引擎'说明功能可能依赖外部工具，实际体验未验证",
+     "依赖 libvlc.dll 打包分发，安装体验粗糙",
+     "离线转换器赛道极其拥挤，Format Factory、HandBrake、XnConvert、Adobe 免费工具等免费替代品众多，付费意愿低",
+     "Windows 单平台，无法做网页 demo 真实转换"
+    ],
+    "reason": "隐私卖点清晰易懂，但赛道拥挤、免费替代多、付费意愿弱，且刷星迹象明显，传播和商业化都有限。"
+   }
+  },
+  "Umbra9179/clipboard-history-manager-windows": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "Windows 剪贴板历史管理工具，可搜索、打标签、编辑和备份复制过的内容",
+    "one_liner_en": "A free Windows clipboard manager with searchable history, tags, editing and backup",
+    "target_user": "Windows 办公人群、开发者、内容创作者等高频复制粘贴的美国/全球知识工作者",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 9,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 4,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做跨平台剪贴板历史 SaaS，含云同步、团队共享片段库和 AI 语义搜索，订阅制",
+    "demo_idea": "网页模拟复制多段文本和图片，展示可搜索、打标签的历史列表并一键回贴",
+    "attack_tool": false,
+    "red_flags": [
+     "纯 Windows 桌面工具，网页 demo 只能模拟，无法展示真实剪贴板能力",
+     "剪贴板历史本就包含 Windows 系统自带功能，差异化空间小",
+     "仓库仅创建 1 天就 1265 stars，增长异常，疑似刷星或营销，可信度存疑",
+     "需与 .NET/WinUI 桌面技术栈和 libvlc 依赖绑定，Web 端无法复用",
+     "已有 Ditto、CopyQ、Windows 自带 Win+V 等成熟免费替代品，付费意愿低",
+     "剪贴板数据含密码验证码等敏感信息，隐私事故风险高"
+    ],
+    "reason": "易懂实用但赛道拥挤，系统自带和免费竞品压制付费空间；桌面形态难做纯网页 demo，刷星信号需警惕"
+   }
+  },
+  "rowanbyte3329/stardew-valley-mod-manager": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "给《星露谷物语》玩家一键安装和管理模组的桌面工具",
+    "one_liner_en": "A free desktop app that makes installing and managing Stardew Valley mods easy",
+    "target_user": "欧美《星露谷物语》PC 玩家，尤其是装了十几个模组、被文件夹和冲突搞晕的休闲玩家",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 8,
+     "wow": 3,
+     "pain": 6,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "免费开源应用 + 付费云同步模组配置，跨设备一键恢复存档与模组包",
+    "demo_idea": "网页模拟器展示一键启用/禁用模组、切换配置档后游戏内物品即时变化",
+    "attack_tool": false,
+    "red_flags": [
+     "已有 Nexus Mods、Vortex、SMAPI 等成熟免费竞品，差异化空间小",
+     "仅限 Windows，且强绑定单一游戏，付费意愿低",
+     "项目创建仅 1 天就上报 871 stars，增长数据可疑",
+     "README 提到 libvlc.dll，但未说明用途，来路存疑"
+    ],
+    "reason": "游戏模组管理器需求真实但盘子小，免费竞品强，商业化和包装空间有限，适合做内容而非产品。"
+   }
+  },
+  "olive527/steam-library-manager-windows": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "在 Windows 上统一管理 Steam、Origin、Uplay 游戏库，支持增量备份与压缩的桌面工具。",
+    "one_liner_en": "Free Windows app to organize, back up and move your Steam, Origin and Ubisoft game libraries.",
+    "target_user": "PC 硬核玩家、多硬盘 / NAS 玩家、游戏收藏者（美国 / 全球英文市场）",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 7,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "做成带游戏库可视化和一键迁移 / 云备份的 PC 游戏管家，Pro 版按年订阅。",
+    "demo_idea": "网页模拟两个硬盘的游戏库，拖拽一个游戏，展示迁移进度和增量备份节省的空间。",
+    "attack_tool": false,
+    "red_flags": [
+     "同类免费工具已很多（Steam 自带备份、GameSave Manager、Ludusavi），差异化空间小",
+     "纯 Windows 桌面应用，核心依赖本地文件系统，难以做成纯网页 demo",
+     "项目新建一天即 723 star，增长异常，需警惕刷星或营销号炒作",
+     "游戏平台客户端频繁改版，维护成本高，易失效",
+     "付费意愿弱：玩家习惯免费工具，订阅模式难成立"
+    ],
+    "reason": "痛点真实但小众，免费替代品多，商业化弱；MIT 许可安全，适合做内容但产品化天花板低。"
+   }
+  },
+  "umbradev315/ffmpeg-video-audio-converter": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "给普通人用的 Windows 视频音频转换工具，点几下就能批量转格式",
+    "one_liner_en": "A Windows GUI for FFmpeg to convert, batch-process and analyze video and audio without the command line",
+    "target_user": "美国/全球的内容创作者、视频播客制作者、小型营销团队和需要批量转码的自由职业者",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 9,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "做成可信赖的桌面批量转码器，带预设模板、拖拽队列和硬件加速一键开关",
+    "demo_idea": "网页拖入一个视频，选目标格式，进度条和输出文件大小对比即时展示",
+    "attack_tool": false,
+    "red_flags": [
+     "FFmpeg GUI 品类极度拥挤，HandBrake、Shutter Encoder、Permute 等成熟免费产品已占据心智",
+     "需要用户自行准备 FFmpeg 可执行文件，首次体验有门槛",
+     "仅支持 Windows，且仓库创建仅 1 天、star 增长异常，真实性存疑",
+     "核心功能完全依赖 FFmpeg，自身差异化有限"
+    ],
+    "reason": "痛点真实且易懂，MIT 许可证友好，但赛道红海、免费替代品强，商业化空间有限，更适合做内容而非产品。"
+   }
+  },
+  "Nebula4207/av1-video-encoder-gui": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "在Windows上不用命令行就能把视频压成AV1格式的图形工具",
+    "one_liner_en": "A free Windows GUI that makes AV1 video encoding easy, no command line needed.",
+    "target_user": "美国及全球的视频存档爱好者、Plex/自建媒体库用户、做视频发布的独立创作者和小型工作室",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 5,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成带预设、拖拽即转、支持批量队列和直接上传的桌面版AV1一键压缩器",
+    "demo_idea": "网页里放同一段视频分别用H.264和AV1编码，对比体积和质量，30秒内看完",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库创建仅1天就有685星，增长异常，疑似刷星",
+     "重度依赖第三方编码器二进制和libvlc.dll，安装体验粗糙",
+     "桌面C#应用，网页demo难以完全复现核心流程",
+     "HandBrake、Shutter Encoder等成熟免费竞品已占据心智，付费意愿有限"
+    ],
+    "reason": "痛点真实、包装空间不错且MIT友好，但竞品强、付费意愿弱，刷星风险需谨慎，更适合做内容而非重产品。"
+   }
+  },
+  "Basil0879/steam-game-idler": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "自动挂机刷 Steam 集换卡、解锁成就、刷游戏时长的桌面工具",
+    "one_liner_en": "A desktop app that idles your Steam games to farm trading cards, unlock achievements, and boost playtime.",
+    "target_user": "美国/全球的 Steam 集卡玩家、成就党、多账号玩家；想快速出手卡牌换钱或凑徽章的 PC 玩家",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 5,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 10,
+     "demoability": 4
+    },
+    "product_idea": "做 Windows 桌面端一键挂机看板：自动挑卡牌游戏、显示掉落进度、多账号切换、卡牌市值估算",
+    "demo_idea": "网页模拟 Steam 库存，动画演示游戏自动挂机、卡牌一张张掉落进收藏",
+    "attack_tool": false,
+    "red_flags": [
+     "直接违反 Steam 用户协议中关于自动化和成就篡改的条款，账号有被封禁风险",
+     "同类成熟开源工具已存在（ArchiSteamFarm、Idle Master），差异化空间小",
+     "成就管理涉及伪造统计数据，社区口碑和合规风险",
+     "项目刚创建 1 天，star 增长异常，可能是刷量或营销，不代表真实需求",
+     "只有 Windows 桌面端，核心价值依赖本地 Steam 客户端，难以做成纯网页 demo 或 SaaS"
+    ],
+    "reason": "易懂好传播，但痛点偏小众、商业化难，且触碰 Steam 规则红线。适合做内容话题，不适合包装成产品。"
+   }
+  },
+  "peak85-sketch/stardew-valley-mod-manager": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "给《星露谷物语》玩家管理模组的免费桌面工具",
+    "one_liner_en": "A free desktop app to install, update and profile Stardew Valley mods",
+    "target_user": "美国及全球英文市场的 Stardew Valley 模组玩家，尤其是维护大型模组包和多存档的玩家及内容创作者",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 8,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "做一个托管式模组包管理器，配一键安装、云同步配置和模组冲突检测",
+    "demo_idea": "网页模拟 Mod 列表，一键切换两个 profile，并演示更新提醒弹窗",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库仅创建 1 天却宣称 514 star 且日增 514，增速异常，疑似刷星或数据异常",
+     "本质是单一游戏的模组管理器，受众天花板低",
+     "Nexus Mods 与 Mod Organizer、SMAPI 已占主流生态，差异化空间小",
+     "仅 Windows 可下载 exe，仓库仅发布了二进制文件，代码质量和安全无法核实",
+     "付费意愿弱，玩家习惯免费模组工具"
+    ],
+    "reason": "MIT 许可证干净，易懂度好；但受众窄、商业化和 wow 都弱，且有刷星疑点，只适合作轻量内容，不宜作为产品重点运营"
+   }
+  },
+  "Belobug/VIctory-Belobug-AMD": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "用 PC 模拟运行 Xbox 游戏主机的模拟器分支，目前只有 3-5 帧，还玩不动",
+    "one_liner_en": "A PC emulator for Xbox console games, still at 3-5 fps and not yet playable",
+    "target_user": "海外主机模拟器爱好者、Xbox 老玩家、Rust 系统级开发者；愿意为「在 PC 上跑主机独占」付费的怀旧玩家",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 3,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "做成一键安装的主机模拟器客户端，自动配好显卡、着色器缓存和存档，用户只需拖入自己的游戏光盘镜像",
+    "demo_idea": "网页上分屏对比：左边原主机画面，右边模拟器实时渲染，配上帧率从 3 fps 提升到 60 fps 的进度条曲线",
+    "attack_tool": false,
+    "red_flags": [
+     "项目本身不含游戏文件，但模拟器的核心用途是运行受版权保护的主机游戏，商业化极易触碰 DMCA 和发行商诉讼（参考 Yuzu、Ryujinx 被任天堂起诉下架的先例）",
+     "GPL-3.0 许可证，衍生商业产品需开源，闭源 SaaS 变现受限",
+     "仅创建 1 天、只有一台 AMD 显卡上的测试、3-5 fps 不可玩，工程远未成熟，星标增速异常疑似刷榜或短期热度",
+     "README 明说大量改动是「针对这一款游戏和这一块显卡」的临时捷径，泛化能力存疑",
+     "项目属于大公司游戏的逆向兼容层，个人很难在上面建立差异化，且法律风险高于技术风险"
+    ],
+    "reason": "话题性强、极客向，但不可玩、法律风险极高、GPL 限制变现，适合做内容不适合做产品。"
+   }
+  },
+  "ProjectLeonidaL/leonida": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "用你自己的正版拷贝，把 GTA6 从 Xbox 搬到 PC 上跑",
+    "one_liner_en": "Build a PC port of GTA VI from your own Xbox copy, on your own PC.",
+    "target_user": "硬核 PC 玩家 / GTA 粉丝 / 静态重编译爱好者（他们不会为工具付费，但会捐赠或为托管内容付费）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 2
+    },
+    "product_idea": "做成一键检测 PC 环境、自动编译的桌面启动器，并配社区版模拟器配置工具",
+    "demo_idea": "用 30 秒演示：自动识别游戏包 → 编译 → 着色器翻译日志滚动，但无法演示游戏启动",
+    "attack_tool": false,
+    "red_flags": [
+     "涉及绕过 Take-Two/Rockstar 平台独占，法律风险极高，DMCA 风险很高",
+     "仓库明确不含游戏本体，但整个项目的唯一用途就是移植受版权保护的游戏",
+     "游戏还不能启动，核心价值目前无法被验证",
+     "GPL-3.0 与游戏逆向社区生态存在冲突",
+     "需要 350GB 磁盘空间，还必须自备 Xbox 游戏包，普通用户门槛极高",
+     "依赖 Telegram 社群，且项目 1 天就获得 417 星，有炒作或刷星嫌疑"
+    ],
+    "reason": "话题性和惊喜感爆表，但法律风险极高、无法演示、没有付费路径，只适合做内容，不适合做产品。"
+   }
+  },
+  "boykopovar/AnyBox": {
+   "date": "2026-11-25",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让 Xbox Series 游戏在 Windows 上原生运行的兼容层",
+    "one_liner_en": "A compatibility layer that runs Xbox Series games natively on Windows",
+    "target_user": "全球 PC 游戏玩家、复古/游戏保存爱好者、模拟器社区技术爱好者",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 7,
+     "packaging_room": 8,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 2
+    },
+    "product_idea": "一键安装的图形化启动器：自动检测游戏、管理着色器缓存、一键运行，附带兼容性数据库",
+    "demo_idea": "网页模拟一个游戏库界面，点开 Xbox 游戏后显示'已通过 AnyBox 在 PC 启动'的假动画效果",
+    "attack_tool": false,
+    "red_flags": [
+     "涉及 Xbox 专有 SDK、固件与游戏版权，法律风险高（DMCA 1201 反规避条款）",
+     "需用户自备游戏可执行文件，法律灰色地带，难做商业产品",
+     "项目刚创建 1 天、无成熟里程碑，README 自述连测试应用都渲染不出一帧",
+     "GPL-2.0 许可证，衍生商业产品须开源",
+     "微软商标与兼容性声明限制宣传口径",
+     "无明确付费方与收费模式，模拟器类产品易被免费替代"
+    ],
+    "reason": "话题与惊喜感极强，但技术极早期、法律风险重、商业化几乎无路，适合做内容流量而非产品。"
    }
   }
  }

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Loomkit — One mod manager for every Unity &amp; Unreal game</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica Neue','Arial','sans-serif'],
+          mono: ['ui-monospace','SFMono-Regular','Menlo','Consolas','monospace']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  :root { color-scheme: dark; }
+  html { scroll-behavior: smooth; }
+  body { background: #07080c; color: #e2e8f0; -webkit-font-smoothing: antialiased; }
+  ::selection { background: rgba(129,140,248,.35); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp .5s cubic-bezier(.22,1,.36,1) both; }
+
+  /* ---------- engine pills ---------- */
+  .engine-pill {
+    display: inline-block;
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: .15rem .5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .engine-unity  { color:#a5b4fc; border-color:rgba(129,140,248,.4); background:rgba(99,102,241,.14); }
+  .engine-unreal { color:#7dd3fc; border-color:rgba(56,189,248,.4);  background:rgba(14,165,233,.14); }
+
+  .tag-neutral {
+    display:inline-block; font-size:11px; padding:.2rem .55rem; border-radius:999px;
+    border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); color:#94a3b8;
+  }
+  .tag-emerald {
+    display:inline-block; font-size:11px; padding:.2rem .55rem; border-radius:999px;
+    border:1px solid rgba(52,211,153,.3); background:rgba(16,185,129,.12); color:#6ee7b7;
+  }
+
+  /* ---------- game list ---------- */
+  .game-row {
+    display:block; width:100%; text-align:left; cursor:pointer;
+    border-radius:.75rem; border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.02); padding:.6rem .75rem;
+    transition: background .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .game-row:hover { background:rgba(255,255,255,.055); border-color:rgba(255,255,255,.18); }
+  .game-row.active {
+    border-color:rgba(129,140,248,.55);
+    background:rgba(99,102,241,.13);
+    box-shadow: inset 0 0 0 1px rgba(129,140,248,.22);
+  }
+  .gr-top { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+  .gr-name { font-size:.85rem; font-weight:500; color:#e2e8f0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .gr-sub { margin-top:.22rem; font-size:11px; color:#64748b; display:flex; gap:.35rem; align-items:center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- scan bar ---------- */
+  .scan-track { height:6px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
+  .scan-fill  { height:100%; width:0; border-radius:999px;
+                background:linear-gradient(90deg,#818cf8,#a78bfa);
+                transition: width .12s linear; }
+
+  /* ---------- mod items ---------- */
+  .mod-item {
+    border:1px solid rgba(255,255,255,.09);
+    background:rgba(255,255,255,.022);
+    border-radius:.85rem;
+    padding:.8rem;
+  }
+  .mod-icon {
+    display:grid; place-items:center; flex-shrink:0;
+    width:2.25rem; height:2.25rem; border-radius:.6rem; font-size:1rem;
+    background:rgba(99,102,241,.12); border:1px solid rgba(129,140,248,.22);
+  }
+  .mod-name { font-size:.85rem; font-weight:600; color:#f1f5f9; }
+  .mod-tag  { font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:#94a3b8;
+              border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05);
+              border-radius:999px; padding:.1rem .45rem; }
+  .mod-desc { margin-top:.2rem; font-size:12px; line-height:1.5; color:#94a3b8; }
+  .mod-meta { margin-top:.3rem; font-size:11px; color:#64748b;
+              font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  .mod-bar-wrap { display:none; margin-top:.5rem; height:6px; border-radius:999px;
+                  background:rgba(255,255,255,.08); overflow:hidden; }
+  .mod-bar-wrap.on { display:block; }
+  .mod-bar { height:100%; width:0; border-radius:999px;
+             background:linear-gradient(90deg,#818cf8,#a78bfa); transition: width .12s linear; }
+
+  .install-btn {
+    flex-shrink:0; cursor:pointer; border-radius:.6rem; border:1px solid transparent;
+    background:#6366f1; color:#fff; font-size:12px; font-weight:600;
+    padding:.42rem .7rem; min-width:86px; transition: background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .install-btn:hover { background:#818cf8; }
+  .install-btn:disabled { cursor:progress; opacity:.8; }
+  .install-btn.done {
+    background:rgba(16,185,129,.12);
+    border-color:rgba(52,211,153,.35);
+    color:#6ee7b7;
+    cursor:default;
+  }
+  .install-btn.done:hover { background:rgba(16,185,129,.12); }
+
+  /* ---------- toast ---------- */
+  #toastBox { transition: opacity .3s ease, transform .3s ease; }
+</style>
+</head>
+<body class="font-sans">
+
+<!-- ===================== NAV ===================== -->
+<header class="sticky top-0 z-40 border-b border-white/5 bg-[#07080c]/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
+    <div class="flex items-center gap-2">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white">L</span>
+      <span class="text-sm font-semibold tracking-tight text-slate-100">Loomkit</span>
+      <span class="hidden rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] uppercase tracking-widest text-slate-400 sm:inline">Beta</span>
+    </div>
+    <nav class="ml-auto hidden items-center gap-6 text-sm text-slate-400 sm:flex">
+      <a href="#demo" class="transition hover:text-slate-100">Demo</a>
+      <a href="#scenarios" class="transition hover:text-slate-100">Use cases</a>
+      <a href="#pricing" class="transition hover:text-slate-100">Pricing</a>
+    </nav>
+    <a href="#pricing" class="ml-auto rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/20 sm:ml-0">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="relative overflow-hidden">
+  <div class="pointer-events-none absolute -top-40 left-1/2 h-80 w-[46rem] -translate-x-1/2 rounded-full bg-indigo-600/25 blur-[120px]"></div>
+  <div class="pointer-events-none absolute -top-10 right-0 h-64 w-64 rounded-full bg-violet-600/20 blur-[100px]"></div>
+
+  <div class="relative mx-auto max-w-4xl px-4 pb-10 pt-14 text-center sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium tracking-wide text-slate-300">
+      🧩 Free &amp; open source · Windows 10 / 11
+    </span>
+    <h1 class="mt-5 text-3xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
+      All your games. All their mods.<br class="hidden sm:block" />
+      <span class="bg-gradient-to-r from-indigo-300 via-violet-300 to-sky-300 bg-clip-text text-transparent">One app.</span>
+    </h1>
+    <p class="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-slate-400 sm:text-base">
+      Loomkit scans your PC, detects whether each game runs Unity or Unreal, and installs cross-game mods in one click —
+      no folder digging, no command line, no reinstalling everything after a patch.
+    </p>
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-500">
+      <span>🔎 Detects Steam, Epic, GOG &amp; itch.io libraries</span>
+      <span class="hidden sm:inline">·</span>
+      <span>⚙️ Unity &amp; Unreal engine version matching</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INTERACTIVE DEMO ===================== -->
+<section id="demo" class="relative mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+  <p class="mb-3 text-center text-[11px] uppercase tracking-[.2em] text-slate-500">Interactive preview — sample data</p>
+
+  <div class="overflow-hidden rounded-3xl border border-white/10 bg-[#0c0e14]/80 shadow-2xl shadow-black/50 backdrop-blur">
+    <!-- window chrome -->
+    <div class="flex items-center gap-2 border-b border-white/10 bg-white/[0.02] px-4 py-3">
+      <span class="h-3 w-3 rounded-full bg-red-400/70"></span>
+      <span class="h-3 w-3 rounded-full bg-amber-400/70"></span>
+      <span class="h-3 w-3 rounded-full bg-emerald-400/70"></span>
+      <span class="ml-3 font-mono text-[11px] text-slate-500">Loomkit 0.9 — Windows</span>
+      <span class="ml-auto rounded-full border border-indigo-400/25 bg-indigo-500/10 px-2 py-0.5 text-[10px] uppercase tracking-widest text-indigo-300">Sample data</span>
+    </div>
+
+    <div class="grid lg:grid-cols-[340px_minmax(0,1fr)]">
+      <!-- ---------- LEFT: library ---------- -->
+      <aside class="border-b border-white/10 p-4 sm:p-5 lg:border-b-0 lg:border-r">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold tracking-wide text-slate-300">Game library</h2>
+          <span class="font-mono text-[11px] text-slate-600">local</span>
+        </div>
+
+        <button id="scanBtn" type="button"
+          class="mt-3 w-full rounded-xl border border-indigo-400/30 bg-indigo-500/15 px-3 py-2.5 text-sm font-semibold text-indigo-200 transition hover:bg-indigo-500/25 disabled:cursor-progress disabled:opacity-70">
+          🔍 Scan my PC
+        </button>
+
+        <div id="scanProgress" class="mt-4 hidden">
+          <div class="scan-track"><div id="scanBar" class="scan-fill"></div></div>
+          <p id="scanStatus" class="mt-2 font-mono text-[11px] leading-relaxed text-slate-500">Starting scan…</p>
+        </div>
+
+        <div id="scanSummary" class="mt-4 hidden grid-cols-3 gap-2 text-center">
+          <div class="rounded-lg border border-white/10 bg-white/[0.03] py-2">
+            <p id="sumGames" class="text-base font-semibold text-slate-100">5</p>
+            <p class="text-[10px] uppercase tracking-wider text-slate-500">games</p>
+          </div>
+          <div class="rounded-lg border border-white/10 bg-white/[0.03] py-2">
+            <p id="sumEngines" class="text-base font-semibold text-slate-100">2</p>
+            <p class="text-[10px] uppercase tracking-wider text-slate-500">engines</p>
+          </div>
+          <div class="rounded-lg border border-white/10 bg-white/[0.03] py-2">
+            <p id="sumMods" class="text-base font-semibold text-slate-100">20</p>
+            <p class="text-[10px] uppercase tracking-wider text-slate-500">mods</p>
+          </div>
+        </div>
+
+        <ul id="gameList" class="mt-4 space-y-2"></ul>
+
+        <p id="emptyLib" class="mt-5 text-xs leading-relaxed text-slate-500">
+          Nothing scanned yet. Hit <span class="font-medium text-slate-300">Scan my PC</span> — Loomkit reads your
+          Steam, Epic, GOG and itch.io libraries and detects each game's engine.
+          <span class="text-slate-600">(Simulated — no files are read.)</span>
+        </p>
+      </aside>
+
+      <!-- ---------- RIGHT: mods ---------- -->
+      <main class="min-h-[460px] p-4 sm:p-5">
+        <div id="modsEmpty" class="grid h-full min-h-[380px] place-items-center text-center">
+          <div>
+            <div class="text-4xl">🧩</div>
+            <p class="mt-3 max-w-xs text-sm leading-relaxed text-slate-400">
+              Pick a game on the left to see the universal mods that match its engine build.
+            </p>
+          </div>
+        </div>
+
+        <div id="modsPanel" class="hidden">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <h3 id="modsTitle" class="text-base font-semibold text-slate-50 sm:text-lg">Game</h3>
+            <span id="modsEngine" class="engine-pill engine-unity">Unity</span>
+            <span id="modsMeta" class="text-[11px] text-slate-500"></span>
+          </div>
+          <p id="modsPath" class="mt-1 truncate font-mono text-[11px] text-slate-600"></p>
+
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <span id="modsCount" class="tag-neutral">4 compatible mods</span>
+            <span id="modsInstalled" class="tag-emerald">0 installed</span>
+            <span class="tag-neutral">Engine match verified</span>
+          </div>
+
+          <ul id="modList" class="mt-4 space-y-2"></ul>
+
+          <p class="mt-4 text-[11px] leading-relaxed text-slate-600">
+            Installs are simulated for this concept demo. In the desktop app, Loomkit writes to a virtual mod folder
+            and leaves your game install untouched.
+          </p>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SCENARIOS ===================== -->
+<section id="scenarios" class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 sm:pb-24">
+  <div class="text-center">
+    <p class="text-[11px] uppercase tracking-[.2em] text-indigo-300/80">Use cases</p>
+    <h2 class="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">Built for people who mod more than one game</h2>
+    <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
+      Three situations where a cross-game manager beats five separate mod tools.
+    </p>
+  </div>
+
+  <div class="mt-10 grid gap-4 md:grid-cols-3">
+    <div class="rounded-2xl border border-white/10 bg-white/[0.025] p-5 transition hover:border-white/20 hover:bg-white/[0.04]">
+      <div class="grid h-10 w-10 place-items-center rounded-xl border border-indigo-400/25 bg-indigo-500/10 text-lg">🎮</div>
+      <h3 class="mt-4 text-base font-semibold text-slate-100">Five games, four launchers</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">
+        Your library is scattered across Steam, Epic, GOG and itch.io. One scan finds all of it and tells you
+        which engine build each game is actually running — before you install anything.
+      </p>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-white/[0.025] p-5 transition hover:border-white/20 hover:bg-white/[0.04]">
+      <div class="grid h-10 w-10 place-items-center rounded-xl border border-sky-400/25 bg-sky-500/10 text-lg">🥽</div>
+      <h3 class="mt-4 text-base font-semibold text-slate-100">VR on flatscreen games</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">
+        Universal VR injectors need the right engine hooks. Loomkit checks the build, installs the matching
+        injector version, and re-checks it every time the game patches.
+      </p>
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-white/[0.025] p-5 transition hover:border-white/20 hover:bg-white/[0.04]">
+      <div class="grid h-10 w-10 place-items-center rounded-xl border border-emerald-400/25 bg-emerald-500/10 text-lg">🔄</div>
+      <h3 class="mt-4 text-base font-semibold text-slate-100">Patch day, not panic day</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">
+        When a game ships a new engine version, Loomkit flags the mods that might break, snapshots your saves
+        first, and rolls everything back in one click if something crashes.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING ===================== -->
+<section id="pricing" class="relative overflow-hidden border-t border-white/5">
+  <div class="pointer-events-none absolute -bottom-40 left-1/2 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-indigo-600/15 blur-[120px]"></div>
+  <div class="relative mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
+    <div class="text-center">
+      <p class="text-[11px] uppercase tracking-[.2em] text-indigo-300/80">Pricing</p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">Free to mod. Pro when you go deep.</h2>
+      <p class="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
+        The core manager stays free and open source. Pro is for players running mods across a dozen games at once.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-10 grid max-w-3xl gap-4 sm:grid-cols-2">
+      <!-- Free -->
+      <div class="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-400">Free</h3>
+        <p class="mt-3 text-3xl font-bold text-white">$0<span class="text-sm font-medium text-slate-500"> forever</span></p>
+        <ul class="mt-5 space-y-2.5 text-sm text-slate-400">
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> Unlimited library scans</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> One-click install &amp; updates</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> Universal mod index (Unity + Unreal)</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> 2 mod profiles</li>
+        </ul>
+        <button type="button" data-waitlist="free"
+          class="mt-6 w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10">
+          Download for Windows
+        </button>
+      </div>
+
+      <!-- Pro -->
+      <div class="relative rounded-2xl border border-indigo-400/35 bg-indigo-500/[0.07] p-6 shadow-lg shadow-indigo-950/40">
+        <span class="absolute -top-2.5 left-6 rounded-full bg-indigo-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white">Pro</span>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-indigo-200">Loomkit Pro</h3>
+        <p class="mt-3 text-3xl font-bold text-white">$4.99<span class="text-sm font-medium text-slate-400"> / month</span></p>
+        <ul class="mt-5 space-y-2.5 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> Everything in Free</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> Unlimited mod profiles &amp; collections</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> Engine-update alerts &amp; auto rollback</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> VR quick-install packs</li>
+          <li class="flex gap-2"><span class="text-emerald-400">✓</span> Cloud sync of your mod presets</li>
+        </ul>
+        <button type="button" data-waitlist="pro"
+          class="mt-6 w-full rounded-xl bg-indigo-500 px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-400">
+          Join the waitlist
+        </button>
+      </div>
+    </div>
+
+    <p class="mt-6 text-center text-xs text-slate-500">Prices in USD. Cancel anytime. Concept demo — nothing is charged or submitted.</p>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="border-t border-white/5 px-4 py-8 sm:px-6">
+  <div class="mx-auto max-w-6xl">
+    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-500">
+      <span class="flex items-center gap-2">
+        <span class="grid h-6 w-6 place-items-center rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 text-[11px] font-bold text-white">L</span>
+        Loomkit
+      </span>
+      <a href="#demo" class="transition hover:text-slate-300">Demo</a>
+      <a href="#scenarios" class="transition hover:text-slate-300">Use cases</a>
+      <a href="#pricing" class="transition hover:text-slate-300">Pricing</a>
+    </div>
+    <p class="mt-5 text-center text-xs leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project <a href="https://github.com/Indigo-0167/universal-game-mod-manager" class="text-slate-300 underline underline-offset-2 transition hover:text-white">Indigo-0167/universal-game-mod-manager</a> (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<!-- ===================== TOAST ===================== -->
+<div class="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4">
+  <div id="toastBox" class="translate-y-2 rounded-full border border-white/15 bg-[#12141c] px-4 py-2 text-sm text-slate-200 opacity-0 shadow-xl shadow-black/50">
+    Sample
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------ sample data ------------------------------ */
+  var GAMES = [
+    {
+      id: 'skyward', name: 'Skyward Hollow', engine: 'Unity', engineVersion: '2022.3.14f1',
+      launcher: 'Steam', size: '18.4 GB',
+      path: 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Skyward Hollow'
+    },
+    {
+      id: 'neondrift', name: 'Neon Drift VR', engine: 'Unreal', engineVersion: '5.3.2',
+      launcher: 'Epic Games', size: '42.1 GB',
+      path: 'C:\\Program Files\\Epic Games\\NeonDriftVR'
+    },
+    {
+      id: 'hollowcircuit', name: 'Hollow Circuit', engine: 'Unity', engineVersion: '2021.3.7f1',
+      launcher: 'GOG', size: '9.7 GB',
+      path: 'C:\\GOG Games\\Hollow Circuit'
+    },
+    {
+      id: 'deepsignal', name: 'Deep Signal', engine: 'Unreal', engineVersion: '4.27.2',
+      launcher: 'itch.io', size: '6.2 GB',
+      path: 'D:\\itch\\deep-signal'
+    },
+    {
+      id: 'riftwalkers', name: 'Riftwalkers', engine: 'Unity', engineVersion: '2022.1.20f1',
+      launcher: 'Steam', size: '24.8 GB',
+      path: 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Riftwalkers'
+    }
+  ];
+
+  var CATALOG = [
+    { id: 'ue5pak', engine: 'Unreal', name: 'UE5 Pak Loader', icon: '📦', tag: 'Unreal',
+      desc: 'Mounts .pak mods without ever touching the game install folder.',
+      version: '1.5.0', size: '8 MB', installs: '22.3k' },
+    { id: 'bepline', engine: 'Unity', name: 'BepInEx Bootstrapper', icon: '🧵', tag: 'Unity',
+      desc: 'Picks the correct BepInEx build for your exact Unity version and wires it up.',
+      version: '1.4.2', size: '11 MB', installs: '30.9k' },
+    { id: 'vrinject', engine: 'Any', name: 'Universal VR Injector', icon: '🥽', tag: 'VR',
+      desc: 'Room-scale VR on supported Unity and Unreal titles — no per-game patch needed.',
+      version: '2.1.0', size: '24 MB', installs: '41.2k' },
+    { id: 'hdfx', engine: 'Any', name: 'HD Texture Framework', icon: '🖼️', tag: 'Universal',
+      desc: 'Drop-in 4K texture pipeline with automatic mip and memory handling.',
+      version: '1.8.3', size: '112 MB', installs: '18.7k' },
+    { id: 'photo', engine: 'Any', name: 'Photo Mode Unlock', icon: '📷', tag: 'Universal',
+      desc: 'Free camera, FOV and time-of-day controls in any supported game.',
+      version: '1.2.6', size: '6 MB', installs: '27.4k' },
+    { id: 'savesafe', engine: 'Any', name: 'Rolling Save Backup', icon: '💾', tag: 'Safety',
+      desc: 'Snapshots your saves before every install. One-click rollback.',
+      version: '1.0.8', size: '3 MB', installs: '15.2k' }
+  ];
+
+  var SCAN_STEPS = [
+    { at: 0,  text: 'Reading Steam library…' },
+    { at: 16, text: 'Reading Epic Games library…' },
+    { at: 32, text: 'Reading GOG Galaxy library…' },
+    { at: 46, text: 'Reading itch.io library…' },
+    { at: 60, text: 'Detecting game engines…' },
+    { at: 76, text: 'Matching universal mod index…' },
+    { at: 92, text: 'Done.' }
+  ];
+
+  /* ------------------------------ elements ------------------------------ */
+  function $(id) { return document.getElementById(id); }
+
+  var scanBtn      = $('scanBtn'),
+      scanProgress = $('scanProgress'),
+      scanBar      = $('scanBar'),
+      scanStatus   = $('scanStatus'),
+      gameList     = $('gameList'),
+      emptyLib     = $('emptyLib'),
+      scanSummary  = $('scanSummary'),
+      sumGames     = $('sumGames'),
+      sumEngines   = $('sumEngines'),
+      sumMods      = $('sumMods'),
+      modsEmpty    = $('modsEmpty'),
+      modsPanel    = $('modsPanel'),
+      modsTitle    = $('modsTitle'),
+      modsEngine   = $('modsEngine'),
+      modsMeta     = $('modsMeta'),
+      modsPath     = $('modsPath'),
+      modsCount    = $('modsCount'),
+      modsInstalled= $('modsInstalled'),
+      modList      = $('modList'),
+      toastBox     = $('toastBox');
+
+  /* ------------------------------ state ------------------------------ */
+  var selectedGame = null;
+  var scanning = false;
+  var installed = {};   /* key -> true */
+  var installing = {};
+  var toastTimer = null;
+
+  /* ------------------------------ helpers ------------------------------ */
+  function modsFor(game) {
+    var specific = CATALOG.filter(function (m) { return m.engine === game.engine; });
+    var any = CATALOG.filter(function (m) { return m.engine === 'Any'; });
+    return specific.concat(any).slice(0, 4);
+  }
+
+  function keyOf(gameId, modId) { return gameId + ':' + modId; }
+
+  function showToast(msg) {
+    toastBox.textContent = msg;
+    toastBox.classList.remove('opacity-0', 'translate-y-2');
+    if (toastTimer) { clearTimeout(toastTimer); }
+    toastTimer = setTimeout(function () {
+      toastBox.classList.add('opacity-0', 'translate-y-2');
+    }, 3000);
+  }
+
+  function engineClass(engine) {
+    return engine === 'Unity' ? 'engine-unity' : 'engine-unreal';
+  }
+
+  /* ------------------------------ game list ------------------------------ */
+  function renderGameList() {
+    gameList.innerHTML = '';
+    GAMES.forEach(function (g, i) {
+      var li = document.createElement('li');
+      li.className = 'fade-up';
+      li.style.animationDelay = (i * 80) + 'ms';
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'game-row';
+      btn.setAttribute('data-id', g.id);
+      btn.innerHTML =
+        '<div class="gr-top">' +
+          '<span class="gr-name">' + g.name + '</span>' +
+          '<span class="engine-pill ' + engineClass(g.engine) + '">' + g.engine + '</span>' +
+        '</div>' +
+        '<div class="gr-sub"><span>' + g.launcher + '</span><span>·</span><span>' + g.engineVersion + '</span></div>';
+
+      btn.addEventListener('click', function () { selectGame(g.id); });
+      li.appendChild(btn);
+      gameList.appendChild(li);
+    });
+  }
+
+  function selectGame(id) {
+    selectedGame = id;
+    var rows = gameList.querySelectorAll('.game-row');
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      if (row.getAttribute('data-id') === id) {
+        row.classList.add('active');
+      } else {
+        row.classList.remove('active');
+      }
+    }
+    renderMods();
+  }
+
+  /* ------------------------------ mods panel ------------------------------ */
+  function renderMods() {
+    var game = null;
+    for (var i = 0; i < GAMES.length; i++) {
+      if (GAMES[i].id === selectedGame) { game = GAMES[i]; break; }
+    }
+
+    if (!game) {
+      modsPanel.classList.add('hidden');
+      modsEmpty.classList.remove('hidden');
+      return;
+    }
+
+    modsEmpty.classList.add('hidden');
+    modsPanel.classList.remove('hidden');
+
+    modsTitle.textContent = game.name;
+    modsEngine.textContent = game.engine + ' ' + game.engineVersion;
+    modsEngine.className = 'engine-pill ' + engineClass(game.engine);
+    modsMeta.textContent = game.launcher + ' · ' + game.size;
+    modsPath.textContent = game.path;
+
+    var mods = modsFor(game);
+    modsCount.textContent = mods.length + ' compatible mods';
+    updateInstalledPill(game);
+
+    modList.innerHTML = '';
+    mods.forEach(function (m, idx) {
+      var li = document.createElement('li');
+      li.className = 'mod-item fade-up';
+      li.style.animationDelay = (idx * 70) + 'ms';
+
+      li.innerHTML =
+        '<div style="display:flex;align-items:flex-start;gap:.75rem">' +
+          '<div class="mod-icon">' + m.icon + '</div>' +
+          '<div style="min-width:0;flex:1 1 auto">' +
+            '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:.45rem">' +
+              '<p class="mod-name">' + m.name + '</p>' +
+              '<span class="mod-tag">' + m.tag + '</span>' +
+            '</div>' +
+            '<p class="mod-desc">' + m.desc + '</p>' +
+            '<p class="mod-meta">v' + m.version + ' · ' + m.size + ' · ' + m.installs + ' installs</p>' +
+            '<div class="mod-bar-wrap"><div class="mod-bar"></div></div>' +
+          '</div>' +
+          '<button type="button" class="install-btn">Install</button>' +
+        '</div>';
+
+      var btn = li.querySelector('.install-btn');
+      var wrap = li.querySelector('.mod-bar-wrap');
+      var bar = li.querySelector('.mod-bar');
+
+      if (installed[keyOf(game.id, m.id)]) {
+        markDone(btn);
+      } else {
+        btn.addEventListener('click', function () {
+          startInstall(game, m, btn, wrap, bar);
+        });
+      }
+
+      modList.appendChild(li);
+    });
+  }
+
+  function updateInstalledPill(game) {
+    var mods = modsFor(game);
+    var count = 0;
+    for (var i = 0; i < mods.length; i++) {
+      if (installed[keyOf(game.id, mods[i].id)]) { count++; }
+    }
+    modsInstalled.textContent = count + ' installed';
+  }
+
+  function markDone(btn) {
+    btn.textContent = 'Installed ✓';
+    btn.classList.add('done');
+  }
+
+  /* ------------------------------ install simulation ------------------------------ */
+  function startInstall(game, mod, btn, wrap, bar) {
+    var key = keyOf(game.id, mod.id);
+    if (installed[key] || installing[key]) { return; }
+
+    installing[key] = true;
+    btn.disabled = true;
+    btn.textContent = 'Installing…';
+    wrap.classList.add('on');
+
+    var duration = 1500;
+    var start = (window.performance && performance.now) ? performance.now() : Date.now();
+
+    function now() {
+      return (window.performance && performance.now) ? performance.now() : Date.now();
+    }
+
+    function frame() {
+      var p = (now() - start) / duration;
+      if (p > 1) { p = 1; }
+      bar.style.width = (p * 100).toFixed(0) + '%';
+
+      if (p < 1) {
+        requestAnimationFrame(frame);
+        return;
+      }
+
+      installing[key] = false;
+      installed[key] = true;
+      btn.disabled = false;
+      markDone(btn);
+      wrap.classList.remove('on');
+      updateInstalledPill(game);
+      showToast('Installed ' + mod.name + ' into ' + game.name + ' — sample data');
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  /* ------------------------------ scan simulation ------------------------------ */
+  function startScan() {
+    if (scanning) { return; }
+    scanning = true;
+
+    scanBtn.disabled = true;
+    scanBtn.textContent = 'Scanning…';
+    emptyLib.classList.add('hidden');
+    scanSummary.classList.add('hidden');
+    scanSummary.classList.remove('grid');
+    scanProgress.classList.remove('hidden');
+    scanBar.style.width = '0%';
+    scanStatus.textContent = SCAN_STEPS[0].text;
+    gameList.innerHTML = '';
+
+    selectedGame = null;
+    modsPanel.classList.add('hidden');
+    modsEmpty.classList.remove('hidden');
+
+    var duration = 2400;
+    var start = (window.performance && performance.now) ? performance.now() : Date.now();
+
+    function now() {
+      return (window.performance && performance.now) ? performance.now() : Date.now();
+    }
+
+    function frame() {
+      var p = (now() - start) / duration;
+      if (p > 1) { p = 1; }
+      var eased = 1 - Math.pow(1 - p, 3);
+      var pct = eased * 100;
+
+      scanBar.style.width = pct.toFixed(1) + '%';
+
+      var label = SCAN_STEPS[0].text;
+      for (var i = 0; i < SCAN_STEPS.length; i++) {
+        if (pct >= SCAN_STEPS[i].at) { label = SCAN_STEPS[i].text; }
+      }
+      scanStatus.textContent = label;
+
+      if (p < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        finishScan();
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  function finishScan() {
+    scanning = false;
+    scanBtn.disabled = false;
+    scanBtn.textContent = '🔄 Rescan';
+    scanProgress.classList.add('hidden');
+
+    var engines = {};
+    var totalMods = 0;
+    for (var i = 0; i < GAMES.length; i++) {
+      engines[GAMES[i].engine] = true;
+      totalMods += modsFor(GAMES[i]).length;
+    }
+
+    sumGames.textContent = String(GAMES.length);
+    sumEngines.textContent = String(Object.keys(engines).length);
+    sumMods.textContent = String(totalMods);
+
+    scanSummary.classList.remove('hidden');
+    scanSummary.classList.add('grid');
+
+    renderGameList();
+    selectGame(GAMES[0].id);
+  }
+
+  /* ------------------------------ waitlist buttons ------------------------------ */
+  var waitlistButtons = document.querySelectorAll('[data-waitlist]');
+  for (var i = 0; i < waitlistButtons.length; i++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        var kind = btn.getAttribute('data-waitlist');
+        if (kind === 'pro') {
+          btn.textContent = "You're on the list ✓";
+          showToast('Added to the Pro waitlist — sample data, nothing was submitted.');
+        } else {
+          showToast('Demo only — no download started. Sample data.');
+        }
+      });
+    })(waitlistButtons[i]);
+  }
+
+  /* ------------------------------ boot ------------------------------ */
+  setTimeout(startScan, 550);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-25",
+ "headline": "一天千星的跨游戏模组管理器，机会还是泡沫？",
+ "summary_md": "**What it is:** Universal Game Mod Manager (Indigo-0167/universal-game-mod-manager) is a free, MIT-licensed Windows desktop app that scans your game libraries — Steam, GOG, Epic, itch.io, and PC Xbox — detects whether each game runs on Unity or Unreal Engine, and helps you discover, install, update, and manage mods that work across multiple games on the same engine. No command line: download the zip, keep the exe and libvlc.dll together, and launch.\n\n**Why it's taking off:** Mod managers have historically been game-specific. The pitch here is a single hub for cross-game mods, especially for Unity and Unreal titles and VR modding, which is a real pain point for players who juggle several modded games. The repo is young and the star count jumped unusually fast, so treat the traction as unverified until there's more history.\n\n**Where the product opportunity is:** The obvious wedge is a polished installer and update layer — engine version detection, compatibility warnings, and one-click updates are the parts users actually feel. A free core with a paid tier (cloud mod profiles, multi-PC sync, verified mod sources) could work, but the space already has free, mature tools like Vortex, Mod Organizer, and Thunderstore. The safer play is a thin, trustworthy compatibility layer that sits alongside those ecosystems rather than replacing them. Per the README, discovery depends on local metadata and some games need manual setup.",
+ "title_en": "Universal Game Mod Manager: One Mod Manager for Unity & Unreal",
+ "tagline_en": "A free Windows app that finds your games and installs Unity/Unreal mods for you",
+ "pick": {
+  "full_name": "Indigo-0167/universal-game-mod-manager",
+  "url": "https://github.com/Indigo-0167/universal-game-mod-manager",
+  "description": "Free Windows game mod manager to discover, install, update and manage universal Unity and Unreal Engine mods.",
+  "license": "MIT",
+  "stars": 1299,
+  "daily_rate": 1299.0,
+  "category": "其他",
+  "one_liner": "一个能自动找到电脑里的游戏并一键安装模组的Windows工具",
+  "one_liner_en": "A free Windows app that finds your installed games and manages universal mods in one click",
+  "reason": "产品定位清晰、易懂，但属于已有成熟免费竞品覆盖的红海；star 数据可疑，商业化路径弱，适合做内容做演示，不适合作为主力创业项目",
+  "content": 6.67,
+  "startup": 6.35,
+  "final": 6.77,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-25-indigo-0167-universal-game-mod-manager",
+ "top": [
+  {
+   "full_name": "Indigo-0167/universal-game-mod-manager",
+   "url": "https://github.com/Indigo-0167/universal-game-mod-manager",
+   "one_liner": "一个能自动找到电脑里的游戏并一键安装模组的Windows工具",
+   "reason": "产品定位清晰、易懂，但属于已有成熟免费竞品覆盖的红海；star 数据可疑，商业化路径弱，适合做内容做演示，不适合作为主力创业项目",
+   "one_liner_en": "A free Windows app that finds your installed games and manages universal mods in one click",
+   "content": 6.67,
+   "startup": 6.35,
+   "final": 6.77,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Nebula4207/av1-video-encoder-gui",
+   "url": "https://github.com/Nebula4207/av1-video-encoder-gui",
+   "one_liner": "在Windows上不用命令行就能把视频压成AV1格式的图形工具",
+   "reason": "痛点真实、包装空间不错且MIT友好，但竞品强、付费意愿弱，刷星风险需谨慎，更适合做内容而非重产品。",
+   "one_liner_en": "A free Windows GUI that makes AV1 video encoding easy, no command line needed.",
+   "content": 6.33,
+   "startup": 6.8,
+   "final": 6.73,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "kai415-debug/ffmpeg-video-audio-converter",
+   "url": "https://github.com/kai415-debug/ffmpeg-video-audio-converter",
+   "one_liner": "给 FFmpeg 套上图形界面的 Windows 免费转码工具",
+   "reason": "易懂易演示，但赛道拥挤、免费替代品多，仓库数据异常需警惕，商业化偏弱。",
+   "one_liner_en": "A free Windows GUI that makes FFmpeg video and audio conversion point-and-click",
+   "content": 5.33,
+   "startup": 6.3,
+   "final": 6.61,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "xcl-dev/xcl",
+   "url": "https://github.com/xcl-dev/xcl",
+   "one_liner": "让 Xbox 主机游戏能在 Windows 电脑上原生运行的兼容层",
+   "reason": "技术上非常惊艳，做内容会爆，但法律风险高，可用游戏少，GPL 许可证封死商业路，所以更适合做内容，不适合做产品。",
+   "one_liner_en": "A compatibility layer that runs Xbox Series X|S console games natively on Windows PCs",
+   "content": 8.33,
+   "startup": 4.6,
+   "final": 6.36,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "mdiri-ai/SoduWork",
+   "url": "https://github.com/mdiri-ai/SoduWork",
+   "one_liner": "让 AI 团队干活、由同事验收的自托管协作引擎",
+   "reason": "概念清晰、MIT 友好、多 agent 复核+人工验收有卖点，但安装重、演示性弱、star 增长异常，需先验证真实性再包装成托管 SaaS",
+   "one_liner_en": "Self-hosted AI agent workspace where work is done by agents and signed off by people",
+   "content": 6.33,
+   "startup": 6.35,
+   "final": 6.28,
+   "category_penalty": 0
+  }
+ ]
+}
