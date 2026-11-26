@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swarmtest — 20 AI testers, 20 phones, one run</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica Neue','Arial','sans-serif']
+        }
+      }
+    }
+  };
+</script>
+<style>
+  html{scroll-behavior:smooth}
+  body{background:#f8fafc}
+
+  /* ---------- device wall ---------- */
+  .wall{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .dev{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:3px;transition:box-shadow .25s,background .25s,border-color .25s}
+  .dev.is-running{border-color:#c7d2fe;background:#eef2ff;box-shadow:0 2px 10px rgba(99,102,241,.12)}
+  .dev.is-found{border-color:#fda4af;background:#fff1f2;box-shadow:0 2px 12px rgba(244,63,94,.18)}
+  .screen{position:relative;overflow:hidden;border-radius:8px;background:#0f172a;aspect-ratio:9/16}
+  .mini{position:absolute;inset:0;padding:4px;display:flex;flex-direction:column;gap:2px}
+  .bar{border-radius:2px;background:#334155;height:3px}
+  .bar.w1{width:50%;margin:0 auto}
+  .bar.h6{height:7px;background:rgba(99,102,241,.65)}
+  .bar.g{background:rgba(16,185,129,.65);height:7px;margin-top:auto}
+  .tap{position:absolute;width:9px;height:9px;border-radius:999px;background:rgba(129,140,248,.95);
+       box-shadow:0 0 10px rgba(99,102,241,.95);transform:translate(-50%,-50%);display:none;z-index:3;
+       animation:tapPulse 2.2s ease-out infinite}
+  .dev.is-running .tap{display:block}
+  .bugwash{position:absolute;inset:0;display:none;background:rgba(244,63,94,.22);box-shadow:inset 0 0 0 2px #f43f5e}
+  .dev.is-found .bugwash{display:block}
+  .bugflag{position:absolute;top:1px;right:2px;font-size:9px;display:none;z-index:4}
+  .dev.is-found .bugflag{display:block}
+  .dev .name{font-size:9px;font-weight:600;color:#334155;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:3px 2px 0}
+  .dev .status{font-size:8px;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px 1px}
+  .dev.is-running .status{color:#6366f1}
+  .dev.is-found .status{color:#e11d48;font-weight:600}
+
+  @keyframes tapPulse{
+    0%{transform:translate(-50%,-50%) scale(.35);opacity:0}
+    22%{opacity:1}
+    100%{transform:translate(-50%,-50%) scale(1.7);opacity:0}
+  }
+
+  /* ---------- heatmap ---------- */
+  #heatmap{position:absolute;inset:0;pointer-events:none;z-index:2}
+  .blob{position:absolute;width:54%;height:36%;transform:translate(-50%,-50%);border-radius:999px;
+        background:radial-gradient(circle,rgba(244,63,94,.95) 0%,rgba(245,158,11,.55) 38%,rgba(245,158,11,0) 72%);
+        opacity:0;transition:opacity .6s ease;mix-blend-mode:screen}
+  .blob.on{opacity:1}
+
+  /* ---------- feed ---------- */
+  #feed{display:flex;flex-direction:column;gap:8px;max-height:430px;overflow-y:auto}
+  .empty{margin:0;border:1px dashed #e2e8f0;background:#f8fafc;border-radius:12px;padding:18px;text-align:center;font-size:12px;color:#94a3b8}
+  .feed{border:1px solid #e2e8f0;border-radius:12px;background:#fff;padding:10px}
+  .feed-head{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .chip{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:999px}
+  .sev-High{background:#ffe4e6;color:#be123c}
+  .sev-Medium{background:#fef3c7;color:#b45309}
+  .sev-Low{background:#e2e8f0;color:#475569}
+  .cat{font-size:9px;padding:2px 6px;border-radius:999px;background:#f1f5f9;color:#64748b}
+  .feed-time{margin-left:auto;font-size:9px;color:#94a3b8;font-variant-numeric:tabular-nums}
+  .feed-title{margin-top:4px;font-size:12.5px;font-weight:600;color:#1e293b;line-height:1.35}
+  .feed-meta{margin-top:2px;font-size:10px;color:#94a3b8}
+  .feed-detail{margin-top:3px;font-size:11px;color:#475569;line-height:1.45}
+  .thumbs{display:flex;gap:4px;margin-top:6px}
+  .thumb{width:34px;height:26px;border-radius:5px;background:#0f172a;border:1px solid #e2e8f0;display:grid;place-items:center;font-size:8px;color:#94a3b8}
+  .feed-item{animation:pop .34s ease-out both}
+  .done{border:1px solid #a7f3d0;background:#ecfdf5;color:#065f46;border-radius:12px;padding:10px;font-size:12px;line-height:1.45}
+
+  @keyframes pop{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+  .dot-live{animation:blink 1.3s infinite}
+  .pulse-dot{animation:blink 1.8s infinite}
+
+  /* ---------- toast ---------- */
+  #toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);opacity:0;pointer-events:none;
+         transition:opacity .3s,transform .3s;z-index:60;background:#0f172a;color:#fff;padding:11px 18px;
+         border-radius:999px;font-size:13px;box-shadow:0 12px 34px rgba(15,23,42,.28);max-width:90vw;text-align:center}
+  #toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body class="font-sans text-slate-900 antialiased">
+
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <div class="flex items-center gap-2">
+      <div class="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-sm">🐞</div>
+      <span class="font-semibold tracking-tight">Swarmtest</span>
+      <span class="ml-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500">concept</span>
+    </div>
+    <nav class="hidden gap-6 text-sm text-slate-600 sm:flex">
+      <a href="#demo" class="hover:text-slate-900">Demo</a>
+      <a href="#uses" class="hover:text-slate-900">Use cases</a>
+      <a href="#pricing" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#waitlist" class="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="mx-auto max-w-6xl px-4 pb-8 pt-12 text-center sm:pt-16">
+  <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600">
+    <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+    20 agents · 20 virtual phones · running in parallel
+  </div>
+  <h1 class="mt-5 text-4xl font-semibold tracking-tight text-slate-900 sm:text-6xl">
+    Your app, tried by<br><span class="text-indigo-600">20 users before launch.</span>
+  </h1>
+  <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+    Twenty AI testers open your build on twenty virtual phones at once — Swedish at 200% text, Arabic right-to-left,
+    VoiceOver on an iPhone SE. Each one taps, types and scrolls like a brand-new user, then files a bug report with
+    numbered screenshots. No test scripts to write.
+  </p>
+  <p class="mt-3 text-xs text-slate-400">Interactive sample — every number on this page is demo data.</p>
+</section>
+
+<!-- ================= DEMO ================= -->
+<section id="demo" class="mx-auto max-w-6xl px-4 pb-16">
+  <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+
+    <!-- controls -->
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <label class="block">
+        <span class="mb-1 block text-[11px] font-semibold uppercase tracking-wide text-slate-500">GitHub repo</span>
+        <input id="repo" value="acme/habitloop" spellcheck="false"
+               class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100">
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-[11px] font-semibold uppercase tracking-wide text-slate-500">App id</span>
+        <input id="appid" value="com.acme.habitloop" spellcheck="false"
+               class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100">
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-[11px] font-semibold uppercase tracking-wide text-slate-500">Persona mix</span>
+        <select id="mix"
+                class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100">
+          <option value="mixed">Mixed personas (recommended)</option>
+          <option value="a11y">Accessibility sweep</option>
+          <option value="l10n">Localization sweep</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-[11px] font-semibold uppercase tracking-wide text-slate-500">Run mode</span>
+        <select id="mode"
+                class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100">
+          <option value="explore">Explore like a new user</option>
+          <option value="feature">Run one feature end to end</option>
+          <option value="reproduce">Reproduce a bug report</option>
+          <option value="compare">Compare two versions</option>
+          <option value="improve">Improvement report</option>
+          <option value="web">Test a website on phones</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
+      <p id="plan" class="text-xs text-slate-500">20 testers · 10 iOS + 10 Android · 9 locales · explore like a new user · ~21 min</p>
+      <div class="flex items-center gap-4">
+        <div class="hidden items-center gap-1.5 text-[11px] text-slate-500 sm:flex">
+          <span class="inline-block h-2 w-2 rounded-full bg-indigo-500"></span> iOS
+          <span class="ml-2 inline-block h-2 w-2 rounded-full bg-emerald-500"></span> Android
+        </div>
+        <button id="runBtn" aria-label="Run twenty testers"
+                class="w-full rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-90 sm:w-auto">
+          Run 20 testers
+        </button>
+      </div>
+    </div>
+
+    <!-- stats -->
+    <div class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <div class="rounded-xl bg-slate-50 p-3">
+        <div class="text-[10px] uppercase tracking-wide text-slate-400">Bugs found</div>
+        <div class="mt-0.5 text-lg font-semibold text-slate-900"><span id="statBugs">0</span><span class="text-sm font-normal text-slate-400">/11</span></div>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-3">
+        <div class="text-[10px] uppercase tracking-wide text-slate-400">Elapsed</div>
+        <div class="mt-0.5 text-lg font-semibold tabular-nums text-slate-900" id="statClock">00:00</div>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-3">
+        <div class="text-[10px] uppercase tracking-wide text-slate-400">Model cost</div>
+        <div class="mt-0.5 text-lg font-semibold tabular-nums text-slate-900" id="statCost">$0.00</div>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-3">
+        <div class="text-[10px] uppercase tracking-wide text-slate-400">Phones live</div>
+        <div class="mt-0.5 text-lg font-semibold tabular-nums text-slate-900" id="statPhones">20</div>
+      </div>
+    </div>
+
+    <!-- main board -->
+    <div class="mt-5 grid gap-4 lg:grid-cols-2">
+
+      <!-- device wall -->
+      <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-3">
+        <div class="mb-2 flex items-center justify-between">
+          <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Device wall</h3>
+          <span class="rounded-full bg-white px-2 py-0.5 text-[10px] text-slate-400 ring-1 ring-slate-200">20 simulators · sample data</span>
+        </div>
+        <div id="wall" class="wall"></div>
+        <p class="mt-2 text-[10px] leading-relaxed text-slate-400">
+          Each card is one Claude Code agent on its own simulator or emulator. Tap dots are the agent tapping the screen.
+        </p>
+      </div>
+
+      <!-- heatmap + feed -->
+      <div class="space-y-4">
+        <div class="rounded-2xl border border-slate-800 bg-slate-950 p-3">
+          <div class="mb-2 flex items-center justify-between">
+            <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-400">Bug heatmap</h3>
+            <div class="flex items-center gap-1.5 text-[10px] text-slate-500">
+              <span>low</span>
+              <span class="inline-block h-1.5 w-12 rounded-full" style="background:linear-gradient(90deg,#334155,#f59e0b,#f43f5e)"></span>
+              <span>high</span>
+            </div>
+          </div>
+          <div class="relative mx-auto w-[150px] overflow-hidden rounded-[22px] border border-slate-700 bg-slate-900" style="aspect-ratio:9/17">
+            <div class="absolute inset-0 z-0 flex flex-col gap-1.5 p-2.5">
+              <div class="mx-auto h-1 w-8 rounded-full bg-slate-700"></div>
+              <div class="mt-1 h-6 rounded-md bg-slate-800"></div>
+              <div class="h-2 w-3/4 rounded bg-slate-800"></div>
+              <div class="h-2 w-1/2 rounded bg-slate-800"></div>
+              <div class="h-2 w-2/3 rounded bg-slate-800"></div>
+              <div class="flex-1"></div>
+              <div class="h-7 rounded-md bg-indigo-500/40"></div>
+            </div>
+            <div id="heatmap"></div>
+          </div>
+          <p class="mt-2 text-center text-[10px] text-slate-500">Hotspots light up as testers find bugs</p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-3">
+          <div class="mb-2 flex items-center justify-between">
+            <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-500">Live bug feed</h3>
+            <span class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">Sample data</span>
+          </div>
+          <div id="feed">
+            <p class="empty">Press “Run 20 testers” to start the sample run.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= USE CASES ================= -->
+<section id="uses" class="mx-auto max-w-6xl px-4 pb-16">
+  <h2 class="text-center text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Three ways teams use it</h2>
+  <p class="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-slate-500">
+    Every run returns numbered screenshots and a prioritized bug list. No test scripts, no device farm to babysit.
+  </p>
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:shadow-md">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-xl">🚀</div>
+      <h3 class="mt-3 font-semibold text-slate-900">Pre-release sweep</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-slate-600">
+        Point a run at your repo before every TestFlight build. Twenty personas hit the flow you care about and file
+        what breaks — while you are still in the branch.
+      </p>
+      <div class="mt-3 rounded-lg bg-slate-50 p-2.5 text-[11px] leading-relaxed text-slate-500">
+        <span class="font-semibold text-slate-600">Sample run found:</span> Send button under the Android nav bar,
+        blank deep-link screen, toast covering the FAB.
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:shadow-md">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-amber-50 text-xl">🌍</div>
+      <h3 class="mt-3 font-semibold text-slate-900">Localization &amp; accessibility</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-slate-600">
+        iPhone SE in Swedish at 200% text, iPad in Arabic right-to-left, VoiceOver on a Pixel. Catch truncated strings,
+        mirrored arrows and unlabeled icons before review.
+      </p>
+      <div class="mt-3 rounded-lg bg-slate-50 p-2.5 text-[11px] leading-relaxed text-slate-500">
+        <span class="font-semibold text-slate-600">Sample run found:</span> untranslated “Receive”, rows clipped at
+        200%, trash icon with no accessibility label.
+      </div>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 transition hover:shadow-md">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-xl">🔁</div>
+      <h3 class="mt-3 font-semibold text-slate-900">Reproduce &amp; compare</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-slate-600">
+        Paste a user report and each phone answers yes, no or unclear with screenshots. Or run the same personas on two
+        builds and get one table of goals, scores and issues.
+      </p>
+      <div class="mt-3 rounded-lg bg-slate-50 p-2.5 text-[11px] leading-relaxed text-slate-500">
+        <span class="font-semibold text-slate-600">Sample run found:</span> 7 of 20 phones reproduced the “search
+        clears on rotate” report; 11 could not.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="pricing" class="mx-auto max-w-6xl px-4 pb-16">
+  <h2 class="text-center text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Simple pricing</h2>
+  <p class="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-slate-500">
+    Self-host it for free on GitHub's public runners, or let us run the swarm and keep the history.
+  </p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Hobby</h3>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">$0<span class="text-base font-normal text-slate-400">/mo</span></div>
+      <p class="mt-2 text-sm text-slate-600">Bring your own Claude key. Free runners, your repo, your logs.</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600">
+        <li>✓ 20 parallel testers</li>
+        <li>✓ iOS Simulator + Android emulator</li>
+        <li>✓ Bug reports with screenshots</li>
+        <li>✓ About $0.15–$0.55 per phone in model usage</li>
+      </ul>
+      <button data-toast="Setup instructions live in the open-source repo — nothing was opened (demo)."
+              class="mt-5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-50">
+        Read the setup guide
+      </button>
+    </div>
+
+    <div class="relative rounded-2xl border-2 border-slate-900 bg-white p-6 shadow-lg">
+      <span class="absolute -top-3 left-6 rounded-full bg-slate-900 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Most popular</span>
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Team</h3>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">$49<span class="text-base font-normal text-slate-400">/mo</span></div>
+      <p class="mt-2 text-sm text-slate-600">We run the swarm. You read the report.</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600">
+        <li>✓ 3 connected repos</li>
+        <li>✓ 20-persona run on every pull request</li>
+        <li>✓ Regression suite: bugs that come back</li>
+        <li>✓ Slack alerts + shareable report links</li>
+      </ul>
+      <button data-toast="Checkout is not part of this demo — nothing was charged."
+              class="mt-5 w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">
+        Start free trial
+      </button>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Scale</h3>
+      <div class="mt-2 text-3xl font-semibold text-slate-900">$199<span class="text-base font-normal text-slate-400">/mo</span></div>
+      <p class="mt-2 text-sm text-slate-600">For teams shipping weekly on several apps.</p>
+      <ul class="mt-4 space-y-2 text-sm text-slate-600">
+        <li>✓ Unlimited repos &amp; runs</li>
+        <li>✓ Compare two versions side by side</li>
+        <li>✓ Website testing on phones included</li>
+        <li>✓ SSO, audit log, priority queue</li>
+      </ul>
+      <button data-toast="Sales contact is not part of this demo — nothing was sent."
+              class="mt-5 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-50">
+        Talk to us
+      </button>
+    </div>
+
+  </div>
+
+  <!-- waitlist -->
+  <div id="waitlist" class="mt-8 overflow-hidden rounded-3xl bg-slate-900 p-6 sm:p-10">
+    <div class="mx-auto max-w-2xl text-center">
+      <h3 class="text-xl font-semibold text-white sm:text-2xl">Get early access</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-300">
+        We are opening the hosted version to a small group of indie teams and QA leads. Leave an email and we will ping
+        you when a slot opens.
+      </p>
+      <div class="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-center">
+        <input type="email" value="you@studio.dev" aria-label="Email address"
+               class="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/30 sm:w-72">
+        <button data-toast="You're on the list — this is a demo, nothing was sent."
+                class="rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100 active:scale-[.98]">
+          Join waitlist
+        </button>
+      </div>
+      <p class="mt-3 text-[11px] text-slate-500">No data leaves this page. The button only shows a message.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-8 text-center">
+    <div class="flex items-center gap-2 text-sm font-semibold text-slate-800">
+      <span class="grid h-7 w-7 place-items-center rounded-lg bg-slate-900 text-xs">🐞</span> Swarmtest
+    </div>
+    <p class="max-w-3xl text-xs leading-relaxed text-slate-500">
+      Concept demo, based on the open-source project
+      <a href="https://github.com/pierridotite/mobile-agent-testers" class="font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 hover:text-slate-900">pierridotite/mobile-agent-testers</a>
+      (MIT), unofficial, all data is sample data
+    </p>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------ */
+  /* Demo data                                                           */
+  /* ------------------------------------------------------------------ */
+  var PERSONAS = [
+    { n: 'Anna',   d: 'iPhone SE (3rd)',  l: 'sv-SE', big: true },
+    { n: 'Malik',  d: 'Pixel 7',          l: 'en-US' },
+    { n: 'Clara',  d: 'iPhone 15',        l: 'de-DE' },
+    { n: 'Jonas',  d: 'Pixel 7a',         l: 'de-DE', big: true },
+    { n: 'Fatima', d: 'iPad Air',         l: 'ar-SA', rtl: true },
+    { n: 'Diego',  d: 'iPhone 14',        l: 'es-MX' },
+    { n: 'Yuki',   d: 'Pixel 8',          l: 'ja-JP' },
+    { n: 'Priya',  d: 'iPhone 13 mini',   l: 'hi-IN', big: true },
+    { n: 'Luca',   d: 'Galaxy S23',       l: 'it-IT' },
+    { n: 'Mei',    d: 'iPhone 15 Pro',    l: 'zh-CN' },
+    { n: 'Sofia',  d: 'Pixel 6a',         l: 'pt-BR' },
+    { n: 'Ethan',  d: 'iPhone SE',        l: 'en-US', big: true, a11y: true },
+    { n: 'Noor',   d: 'Galaxy A54',       l: 'tr-TR' },
+    { n: 'Elif',   d: 'iPhone 12',        l: 'tr-TR', big: true },
+    { n: 'Marco',  d: 'Pixel 7',          l: 'fr-FR' },
+    { n: 'Ines',   d: 'iPhone 14 Pro',    l: 'fr-FR', dark: true },
+    { n: 'Kwame',  d: 'Pixel 8 Pro',      l: 'en-GB' },
+    { n: 'Hana',   d: 'iPad mini',        l: 'ko-KR' },
+    { n: 'Oliver', d: 'iPhone 15',        l: 'en-US', a11y: true },
+    { n: 'Zara',   d: 'Galaxy S22',       l: 'ar-EG', rtl: true, big: true }
+  ];
+
+  var BUGS = [
+    { at: 1300, i: 1,  sev: 'High',   cat: 'Broken flow',   hx: 50, hy: 90,
+      title: '“Send” button sits under the Android navigation bar',
+      detail: 'Tapped 6 times with no effect — the system bar swallows the touch. Reproduced on 3 of 3 Android phones.' },
+    { at: 2100, i: 0,  sev: 'Medium', cat: 'Translation',   hx: 40, hy: 55,
+      title: '“Receive” is untranslated in the Swedish build',
+      detail: 'The primary tab label stays English while every other string is localized. Screenshot 2/3 shows the mixed header.' },
+    { at: 2900, i: 2,  sev: 'Medium', cat: 'Layout',        hx: 56, hy: 72,
+      title: 'Long German label overflows the primary button',
+      detail: '“Übertragung starten” spills outside the rounded button at default text size on a 6.1" screen.' },
+    { at: 3700, i: 7,  sev: 'High',   cat: 'Accessibility', hx: 45, hy: 62,
+      title: 'Device list rows are clipped at the largest text size',
+      detail: 'Second row of the list is cut in half; the file name is unreadable and the tap target drops below 44pt.' },
+    { at: 4400, i: 4,  sev: 'Medium', cat: 'Layout',        hx: 14, hy: 12,
+      title: 'RTL layout mirrors the back arrow the wrong way',
+      detail: 'In Arabic the back arrow points right but pushes the previous screen — inconsistent with iOS RTL conventions.' },
+    { at: 5100, i: 18, sev: 'High',   cat: 'Accessibility', hx: 82, hy: 40,
+      title: 'Trash icon has no accessibility label',
+      detail: 'VoiceOver announces “button” with no name. A screen-reader user cannot tell what gets deleted.' },
+    { at: 5800, i: 14, sev: 'Medium', cat: 'Broken flow',   hx: 50, hy: 22,
+      title: 'Search field loses its text after rotation',
+      detail: 'Typed “budget”, rotated to landscape, field is empty and results reset to the full list.' },
+    { at: 6500, i: 15, sev: 'High',   cat: 'Accessibility', hx: 60, hy: 48,
+      title: 'Secondary text contrast is 2.9:1 in dark mode',
+      detail: 'The helper line under each setting falls below 4.5:1. Hard to read at low brightness.' },
+    { at: 7300, i: 6,  sev: 'Low',    cat: 'Layout',        hx: 72, hy: 84,
+      title: 'Toast overlaps the floating action button',
+      detail: 'In Japanese the confirmation toast covers the FAB for 3 seconds; a second tap hits the toast instead.' },
+    { at: 8100, i: 16, sev: 'High',   cat: 'Broken flow',   hx: 50, hy: 50,
+      title: 'Deep link to /receive opens a blank screen',
+      detail: 'Cold start from the deep link renders an empty shell with no back button. Warm start works fine.' },
+    { at: 8900, i: 8,  sev: 'Medium', cat: 'Broken flow',   hx: 50, hy: 78,
+      title: 'Progress bar does not reset on a second transfer',
+      detail: 'Starting a second file keeps the old percentage for 4 seconds, then jumps. Looks like a stalled upload.' }
+  ];
+
+  BUGS.sort(function (a, b) { return a.at - b.at; });
+
+  var ACTIONS = [
+    'Tapping Send', 'Scrolling list', 'Typing text', 'Opening settings', 'Swiping back',
+    'Rotating device', 'Reopening app', 'Reading dialog', 'Tapping link', 'Changing locale'
+  ];
+
+  var RUN_MS = 11000;
+  var SPEED = 120;
+
+  /* ------------------------------------------------------------------ */
+  /* DOM refs                                                            */
+  /* ------------------------------------------------------------------ */
+  var wall = document.getElementById('wall');
+  var heat = document.getElementById('heatmap');
+  var feed = document.getElementById('feed');
+  var btn = document.getElementById('runBtn');
+  var statBugs = document.getElementById('statBugs');
+  var statClock = document.getElementById('statClock');
+  var statCost = document.getElementById('statCost');
+  var statPhones = document.getElementById('statPhones');
+
+  var devs = [];
+  var blobs = [];
+  var timer = null;
+  var t0 = 0;
+  var found = {};
+  var foundCount = 0;
+  var nextBug = 0;
+
+  /* ------------------------------------------------------------------ */
+  /* Build the device wall                                               */
+  /* ------------------------------------------------------------------ */
+  PERSONAS.forEach(function (p, i) {
+    var el = document.createElement('div');
+    el.className = 'dev';
+    el.title = p.n + ' · ' + p.d + ' · ' + p.l +
+      (p.big ? ' · 200% text' : '') + (p.rtl ? ' · RTL' : '') + (p.a11y ? ' · VoiceOver' : '');
+
+    var taps = '';
+    for (var k = 0; k < 3; k++) {
+      var l = 18 + Math.round(Math.random() * 64);
+      var t = 14 + Math.round(Math.random() * 70);
+      var dl = (Math.random() * 2).toFixed(2);
+      taps += '<span class="tap" style="left:' + l + '%;top:' + t + '%;animation-delay:' + dl + 's"></span>';
+    }
+
+    el.innerHTML =
+      '<div class="screen">' +
+        '<div class="mini">' +
+          '<div class="bar w1"></div>' +
+          '<div class="bar h6"></div>' +
+          '<div class="bar"></div>' +
+          '<div class="bar" style="width:78%"></div>' +
+          '<div class="bar" style="width:58%"></div>' +
+          '<div class="bar g"></div>' +
+        '</div>' +
+        taps +
+        '<div class="bugwash"></div>' +
+        '<span class="bugflag">🐞</span>' +
+      '</div>' +
+      '<div class="name">' + p.n + '</div>' +
+      '<div class="status">idle</div>';
+
+    wall.appendChild(el);
+    devs.push({ el: el, status: el.querySelector('.status') });
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* Build the heatmap blobs                                             */
+  /* ------------------------------------------------------------------ */
+  BUGS.forEach(function (b) {
+    var d = document.createElement('div');
+    d.className = 'blob';
+    d.style.left = b.hx + '%';
+    d.style.top = b.hy + '%';
+    heat.appendChild(d);
+    blobs.push(d);
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* Helpers                                                             */
+  /* ------------------------------------------------------------------ */
+  function fmt(sec) {
+    var m = Math.floor(sec / 60);
+    var r = sec % 60;
+    return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
+  }
+
+  function resetState() {
+    if (timer) { clearInterval(timer); timer = null; }
+    found = {};
+    foundCount = 0;
+    nextBug = 0;
+
+    feed.innerHTML = '<p class="empty">Press “Run 20 testers” to start the sample run.</p>';
+    statBugs.textContent = '0';
+    statClock.textContent = '00:00';
+    statCost.textContent = '$0.00';
+    statPhones.textContent = '20';
+
+    devs.forEach(function (d) {
+      d.el.className = 'dev';
+      d.status.textContent = 'idle';
+    });
+    blobs.forEach(function (b) { b.className = 'blob'; });
+
+    btn.disabled = false;
+    btn.textContent = 'Run 20 testers';
+  }
+
+  function addFeedItem(b) {
+    var p = PERSONAS[b.i];
+    var item = document.createElement('div');
+    item.className = 'feed-item';
+    item.innerHTML =
+      '<div class="feed">' +
+        '<div class="feed-head">' +
+          '<span class="chip sev-' + b.sev + '">' + b.sev + '</span>' +
+          '<span class="cat">' + b.cat + '</span>' +
+          '<span class="feed-time">' + statClock.textContent + '</span>' +
+        '</div>' +
+        '<div class="feed-title">' + b.title + '</div>' +
+        '<div class="feed-meta">' + p.n + ' · ' + p.d + ' · ' + p.l +
+          (p.big ? ' · 200% text' : '') + (p.rtl ? ' · RTL' : '') + '</div>' +
+        '<div class="feed-detail">' + b.detail + '</div>' +
+        '<div class="thumbs">' +
+          '<span class="thumb">1/3</span>' +
+          '<span class="thumb">2/3</span>' +
+          '<span class="thumb">3/3</span>' +
+        '</div>' +
+      '</div>';
+    feed.prepend(item);
+    while (feed.children.length > 24) {
+      feed.removeChild(feed.lastChild);
+    }
+  }
+
+  function revealBug(b, idx) {
+    found[b.i] = true;
+    foundCount++;
+
+    var d = devs[b.i];
+    d.el.classList.remove('is-running');
+    d.el.classList.add('is-found');
+    d.status.textContent = '🐞 bug found';
+
+    blobs[idx].className = 'blob on';
+    statBugs.textContent = String(foundCount);
+    addFeedItem(b);
+  }
+
+  function tick() {
+    var el = performance.now() - t0;
+
+    statClock.textContent = fmt(Math.floor(el / 1000 * SPEED));
+    statCost.textContent = '$' + Math.min(8.4, el / RUN_MS * 8.4).toFixed(2);
+
+    var live = 0;
+    for (var i = 0; i < devs.length; i++) {
+      if (found[i]) { continue; }
+      live++;
+      devs[i].status.textContent = ACTIONS[(Math.floor(el / 1300) + i * 3) % ACTIONS.length];
+    }
+    statPhones.textContent = String(live);
+
+    while (nextBug < BUGS.length && BUGS[nextBug].at <= el) {
+      revealBug(BUGS[nextBug], nextBug);
+      nextBug++;
+    }
+
+    if (el >= RUN_MS) { finishRun(); }
+  }
+
+  function finishRun() {
+    if (timer) { clearInterval(timer); timer = null; }
+    devs.forEach(function (d) { d.el.classList.remove('is-running'); });
+
+    statPhones.textContent = '0';
+    statClock.textContent = fmt(Math.floor(RUN_MS / 1000 * SPEED));
+    statCost.textContent = '$8.40';
+    statBugs.textContent = String(foundCount);
+
+    btn.disabled = false;
+    btn.textContent = 'Run again';
+
+    var done = document.createElement('div');
+    done.className = 'feed-item';
+    done.innerHTML = '<div class="done"><strong>Run complete.</strong> ' + foundCount +
+      ' bugs across 20 personas, 33 screenshots, est. $8.40 of model usage — ' +
+      fmt(Math.floor(RUN_MS / 1000 * SPEED)) + ' of parallel testing on free GitHub runners.</div>';
+    feed.prepend(done);
+  }
+
+  function startRun() {
+    resetState();
+    btn.disabled = true;
+    btn.innerHTML = '<span class="dot-live">●</span> Running…';
+
+    devs.forEach(function (d) { d.el.classList.add('is-running'); });
+
+    t0 = performance.now();
+    timer = setInterval(tick, 90);
+    tick();
+  }
+
+  btn.addEventListener('click', function () {
+    if (timer) { return; }
+    startRun();
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* Plan summary                                                        */
+  /* ------------------------------------------------------------------ */
+  var mixSel = document.getElementById('mix');
+  var modeSel = document.getElementById('mode');
+  var planEl = document.getElementById('plan');
+
+  var MIX = {
+    mixed: '20 testers · 10 iOS + 10 Android · 9 locales',
+    a11y: '20 testers · VoiceOver + TalkBack · largest text · contrast',
+    l10n: '20 testers · 11 locales · Arabic & Hebrew RTL'
+  };
+  var MODE = {
+    explore: 'explore like a new user',
+    feature: 'one feature end to end',
+    reproduce: 'reproduce a bug report',
+    compare: 'compare two versions',
+    improve: 'improvement report',
+    web: 'test a website on phones'
+  };
+
+  function updatePlan() {
+    var mins = mixSel.value === 'l10n' ? 23 : (mixSel.value === 'a11y' ? 24 : 21);
+    planEl.textContent = MIX[mixSel.value] + ' · ' + MODE[modeSel.value] + ' · ~' + mins + ' min';
+  }
+  mixSel.addEventListener('change', updatePlan);
+  modeSel.addEventListener('change', updatePlan);
+  updatePlan();
+
+  /* ------------------------------------------------------------------ */
+  /* Toast                                                               */
+  /* ------------------------------------------------------------------ */
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    if (toastTimer) { clearTimeout(toastTimer); }
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2800);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-toast]'), function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      showToast(el.getAttribute('data-toast'));
+    });
+  });
+
+  /* Initialise the wall in idle state */
+  resetState();
+})();
+</script>
+</body>
+</html>

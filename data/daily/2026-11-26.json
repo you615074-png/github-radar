@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-26",
+ "headline": "20个AI测试员并发跑移动App",
+ "summary_md": "**What it is.** `pierridotite/mobile-agent-testers` is an MIT-licensed GitHub Actions template that spins up 20 Claude Code agents on 20 iOS Simulators and Android emulators in parallel. Each agent role-plays a persona — iPhone SE in Swedish at the largest text size, Pixel 7 at 200%, iPad in German, Arabic RTL — opens your app, taps through it like a first-time user, and writes a bug report with numbered screenshots. No test scripts to author. It supports Flutter, React Native, Expo, native Kotlin/Swift, Kotlin Multiplatform, Capacitor and .NET MAUI.\n\n**Why it's taking off.** It turns a demo into something teams can actually run today: clone the template, drop in a Claude token, trigger the workflow, and get a `SUMMARY.md` with findings. Per the README, the demo run found 9 of 11 deliberately planted bugs plus real issues nobody planted, for under $1 in model usage across four testers. Runs cost roughly $0.15–$0.55 per phone, and GitHub runners are free for public repos. The repo gained ~2.4k stars in nine days, which tracks with how visual and shareable the output is.\n\n**Where the product opportunity is.** The template stops at a repo and a CI log. A hosted layer above it — connect once, pick devices and locales, get a shareable dashboard with clustered bugs, dedupe across runs, and regression diffs between builds — is the obvious paid product. The hard sell is trust: false positives from screenshot-reading models will decide whether teams keep it in their release loop.",
+ "title_en": "20 AI testers, 20 phones, one free GitHub runner",
+ "tagline_en": "An open-source template that sends Claude Code agents to explore your mobile app like real users and file bug reports.",
+ "pick": {
+  "full_name": "pierridotite/mobile-agent-testers",
+  "url": "https://github.com/pierridotite/mobile-agent-testers",
+  "description": "20 AI testers on 20 different phones, in parallel, on GitHub's free runners: Claude Code agents on iOS Simulators and Android emulators that find broken flows, translation, layout and accessibility bugs",
+  "license": "MIT",
+  "stars": 2457,
+  "daily_rate": 364.0,
+  "category": "开发者工具",
+  "one_liner": "20个AI测试员同时在20台虚拟手机上帮你找App的bug",
+  "one_liner_en": "20 AI testers run your mobile app on 20 virtual phones in parallel and report bugs",
+  "reason": "痛点和演示性都很强，MIT许可、包装空间大；商业化路径清晰但依赖外部模型与CI平台，需做托管服务建立壁垒。",
+  "content": 8.67,
+  "startup": 8.15,
+  "final": 7.36,
+  "category_penalty": 0.8
+ },
+ "demo_path": "demos/2026-11-26-pierridotite-mobile-agent-testers",
+ "top": [
+  {
+   "full_name": "pierridotite/mobile-agent-testers",
+   "url": "https://github.com/pierridotite/mobile-agent-testers",
+   "one_liner": "20个AI测试员同时在20台虚拟手机上帮你找App的bug",
+   "reason": "痛点和演示性都很强，MIT许可、包装空间大；商业化路径清晰但依赖外部模型与CI平台，需做托管服务建立壁垒。",
+   "one_liner_en": "20 AI testers run your mobile app on 20 virtual phones in parallel and report bugs",
+   "content": 8.67,
+   "startup": 8.15,
+   "final": 7.36,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "Moh4696/inkworks-skill",
+   "url": "https://github.com/Moh4696/inkworks-skill",
+   "one_liner": "让你的 AI 编程助手生成可交互的 3D 工程图纸式原理动画页",
+   "reason": "视觉风格独特、演示性强、MIT 友好，适合做内容；但只是技能模板，商业化路径弱，需包装成托管生成器才有付费空间",
+   "one_liner_en": "An agent skill that turns prompts into interactive 3D engineering-drawing explainer pages",
+   "content": 8.0,
+   "startup": 6.05,
+   "final": 7.13,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "valentderah/totk-pc-recomp",
+   "url": "https://github.com/valentderah/totk-pc-recomp",
+   "one_liner": "把《塞尔达：王国之泪》静态重编译成 PC 原生游戏，60帧 4K 运行",
+   "reason": "话题性和惊喜感极强，演示效果好，但法律风险致命、只能做内容不能做产品，变现几乎为零",
+   "one_liner_en": "Play Tears of the Kingdom natively on PC with 60fps, 4K, DLSS and mods.",
+   "content": 8.33,
+   "startup": 5.6,
+   "final": 7.0,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "nexu-io/opengame",
+   "url": "https://github.com/nexu-io/opengame",
+   "one_liner": "用AI编程助手一句话生成可发布的小游戏",
+   "reason": "题材热、许可证干净、模板可演示，但星数异常、宣传夸大、国内渠道偏重，产品化需聚焦美区模板改皮+导出。",
+   "one_liner_en": "Turn your coding agent into a game studio that builds playable games",
+   "content": 7.33,
+   "startup": 6.5,
+   "final": 6.97,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Avaneesh-Inamdar/Stream-Tube-Desktop",
+   "url": "https://github.com/Avaneesh-Inamdar/Stream-Tube-Desktop",
+   "one_liner": "Windows 上的原生 YouTube 客户端，无广告、自动跳过赞助片段",
+   "reason": "痛点真实、易理解、MIT 许可友好，但商业化几乎只能靠捐赠或增值功能，且面临 YouTube 条款和法律风险，适合做内容不适合做付费产品。",
+   "one_liner_en": "A native YouTube desktop app with no ads and automatic sponsor skipping",
+   "content": 7.67,
+   "startup": 6.15,
+   "final": 6.65,
+   "category_penalty": 0
+  }
+ ]
+}

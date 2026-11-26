@@ -221,6 +221,12 @@
    "full_name": "Indigo-0167/universal-game-mod-manager",
    "category": "其他",
    "final": 6.77
+  },
+  {
+   "date": "2026-11-26",
+   "full_name": "pierridotite/mobile-agent-testers",
+   "category": "开发者工具",
+   "final": 7.36
   }
  ],
  "top": {
@@ -232,7 +238,6 @@
   "Gathin23/cleanyourtv": "2026-10-30",
   "tangency-labs/solidcraft": "2026-11-07",
   "Nutlope/hallmark": "2026-11-02",
-  "HeyPuter/everything": "2026-10-26",
   "rddmwmddr/android-ad-cleaner": "2026-11-11",
   "designfuchen/word-atlas": "2026-11-04",
   "seedds/nxnative": "2026-11-06",
@@ -346,7 +351,12 @@
   "Nebula4207/av1-video-encoder-gui": "2026-11-25",
   "kai415-debug/ffmpeg-video-audio-converter": "2026-11-25",
   "xcl-dev/xcl": "2026-11-25",
-  "mdiri-ai/SoduWork": "2026-11-25"
+  "mdiri-ai/SoduWork": "2026-11-25",
+  "pierridotite/mobile-agent-testers": "2026-11-26",
+  "Moh4696/inkworks-skill": "2026-11-26",
+  "valentderah/totk-pc-recomp": "2026-11-26",
+  "nexu-io/opengame": "2026-11-26",
+  "Avaneesh-Inamdar/Stream-Tube-Desktop": "2026-11-26"
  },
  "scores": {
   "heydamir/unslop": {
@@ -380,34 +390,33 @@
    }
   },
   "storytold/craft-anything": {
-   "date": "2026-11-18",
+   "date": "2026-11-26",
    "v": 3,
    "eval": {
-    "category": "AI应用",
-    "one_liner": "用AI观察任意网站或App，再帮你造一个类似版本",
-    "one_liner_en": "Point AI at any site or app, see how it works, then build your own version",
-    "target_user": "美国/全球的独立开发者、创客、想快速做竞品或复刻玩法的初创团队、AI 编程爱好者和教学场景",
+    "category": "开发者工具",
+    "one_liner": "用AI拆解任意网站或游戏，再照着生成一个你自己的版本",
+    "one_liner_en": "Inspect how any website, app or game works, then let AI rebuild your own version",
+    "target_user": "想快速复刻界面/玩法的独立开发者、独立游戏作者、学习逆向与前端的学生和爱好者",
     "scores": {
      "topicality": 9,
-     "accessibility": 8,
+     "accessibility": 7,
      "wow": 9,
      "pain": 6,
-     "packaging_room": 7,
-     "monetization": 6,
+     "packaging_room": 5,
+     "monetization": 5,
      "license_safety": 9,
-     "demoability": 8
+     "demoability": 7
     },
-    "product_idea": "做一个网页版“复刻工作台”，把网站URL粘贴进去，系统全程自动查看、抓取页面并生成可运行版本，并逐项标出相似度的对比结果",
-    "demo_idea": "现场粘贴一个知名网站的URL，30秒内抓取页面并生成复刻版，左右分屏用滑块对比相似度",
+    "product_idea": "浏览器里的\"复刻工作台\"：贴网址、截图对比相似度、一键导出可运行项目，按次或订阅收费",
+    "demo_idea": "网页里贴一个网站地址，30秒后并排展示原站和AI重建版，并给出相似度评分",
     "attack_tool": false,
     "red_flags": [
-     "“复刻任意网站/App”极易踩版权与商标红线，美国 DMCA 与判例风险高",
-     "从 Deep 模式看内部分属于逆向工程，可能违反目标方 ToS 与 EULA，game 反编译尤其敏感",
-     "项目在 17 天内就冲到 3.6 万星，名称含“craft”且主页是商业站 ArtCraft，疑似营销拉星，热度真实性存疑",
-     "依赖外部 coding agent（如 Claude Code）与 Ghidra，产品化需自建 agent 与授权链",
-     "功能范围过大（web/app/game/二进制），MVP 需大幅收窄"
+     "Deep模式内置Ghidra反编译、反汇编、破解他人网站JS，复刻他人产品涉嫌侵犯版权/商业外观，法律风险高",
+     "项目自带同名商业站点ArtCraft、Discord与付费应用矩阵，并非纯开源冷启动项目",
+     "实际是编码Agent外壳+爬取工具链，核心能力依赖外部LLM，个人很难做出差异化",
+     "AI复刻出的\"山寨版\"在App Store/Product Hunt上易被拒稿或引发侵权投诉"
     ],
-    "reason": "话题性与演示效果极强，Apache 许可友好，但复刻真实网站或游戏存在明显的版权与逆向合规风险，建议收窄到“自有资产复刻 + 教学演示”，并警惕其虚高热度是否由营销推动"
+    "reason": "话题性和惊艳感强、增长猛，但法律灰色、商业化已被官方占位，适合做内容不适合做产品。"
    }
   },
   "zortos293/Lichii": {
@@ -470,37 +479,6 @@
      "设计系统本身难以直接向终端付费"
     ],
     "reason": "大厂官方设计系统，演示性强、话题尚可，但个人几乎无法在其上包装出差异化付费产品，商业化弱，更适合做内容而非创业。"
-   }
-  },
-  "jhaizhou-ops/S2Arm": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "把自己买的 Switch 游戏原生化移植到 iPhone、iPad 和 Mac 上玩",
-    "one_liner_en": "Run your own Switch games natively on iPhone, iPad and Mac",
-    "target_user": "美欧的 Nintendo Switch 玩家，同时拥有 iPhone 或 Mac，愿意为便利和性能付费",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 8,
-     "packaging_room": 4,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "面向合法自购玩家的 Mac 与 iOS 图形化移植工具，并做云构建和签名托管订阅",
-    "demo_idea": "网页上并排展示同一款游戏在模拟器与 S2Arm 原生端上的帧率和发热对比视频",
-    "attack_tool": false,
-    "red_flags": [
-     "核心用途是运行 Nintendo Switch 游戏，需要自带 ROM 和 keys，实质是绕过任天堂版权和保护措施，法律风险极高（DMCA 1201、任天堂诉讼史）",
-     "README 自带 keys 导入流程，灰色地带明确，无法在 App Store 或 Stripe 正常收款，存在被封禁风险",
-     "商业模式天花板极低，不能公开收钱，只能靠捐赠或灰色渠道",
-     "项目仅 10 天就 3500 star，增长曲线异常，需警惕刷星或炒作",
-     "主机游戏 ROM 生态敏感，内容账号发布可能被平台限流或下架"
-    ],
-    "reason": "技术上很炸，话题和惊喜感强，但直指盗版生态，商业化几乎无路，只适合做内容，不适合包装成产品。"
    }
   },
   "Kianuni/Erosion-CN": {
@@ -956,522 +934,96 @@
     "reason": "话题热、许可证友好，但属于授权渗透进攻类，包装成产品需强合规背书，商业化路径窄且易被山寨。"
    }
   },
-  "ersinkoc/phonebox": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "把闲置旧安卓手机变成电脑桌面副屏控制面板",
-    "one_liner_en": "Turn an old Android phone into a touch control deck for your PC",
-    "target_user": "欧美开发者与极客、Stream Deck 用户、Claude Code/Codex 重度使用者、Home Assistant 玩家",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "一键安装包加托管面板模板市场，按模板或订阅收费，省去手动装 APK 和跑脚本",
-    "demo_idea": "网页用模拟数据复刻手机面板，拖动 widget 实时刷新 CPU 图表和 AI 配额",
-    "attack_tool": false,
-    "red_flags": [
-     "Android APK 不在任何应用商店，需手动侧载，普通用户门槛高",
-     "安装脚本 curl | bash + PowerShell irm | iex，Windows 包未签名，SmartScreen 会拦截",
-     "核心卖点是省一块 Stream Deck 的钱，付费意愿有限，易被免费开源版替代",
-     "iOS 完全不支持，市场覆盖面受限"
-    ],
-    "reason": "点子易懂、演示性强、话题热，MIT 许可友好；但盈利路径弱，靠模板与托管服务才有空间。"
-   }
-  },
-  "chuanqisun/spaceship": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "像开飞船一样实时操控 AI 写作方向",
-    "one_liner_en": "Steer AI writing in real time like piloting a spaceship",
-    "target_user": "需要高频产出文案的英文内容创作者、营销人员、AI 交互设计爱好者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 8,
-     "pain": 5,
-     "packaging_room": 8,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 9
-    },
-    "product_idea": "网页版实时 AI 写作操控台，用摇杆、旋钮和注意力锁定来引导文本生成方向",
-    "demo_idea": "网页中拖动旋钮，实时看到不同写作风格的平行宇宙文本立刻切换",
-    "attack_tool": false,
-    "red_flags": [
-     "目前只是前端概念验证，依赖用户自带 Cerebras、Gemini API Key，产品化需自建后端",
-     "实时生成成本高，商业化收费模式不清晰",
-     "核心交互偏实验性，普通用户学习成本高",
-     "由 MIT 学生个人项目驱动，长期维护不确定"
-    ],
-    "reason": "交互创意惊艳、演示直观，适合做内容；痛点与付费路径偏弱，更像研究概念，离可收费产品还有距离"
-   }
-  },
-  "NVIDIA/SkillEvaluator": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "给 AI 代理的技能和插件做质检和打分",
-    "one_liner_en": "Lint, score, and test AI agent skills and plugins before you ship them",
-    "target_user": "维护 Claude Code/Codex 技能库的平台团队与独立代理开发者，以及需要筛选第三方插件的企业 AI 工程团队",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 8
-    },
-    "product_idea": "做成托管版技能质检台：贴一个 GitHub 仓库，自动出评分卡、兼容性矩阵和 CI 门禁。",
-    "demo_idea": "网页输入一个技能文件夹，展示六种代理的加载状态、评分和扣分项，全部由模拟数据现算。",
-    "attack_tool": false,
-    "red_flags": [
-     "NVIDIA 官方项目，个人在上面做差异化的空间很小",
-     "Tier 2/3 依赖 NVIDIA Build 接口和 Docker，脱离 NVIDIA 生态后体验明显下降",
-     "核心功能是 CLI 和 CI 集成，网页能做到的只是展示层"
-    ],
-    "reason": "话题热、许可证干净、演示直观，但它是大厂官方基础设施，包装和变现空间受限，更适合做一期内容而不是产品。"
-   }
-  },
-  "Immortal-Protocols/lastbook": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "教育学习",
-    "one_liner": "断网也能用的生存百科: 手册、视频、地图和本地AI问答",
-    "one_liner_en": "Offline survival library with manuals, maps, videos and on-device AI chat",
-    "target_user": "美国prepper/应急准备爱好者、户外与房车家庭、学校与图书馆的离线资源采购者",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 5,
-     "monetization": 5,
-     "license_safety": 10,
-     "demoability": 7
-    },
-    "product_idea": "做订阅制离线资料包: 按州地图、主题手册和本机AI，年费更新内容",
-    "demo_idea": "网页模拟断网状态，输入'净水'秒出带页码的手册答案和离线地图",
-    "attack_tool": false,
-    "red_flags": [
-     "内容多为第三方手册/百科/视频，版权与再分发授权不清",
-     "需求偏小众、低频，应急场景付费持续性弱",
-     "桌面端已签名公证、体验完整，包装空间有限",
-     "依赖下载托管与Hugging Face模型，离线包体积大"
-    ],
-    "reason": "话题性靠灾难叙事和本地AI，演示直观；但版权内容再分发风险高，付费人群窄，商业化天花板明显。"
-   }
-  },
-  "huami1314/GestaltX": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "改一下 iPhone 系统隐藏开关，给老机型解锁动态岛和 AI 功能",
-    "one_liner_en": "Tweak hidden iPhone system flags to unlock Dynamic Island and Apple Intelligence",
-    "target_user": "爱折腾的 iPhone 极客、越狱和 sideload 社区用户，以及想在中国大陆机型上强开 Apple Intelligence 的人",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 3,
-     "monetization": 4,
-     "license_safety": 4,
-     "demoability": 5
-    },
-    "product_idea": "做成一键式 iOS 隐藏功能开关 App，带预设、备份和回滚，降低 sideload 门槛",
-    "demo_idea": "网页用 iPhone 模型动画演示：开关一拨，灵动岛和 AI 入口出现，再一键还原",
-    "attack_tool": false,
-    "red_flags": [
-     "GPL-3.0 传染性许可证，商业闭源分发受限",
-     "依赖 iOS 27 私有 MobileGestalt 漏洞（worse_query），Apple 随时修补",
-     "修改系统能力标志，可能导致 Face ID、听写失效甚至变砖，法律上属绕过 Apple 限制",
-     "需自签证书与 App Group，普通用户安装门槛高",
-     "商业模式易与 Apple 服务条款冲突，App Store 不可能上架",
-     "改名、改区域激活 AI 涉及服务条款和地区授权灰色地带"
-    ],
-    "reason": "话题性和惊喜感极强，9 天 8000 星，演示效果直观；但依赖漏洞、GPL 限制、灰产边缘，难做成合规付费产品，适合做爆款内容而非创业项目。"
-   }
-  },
-  "erkamyaman/rust-anything": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "逐块把现有代码重写成 Rust，每一步都用原始行为录像验证结果一致",
-    "one_liner_en": "Rewrite your app in Rust piece by piece, verifying each step against recorded behavior of the original",
-    "target_user": "美国和全球使用 Node/Python/Go/Java 后端、面临性能瓶颈的中小型工程团队的技术负责人、资深工程师以及使用 AI 编码代理的开发者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 5,
-     "wow": 7,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "AI 编码代理的性能热点迁移插件：录制原行为、定位热点、逐步生成并验证 Rust 移植、出基准报告",
-    "demo_idea": "网页上传一段慢 TS/Python 代码，现场录制用例、生成 Rust 移植，并并排播放 diff 全绿与 20 倍加速跑分",
-    "attack_tool": false,
-    "red_flags": [
-     "仅 2 天 2573 star、日增 1286，增长曲线异常，难以排除刷榜或营销，需观察留存",
-     "核心重写由用户的 AI 编码代理完成，工具本身壁垒偏薄，易被 Claude Code、Cursor 内建能力替代",
-     "README 自承只覆盖录制到的用例，行为等价保证有限，企业信任建立难",
-     "README 自承只覆盖录制到的用例，行为等价保证有限，企业信任建立难",
-     "依赖 MCP、cargo、多语言工具链，非 Rust 用户上手门槛高"
-    ],
-    "reason": "蹭上 Rust 重写与 AI 代理两个热点，定位清晰、故事好讲；但产品价值依赖第三方代理，壁垒与留存存疑，适合做内容，产品化需再观察。"
-   }
-  },
-  "DeanChensj/jiangshan-map": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "教育学习",
-    "one_liner": "拖动时间轴，看中国两千年疆域和古城变迁的交互历史地图",
-    "one_liner_en": "Scrub a timeline to watch 2,400 years of Chinese borders and ancient cities change on an interactive map",
-    "target_user": "美国/全球的历史爱好者、人文社科学生教师、中文学习者、博物馆与教育内容团队；以及做中国历史类内容的 YouTuber 和出版方",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 4,
-     "packaging_room": 6,
-     "monetization": 4,
-     "license_safety": 4,
-     "demoability": 9
-    },
-    "product_idea": "做成英文历史地理教育订阅站：时间轴地图、诗歌路线导览、教师课堂包与图层导出",
-    "demo_idea": "网页打开即自动播放时间轴，疆域随年份变色推进，点开长安弹出历代名称与事件卡片",
-    "attack_tool": false,
-    "red_flags": [
-     "GPL-3.0 传染性许可，商业闭源包装前必须确认可替换或走服务化",
-     "数据以中国史观与疆域表述为主，涉及西藏、台湾、伊利等历史边界，面向美国市场易触发政治争议与平台审核风险",
-     "受众偏历史爱好者，付费意愿弱，属于'好看但难赚钱'的类型",
-     "核心数据多为人工整理的历史地名考据，事实核查与差错责任成本高",
-     "开源版已是完整可用网站，产品化增量主要在英文包装与教学配套"
-    ],
-    "reason": "传播力强、演示性极佳，但痛点弱、变现路径模糊，加上 GPL 与历史疆域敏感性，适合做内容爆款而非独立 SaaS。"
-   }
-  },
-  "boringmarketer/boring-marketing-skills": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "给AI代理装上32个免费营销技能，自动帮你做调研、写文案、投广告",
-    "one_liner_en": "32 free marketing skills that turn your AI agent into a full marketing team",
-    "target_user": "美国本地服务商家（水管工、诊所、律所）和帮他们做营销的小型代理商、独立营销顾问",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 6,
-     "pain": 7,
-     "packaging_room": 6,
-     "monetization": 7,
-     "license_safety": 10,
-     "demoability": 6
-    },
-    "product_idea": "做成Web端托管版：输入网址自动生成品牌文件、落地页和广告，按月订阅",
-    "demo_idea": "输入一家水管公司的网址，30秒后生成品牌语气、首页诊断和一个落地页",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是Prompt/技能包集合，非代码产品，容易被复制",
-     "作者已绑定自家boringfunnels和playbook做变现，独立包装空间受限",
-     "技能质量依赖底层模型和实时网页抓取，效果不稳定",
-     "仅创建1天、星数暴涨，热度真实性待观察"
-    ],
-    "reason": "营销技能包痛点真实、MIT许可干净、本地商家付费意愿强；但门槛低、易被复制，需靠托管体验和垂直数据做壁垒。"
-   }
-  },
-  "CzzzzzzJ/mdldm-maitian": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "自媒体人一次填好七个平台的发布中控和数据看板",
-    "one_liner_en": "One dashboard to publish and track content across Bilibili, Douyin, Xiaohongshu, YouTube and X.",
-    "target_user": "在美国/全球做多平台内容分发的独立创作者、小型 MCN 及出海中文创作者",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 8,
-     "packaging_room": 8,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "托管版多平台发布+数据大屏 SaaS，浏览器扩展做适配器，月费订阅",
-    "demo_idea": "网页里模拟一期视频分六平台填写进度，再切到数据大屏看播放和涨粉",
-    "attack_tool": false,
-    "red_flags": [
-     "重度依赖国内平台（B站/抖音/小红书/视频号）配置与风控技巧，海外用户基本用不上",
-     "飞书通知为国内工具，海外需换 Slack/邮件",
-     "需常开 Mac 或 NAS + 专用 Chrome，非技术用户门槛高",
-     "靠浏览器自动化操作平台后台，可能违反各平台 ToS 并随时被改版打断",
-     "核心适配器是闭源 Chrome 插件，开源部分只是调度壳"
-    ],
-    "reason": "痛点真实、包装空间大，但价值集中在中国平台自动化；面向美国市场需重做适配器和通知渠道，商业化可行但本地化成本高。"
-   }
-  },
-  "HKUDS/CLI-Anything": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "AI基础设施",
-    "one_liner": "把任何软件包装成命令行工具，让 AI 智能体直接操作",
-    "one_liner_en": "Turn any software into a CLI so AI agents can operate it directly",
-    "target_user": "构建 AI 智能体的开发者、自动化工作流团队、做 agent 产品的美国初创公司",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 6,
-     "packaging_room": 5,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "托管式 CLI Hub：一键生成、托管并监控软件 CLI，供智能体调用",
-    "demo_idea": "网页输入一款软件，30 秒生成可调用的 CLI，智能体现场画出 3D 场景",
-    "attack_tool": false,
-    "red_flags": [
-     "背后是 HKUDS 高校实验室项目，属于研究型基础设施",
-     "社区众包 CLI 质量的稳定性存疑",
-     "大厂竞品（MCP 官方、LangChain 工具层）随时可能覆盖同类需求，独立商业化空间窄",
-     "主要由论文和社区 PR 驱动，产品化方向不明确"
-    ],
-    "reason": "话题热度高、许可证宽松，但属于学术众包型基础设施，个人靠它做出差异化产品难度大，更适合做内容科普而非创业。"
-   }
-  },
   "google-labs-code/stitch-skills": {
-   "date": "2026-11-18",
+   "date": "2026-11-26",
    "v": 3,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "让 AI 编程助手直接调用 Google Stitch 生成和修改 UI 设计的技能包",
-    "one_liner_en": "Agent skills that let coding agents generate and edit UI designs via Google Stitch",
-    "target_user": "用 Claude Code/Cursor 做前端的独立开发者与小型产品团队",
+    "one_liner": "让 AI 编程助手直接调用谷歌 Stitch 生成和修改界面设计",
+    "one_liner_en": "Agent skills that let coding agents generate and edit UI designs in Google Stitch",
+    "target_user": "使用 Claude Code、Cursor 的独立开发者与小型产品团队里的前端、全栈工程师",
     "scores": {
-     "topicality": 7,
+     "topicality": 8,
      "accessibility": 5,
-     "wow": 5,
+     "wow": 6,
      "pain": 5,
-     "packaging_room": 3,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "面向 Cursor/Claude Code 的 UI 生成技能市场，按套件订阅收费",
-    "demo_idea": "在 Cursor 里用一句话生成登录页并导出设计稿，30 秒录屏展示",
-    "attack_tool": false,
-    "red_flags": [
-     "Google 官方 Labs 项目，依赖 Google Stitch MCP 与账号，个人难做差异化",
-     "本质是技能/插件资源集合，非独立产品",
-     "商业化受制于 Google 平台政策与定价，无法自建付费闭环"
-    ],
-    "reason": "话题热但属于大厂官方技能库，缺乏独立产品空间，适合做单条内容而非创业点。"
-   }
-  },
-  "n8n-io/n8n": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "用拖拽画布搭建 AI 工作流和自动化流程的自托管平台",
-    "one_liner_en": "Build AI agents and automation workflows on a visual canvas, self-hosted or in the cloud",
-    "target_user": "海外中小团队的技术负责人、独立开发者、想做 AI 自动化的运营团队",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 6,
      "packaging_room": 2,
      "monetization": 2,
-     "license_safety": 2,
-     "demoability": 8
-    },
-    "product_idea": "不适合重新包装，只能做模板市场或垂直行业工作流合集",
-    "demo_idea": "网页里拖三个节点连上 Slack 和 GPT，一键跑出自动回复效果",
-    "attack_tool": false,
-    "red_flags": [
-     "已是估值数十亿的成熟商业公司，官方云服务就是产品本身，个人无法在它上面做差异化产品",
-     "Sustainable Use License 是自定义 fair-code 许可，限制商业转售，不是标准开源许可",
-     "210k stars 的大厂级项目，内容同质化严重，几乎每个技术博主都写过"
-    ],
-    "reason": "话题和演示价值高，适合做内容；但项目本身已是成熟商业产品，包装和商业化空间几乎没有，许可也限制转售，不适合当创业标的。"
-   }
-  },
-  "tangerineturtle1/NX2navi": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "生活娱乐",
-    "one_liner": "把《塞尔达传说：时之笛》在 Switch 2 上的版本重编译成 PC 原生游戏，并支持 4K 和光追级画质",
-    "one_liner_en": "Play Zelda: Ocarina of Time (Switch 2 version) as a native PC port with 4K, DLSS and HDR.",
-    "target_user": "美国和全球的复古游戏玩家，以及 PC 画质和 mod 爱好者；愿意为画质增强和便利安装付费",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 9,
-     "pain": 6,
-     "packaging_room": 7,
-     "monetization": 3,
-     "license_safety": 8,
+     "license_safety": 9,
      "demoability": 6
     },
-    "product_idea": "做一键安装的 PC 移植启动器：自动检测合法游戏文件、自动构建、内置画质预设和 mod 管理。",
-    "demo_idea": "网页播放 60fps 4K 宽屏对比视频，用滑块切换原版和增强画面，展示 DLSS、HDR 和帧生成效果。",
+    "product_idea": "没有独立产品形态；最多做 Stitch 提示词模板库或设计系统转 DESIGN.md 的轻量工具。",
+    "demo_idea": "网页输入一句话，展示 agent 调用 Stitch 生成三版手机界面并加主题，30 秒出图。",
     "attack_tool": false,
     "red_flags": [
-     "项目依赖用户自行 dump 的游戏 ROM，明确不提供游戏文件，存在任天堂版权与 DMCA 风险",
-     "项目已宣布合并进 Triforce 并迁移仓库，本仓库仅作存档，活跃度会下降",
-     "付费或商业化极易触发任天堂法务行动，例如曾经的 AM2R 和各类粉丝重制项目",
-     "构建需 20 到 45 分钟且依赖本地环境，普通用户体验门槛高",
-     "原项目本身不直接变现，商业化路径必须绕开游戏本体"
+     "谷歌官方团队项目，本质是 MCP 插件集合，个人难以在其上做差异化产品",
+     "强依赖 Stitch MCP 账号与凭证，无独立价值，无法自建付费闭环",
+     "README 大量安装配置说明，属于集成文档而非可包装的产品雏形",
+     "Agent Skills 生态尚早，跨 agent 兼容性反复变动，维护成本高"
     ],
-    "reason": "话题性和惊喜感极强，但天花板受任天堂版权限制，直接变现几乎不可行；适合做内容，不建议做付费产品。"
+    "reason": "话题性和谷歌加持带来流量，适合做内容；但它是大厂官方集成插件，无产品化空间和收费路径，创业价值低。"
    }
   },
   "valentderah/totk-pc-recomp": {
-   "date": "2026-11-18",
+   "date": "2026-11-26",
    "v": 3,
    "eval": {
     "category": "生活娱乐",
-    "one_liner": "把《王国之泪》重编译成能在电脑上原生高帧率运行的程序",
-    "one_liner_en": "Play Tears of the Kingdom natively on PC at 60fps+, no emulator needed",
-    "target_user": "拥有 Switch 正版游戏、想在高配 PC / Steam Deck 上高帧率玩的任天堂核心玩家（美国 / 欧洲 / 全球英文玩家）",
+    "one_liner": "把《塞尔达：王国之泪》静态重编译成 PC 原生游戏，60帧 4K 运行",
+    "one_liner_en": "Play Tears of the Kingdom natively on PC with 60fps, 4K, DLSS and mods.",
+    "target_user": "拥有正版 Switch 游戏、追求高帧率/高画质的欧美 PC 玩家与 Steam Deck 用户（模拟器社区）",
     "scores": {
      "topicality": 9,
-     "accessibility": 8,
+     "accessibility": 7,
      "wow": 9,
-     "pain": 7,
-     "packaging_room": 3,
-     "monetization": 2,
-     "license_safety": 2,
-     "demoability": 3
-    },
-    "product_idea": "无法做成商业产品，只能做纯内容：装机教程 + 性能实测 + 版本对比视频/图文。",
-    "demo_idea": "网页放模拟数据的分屏对比：30fps 原版 vs 60fps/4K 重编译版，配帧率曲线动画。",
-    "attack_tool": false,
-    "red_flags": [
-     "本质是 Nintendo 商业游戏的静态重编译，法律风险极高（DMCA / 版权侵权），项目自述为非商业粉丝项目",
-     "README 明确不含游戏文件，用户须自行 dump 正版，传播内容易被平台下架、账号受限",
-     "任天堂历史上对模拟器/重编译项目诉讼态度强硬（如 Yuzu、Ryujinx 案），商业包装基本不可行",
-     "MIT 只覆盖自有代码，对游戏本身不授予任何权利",
-     "需自备正版游戏 + 36GiB 构建 + Vulkan 1.3 显卡，门槛高，本身已是成熟形态，可包装空间小",
-     "早期开发阶段，崩溃与视觉 bug 多，Demo 稳定性差"
-    ],
-    "reason": "话题性与惊喜感极强、涨粉利器，但法律红线明显、几无商业化空间，只能做内容不能做产品。"
-   }
-  },
-  "Eglantine-Community/Eglantine": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "能在电脑上模拟运行 Switch 2 游戏的开源模拟器",
-    "one_liner_en": "A free open-source emulator that runs Nintendo Switch 2 games on your PC",
-    "target_user": "美国/全球的 Switch 游戏玩家、模拟器爱好者，以及想省钱玩独占游戏的 PC 用户",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 8,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 4,
-     "monetization": 2,
-     "license_safety": 3,
-     "demoability": 5
-    },
-    "product_idea": "做成带有游戏兼容数据库、一键配置和一键安装的桌面客户端，提供付费的配置托管服务",
-    "demo_idea": "在网页里并排播放《马力欧赛车世界》在 Switch 2 真机和模拟器上的画面，实时对比两者的帧率",
-    "attack_tool": false,
-    "red_flags": [
-     "模拟处于破解 Switch 2 的 DRM 与版权灰色地带",
-     "任天堂一贯通过法律手段打击模拟器（Yuzu、Ryujinx 已下架）",
-     "GPL-3.0 使闭源商业化困难",
-     "项目仅创建 20 天、非常实验性、star 增长或含炒作水分",
-     "不接收捐赠、无商业路径",
-     "模拟器需用户自备游戏 ROM，法律风险高"
-    ],
-    "reason": "话题与惊喜感极强，但法律风险高、商业空间极小、GPL 难以打包，适合做内容不适合做产品"
-   }
-  },
-  "huggingface/pybot": {
-   "date": "2026-11-18",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "纯 Python 规则写的聊天机器人，不训练不用模型",
-    "one_liner_en": "A chatbot written in pure Python rules, no model, no training.",
-    "target_user": "AI 教育者、想讲清 LLM 与规则系统区别的内容创作者、教学机构",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 3,
-     "packaging_room": 4,
+     "pain": 6,
+     "packaging_room": 5,
      "monetization": 3,
      "license_safety": 9,
-     "demoability": 7
+     "demoability": 8
     },
-    "product_idea": "做成网页版'规则 vs LLM'对话对比演示器，可当 AI 教学素材售卖",
-    "demo_idea": "网页并排展示 PyBot 与 LLM 对同一问题的回答，标注是哪条规则命中",
+    "product_idea": "做成图形化一键安装器加性能调优面板，面向不想折腾模拟器的 PC 玩家",
+    "demo_idea": "网页分屏对比：Switch 原版 30 帧 vs PC 原生 60 帧 4K 加 DLSS，滑动对比",
     "attack_tool": false,
     "red_flags": [
-     "HuggingFace 官方实验项目，个人难在其上做出差异化产品",
-     "本质是好奇心实验/演示，非解决真实付费痛点",
-     "640k 行代码是 agent 生成的产物，维护与扩展价值有限",
-     "无清晰付费场景，变现路径薄弱"
+     "需要用户自行导出正版游戏文件，法律上处于任天堂版权与 DMCA 灰色地带，商业分发风险极高",
+     "项目本身已是完整可用的成品安装器，几乎没有做产品化包装的空间",
+     "核心价值依赖任天堂作品，无法独立商业化，随时可能被 DMCA 下架，历史上类似项目如 Yuzu 已被起诉",
+     "项目依赖多种第三方重编译/模拟器代码，第三方许可证需仔细核查",
+     "早期开发阶段，存在视觉 bug 和崩溃"
     ],
-    "reason": "话题性强的官方趣味实验，适合做爆款内容，但作为产品缺乏痛点和变现空间。"
+    "reason": "话题性和惊喜感极强，演示效果好，但法律风险致命、只能做内容不能做产品，变现几乎为零"
    }
   },
   "Hut-hzf/ung220z-tool": {
-   "date": "2026-11-18",
+   "date": "2026-11-26",
    "v": 3,
    "eval": {
     "category": "安全",
-    "one_liner": "一键找回中国移动光猫管理密码的小工具",
-    "one_liner_en": "Script that extracts the admin passwords from your own Unionman UNG220Z fiber router",
-    "target_user": "全球英文市场里没有对应需求，唯一相关人群是中国移动宽带用户",
+    "one_liner": "一键找回自家光猫管理员密码的小工具",
+    "one_liner_en": "A script that recovers your own ONT router's admin credentials via Telnet.",
+    "target_user": "美国/全球自建家庭网络、想迁移宽带配置或找回光猫密码的技术爱好者",
     "scores": {
-     "topicality": 2,
-     "accessibility": 4,
-     "wow": 3,
-     "pain": 2,
-     "packaging_room": 3,
-     "monetization": 1,
+     "topicality": 5,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 2,
      "license_safety": 9,
-     "demoability": 2
+     "demoability": 4
     },
-    "product_idea": "无产品化空间：设备是中国运营商定制光猫，海外无此型号，商业价值近乎为零",
-    "demo_idea": "只能演示对着家中的 192.168.1.1 打印凭据，网页 demo 无法模拟",
+    "product_idea": "面向 ISP 用户的光猫自助管理网页，自动识别固件并导出宽带与 Wi-Fi 配置",
+    "demo_idea": "模拟一个光猫登录页，一键显示解密后的 Wi-Fi 密码与 PPPoE 账号",
     "attack_tool": true,
     "red_flags": [
-     "实质是针对特定运营商光猫的凭据提取、提权利用脚本，在未授权的第三方设备上可直接使用，属于攻击工具范畴",
-     "仅针对中国移动定制的 Unionman UNG220Z，美国及全球英文市场几乎不存在用户",
-     "依赖中国运营商 TR-069 配置体系与 CMCCAdmin 账号，脱离中国市场后不成立",
-     "演示必须连接真实硬件，无法在纯前端网页中展示",
-     "包含 /etc/shadow 口令比对等入侵环节，法律与平台合规风险高"
+     "本质是提取他人设备凭据的自动化利用工具，README 强调查找漏洞路径（webFac 工厂模式、开 Telnet、读 /etc/shadow），攻击属性明显",
+     "目标设备是运营商（中国移动等）管理的 ONT，用户通常无所有权，法律与 CFAA 风险高",
+     "几乎无美国市场需求：UNG220Z、中兴、烽火、华为光猫主要在中国部署，与目标市场不匹配",
+     "无付费意愿与商业模式，只能做安全科普内容",
+     "在国外分发可能被视为帮助未授权访问设备"
     ],
-    "reason": "技术含量不高，且是典型渗透利用脚本，缺乏海外市场与产品化空间，也不适合做公开内容。"
+    "reason": "技术完成度不错，但它是针对国内运营商光猫的凭据提取利用工具，攻击属性明确，美国市场和商业化都站不住，只适合做安全科普选题。"
    }
   },
   "firecrawl/firecrawl": {
@@ -3966,6 +3518,311 @@
      "无明确付费方与收费模式，模拟器类产品易被免费替代"
     ],
     "reason": "话题与惊喜感极强，但技术极早期、法律风险重、商业化几乎无路，适合做内容流量而非产品。"
+   }
+  },
+  "lsernau/grh-lean": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "用 Lean 4 形式化证明黎曼猜想的 AI 生成代码仓库",
+    "one_liner_en": "A Lean 4 formal proof of the Riemann Hypothesis, generated with Claude",
+    "target_user": "数学研究者、形式化验证爱好者、AI 研究者（愿意付费的人群极少）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 9,
+     "pain": 2,
+     "packaging_room": 2,
+     "monetization": 1,
+     "license_safety": 8,
+     "demoability": 3
+    },
+    "product_idea": "把这份证明转成交互式讲解网站，逐段解释每个引理的作用，并标注出可能的漏洞",
+    "demo_idea": "网页左侧显示 Lean 代码，右侧逐条展开证明思路，并实时显示公理检查结果",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是论文、研究产物，不是可产品化的软件",
+     "作者声明不维护、不接受贡献，也未经过数学家人工审阅",
+     "Anthropic 官方产物，个人无法在其上做差异化",
+     "没有用户痛点，也没有付费场景"
+    ],
+    "reason": "传播话题性和惊喜感很强，但不是产品：没有用户可以付费的痛点，而且是大厂研究产物，包装空间极小，只适合做一条内容。"
+   }
+  },
+  "alesha-pro/llm.asm": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "用纯汇编写的超小体积大模型推理与训练引擎",
+    "one_liner_en": "Run and train an LLM in pure assembly, smaller than a photo",
+    "target_user": "想炫技的极客开发者、嵌入式与边缘算力团队、技术内容创作者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 9,
+     "pain": 3,
+     "packaging_room": 5,
+     "monetization": 2,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "把 14KB 推理引擎做成一键跑起来的极简 CLI 或网页沙盒，展示体积与速度",
+    "demo_idea": "网页里并排跑同一模型，对比汇编引擎与普通方案的文件体积和生成速度",
+    "attack_tool": false,
+    "red_flags": [
+     "纯汇编维护成本极高，面向极客小众，付费意愿弱",
+     "对标 llama.cpp 属性能优化层，难以形成产品护城河",
+     "易被视作技术演示噱头，缺乏明确商业场景",
+     "创建仅 1 天、星标暴增，真实性与可持续性待观察"
+    ],
+    "reason": "话题性和惊喜感极强，是极佳的内容素材；但受众极窄、商业变现路径模糊，更适合做爆款内容而非产品。"
+   }
+  },
+  "avatarmanz/VIctory-7900XTX": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "在 PC 上原生跑 Xbox 主机游戏的兼容层，靠改渲染管线冲 30fps",
+    "one_liner_en": "Run your own Xbox Series game on PC, patching its renderer for 30+ fps",
+    "target_user": "拥有自购 Xbox 游戏备份、追求高帧率的 PC 硬件玩家（美国 / 欧洲高端显卡社区）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 8,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 3,
+     "license_safety": 4,
+     "demoability": 5
+    },
+    "product_idea": "打包成图形化启动器：一键检测硬件、预编译着色器、自动开兼容补丁，卖付费版预设",
+    "demo_idea": "网页对比同一场景开补丁前后 13fps 到 22fps 的帧时间曲线和画面闪烁问题",
+    "attack_tool": false,
+    "red_flags": [
+     "几乎无法合法商业化：依赖用户自持游戏转储，实际场景常与盗版、DRM 绕过纠缠",
+     "GPL-3.0 传染且项目自带法律灰区，商业包装空间受限",
+     "仅单机单卡实测，状态极早期（1 天），稳定性风险高",
+     "涉及主机游戏版权与逆向，DMCA 及发行商法律风险",
+     "受众极窄，付费意愿低，难做订阅或 SaaS"
+    ],
+    "reason": "话题性和技术硬核度极高，内容传播价值强；但法律与 GPL 双重限制，商业化几乎不可行，更适合做深度解析内容而非产品。"
+   }
+  },
+  "Reukix/Reloc": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "让 iPhone 假装自己是外接 GPS，随意改定位",
+    "one_liner_en": "Make your iPhone believe an external GPS is feeding it any location you pick",
+    "target_user": "做 LBS / 打车 / 社交 App 的 iOS 开发者与 QA 团队，以及需要测试定位的自动化测试工程师",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 2,
+     "demoability": 7
+    },
+    "product_idea": "给 iOS 测试团队的外设级定位模拟工具，做签名分发 + 一键配对向导 + 团队共享测试点",
+    "demo_idea": "网页地图点一个坐标，演示 iPhone 上打卡 App 立即显示新位置的对比画面",
+    "attack_tool": false,
+    "red_flags": [
+     "AGPL-3.0，商用或网络服务需开源，商业包装受限",
+     "依赖外部代理做 10.7.0.1 回环，且需自备 MFi 凭据，合规与获取门槛高",
+     "本质是欺骗系统定位，容易被用于签到打卡、游戏、约会 App 作弊，可能违反平台条款",
+     "需要未签名 IPA 侧载，难以上架 App Store，分发渠道受限",
+     "项目仅 1 天、539 星，真实性待验证"
+    ],
+    "reason": "技术极客感强、话题足，但许可证与平台合规是硬伤，商业化空间窄，适合做内容而非产品。"
+   }
+  },
+  "DoubleGhosty/cool_fox": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "让 Xbox 游戏在 Windows 电脑上原生运行的兼容层，还很快",
+    "one_liner_en": "A compatibility layer that runs an Xbox game natively on Windows PCs, fast",
+    "target_user": "有 Xbox 主机游戏完整备份、电脑配置较高的 PC 玩家和模拟器爱好者",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 5,
+     "wow": 8,
+     "pain": 5,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 3
+    },
+    "product_idea": "打包成一键安装的图形界面启动器，自动配置显卡、缓存和着色器，先做合法备份相关的合规引导",
+    "demo_idea": "并排展示同一场景在 280ms 与 50ms 每帧下的对比，配上帧率曲线和画面截图",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是游戏模拟与兼容层，需要用户自备完整游戏备份，法律风险极高，涉及 DMCA 反规避条款",
+     "与版权游戏绑定，无法公开演示，也难以合法商业化收费",
+     "GPL-3.0 许可证，商业闭源包装受限",
+     "依赖特定 AMD 显卡和 Windows 环境，体验门槛高",
+     "仓库为镜像，且创建仅 1 天但已 450 星，热度数据可疑"
+    ],
+    "reason": "技术极客感强，传播有话题，但法律风险高、受众窄、无合法收费路径，更适合做内容而非产品"
+   }
+  },
+  "qianyiai/kurocat": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "桌面上会跟着你打字跳舞的3D小黑猫，还能当AI写代码的搭子",
+    "one_liner_en": "A tiny 3D desktop cat that reacts to your typing and vibes with your AI coding tools",
+    "target_user": "Twitch/YouTube 主播、写码直播的程序员、桌面美化爱好者，尤其是 OBS 直播和 coding stream 人群",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 4,
+     "packaging_room": 5,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 9
+    },
+    "product_idea": "做 OBS/直播场景的『桌面宠物+打字可视化』付费皮肤包与订阅，猫形象按主播风格定制",
+    "demo_idea": "网页直接让访客敲键盘，小猫实时跟着打字动作和摸头互动，秒懂产品价值",
+    "attack_tool": false,
+    "red_flags": [
+     "对 Bongo Cat 的高度模仿，存在原创性和品牌差异化风险",
+     "宠物玩具类需求偏'有趣'而非高频刚需，付费转化弱",
+     "项目已自带完整官网、多平台安装包和 Homebrew，开源版完成度高，包装空间有限",
+     "受众大量在国内（豆包、国内高速源），英文市场付费意愿需验证",
+     "全局键鼠监听会触发 macOS 辅助功能/输入监控权限和用户隐私顾虑"
+    ],
+    "reason": "演示性和易懂度极强、MIT 干净，但本质是 Bongo Cat 类趣味玩具，痛点弱、打包空间小，做内容优于做产品，变现靠直播皮肤定制更现实。"
+   }
+  },
+  "Moh4696/inkworks-skill": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "让你的 AI 编程助手生成可交互的 3D 工程图纸式原理动画页",
+    "one_liner_en": "An agent skill that turns prompts into interactive 3D engineering-drawing explainer pages",
+    "target_user": "教育内容创作者、科普博主、工程与 STEM 教师、技术营销团队",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 5,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "做成托管式网页生成器：输入机器名称，输出可嵌入的 3D 原理页或短视频",
+    "demo_idea": "网页输入'汽车发动机'，30 秒渲染出可拖动、可慢放、可单缸跟踪的工程图动画",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是 agent skill 加代码模板，不是独立产品，容易被同类 skill 复制",
+     "受众偏小众，付费意愿集中在教育内容团队而非个人",
+     "依赖 Claude Code、Codex 等第三方 agent 生态，渠道受制于人",
+     "star 单日暴涨 380，疑似刷榜或短期热度，留存存疑"
+    ],
+    "reason": "视觉风格独特、演示性强、MIT 友好，适合做内容；但只是技能模板，商业化路径弱，需包装成托管生成器才有付费空间"
+   }
+  },
+  "sybil-solutions/inference-optimisation-skill": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "AI基础设施",
+    "one_liner": "教 AI 代理自动调优本地大模型推理速度的技能包",
+    "one_liner_en": "An agent skill that auto-tunes local LLM serving speed on any hardware",
+    "target_user": "自建本地 LLM 推理的开发者、小型 AI 团队、边缘部署与私有化部署工程师（美国 / 全球）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 3,
+     "wow": 6,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 3
+    },
+    "product_idea": "把技能包做成带界面的本地推理调优 SaaS：一键基准测试、自动搜索配置、生成加速报告",
+    "demo_idea": "网页上传硬件和模型信息，模拟跑出调优前后 tok/s 对比曲线和通过门禁的配置卡",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是 prompt / 技能文档加脚本，离成熟产品还远",
+     "受众极窄，需要自己的 GPU 和本地部署环境才能体验",
+     "核心价值依赖真实硬件测量，纯网页难演示",
+     "README 数据来源自建仓库，缺乏第三方验证"
+    ],
+    "reason": "话题热、许可证干净，但受众窄、无法网页演示、商业化弱，更适合做内容而非包装成产品。"
+   }
+  },
+  "nexu-io/opengame": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "用AI编程助手一句话生成可发布的小游戏",
+    "one_liner_en": "Turn your coding agent into a game studio that builds playable games",
+    "target_user": "美国/全球的独立游戏开发者、vibe coding 爱好者、TikTok/itch.io 小游戏创作者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 7,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 7
+    },
+    "product_idea": "浏览器版AI游戏工作室：选模板、一句话改主题、导出可玩链接和9:16广告素材",
+    "demo_idea": "网页里点一个模板，输入一句话换成太空主题，30秒后直接玩到新游戏",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库仅创建1天、星数增长异常，需警惕刷星和营销水分",
+     "重度依赖微信小游戏/抖音发布链路，对美区用户价值有限",
+     "明确内嵌商业导流（OpenDesign Go、黑五折扣），开源与变现边界模糊",
+     "AAA级3D游戏的宣称大概率夸大，实际效果需验证",
+     "核心依赖用户自备API Key和本地22种agent安装，上手门槛不低"
+    ],
+    "reason": "题材热、许可证干净、模板可演示，但星数异常、宣传夸大、国内渠道偏重，产品化需聚焦美区模板改皮+导出。"
+   }
+  },
+  "pierridotite/mobile-agent-testers": {
+   "date": "2026-11-26",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "20个AI测试员同时在20台虚拟手机上帮你找App的bug",
+    "one_liner_en": "20 AI testers run your mobile app on 20 virtual phones in parallel and report bugs",
+    "target_user": "欧美独立开发者、小型移动App团队（Flutter/React Native/Expo）、QA负责人",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 9,
+     "pain": 8,
+     "packaging_room": 8,
+     "monetization": 7,
+     "license_safety": 10,
+     "demoability": 8
+    },
+    "product_idea": "托管式移动AI众测服务：接上仓库即自动多设备跑测，出可视化bug报告和回归测试",
+    "demo_idea": "网页上传演示App，实时看20台手机并行点击找bug，地图热力图高亮发现的11个bug",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖GitHub Actions免费runner和Anthropic兼容模型，成本与稳定性受平台政策影响",
+     "依赖Claude等模型读截图，结果质量不稳定，误报可能影响信任",
+     "同一作者、9天2457星增长异常快，可能有营销助推",
+     "移动端多设备并发测试涉及App内数据，需注意隐私与客户代码保密"
+    ],
+    "reason": "痛点和演示性都很强，MIT许可、包装空间大；商业化路径清晰但依赖外部模型与CI平台，需做托管服务建立壁垒。"
    }
   }
  }
