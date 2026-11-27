@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MiniForge — Train a 64M language model in a browser tab</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+  ::selection { background: #c7d2fe; color: #1e1b4b; }
+  select option { background-color: #0f172a; color: #e2e8f0; }
+</style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+
+<!-- ===================== NAV ===================== -->
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-indigo-600 text-sm font-bold text-white">MF</span>
+      <span class="text-[15px] font-semibold tracking-tight">MiniForge</span>
+      <span class="mono hidden rounded border border-slate-200 px-1.5 py-0.5 text-[10px] uppercase tracking-widest text-slate-500 sm:inline">concept</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm text-slate-600 md:flex">
+      <a href="#lab" class="hover:text-slate-900">The lab</a>
+      <a href="#how" class="hover:text-slate-900">How it works</a>
+      <a href="#usecases" class="hover:text-slate-900">Use cases</a>
+      <a href="#waitlist" class="hover:text-slate-900">Pricing</a>
+    </nav>
+    <a href="#waitlist" class="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800">Join waitlist</a>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section id="top" class="relative overflow-hidden">
+  <div class="pointer-events-none absolute inset-x-0 -top-56 h-96 bg-gradient-to-b from-indigo-200/50 via-indigo-100/20 to-transparent blur-2xl"></div>
+  <div class="relative mx-auto max-w-6xl px-4 pb-8 pt-14 sm:px-6 sm:pt-20">
+    <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+      Built on the MiniMind open-source project · Apache-2.0
+    </span>
+    <h1 class="mt-5 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05]">
+      Train your own language model
+      <span class="text-indigo-600">in a browser tab.</span>
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
+      MiniForge turns the MiniMind training stack into a guided, hands-on lab. Press start, watch the cross-entropy loss fall, and hear a 64M model go from babble to conversation — about two hours and three dollars of GPU time, built entirely from scratch.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="#lab" class="rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500">Open the lab</a>
+      <a href="#how" class="rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900">See how it works</a>
+    </div>
+    <dl class="mt-12 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4">
+      <div>
+        <dt class="mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Parameters</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">64M</dd>
+      </div>
+      <div>
+        <dt class="mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Training time</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">~2 hrs</dd>
+      </div>
+      <div>
+        <dt class="mono text-[10px] uppercase tracking-[0.18em] text-slate-500">GPU cost</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">~$3</dd>
+      </div>
+      <div>
+        <dt class="mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Hidden layers</dt>
+        <dd class="mt-1 text-2xl font-semibold tracking-tight">0</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ===================== THE LAB ===================== -->
+<section id="lab" class="mx-auto max-w-6xl px-4 pb-4 pt-10 sm:px-6">
+  <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">The lab</h2>
+      <p class="mt-1 max-w-xl text-slate-600">A live training console. Configure a run, start it, and watch the model learn — simulated in your browser for this concept demo.</p>
+    </div>
+    <span class="mono rounded-md border border-slate-300 bg-white px-2 py-1 text-[10px] uppercase tracking-widest text-slate-500">Sample data</span>
+  </div>
+
+  <!-- Console -->
+  <div class="rounded-2xl bg-slate-950 p-5 shadow-xl ring-1 ring-slate-800 sm:p-7">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span id="statusDot" class="inline-flex h-2.5 w-2.5 rounded-full bg-slate-500"></span>
+        <span class="mono text-[11px] uppercase tracking-[0.2em] text-slate-400">Training run</span>
+        <span id="statusText" class="mono rounded-full bg-slate-800 px-2.5 py-0.5 text-[11px] text-slate-300">idle</span>
+      </div>
+      <div class="mono text-[11px] text-slate-500">1× RTX 3090 · $1.50/hr · built-in demo data</div>
+    </div>
+
+    <div class="mt-5 grid gap-3 sm:grid-cols-3">
+      <label class="block">
+        <span class="mono text-[10px] uppercase tracking-widest text-slate-500">Model</span>
+        <select id="selModel" class="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 disabled:opacity-60">
+          <option value="64">minimind-3 · 64M dense</option>
+          <option value="26">minimind2-small · 26M dense</option>
+          <option value="198">minimind-3-moe · 198M-A64M</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="mono text-[10px] uppercase tracking-widest text-slate-500">Steps</span>
+        <select id="selSteps" class="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 disabled:opacity-60">
+          <option value="500">500 steps</option>
+          <option value="1000">1,000 steps</option>
+          <option value="2000" selected>2,000 steps</option>
+          <option value="4000">4,000 steps</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="mono text-[10px] uppercase tracking-widest text-slate-500">Dataset</span>
+        <select id="selData" class="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 disabled:opacity-60">
+          <option>pretrain + sft_t2t</option>
+          <option>pretrain only</option>
+          <option>sft + dpo</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="mt-4 flex flex-wrap gap-2">
+      <button id="btnStart" class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60">Start training</button>
+      <button id="btnReset" class="rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-300 transition hover:border-slate-600 hover:text-white">Reset</button>
+    </div>
+
+    <dl class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div class="rounded-xl border border-slate-800 bg-slate-900/80 p-3">
+        <dt class="mono text-[10px] uppercase tracking-widest text-slate-500">Step</dt>
+        <dd id="mStep" class="mono mt-1 text-base text-slate-100">0 / 2,000</dd>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/80 p-3">
+        <dt class="mono text-[10px] uppercase tracking-widest text-slate-500">Loss</dt>
+        <dd id="mLoss" class="mono mt-1 text-base text-emerald-300">11.150</dd>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/80 p-3">
+        <dt class="mono text-[10px] uppercase tracking-widest text-slate-500">Throughput</dt>
+        <dd id="mTok" class="mono mt-1 text-base text-slate-100">0.0k tok/s</dd>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/80 p-3">
+        <dt class="mono text-[10px] uppercase tracking-widest text-slate-500">Spent</dt>
+        <dd id="mCost" class="mono mt-1 text-base text-slate-100">$0.00</dd>
+      </div>
+    </dl>
+
+    <div class="mt-5 rounded-xl border border-slate-800 bg-slate-900/60 p-3">
+      <div class="mb-1 flex items-center justify-between">
+        <span class="mono text-[10px] uppercase tracking-widest text-slate-500">Cross-entropy loss</span>
+        <span id="mTime" class="mono text-[11px] text-slate-400">0:00:00</span>
+      </div>
+      <canvas id="lossChart" class="block h-48 w-full sm:h-56"></canvas>
+    </div>
+
+    <div class="mt-4 flex items-center gap-3">
+      <div class="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+        <div id="progressBar" class="h-full w-0 rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400 transition-[width] duration-100"></div>
+      </div>
+      <span id="progressText" class="mono w-10 text-right text-[11px] text-slate-400">0%</span>
+    </div>
+  </div>
+
+  <!-- Before / after -->
+  <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h3 class="text-lg font-semibold tracking-tight">Hear the difference</h3>
+        <p class="mt-1 text-sm text-slate-600">Same prompt, two checkpoints. The right-hand answer refreshes live as the loss falls.</p>
+      </div>
+      <span class="mono rounded-md border border-slate-300 px-2 py-1 text-[10px] uppercase tracking-widest text-slate-500">Sample data</span>
+    </div>
+
+    <div class="mt-4 flex flex-col gap-2 sm:flex-row">
+      <input id="promptInput" type="text" value="Explain gravity to a 5-year-old."
+        class="w-full flex-1 rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+        placeholder="Ask the model something…" />
+      <button id="btnGenerate" class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500">Generate</button>
+    </div>
+
+    <div class="mt-3 flex flex-wrap items-center gap-2">
+      <span class="mono text-[10px] uppercase tracking-widest text-slate-400">Try</span>
+      <button data-prompt="Explain gravity to a 5-year-old." class="rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-600 transition hover:border-indigo-300 hover:text-indigo-600">Gravity</button>
+      <button data-prompt="What is the capital of France?" class="rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-600 transition hover:border-indigo-300 hover:text-indigo-600">Capital of France</button>
+      <button data-prompt="Write a Python loop that prints 0 to 4." class="rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-600 transition hover:border-indigo-300 hover:text-indigo-600">Python loop</button>
+      <button data-prompt="Why is the sky blue?" class="rounded-full border border-slate-200 px-3 py-1 text-xs text-slate-600 transition hover:border-indigo-300 hover:text-indigo-600">Sky is blue</button>
+    </div>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-2">
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <div class="flex items-center justify-between gap-2">
+          <span class="mono text-[10px] uppercase tracking-widest text-slate-500">Checkpoint @ step 0</span>
+          <span class="rounded-full bg-rose-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-rose-600">untrained</span>
+        </div>
+        <p id="outRaw" class="mono mt-3 min-h-[104px] break-words text-sm leading-relaxed text-slate-500">gravity . . the the of is a to down the when you . a of the the thing pull .</p>
+      </div>
+      <div class="rounded-xl border border-indigo-200 bg-indigo-50/70 p-4">
+        <div class="flex items-center justify-between gap-2">
+          <span class="mono text-[10px] uppercase tracking-widest text-indigo-600">Checkpoint @ step <span id="ckStep">0</span></span>
+          <span id="ckBadge" class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-600">untrained</span>
+        </div>
+        <p id="outTrained" class="mt-3 min-h-[104px] break-words text-sm leading-relaxed text-slate-800 transition-opacity duration-150">gravity . . the the of is a to down the when you . a of the the thing pull .</p>
+      </div>
+    </div>
+    <p class="mt-4 text-xs text-slate-400">Qualities shown are pre-written sample outputs mapped to the simulated loss — no model is actually running in this demo.</p>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section id="how" class="mx-auto max-w-6xl px-4 pt-16 sm:px-6">
+  <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Four steps, no magic</h2>
+  <p class="mt-2 max-w-2xl text-slate-600">Everything the model does is visible. That is the whole point.</p>
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="rounded-xl border border-slate-200 bg-white p-5">
+      <span class="mono text-xs font-semibold text-indigo-600">01</span>
+      <h3 class="mt-2 text-sm font-semibold">Pick a recipe</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-slate-600">64M dense, a 26M small model, or a 198M-A64M MoE — each ships with its own data and hyperparameters.</p>
+    </div>
+    <div class="rounded-xl border border-slate-200 bg-white p-5">
+      <span class="mono text-xs font-semibold text-indigo-600">02</span>
+      <h3 class="mt-2 text-sm font-semibold">Press start</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-slate-600">One click launches the run. Step, loss, throughput and dollars stream into the console as it goes.</p>
+    </div>
+    <div class="rounded-xl border border-slate-200 bg-white p-5">
+      <span class="mono text-xs font-semibold text-indigo-600">03</span>
+      <h3 class="mt-2 text-sm font-semibold">Watch the curve</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-slate-600">Inline notes explain warmup, LR decay, and the exact moment a loss spike turns into a lesson.</p>
+    </div>
+    <div class="rounded-xl border border-slate-200 bg-white p-5">
+      <span class="mono text-xs font-semibold text-indigo-600">04</span>
+      <h3 class="mt-2 text-sm font-semibold">Talk to it</h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-slate-600">Run the same prompt against step 0 and step 2,000. The gap between them is the entire story.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== USE CASES ===================== -->
+<section id="usecases" class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+  <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Three ways people use it</h2>
+  <div class="mt-8 grid gap-5 md:grid-cols-3">
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-xl">🔧</div>
+      <h3 class="mt-4 font-semibold tracking-tight">Learn by breaking it</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">Crank the learning rate, kill the run at step 900, watch the curve flatline into noise. Every knob is exposed because nothing is buried under a framework wrapper.</p>
+      <p class="mono mt-4 text-[10px] uppercase tracking-widest text-slate-400">Best for: self-taught engineers</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-xl">🎓</div>
+      <h3 class="mt-4 font-semibold tracking-tight">Teach a class</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">Share one lab link with 30 students. Same seed, same data, same 20-minute run — then compare loss curves side by side in the instructor dashboard.</p>
+      <p class="mono mt-4 text-[10px] uppercase tracking-widest text-slate-400">Best for: instructors &amp; bootcamps</p>
+    </div>
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-50 text-xl">💼</div>
+      <h3 class="mt-4 font-semibold tracking-tight">Interview prep</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600">Answer “why does LoRA freeze the base weights?” from memory — because you trained both variants last night and compared the curves yourself.</p>
+      <p class="mono mt-4 text-[10px] uppercase tracking-widest text-slate-400">Best for: LLM interview candidates</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING / WAITLIST ===================== -->
+<section id="waitlist" class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
+  <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+    <div class="max-w-2xl">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">Simple pricing, once it ships</h2>
+      <p class="mt-2 text-slate-600">The open-source project stays free forever. MiniForge adds a hosted lab, saved runs and classroom tools for people who’d rather not touch a terminal.</p>
+    </div>
+
+    <div class="mt-8 grid gap-5 md:grid-cols-3">
+      <div class="flex flex-col rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Explorer</h3>
+        <p class="mt-1 text-sm text-slate-500">Kick the tires.</p>
+        <p class="mt-4 text-3xl font-semibold tracking-tight">$0<span class="text-base font-normal text-slate-500">/forever</span></p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-600">
+          <li>1 run per month</li>
+          <li>26M dense model</li>
+          <li>Community lesson plans</li>
+        </ul>
+        <button data-plan="Explorer" class="mt-6 rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900">Start free</button>
+      </div>
+
+      <div class="relative flex flex-col rounded-2xl border-2 border-indigo-600 p-6 shadow-md">
+        <span class="absolute -top-3 left-6 rounded-full bg-indigo-600 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">Most popular</span>
+        <h3 class="font-semibold">Studio</h3>
+        <p class="mt-1 text-sm text-slate-500">For serious learners.</p>
+        <p class="mt-4 text-3xl font-semibold tracking-tight">$12<span class="text-base font-normal text-slate-500">/month</span></p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-600">
+          <li>Unlimited runs</li>
+          <li>64M dense + MoE recipes</li>
+          <li>Saved runs &amp; loss-curve export</li>
+          <li>Private notebooks</li>
+        </ul>
+        <button data-plan="Studio" class="mt-6 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500">Join waitlist</button>
+      </div>
+
+      <div class="flex flex-col rounded-2xl border border-slate-200 p-6">
+        <h3 class="font-semibold">Classroom</h3>
+        <p class="mt-1 text-sm text-slate-500">For courses and teams.</p>
+        <p class="mt-4 text-3xl font-semibold tracking-tight">$39<span class="text-base font-normal text-slate-500">/month</span></p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-600">
+          <li>Up to 40 seats</li>
+          <li>Shared lesson plans</li>
+          <li>Instructor dashboard</li>
+          <li>Roster-wide curve comparison</li>
+        </ul>
+        <button data-plan="Classroom" class="mt-6 rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900">Talk to us</button>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <label class="flex-1">
+          <span class="text-sm font-medium text-slate-700">Join the waitlist</span>
+          <input id="waitlistInput" type="email" value="you@example.com"
+            class="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            placeholder="you@example.com" />
+        </label>
+        <button id="btnWaitlist" class="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">Join waitlist</button>
+      </div>
+      <p id="waitlistMsg" class="mt-3 hidden text-sm font-medium text-emerald-600">Thanks — you’re on the list. (Demo only: nothing was sent or stored.)</p>
+      <p class="mt-2 text-xs text-slate-400">No account, no payment, no data submitted in this concept demo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="grid h-7 w-7 place-items-center rounded-md bg-indigo-600 text-xs font-bold text-white">MF</span>
+        <span class="text-sm font-semibold text-slate-800">MiniForge</span>
+        <span class="mono rounded border border-slate-200 px-1.5 py-0.5 text-[10px] uppercase tracking-widest text-slate-400">unaffiliated concept</span>
+      </div>
+      <p class="max-w-xl text-sm leading-relaxed text-slate-500">
+        Concept demo, based on the open-source project
+        <a href="https://github.com/jingyaogong/minimind" class="font-medium text-indigo-600 underline decoration-indigo-300 underline-offset-2 hover:text-indigo-500">jingyaogong/minimind</a>
+        (Apache-2.0), unofficial, all data is sample data
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 max-w-[90vw] -translate-x-1/2 translate-y-2 rounded-xl bg-slate-900 px-4 py-2.5 text-center text-sm text-white opacity-0 shadow-lg transition-all duration-300"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var els = {
+    statusDot: $('statusDot'),
+    statusText: $('statusText'),
+    selModel: $('selModel'),
+    selSteps: $('selSteps'),
+    selData: $('selData'),
+    btnStart: $('btnStart'),
+    btnReset: $('btnReset'),
+    mStep: $('mStep'),
+    mLoss: $('mLoss'),
+    mTok: $('mTok'),
+    mCost: $('mCost'),
+    mTime: $('mTime'),
+    canvas: $('lossChart'),
+    progressBar: $('progressBar'),
+    progressText: $('progressText'),
+    promptInput: $('promptInput'),
+    btnGenerate: $('btnGenerate'),
+    outRaw: $('outRaw'),
+    outTrained: $('outTrained'),
+    ckStep: $('ckStep'),
+    ckBadge: $('ckBadge'),
+    toast: $('toast'),
+    waitlistInput: $('waitlistInput'),
+    btnWaitlist: $('btnWaitlist'),
+    waitlistMsg: $('waitlistMsg')
+  };
+
+  /* ---------------- sample answer bank ---------------- */
+  var BANK = {
+    gravity: {
+      raw: "gravity . . the the of is a to down the when you . a of the the thing pull .",
+      early: "gravity is a thing that pull things down . when you jump you come back to the the ground .",
+      mid: "Gravity is a force that pulls objects toward each other. Earth's gravity pulls you down, which is why you land after you jump.",
+      final: "Gravity is like an invisible magnet inside the Earth that pulls everything down. That's why your ball comes back when you throw it up — and why you don't float away when you jump!"
+    },
+    capital: {
+      raw: "the capital of france is . . paris the the of city a in the . . france of",
+      early: "The capital of France is Paris . Paris is a big city in France and the the river .",
+      mid: "The capital of France is Paris. It is the largest city in the country and it sits on the Seine.",
+      final: "The capital of France is Paris — home to the Eiffel Tower and roughly 2.1 million people inside the city limits."
+    },
+    code: {
+      raw: "for i in range ( ) : . print the the of a in to . . loop of",
+      early: "for i in range(5): print(i) . This loop print the numbers 0 to 4 . .",
+      mid: "Use a for loop: `for i in range(5): print(i)` — it prints 0, 1, 2, 3 and 4.",
+      final: "Here's the loop: `for i in range(5): print(i)`. range(5) yields 0-4, so you get five lines. Want them on one line? Use `print(i, end=' ')`."
+    },
+    sky: {
+      raw: "the sky is blue . . because the of light a in the . . of the sun the",
+      early: "The sky is blue because sunlight hit the air and the blue light is spread the most .",
+      mid: "Sunlight hits air molecules and short blue wavelengths scatter more than red ones. That's why the sky looks blue.",
+      final: "Sunlight is a mix of colors, but air molecules scatter short blue wavelengths far more than long red ones — that's Rayleigh scattering. So blue light reaches your eyes from every direction and the sky looks blue."
+    },
+    general: {
+      raw: "the . . a of is to the the and of a in the . . you the of",
+      early: "That is a good question . The answer is about the the thing and how it work . .",
+      mid: "That's a good question. The short answer is that it depends on the details, but here is the general idea.",
+      final: "Good question. The short version: break it into small steps, check each one as you go, and the whole thing becomes much easier to reason about."
+    }
+  };
+
+  function bucketFor(text) {
+    var t = String(text || '').toLowerCase();
+    if (t.indexOf('gravity') !== -1 || t.indexOf('gravit') !== -1) return BANK.gravity;
+    if (t.indexOf('capital') !== -1 || t.indexOf('france') !== -1 || t.indexOf('paris') !== -1) return BANK.capital;
+    if (t.indexOf('python') !== -1 || t.indexOf('loop') !== -1 || t.indexOf('code') !== -1) return BANK.code;
+    if (t.indexOf('sky') !== -1 || t.indexOf('blue') !== -1) return BANK.sky;
+    return BANK.general;
+  }
+
+  /* ---------------- run state ---------------- */
+  var SEC_PER_STEP = 3.6;   /* 2,000 steps -> 2 simulated hours */
+  var GPU_RATE = 1.5;       /* dollars per hour */
+
+  var run = {
+    active: false,
+    finished: false,
+    step: 0,
+    total: 2000,
+    loss: 11.2,
+    floor: 2.05,
+    startLoss: 11.2,
+    history: [],
+    timer: null,
+    elapsedSec: 0,
+    cost: 0
+  };
+
+  function lossAt(p) {
+    return run.floor + (run.startLoss - run.floor) * Math.exp(-3.4 * p);
+  }
+
+  function fmtTime(sec) {
+    var s = Math.max(0, Math.floor(sec));
+    var h = Math.floor(s / 3600);
+    var m = Math.floor((s % 3600) / 60);
+    var ss = s % 60;
+    var pad = function (n) { return n < 10 ? '0' + n : String(n); };
+    return h + ':' + pad(m) + ':' + pad(ss);
+  }
+
+  /* ---------------- chart ---------------- */
+  var chartW = 300, chartH = 200;
+
+  function sizeChart() {
+    var c = els.canvas;
+    if (!c) return;
+    var rect = c.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    chartW = Math.max(1, Math.floor(rect.width));
+    chartH = Math.max(1, Math.floor(rect.height));
+    c.width = Math.floor(chartW * dpr);
+    c.height = Math.floor(chartH * dpr);
+    var ctx = c.getContext('2d');
+    if (!ctx) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawChart();
+  }
+
+  function drawChart() {
+    var c = els.canvas;
+    if (!c) return;
+    var ctx = c.getContext('2d');
+    if (!ctx) return;
+    var w = chartW, h = chartH;
+    ctx.clearRect(0, 0, w, h);
+
+    var padL = 34, padR = 8, padT = 10, padB = 16;
+    var plotW = Math.max(1, w - padL - padR);
+    var plotH = Math.max(1, h - padT - padB);
+    var yMax = 12, yMin = 0;
+
+    ctx.lineWidth = 1;
+    ctx.font = '10px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctx.textBaseline = 'middle';
+
+    for (var i = 0; i <= 4; i++) {
+      var v = yMax - (yMax - yMin) * i / 4;
+      var y = padT + plotH * i / 4;
+      ctx.strokeStyle = 'rgba(148,163,184,0.16)';
+      ctx.beginPath();
+      ctx.moveTo(padL, y);
+      ctx.lineTo(padL + plotW, y);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(148,163,184,0.7)';
+      ctx.fillText(v.toFixed(0), 6, y);
+    }
+
+    if (run.history.length < 2) return;
+
+    var total = run.total || 1;
+    var toX = function (s) { return padL + plotW * Math.min(1, s / total); };
+    var toY = function (l) {
+      var n = (l - yMin) / (yMax - yMin);
+      if (n < 0) n = 0;
+      if (n > 1) n = 1;
+      return padT + plotH * (1 - n);
+    };
+
+    var first = run.history[0];
+    var last = run.history[run.history.length - 1];
+
+    /* area fill */
+    var grad = ctx.createLinearGradient(0, padT, 0, padT + plotH);
+    grad.addColorStop(0, 'rgba(99,102,241,0.38)');
+    grad.addColorStop(1, 'rgba(99,102,241,0.02)');
+    ctx.beginPath();
+    ctx.moveTo(toX(first.step), toY(first.loss));
+    for (var j = 1; j < run.history.length; j++) {
+      ctx.lineTo(toX(run.history[j].step), toY(run.history[j].loss));
+    }
+    ctx.lineTo(toX(last.step), padT + plotH);
+    ctx.lineTo(toX(first.step), padT + plotH);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    /* curve */
+    ctx.beginPath();
+    ctx.moveTo(toX(first.step), toY(first.loss));
+    for (var k = 1; k < run.history.length; k++) {
+      ctx.lineTo(toX(run.history[k].step), toY(run.history[k].loss));
+    }
+    ctx.strokeStyle = '#818cf8';
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    /* head dot */
+    ctx.beginPath();
+    ctx.arc(toX(last.step), toY(last.loss), 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#34d399';
+    ctx.fill();
+  }
+
+  /* ---------------- rendering ---------------- */
+  function renderOutputs() {
+    var p = run.total ? run.step / run.total : 0;
+    var bucket = bucketFor(els.promptInput.value);
+
+    els.outRaw.textContent = bucket.raw;
+
+    var tier = 'raw';
+    if (p >= 0.9) tier = 'final';
+    else if (p >= 0.6) tier = 'mid';
+    else if (p >= 0.3) tier = 'early';
+    else tier = 'raw';
+
+    els.outTrained.textContent = bucket[tier];
+    els.ckStep.textContent = run.step.toLocaleString('en-US');
+
+    var badge = els.ckBadge;
+    var base = 'rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ';
+    if (tier === 'final') {
+      badge.textContent = 'converged';
+      badge.className = base + 'bg-emerald-100 text-emerald-700';
+    } else if (tier === 'mid') {
+      badge.textContent = 'forming';
+      badge.className = base + 'bg-amber-100 text-amber-700';
+    } else if (tier === 'early') {
+      badge.textContent = 'babbling';
+      badge.className = base + 'bg-indigo-100 text-indigo-700';
+    } else {
+      badge.textContent = 'untrained';
+      badge.className = base + 'bg-slate-200 text-slate-600';
+    }
+  }
+
+  function render() {
+    var p = run.total ? run.step / run.total : 0;
+
+    els.mStep.textContent = run.step.toLocaleString('en-US') + ' / ' + run.total.toLocaleString('en-US');
+    els.mLoss.textContent = run.loss.toFixed(3);
+    els.mTok.textContent = run.active ? (40 + Math.random() * 6).toFixed(1) + 'k tok/s' : '0.0k tok/s';
+    els.mCost.textContent = '$' + run.cost.toFixed(2);
+    els.mTime.textContent = fmtTime(run.elapsedSec);
+    els.progressBar.style.width = (p * 100).toFixed(1) + '%';
+    els.progressText.textContent = Math.round(p * 100) + '%';
+
+    drawChart();
+    renderOutputs();
+  }
+
+  /* ---------------- toast ---------------- */
+  var toastTimer = null;
+  function showToast(msg) {
+    if (!els.toast) return;
+    els.toast.textContent = msg;
+    els.toast.classList.remove('opacity-0', 'translate-y-2');
+    els.toast.classList.add('opacity-100', 'translate-y-0');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      els.toast.classList.add('opacity-0', 'translate-y-2');
+      els.toast.classList.remove('opacity-100', 'translate-y-0');
+    }, 3800);
+  }
+
+  /* ---------------- training loop ---------------- */
+  function setControlsEnabled(on) {
+    els.selModel.disabled = !on;
+    els.selSteps.disabled = !on;
+    els.selData.disabled = !on;
+  }
+
+  function start() {
+    if (run.active) return;
+
+    run.total = parseInt(els.selSteps.value, 10) || 2000;
+    var model = els.selModel.value;
+    run.floor = model === '26' ? 2.75 : (model === '198' ? 1.85 : 2.05);
+    run.startLoss = 11.2;
+
+    run.step = 0;
+    run.loss = lossAt(0);
+    run.elapsedSec = 0;
+    run.cost = 0;
+    run.history = [{ step: 0, loss: run.loss }];
+    run.active = true;
+    run.finished = false;
+
+    setControlsEnabled(false);
+    els.btnStart.disabled = true;
+    els.btnStart.textContent = 'Training…';
+    els.statusText.textContent = 'training';
+    els.statusDot.className = 'inline-flex h-2.5 w-2.5 rounded-full bg-amber-400 animate-pulse';
+
+    render();
+    run.timer = setInterval(tick, 90);
+  }
+
+  function tick() {
+    if (!run.active) return;
+
+    var inc = Math.max(1, Math.round(run.total / 220));
+    run.step = Math.min(run.total, run.step + inc);
+    var p = run.step / run.total;
+
+    var base = lossAt(p);
+    var noise = (Math.random() - 0.5) * 0.34 * (1 - 0.6 * p);
+    run.loss = Math.max(1.2, base + noise);
+
+    run.history.push({ step: run.step, loss: run.loss });
+    run.elapsedSec = run.step * SEC_PER_STEP;
+    run.cost = (run.elapsedSec / 3600) * GPU_RATE;
+
+    render();
+
+    if (run.step >= run.total) finish();
+  }
+
+  function finish() {
+    run.active = false;
+    run.finished = true;
+    if (run.timer) {
+      clearInterval(run.timer);
+      run.timer = null;
+    }
+    setControlsEnabled(true);
+    els.btnStart.disabled = false;
+    els.btnStart.textContent = 'Run again';
+    els.statusText.textContent = 'complete';
+    els.statusDot.className = 'inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400';
+    render();
+    showToast('Run complete — ' + fmtTime(run.elapsedSec) + ' of GPU time, $' + run.cost.toFixed(2) + ' spent.');
+  }
+
+  function reset() {
+    if (run.timer) {
+      clearInterval(run.timer);
+      run.timer = null;
+    }
+    run.active = false;
+    run.finished = false;
+    run.total = parseInt(els.selSteps.value, 10) || 2000;
+    var model = els.selModel.value;
+    run.floor = model === '26' ? 2.75 : (model === '198' ? 1.85 : 2.05);
+    run.step = 0;
+    run.loss = lossAt(0);
+    run.history = [];
+    run.elapsedSec = 0;
+    run.cost = 0;
+
+    setControlsEnabled(true);
+    els.btnStart.disabled = false;
+    els.btnStart.textContent = 'Start training';
+    els.statusText.textContent = 'idle';
+    els.statusDot.className = 'inline-flex h-2.5 w-2.5 rounded-full bg-slate-500';
+
+    render();
+    showToast('Run reset. Every value is back to step 0.');
+  }
+
+  /* ---------------- events ---------------- */
+  els.btnStart.addEventListener('click', start);
+  els.btnReset.addEventListener('click', reset);
+
+  els.selSteps.addEventListener('change', function () {
+    if (run.active) return;
+    run.total = parseInt(els.selSteps.value, 10) || 2000;
+    render();
+  });
+
+  els.btnGenerate.addEventListener('click', function () {
+    els.outTrained.style.opacity = '0.25';
+    setTimeout(function () {
+      renderOutputs();
+      els.outTrained.style.opacity = '1';
+    }, 160);
+    showToast('Sample output — served from built-in demo data.');
+  });
+
+  els.promptInput.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      els.btnGenerate.click();
+    }
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-prompt]'), function (chip) {
+    chip.addEventListener('click', function () {
+      els.promptInput.value = chip.getAttribute('data-prompt') || '';
+      els.outTrained.style.opacity = '0.25';
+      setTimeout(function () {
+        renderOutputs();
+        els.outTrained.style.opacity = '1';
+      }, 160);
+    });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-plan]'), function (btn) {
+    btn.addEventListener('click', function () {
+      var plan = btn.getAttribute('data-plan') || 'this plan';
+      showToast('“' + plan + '” is a concept tier — this demo does not take payments or sign-ups.');
+    });
+  });
+
+  els.btnWaitlist.addEventListener('click', function (ev) {
+    ev.preventDefault();
+    var email = String(els.waitlistInput.value || '').trim();
+    if (!email || email.indexOf('@') <= 0 || email.indexOf('.') === -1) {
+      showToast('Enter a valid email to join the waitlist.');
+      return;
+    }
+    els.waitlistMsg.classList.remove('hidden');
+    els.waitlistInput.value = '';
+    showToast('Added to the waitlist — demo only, nothing was submitted.');
+  });
+
+  window.addEventListener('resize', sizeChart);
+
+  /* ---------------- boot ---------------- */
+  requestAnimationFrame(function () {
+    sizeChart();
+    render();
+  });
+
+  setTimeout(function () {
+    if (!run.active && !run.finished) start();
+  }, 900);
+})();
+</script>
+</body>
+</html>

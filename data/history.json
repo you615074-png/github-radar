@@ -227,6 +227,12 @@
    "full_name": "pierridotite/mobile-agent-testers",
    "category": "开发者工具",
    "final": 7.36
+  },
+  {
+   "date": "2026-11-27",
+   "full_name": "jingyaogong/minimind",
+   "category": "AI基础设施",
+   "final": 7.67
   }
  ],
  "top": {
@@ -242,11 +248,6 @@
   "designfuchen/word-atlas": "2026-11-04",
   "seedds/nxnative": "2026-11-06",
   "TauricResearch/TradingAgents": "2026-11-04",
-  "Panniantong/Agent-Reach": "2026-10-27",
-  "storytold/lightcraft": "2026-10-27",
-  "storytold/filmcraft": "2026-10-27",
-  "ludovic111/horizon": "2026-10-27",
-  "alchaincyf/huashu-design": "2026-10-27",
   "HKUDS/DeepTutor": "2026-10-28",
   "andyhuo520/digital-human-koubo": "2026-10-28",
   "Jakeschincariol/day-trader-skill": "2026-11-14",
@@ -325,7 +326,7 @@
   "Immortal-Protocols/lastbook": "2026-11-18",
   "tangerineturtle1/NX2navi": "2026-11-18",
   "cathrynlavery/diagram-design": "2026-11-19",
-  "kajisho5/ffmpeg-skill": "2026-11-19",
+  "kajisho5/ffmpeg-skill": "2026-11-27",
   "erkamyaman/rust-anything": "2026-11-19",
   "firecrawl/firecrawl": "2026-11-19",
   "zhouxiaoka/autoclip": "2026-11-20",
@@ -356,7 +357,11 @@
   "Moh4696/inkworks-skill": "2026-11-26",
   "valentderah/totk-pc-recomp": "2026-11-26",
   "nexu-io/opengame": "2026-11-26",
-  "Avaneesh-Inamdar/Stream-Tube-Desktop": "2026-11-26"
+  "Avaneesh-Inamdar/Stream-Tube-Desktop": "2026-11-26",
+  "jingyaogong/minimind": "2026-11-27",
+  "gary23w/f-ck_data_brokers": "2026-11-27",
+  "qianyiai/KuroCat": "2026-11-27",
+  "n8n-io/nod": "2026-11-27"
  },
  "scores": {
   "heydamir/unslop": {
@@ -479,38 +484,6 @@
      "设计系统本身难以直接向终端付费"
     ],
     "reason": "大厂官方设计系统，演示性强、话题尚可，但个人几乎无法在其上包装出差异化付费产品，商业化弱，更适合做内容而非创业。"
-   }
-  },
-  "Kianuni/Erosion-CN": {
-   "date": "2026-11-19",
-   "v": 3,
-   "eval": {
-    "category": "开发者工具",
-    "one_liner": "破解国行 iPhone 系统限制的越狱级工具箱",
-    "one_liner_en": "A bootloop-safe toolbox that unlocks region-locked iOS system features and MobileGestalt settings",
-    "target_user": "海外华人、留学生、跨境旅行者、iOS 越狱/玩机圈爱好者（想解锁国行 iPhone 的 FaceTime 音频、eSIM、AI 功能）",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 5,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 4,
-     "license_safety": 4,
-     "demoability": 3
-    },
-    "product_idea": "做成带引导的 Mac/PC 桌面助手，一键安全解锁国行 iPhone 的 eSIM、FaceTime 音频与 AI 功能",
-    "demo_idea": "网页模拟一台国行 iPhone 的开关面板，点一下就变出 eSIM 和 Siri AI，再一键还原",
-    "attack_tool": false,
-    "red_flags": [
-     "项目本质是绕过苹果地区限制与系统沙盒防护，违反 Apple 服务条款，可能被下架、封签或法律追责",
-     "仅面向国行 iPhone 用户，与美国/全球主流英文市场画像不符，付费人群极窄",
-     "依赖系统漏洞 worse_query，iOS 27.3 beta 2 已被封堵，技术寿命极短、随时失效",
-     "需自签 + App Group 权限，安装门槛极高，普通用户无法独立完成",
-     "GPL-3.0 传染性许可证，商业化需开源衍生代码，包装成闭源产品受限",
-     "苹果封堵/法务风险可能导致产品一夜归零，收款和上架（App Store 不可能）渠道受限"
-    ],
-    "reason": "技术含量高、玩机圈传播性强，但依赖漏洞、受众窄且集中在中国市场，商业化与合规风险都大，更适合做内容而非产品。"
    }
   },
   "unclebob/ub-mode": {
@@ -1027,306 +1000,184 @@
    }
   },
   "firecrawl/firecrawl": {
-   "date": "2026-11-19",
+   "date": "2026-11-27",
    "v": 3,
    "eval": {
     "category": "AI基础设施",
-    "one_liner": "把任何网页变成AI能读懂的结构化数据",
-    "one_liner_en": "Turn any website into clean, LLM-ready data with one API",
-    "target_user": "做AI Agent、RAG和自动化的北美开发者与初创团队",
+    "one_liner": "把任意网页变成干净的 Markdown，喂给 AI 用的抓取 API",
+    "one_liner_en": "Turn any website into clean markdown for your AI agents",
+    "target_user": "做 AI Agent / RAG 应用的美国独立开发者与小型 AI 初创团队",
     "scores": {
      "topicality": 9,
-     "accessibility": 6,
-     "wow": 7,
+     "accessibility": 7,
+     "wow": 6,
      "pain": 8,
      "packaging_room": 3,
-     "monetization": 8,
+     "monetization": 3,
      "license_safety": 2,
      "demoability": 7
     },
-    "product_idea": "面向小团队的托管爬虫API，按量付费、免运维，自带Markdown输出",
-    "demo_idea": "输入一个JS重网站链接，30秒内输出干净Markdown和结构化JSON对比",
+    "product_idea": "做垂直场景的网页转知识库工具，比如竞品监控或文档问答",
+    "demo_idea": "输入任意网址，30 秒内左边显示原网页、右边显示干净 Markdown 对比",
     "attack_tool": false,
     "red_flags": [
-     "已是成熟商业SaaS+20万星，开源自建难差异化",
-     "AGPL-3.0商用限制强，二次分发有法律风险",
-     "爬虫服务面临目标网站ToS和版权争议",
-     "大厂官方能力(RAG抓取)挤压空间"
+     "AGPL-3.0，商用二开有传染风险",
+     "已是成熟商业产品（firecrawl.dev Cloud），开源版更像获客漏斗",
+     "官方托管服务和 SDK 完善，个人很难在其上做差异化",
+     "自建需 Rust 和浏览器，纯本地体验仍有门槛"
     ],
-    "reason": "明星级AI基建项目，话题和需求都强，但商业化成熟、AGPL限制大，更适合做内容而非再包装产品"
+    "reason": "热度和痛点都强，但大厂级商业项目且 AGPL，包装和变现空间小，更适合当内容素材而非创业底子。"
    }
   },
   "kajisho5/ffmpeg-skill": {
-   "date": "2026-11-19",
+   "date": "2026-11-27",
    "v": 3,
    "eval": {
     "category": "多媒体创作",
-    "one_liner": "给 AI 编程助手装一个本地视频剪辑器，用一句话就能剪片子",
-    "one_liner_en": "Give your coding agent a local video editor powered by FFmpeg",
-    "target_user": "做短视频、播客切片和内容二次分发的独立创作者、开发者、增长团队（美国/全球）",
+    "one_liner": "让 AI 编程助手直接剪视频的本地工具箱",
+    "one_liner_en": "Give your coding agent a local FFmpeg video editor with 42 tools.",
+    "target_user": "美国/全球的独立创作者、播客与短视频制作者、以及用 Claude Code/Cursor 的开发者型内容创作者",
     "scores": {
-     "topicality": 8,
+     "topicality": 9,
      "accessibility": 7,
-     "wow": 7,
+     "wow": 8,
      "pain": 7,
-     "packaging_room": 6,
-     "monetization": 6,
-     "license_safety": 9,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 10,
      "demoability": 8
     },
-    "product_idea": "做成零安装的本地桌面或 CLI 包装：上传素材，用自然语言让 AI 剪片、自动加字幕、按平台横竖屏导出",
-    "demo_idea": "网页里放同一段视频前后对比：左边原片，右边一键生成竖屏加卡拉OK字幕、去静音，下方显示 AI 执行的命令",
+    "product_idea": "网页版：上传或本地选片，用自然语言让 Agent 剪片、加字幕、转竖屏，带审片页导出",
+    "demo_idea": "网页输入一句话，实时展示横屏转竖屏加卡拉OK字幕的前后对比和命令回放",
     "attack_tool": false,
     "red_flags": [
-     "项目依赖 FFmpeg 和 Python 环境，普通用户仍有安装门槛",
-     "同作者生态里已有多个姊妹仓库，产品边界偏工具层，容易被大厂 Agent 内置能力吸收",
-     "核心价值依赖 Claude Code、Cursor 等第三方 Agent，平台规则变化会影响可用性",
-     "只有命令和带时间码的剪辑工具，无模型无数据，难以形成付费墙"
+     "本质是给 Agent 的 skill/MCP 封装，上游 ffmpeg 与 Agent 客户端都是免费生态，容易被复制",
+     "目标用户是开发者型，付费意愿集中在非技术创作者，但非技术用户装不上本地 MCP",
+     "缺乏云端协作、素材管理、模板库等留人能力",
+     "Whisper/字幕、转码等下游易被大厂 Agent 内置功能替代"
     ],
-    "reason": "MIT 许可、星标增长快、演示直观，很适合做内容。但它本质是 Agent 技能层，商业壁垒偏低，需要把它包装成面向创作者的本地剪辑应用才能收费。"
+    "reason": "话题性强、增长猛、MIT 干净、演示直观，适合做内容；但商业模式需靠托管化与模板化把门槛降给非技术创作者，否则难收订阅。"
    }
   },
   "mjmirza/app-store-compliance": {
-   "date": "2026-11-19",
+   "date": "2026-11-27",
    "v": 3,
    "eval": {
     "category": "开发者工具",
-    "one_liner": "上架 App Store 前自动检查，避免被苹果谷歌拒审",
-    "one_liner_en": "Scan your app before submission and avoid App Store and Google Play rejections",
-    "target_user": "美国及全球独立 iOS/Android 开发者、小型移动工作室、大量使用 AI 编码工具的非专业开发者",
+    "one_liner": "上架前扫一遍代码，提前发现 App Store 被拒的风险",
+    "one_liner_en": "Scan your app before submission to catch App Store rejection risks",
+    "target_user": "全球独立 iOS/Android 开发者和小型移动应用团队，尤其是靠 AI 编程工具做 App 的独立开发者",
     "scores": {
      "topicality": 7,
-     "accessibility": 6,
+     "accessibility": 7,
      "wow": 5,
-     "pain": 8,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 2,
-     "demoability": 7
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 3,
+     "demoability": 6
     },
-    "product_idea": "网页版提交前体检：上传项目或连 GitHub，自动生成拒审风险报告和修复清单",
-    "demo_idea": "上传一个示例项目，10 秒内扫出隐私清单缺失等问题，用红黄绿三色报告展示",
+    "product_idea": "把检查脚本做成上传前的 CI 与本地 pre-submit 守护，按团队月费收费，再配一个可视化合规面板",
+    "demo_idea": "在网页里粘贴一个有隐私清单缺失的示例项目，一键扫描，实时显示 BLOCKED 与修复建议",
     "attack_tool": false,
     "red_flags": [
-     "License 为 NOASSERTION，商用和二次分发权利不明，必须先确认授权",
-     "本质是文档加脚本清单，内容容易被复制，护城河靠持续更新法规库",
-     "法规数据（EU AI Act、COPPA）需长期维护，否则很快过时",
-     "覆盖 COPPA 等儿童合规内容，报告结论有被用户当作法律意见的风险"
+     "License 为 NOASSERTION，无法确认能否商用二次分发",
+     "本质是文档性 playbook、规则清单与 Shell 脚本，产品壁垒主要靠规则维护，容易被复制或平台官方文档替代",
+     "规则时效性强，Apple/Google 政策一变就要重维护，订阅模式需要持续投入",
+     "不保证过审，宣传上易踩虚假承诺风险"
     ],
-    "reason": "痛点真实且高频，可包装成提交前体检产品；但许可证不明、内容壁垒弱，商业化空间中等。"
+    "reason": "痛点真实、话题热，脚本开源易演示，但本质是规则清单加 Shell 检查，壁垒低、变现弱，适合做内容而非重产品。"
    }
   },
-  "cathrynlavery/diagram-design": {
-   "date": "2026-11-19",
+  "jingyaogong/minimind": {
+   "date": "2026-11-27",
    "v": 3,
    "eval": {
-    "category": "开发者工具",
-    "one_liner": "让 AI 编程助手一句话画出可双击打开的品牌风信息图",
-    "one_liner_en": "An agent skill that draws on-brand diagrams as a single self-contained HTML + SVG file.",
-    "target_user": "全球使用 Claude Code/Cursor 的开发者、技术创始人、需要对外出图的初创公司市场与售前团队",
+    "category": "AI基础设施",
+    "one_liner": "花3块钱、2小时，从零亲手训出一个64M小语言模型",
+    "one_liner_en": "Train your own tiny 64M LLM from scratch in 2 hours for about $3",
+    "target_user": "美国/全球的 AI 学习者、想转 LLM 的软件工程师、教 AI 课程的讲师、面试备考者",
     "scores": {
      "topicality": 9,
      "accessibility": 8,
      "wow": 8,
-     "pain": 7,
-     "packaging_room": 6,
+     "pain": 8,
+     "packaging_room": 7,
      "monetization": 6,
-     "license_safety": 9,
-     "demoability": 9
+     "license_safety": 10,
+     "demoability": 6
     },
-    "product_idea": "在线版：粘贴文本或接入品牌色，一键生成品牌风 HTML/SVG 图，付费导出与团队模板库",
-    "demo_idea": "网页输入一句架构描述，30 秒内渲染出精致 SVG 图，一键切换品牌配色并导出",
+    "product_idea": "浏览器里一键训小模型的交互式课程，边跑边看 loss 曲线和每步原理",
+    "demo_idea": "网页上一键启动训练，实时曲线加生成效果对比\"训前乱码 vs 训后能对话\"",
     "attack_tool": false,
     "red_flags": [
-     "作者已有官方网站与商业化迹象（LittleMight），开源版可能只是获客入口，二次包装空间被压缩",
-     "核心价值依赖宿主 AI 代理（Claude Code/Cursor 等）的生态，平台方可能内建同类能力",
-     "图表设计风格偏重审美，用户付费意愿取决于是否愿意为‘好看’单独买单"
+     "含国内推广链接和国内平台（ModelScope/Bilibili/SwanLab），面向美国市场需替换",
+     "本质是教程+复现项目，需包装成产品才有付费点",
+     "依赖 GPU，纯前端 demo 无法真跑训练，只能模拟"
     ],
-    "reason": "选题极强、演示效果好、MIT 安全；但已有官网和商业主体，且依赖代理生态，包装与变现空间中等。"
+    "reason": "话题性强、教学价值高、Apache 许可友好，但偏教程属性，要靠交互式课程或托管训练环境包装出付费价值。"
    }
   },
-  "gylive/google-ultra": {
-   "date": "2026-11-19",
+  "XiaoYouChR/Ghost-Downloader-3": {
+   "date": "2026-11-27",
    "v": 3,
    "eval": {
-    "category": "其他",
-    "one_liner": "钻进 Google Play 结算流程白拿 Google One AI Ultra 一年免费试用",
-    "one_liner_en": "A script that exploits Play Billing's client-side offers to grab a free year of Google One AI Ultra",
-    "target_user": "想白拿订阅的薅羊毛用户和黑产代开从业者，不是有付费意愿的正常用户",
+    "category": "效率工具",
+    "one_liner": "一个全能的下载器，HTTP、BT、磁力、视频网站内容都能下",
+    "one_liner_en": "One downloader app for HTTP, torrents, magnet links, and web videos",
+    "target_user": "全球重度下载用户：视频收藏党、BT 玩家、播客与课程囤积者、开发者",
     "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 2,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 9,
-     "demoability": 3
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 3,
+     "demoability": 7
     },
-    "product_idea": "无。这是滥用结算漏洞，做不成合规产品",
-    "demo_idea": "不该演示。展示即等于传授滥用方法",
-    "attack_tool": true,
+    "product_idea": "做成跨平台桌面加手机的全能下载 App，带浏览器插件和云加速订阅",
+    "demo_idea": "网页模拟一个难以下载的视频链接，点击后多线程秒下、自动嗅探清晰度",
+    "attack_tool": false,
     "red_flags": [
-     "利用 Google Play Billing 客户端漏洞骗取免费试用，违反 Google 服务条款，属于滥用平台规则",
-     "本质是薅羊毛/绕过结算校验工具，账号封禁与平台追责风险高",
-     "作者免责声明自认可能违法，且明令禁止批量代开与牟利",
-     "仓库同时提供批量养号与账号密码文件格式，带有黑产工具特征",
-     "无法商业化：任何收费包装都构成协助欺诈",
-     "仅国内社区（LINUX DO、微信群）运营，目标市场不匹配"
+     "GPL-3.0，闭源商用或改自定义协议风险大",
+     "YouTube、Bilibili 下载涉版权，美国市场版权诉讼与 DMCA 风险",
+     "项目已近成熟桌面 App，包装空间有限",
+     "下载器品类免费竞品多，付费意愿低",
+     "README 含代理服务商广告，与绕过区域限制相关"
     ],
-    "reason": "这是滥用支付结算漏洞的薅羊毛脚本，非正当产品，不能做内容也不值得包装，只能当反面案例。"
+    "reason": "成熟且热门的全能下载器，传播和演示不错，但 GPL 许可叠加版权敏感，加上免费竞品挤压，商业化天花板低。"
    }
   },
-  "jingyaogong/minimind": {
-   "date": "2026-11-19",
+  "Eynnzerr/TelemetryCleaner": {
+   "date": "2026-11-27",
    "v": 3,
    "eval": {
-    "category": "AI基础设施",
-    "one_liner": "花 3 块钱、2 小时，从零亲手训练一个迷你大模型",
-    "one_liner_en": "Train your own tiny LLM from scratch in 2 hours for about $3",
-    "target_user": "想真正搞懂 LLM 内部原理的开发者、AI 课程讲师、面试备考的 ML 工程师（美国/全球英文市场）",
+    "category": "安全",
+    "one_liner": "免 Root 卸载国产安卓预装的运营商数据收集模块",
+    "one_liner_en": "Remove carrier telemetry bloatware from Chinese Android phones without root",
+    "target_user": "使用国行安卓手机、关心隐私的技术爱好者与极客；对数据收集敏感、愿意动手折腾手机的用户",
     "scores": {
      "topicality": 7,
-     "accessibility": 6,
-     "wow": 6,
-     "pain": 5,
-     "packaging_room": 5,
-     "monetization": 4,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做成交互式「从零训模型」在线课程，配可视化训练进度和云端一键实验",
-    "demo_idea": "网页展示 64M 模型问答，并实时播放 loss 曲线和 3 元成本对比",
-    "attack_tool": false,
-    "red_flags": [
-     "本质上是教学/教程型仓库，偏论文复现与学习用途，商业化空间有限",
-     "需要 GPU 环境，纯网页无法完整演示核心训练过程",
-     "README 与体验站偏中文，Bilibili/ModelScope 生态需替换为 HuggingFace 等英文渠道",
-     "概念已有大量免费竞品（Karpathy nanoGPT、llm.c）"
-    ],
-    "reason": "传播价值不错、许可证友好，但偏教程性质、需 GPU、付费意愿弱，适合做内容而非独立产品。"
-   }
-  },
-  "mdiri-ai/SoduWork": {
-   "date": "2026-11-19",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "让 AI 团队干活、由同事验收的自托管协作引擎",
-    "one_liner_en": "Self-hosted AI agent workspace where work is done by agents and signed off by people",
-    "target_user": "使用 Claude Code、Codex 等编码 agent 的中小型工程团队和 AI 重度用户（美国及全球英文市场）",
-    "scores": {
-     "topicality": 8,
      "accessibility": 5,
      "wow": 6,
      "pain": 6,
      "packaging_room": 6,
-     "monetization": 5,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "托管版多 agent 工作台：提交需求、AI 执行、另一个模型复核、人工签字验收，团队可共享插件",
-    "demo_idea": "网页里提交一张工单，两个不同模型轮流执行与驳回，最后点验收生成审计记录",
-    "attack_tool": false,
-    "red_flags": [
-     "21 天 3939 star、日增 1337，增长异常可疑，疑似刷星",
-     "多 harness 依赖 Pi/Codex/DeepSeek 等第三方 CLI，频繁变动易碎",
-     "自托管安装需 Python/Node/Git，门槛高，首次配置步骤繁琐",
-     "public beta，官方自己提示勿用于生产",
-     "多 agent + 治理 + 审计的竞品密集（LangGraph、CrewAI、Devin 类），差异化待验证"
-    ],
-    "reason": "概念清晰、MIT 友好、多 agent 复核+人工验收有卖点，但安装重、演示性弱、star 增长异常，需先验证真实性再包装成托管 SaaS"
-   }
-  },
-  "XiaoYouChR/Ghost-Downloader-3": {
-   "date": "2026-11-19",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "一个应用搞定所有下载：网页视频、磁力、BT、FTP 全支持",
-    "one_liner_en": "One downloader for everything: web video, torrents, FTP and more",
-    "target_user": "美国/全球重度下载用户、内容创作者、自建媒体库的极客与小型工作室",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 9,
-     "wow": 7,
-     "pain": 6,
-     "packaging_room": 4,
-     "monetization": 3,
-     "license_safety": 4,
-     "demoability": 6
-    },
-    "product_idea": "做跨平台桌面下载中枢，Pro 版加云端嗅探、批量队列与订阅下载",
-    "demo_idea": "网页贴入视频/磁力链接，实时显示分块加速下载与嗅探结果",
-    "attack_tool": false,
-    "red_flags": [
-     "GPL-3.0 传染性许可证，闭源商业化受限",
-     "核心功能依赖 YouTube/Bilibili 抓取，易受平台规则与版权争议影响",
-     "开源版已是完整成熟桌面应用，包装空间有限",
-     "品牌中文名与 Bilibili 渊源，英文市场认知需重塑"
-    ],
-    "reason": "成熟好用的聚合下载器，易懂且话题足，但已成品化、商业化空间与许可证是硬伤，适合做内容而非产品。"
-   }
-  },
-  "Eynnzerr/TelemetryCleaner": {
-   "date": "2026-11-19",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "一键清除国产手机里偷偷上传数据的运营商预装组件",
-    "one_liner_en": "Remove carrier-installed telemetry apps from Chinese Android phones, no root needed",
-    "target_user": "居住在海外、使用国行小米/OPPO/华为等国产手机、重视隐私的华人用户和极客",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 7,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 6,
-     "monetization": 2,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "做成无需 ADB 的隐私清理工具，检测并冻结运营商遥测组件，附风险说明与一键恢复",
-    "demo_idea": "网页模拟扫描：动画找出 3 个隐藏遥测包，展示权限列表，点击后显示已清理对比",
-    "attack_tool": false,
-    "red_flags": [
-     "核心场景只存在于国行国产固件，与美国/全球英文市场用户几乎无关",
-     "依赖 Shizuku/ADB 或 Root，普通海外用户门槛高，也难在网页演示",
-     "卸载系统组件有变砖风险，用户信任与责任风险高",
-     "付费意愿弱：目标人群少且习惯用免费开源工具",
-     "无商业主体，预装包名清单需持续人工维护"
-    ],
-    "reason": "技术扎实、隐私话题有传播性，但市场局限于国行机型，海外付费需求弱，更适合做内容选题而非产品。"
-   }
-  },
-  "rddmwmddr/android-ad-cleaner": {
-   "date": "2026-11-19",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "一键关掉安卓手机系统广告和营销推送的工具",
-    "one_liner_en": "Turn off bloatware ads and marketing spam on Android phones, no root needed",
-    "target_user": "海外华人、留学生、出差常驻中国的美国科技从业者，以及买中国品牌安卓机的全球用户；但英文主流市场用户基本用不到",
-    "scores": {
-     "topicality": 6,
-     "accessibility": 8,
-     "wow": 4,
-     "pain": 7,
-     "packaging_room": 3,
      "monetization": 2,
      "license_safety": 9,
      "demoability": 5
     },
-    "product_idea": "面向海外华人做付费桌面客户端，按机型卖脚本包并持续更新",
-    "demo_idea": "录屏对比同一台手机去广告前后：商店首页轮播、热搜、营销通知全部消失",
+    "product_idea": "打包成极简隐私清理 App：一键检测并移除运营商遥测组件，附带厂商追踪报告",
+    "demo_idea": "网页模拟手机界面：扫描出隐藏数据收集组件，点一下卸载，显示它曾读取了哪些隐私",
     "attack_tool": false,
     "red_flags": [
-     "市场几乎只在国内：依赖国产定制安卓、Gitee、微信和电报群，美国主流用户感知不到痛点",
-     "已有成熟桌面客户端和手机版 APK，签名公证齐全，包装空间很小",
-     "靠 USB 调试和授权，商业化只能卖脚本更新订阅，付费意愿弱",
-     "机型脚本依赖具体系统版本，维护成本高、易失效"
+     "目标用户几乎只在中国大陆，与美国/全球市场基本无关，海外用户买不到国行手机、也无此痛点",
+     "产品本质是卸载系统组件，无法在纯网页 demo 真机演示，演示价值有限",
+     "卸载系统组件存在变砖/功能异常风险，用户信任门槛高",
+     "商业化路径极窄：付费意愿低、无订阅场景，安卓清理类工具普遍免费或靠广告",
+     "依赖 Shizuku/Root/ADB，体验门槛高，海外用户群体几乎没有"
     ],
-    "reason": "痛点真实，但市场基本在国内；产品已很成熟，难以包装出差异化，商业化空间很小，适合做内容而非创业项目。"
+    "reason": "话题性和隐私价值不错，但用户群几乎全在中国，与英文市场脱节；变现弱、演示难，适合做内容不适合做产品"
    }
   },
   "wangzan101/Mika": {
@@ -3823,6 +3674,255 @@
      "移动端多设备并发测试涉及App内数据，需注意隐私与客户代码保密"
     ],
     "reason": "痛点和演示性都很强，MIT许可、包装空间大；商业化路径清晰但依赖外部模型与CI平台，需做托管服务建立壁垒。"
+   }
+  },
+  "erkamyaman/rust-anything": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "把现有代码一块一块改写成 Rust，每步自动验证行为不变",
+    "one_liner_en": "Port your app to Rust piece by piece, verified against the original at every step",
+    "target_user": "美国/全球有性能瓶颈的 TS/JS、Python 后端团队的工程负责人与技术 CTO",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 7,
+     "packaging_room": 5,
+     "monetization": 6,
+     "license_safety": 10,
+     "demoability": 5
+    },
+    "product_idea": "托管式迁移平台：上传仓库、自动录制行为基线、生成 Rust 移植 PR 并持续回归门禁",
+    "demo_idea": "网页演示一个慢 Python 函数被自动移植成 Rust，记录用例逐条比对通过并显示提速倍数",
+    "attack_tool": false,
+    "red_flags": [
+     "11 天 1 万星、日增近千，增长数据可疑，可能是炒作或刷星",
+     "已有官网 rustanything.ai 与咨询收费，作者本人已在商业化，包装空间有限",
+     "依赖外部 coding agent（Claude Code、Codex、Cursor），核心价值部分不可控",
+     "把源码交给第三方 agent 与云端服务，企业客户会顾虑代码安全",
+     "重写语言这一命题对多数团队来说风险高、周期长，真实付费转化不确定"
+    ],
+    "reason": "话题性强、许可干净、赛道真实，但增长数据可疑且作者已自建商业站，适合做内容选题，产品化空间中等偏上。"
+   }
+  },
+  "trustno1-coder/VIctory-NVIDIA": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "让 PC 用上 Xbox Series X 游戏兼容层，并给 NVIDIA 显卡加 DLSS 帧生成",
+    "one_liner_en": "A compatibility layer that runs Xbox Series X game builds on PC with DLSS frame generation",
+    "target_user": "拥有高端 NVIDIA 显卡、想在 PC 上以更高帧率玩 Xbox 独占游戏的硬核玩家",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 4,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 5
+    },
+    "product_idea": "做成一体化启动器：自动检测 GPU、下载依赖、调好画质预设，替玩家省去配置麻烦",
+    "demo_idea": "网页并排对比开关帧生成前后的帧率、延迟与画质，插入一段实机录屏",
+    "attack_tool": false,
+    "red_flags": [
+     "需要用户自备 Xbox 游戏的 dump，涉版权/DRM 灰区，美国市场 DMCA 风险高",
+     "依赖 NVIDIA/AMD/Microsoft 的官方 DLL，分发和商用授权不明",
+     "GPL-3.0 传染性强，闭源商业包装受限",
+     "仅支持 Windows 11 与特定 RTX 型号，硬件前提苛刻",
+     "本质是硬核玩家工具，面向大众的包装空间和付费意愿都低"
+    ],
+    "reason": "技术惊艳但受众窄，绕不开游戏 dump 与厂商 DLL 的版权风险，商业化路径几乎不存在，更适合当猎奇内容而非产品。"
+   }
+  },
+  "ZigZagBoi1/ScarlettPort": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "让 Xbox 游戏在你自己的 PC 上原生运行的兼容层",
+    "one_liner_en": "A compatibility layer that runs your own Xbox Series X|S game dump natively on a Windows PC.",
+    "target_user": "全球硬核 PC 游戏玩家、模拟器与移植社区（模拟器极客、RetroArch/Proton 用户）",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 6,
+     "wow": 8,
+     "pain": 2,
+     "packaging_room": 6,
+     "monetization": 2,
+     "license_safety": 1,
+     "demoability": 4
+    },
+    "product_idea": "把开源版打包成一键启动器，帮助玩家自带合法游戏文件、自动配置着色器缓存并管理更新",
+    "demo_idea": "网页播放同一游戏的运行帧率对比和开机计时视频，并展示着色器重编译进度条",
+    "attack_tool": false,
+    "red_flags": [
+     "项目按“自带游戏 dump”模式分发主机游戏的兼容层，在美国市场涉及 DMCA 第 1201 条绕过技术保护措施的风险，原作者与分发者可能被追责",
+     "主仓库 License 标记为 NOASSERTION，其实质授权范围不明，商业包装和二次分发存在法律不确定性",
+     "属于主机游戏移植与模拟器灰色地带，微软与游戏发行商极可能发律师函要求下架",
+     "当前只有 7-8 fps，长时稳定性未验证，距离可用产品很远",
+     "强依赖用户自备游戏文件，获客渠道受平台条款限制（Steam、Epic、主机商店）",
+     "README 显示贡献者协作有限，单人或少数人维护，项目可持续性存疑"
+    ],
+    "reason": "这个项目话题性和技术演示都强，但法律风险极高，商业化几乎不可行，只适合做内容选题而不适合包装成产品"
+   }
+  },
+  "Pixel679-cmyk/windows-titlebar-blur-customizer": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "给 Windows 窗口标题栏加上 Aero、亚克力毛玻璃效果的桌面美化工具",
+    "one_liner_en": "A Windows tool that adds Aero, acrylic and Mica glass blur effects to app title bars",
+    "target_user": "喜欢折腾桌面的 Windows 重度用户和美化爱好者，全球市场（主要是美国、欧洲和东南亚的开发者与游戏玩家）",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成一个可视化预设市场：用户只需一键应用现成的主题包，就能给窗口加上毛玻璃效果，并且支持购买高级主题包",
+    "demo_idea": "网页并排展示开、关两种效果：左边是普通标题栏，右边是毛玻璃标题栏，然后用滑块实时调节模糊强度",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库创建只有 1 天，却已经有 1351 个 star，而且每天新增 1351 个，数据增长明显异常，疑似刷星，可信度存疑",
+     "只能运行在 Windows 上，纯前端网页 demo 无法真实展示 DWM 效果，只能播放模拟视频",
+     "需要修改系统级 DWM 的渲染行为，因此在反作弊、Windows 更新后可能崩溃和受安全软件误报方面存在风险",
+     "这个需求属于外观美化，付费意愿低，免费竞品（TranslucentTB、StartAllBack、WindowBlinds、Rainmeter）已经非常成熟",
+     "README 已宣称自己是免费开源工具，而且带一个 exe 发行包，与‘开源’标签不符，有分发捆绑软件的风险"
+    ],
+    "reason": "话题性和观感都不错，但属于 Windows 美化这一小众需求，免费替代品很多，变现能力弱；刷星迹象明显，需要先核实项目真实性再考虑做内容"
+   }
+  },
+  "RMvdesi/obsidian-prism": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给 Google Antigravity 编辑器换皮肤、加特效的主题插件",
+    "one_liner_en": "A visual theme and UI overlay suite for Google Antigravity IDE",
+    "target_user": "Google Antigravity 的重度个人开发者、较关注界面和自定义的开发者和技术博主",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 5,
+     "wow": 6,
+     "pain": 3,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 7
+    },
+    "product_idea": "把四套配色和动效抽成独立主题包，在 Gumroad 上按主题或捆绑卖几美元",
+    "demo_idea": "网页嵌入录制好的编辑器界面动图，用左右对比展示换肤前后效果",
+    "attack_tool": false,
+    "red_flags": [
+     "本质是 IDE 主题皮肤，属于大厂产品(GitHub)生态的附属插件，难以做出差异化产品",
+     "针对 Google Antigravity 的 IDE 视觉套件，依赖宿主内部接口，宿主一更新就可能失效，持续性风险高",
+     "GPL-3.0 许可证，商业化时若基于其修改并分发，需要开源衍生作品，风险较高",
+     "文档以中文为主，目标市场是印度英文市场时，本地化和留存都是问题",
+     "付费意愿低：主题皮肤类产品在 VS Code / 编辑器主题生态中多为免费，用户为皮肤付费的意愿弱",
+     "项目创建仅 10 天，大量更新频繁，稳定性存疑，可能不适合作为产品基础"
+    ],
+    "reason": "视觉效果好、演示性强、增长快，但本质是 IDE 皮肤插件，依赖大厂宿主接口，开源许可证严格，付费意愿低，更适合做内容素材而非产品底座。"
+   }
+  },
+  "n8n-io/nod": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "AI应用",
+    "one_liner": "住在你电脑里的私人 AI 助理，帮你跑真实网站上的杂活",
+    "one_liner_en": "A personal AI agent that lives on your computer and does real tasks on real websites",
+    "target_user": "美国的独立顾问、自由职业者、小团队创始人、知识工作者（每天要处理发票、预约通话、取消订阅等重复网络操作的人）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 8,
+     "pain": 8,
+     "packaging_room": 3,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "个人助理托管服务：代管运行本地 agent、按任务收费，帮用户处理发票、通话准备、取消试用等日常事务",
+    "demo_idea": "网页模拟 Gmail 和订阅页：agent 自动追发票、取消试用，并在执行前弹出确认请求",
+    "attack_tool": false,
+    "red_flags": [
+     "n8n 官方项目，个人难以在其上做出差异化产品",
+     "桌面端 Electron 应用，依赖本机模型密钥和真实账号，纯网页 demo 很难复现",
+     "浏览器自动化涉及用户账号密码和支付信息，存在隐私与责任风险",
+     "取消试用、代发邮件等操作可能违反第三方平台服务条款",
+     "产品涉及处理财务与订阅数据，若面向美国用户需关注 FTC 和隐私法合规"
+    ],
+    "reason": "话题性强、品牌背书好、许可证干净，适合做内容；但官方成熟产品包装空间小，商业化难由个人主导。"
+   }
+  },
+  "gary23w/f-ck_data_brokers": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "安全",
+    "one_liner": "一条命令帮600多家数据经纪商发删除你的个人信息的法律信",
+    "one_liner_en": "A free script that sends legal data-deletion requests to 600+ data brokers for you",
+    "target_user": "注重隐私的美国普通消费者和隐私爱好者，尤其是有数据删除需求但不想付费订 RemoveYourData 类服务的人",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 6,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "托管式自动删除服务：替你向600多家经纪商持续发送并跟进删除请求，按年订阅",
+    "demo_idea": "网页输入姓名邮箱，实时生成一封带法条引用的删除信并模拟发送进度条和回信分类",
+    "attack_tool": false,
+    "red_flags": [
+     "项目本身已导流到作者的付费服务 Agent Garrett，独立产品空间被作者自营服务挤压",
+     "CCPA/GDPR 删除请求涉及法律合规与各州隐私法差异，用户自行发信可能出错",
+     "数据经纪商名单与法条需持续维护，否则过期失效",
+     "数据删除是持续订阅生意，价格战激烈（DeleteMe、Incogni 等已成熟）"
+    ],
+    "reason": "痛点真实、易懂易传播、MIT 可商用；但作者已自建付费服务，包装空间受限，商业化需靠持续运营和合规信任。"
+   }
+  },
+  "qianyiai/KuroCat": {
+   "date": "2026-11-27",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "一只会随你打字敲键盘的桌面小黑猫，还能当AI编程搭子",
+    "one_liner_en": "A desktop cat that types along with you and doubles as an AI coding buddy",
+    "target_user": "美国/全球的开发者、程序员主播、VTuber 与桌面美化爱好者",
+    "scores": {
+     "topicality": 8,
+     "accessibility": 9,
+     "wow": 8,
+     "pain": 4,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 9
+    },
+    "product_idea": "网页版虚拟桌面宠物：点击即玩、无需安装，订阅解锁皮肤与OBS直播模式",
+    "demo_idea": "打开网页敲键盘，猫咪实时跟着按键敲击，摸头会呼噜，输入密码时捂眼",
+    "attack_tool": false,
+    "red_flags": [
+     "依赖夸克网盘分发和国内下载源，海外用户体验割裂",
+     "核心是Bongo Cat的仿制/替代品，同质化竞争激烈",
+     "本身已是成熟成品且有官网、多平台安装包，包装空间有限",
+     "创始人偏国内生态，域名与渠道均面向中文用户，出海需重建",
+     "桌面宠物付费意愿低，免费替代品（Bongo Cat）已占据心智"
+    ],
+    "reason": "演示性和话题度强，易懂好玩，但痛点弱、变现难，已近成品且与Bongo Cat高度同质，做内容优于做产品。"
    }
   }
  }

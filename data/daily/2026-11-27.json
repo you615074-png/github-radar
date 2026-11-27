@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-27",
+ "headline": "3块钱2小时训出64M小模型，教程火了",
+ "summary_md": "MiniMind (jingyaogong/minimind) is an open-source project that lets you train a ~64M parameter language model from scratch in about two hours on a single RTX 3090 — roughly $3 of rented GPU time, per the README. It's not just model weights: the repo includes the tokenizer training code and the full pipeline — pretraining, SFT, LoRA, DPO, PPO/GRPO/CISPO, tool use, agentic RL, and distillation — with core algorithms written in raw PyTorch rather than hidden behind transformers/trl abstractions.\n\nIt's taking off because it hits a real gap. Most people \"learn LLMs\" by fine-tuning something huge; MiniMind lets you watch every stage of a model come to life on hardware you can afford. The structure tracks the Qwen3 / Qwen3-MoE ecosystem, ships training data, and has a small OpenAI-compatible server and Streamlit chat UI. With 72k+ stars and ~670/day recently, it's become a default recommendation for engineers who want to understand LLMs by building one.\n\nThe product opportunity is in packaging. The repo is a tutorial and a reproduction, not a product. A browser-based interactive course where you launch a real (or simulated) training run, watch loss curves, tweak hyperparameters, and get explanations at each step could sell to individuals and to instructors who need lab material. The GPU dependency is the main constraint — a hosted environment or a simulated mode is what turns this into something people pay for.",
+ "title_en": "MiniMind: Train a 64M LLM from scratch in 2 hours",
+ "tagline_en": "A tiny LLM you can actually train yourself, from pretrain to RLHF, in one weekend.",
+ "pick": {
+  "full_name": "jingyaogong/minimind",
+  "url": "https://github.com/jingyaogong/minimind",
+  "description": "🧠 两小时从 0 训出你的 64M 大模型。Train your own 64M LLM from scratch in 2 hours.",
+  "license": "Apache-2.0",
+  "stars": 72153,
+  "daily_rate": 673.1,
+  "category": "AI基础设施",
+  "one_liner": "花3块钱、2小时，从零亲手训出一个64M小语言模型",
+  "one_liner_en": "Train your own tiny 64M LLM from scratch in 2 hours for about $3",
+  "reason": "话题性强、教学价值高、Apache 许可友好，但偏教程属性，要靠交互式课程或托管训练环境包装出付费价值。",
+  "content": 8.33,
+  "startup": 7.65,
+  "final": 7.67,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-27-jingyaogong-minimind",
+ "top": [
+  {
+   "full_name": "jingyaogong/minimind",
+   "url": "https://github.com/jingyaogong/minimind",
+   "one_liner": "花3块钱、2小时，从零亲手训出一个64M小语言模型",
+   "reason": "话题性强、教学价值高、Apache 许可友好，但偏教程属性，要靠交互式课程或托管训练环境包装出付费价值。",
+   "one_liner_en": "Train your own tiny 64M LLM from scratch in 2 hours for about $3",
+   "content": 8.33,
+   "startup": 7.65,
+   "final": 7.67,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "kajisho5/ffmpeg-skill",
+   "url": "https://github.com/kajisho5/ffmpeg-skill",
+   "one_liner": "让 AI 编程助手直接剪视频的本地工具箱",
+   "reason": "话题性强、增长猛、MIT 干净、演示直观，适合做内容；但商业模式需靠托管化与模板化把门槛降给非技术创作者，否则难收订阅。",
+   "one_liner_en": "Give your coding agent a local FFmpeg video editor with 42 tools.",
+   "content": 8.0,
+   "startup": 7.1,
+   "final": 7.58,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "gary23w/f-ck_data_brokers",
+   "url": "https://github.com/gary23w/f-ck_data_brokers",
+   "one_liner": "一条命令帮600多家数据经纪商发删除你的个人信息的法律信",
+   "reason": "痛点真实、易懂易传播、MIT 可商用；但作者已自建付费服务，包装空间受限，商业化需靠持续运营和合规信任。",
+   "one_liner_en": "A free script that sends legal data-deletion requests to 600+ data brokers for you",
+   "content": 8.0,
+   "startup": 6.65,
+   "final": 7.28,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "qianyiai/KuroCat",
+   "url": "https://github.com/qianyiai/KuroCat",
+   "one_liner": "一只会随你打字敲键盘的桌面小黑猫，还能当AI编程搭子",
+   "reason": "演示性和话题度强，易懂好玩，但痛点弱、变现难，已近成品且与Bongo Cat高度同质，做内容优于做产品。",
+   "one_liner_en": "A desktop cat that types along with you and doubles as an AI coding buddy",
+   "content": 8.33,
+   "startup": 5.7,
+   "final": 7.19,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "n8n-io/nod",
+   "url": "https://github.com/n8n-io/nod",
+   "one_liner": "住在你电脑里的私人 AI 助理，帮你跑真实网站上的杂活",
+   "reason": "话题性强、品牌背书好、许可证干净，适合做内容；但官方成熟产品包装空间小，商业化难由个人主导。",
+   "one_liner_en": "A personal AI agent that lives on your computer and does real tasks on real websites",
+   "content": 8.33,
+   "startup": 6.2,
+   "final": 6.85,
+   "category_penalty": 0
+  }
+ ]
+}
