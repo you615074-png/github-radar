@@ -1,0 +1,81 @@
+{
+ "date": "2026-11-28",
+ "headline": "Windows 键盘改键工具，机会与疑点并存",
+ "summary_md": "**What it is**\n`hollow-445/windows-keyboard-manager` is a free, MIT-licensed Windows app for remapping keys without writing scripts. Per the README, it supports custom layouts, multiple logical layers, tap-hold actions, multi-tap behavior and programmable modifier combinations — the kind of setup usually associated with programmable keyboards like QMK or ZMK, but applied to any standard keyboard.\n\n**Why it's taking off**\nThe pain is real: Windows still has no built-in layer or tap-hold support, and reaching for the arrow keys or brackets all day is a genuine ergonomic cost. The feature list maps directly to what home-row-modifier users already do on custom hardware, and it's easy to demo in a short clip. The repo also shows a striking star count for a project only a day old — worth treating with some caution until the code and releases have had more eyes on them.\n\n**Where the product opportunity is**\nThe obvious gap is the configuration experience: most remappers are config-file or script driven. A visual editor where you drag keys, define layers and tap-hold behavior, then sync the profile to the cloud across machines would be a real step up. Per the README, the current build ships as a zip with an `.exe` and `libvlc.dll`, so a signed installer and a transparent build pipeline would also help trust. The competitive bar is high — AutoHotkey, PowerToys Keyboard Manager and Kanata are all free — so differentiation has to come from UX, not features.",
+ "title_en": "Windows Keyboard Manager: Free Keyboard Remapping",
+ "tagline_en": "A free, open-source Windows tool for custom keyboard layouts, layers and tap-hold keys.",
+ "pick": {
+  "full_name": "hollow-445/windows-keyboard-manager",
+  "url": "https://github.com/hollow-445/windows-keyboard-manager",
+  "description": "Free open-source keyboard remapping software for Windows with custom layouts, programmable keys, layers and tap-hold actions.",
+  "license": "MIT",
+  "stars": 1071,
+  "daily_rate": 1071.0,
+  "category": "效率工具",
+  "one_liner": "免费开源的 Windows 键盘改键工具，可自定义按键与分层布局",
+  "one_liner_en": "Free open-source Windows tool to remap keys, add layers and tap-hold actions",
+  "reason": "痛点真实、易演示、MIT 许可也友好，但已有大量免费替代品，付费空间有限，仓库本身也存在可信度疑问，适合做内容而非做产品",
+  "content": 6.67,
+  "startup": 7.2,
+  "final": 7.23,
+  "category_penalty": 0
+ },
+ "demo_path": "demos/2026-11-28-hollow-445-windows-keyboard-manager",
+ "top": [
+  {
+   "full_name": "hollow-445/windows-keyboard-manager",
+   "url": "https://github.com/hollow-445/windows-keyboard-manager",
+   "one_liner": "免费开源的 Windows 键盘改键工具，可自定义按键与分层布局",
+   "reason": "痛点真实、易演示、MIT 许可也友好，但已有大量免费替代品，付费空间有限，仓库本身也存在可信度疑问，适合做内容而非做产品",
+   "one_liner_en": "Free open-source Windows tool to remap keys, add layers and tap-hold actions",
+   "content": 6.67,
+   "startup": 7.2,
+   "final": 7.23,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Loris-593/notebook-fan-control-windows",
+   "url": "https://github.com/Loris-593/notebook-fan-control-windows",
+   "one_liner": "开源免费的 Windows 笔记本风扇调速和温度监控工具",
+   "reason": "需求真实但小众，MIT 许可证友好，包装空间中等，商业化依赖配置库和订阅，传播性强但变现天花板较低",
+   "one_liner_en": "Free open-source Windows laptop fan control and temperature monitoring tool",
+   "content": 7.67,
+   "startup": 6.8,
+   "final": 7.22,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "Red2076-arch/waifu2x-image-upscaler-windows",
+   "url": "https://github.com/Red2076-arch/waifu2x-image-upscaler-windows",
+   "one_liner": "免费开源的AI图片放大与去噪工具，支持任意显卡加速",
+   "reason": "经典模型换皮包装，易懂易演示但无差异化，竞品多且商业化空间小，适合做内容不适合做产品",
+   "one_liner_en": "Free open-source AI image upscaler and denoiser with Vulkan GPU acceleration",
+   "content": 7.33,
+   "startup": 5.35,
+   "final": 6.84,
+   "category_penalty": 0
+  },
+  {
+   "full_name": "storytold/craft-anything",
+   "url": "https://github.com/storytold/craft-anything",
+   "one_liner": "用AI拆解任意网站或游戏，再照着生成一个你自己的版本",
+   "reason": "话题性和惊艳感强、增长猛，但法律灰色、商业化已被官方占位，适合做内容不适合做产品。",
+   "one_liner_en": "Inspect how any website, app or game works, then let AI rebuild your own version",
+   "content": 8.33,
+   "startup": 6.1,
+   "final": 6.57,
+   "category_penalty": 0.8
+  },
+  {
+   "full_name": "pithings/unkernel",
+   "url": "https://github.com/pithings/unkernel",
+   "one_liner": "一个能在浏览器里秒开的真 Linux 终端",
+   "reason": "话题性和惊喜感极强，演示效果出色；但内核是 GPL，商业化受许可证限制，竞品已占位，更适合做内容而非独立产品。",
+   "one_liner_en": "A real Linux kernel compiled to WebAssembly that boots to a shell in under a second",
+   "content": 8.33,
+   "startup": 5.6,
+   "final": 6.51,
+   "category_penalty": 0.8
+  }
+ ]
+}

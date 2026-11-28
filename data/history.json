@@ -233,12 +233,17 @@
    "full_name": "jingyaogong/minimind",
    "category": "AI基础设施",
    "final": 7.67
+  },
+  {
+   "date": "2026-11-28",
+   "full_name": "hollow-445/windows-keyboard-manager",
+   "category": "效率工具",
+   "final": 7.23
   }
  ],
  "top": {
   "wheresryan22/anatomy": "2026-11-08",
   "storytold/wordcraft": "2026-11-05",
-  "KnifeLemon/Filee": "2026-10-28",
   "cloudflare/security-audit-skill": "2026-11-07",
   "simbasjungles/free-my-tv": "2026-11-04",
   "Gathin23/cleanyourtv": "2026-10-30",
@@ -248,8 +253,6 @@
   "designfuchen/word-atlas": "2026-11-04",
   "seedds/nxnative": "2026-11-06",
   "TauricResearch/TradingAgents": "2026-11-04",
-  "HKUDS/DeepTutor": "2026-10-28",
-  "andyhuo520/digital-human-koubo": "2026-10-28",
   "Jakeschincariol/day-trader-skill": "2026-11-14",
   "Leonxlnx/taste-skill": "2026-10-29",
   "pbakaus/impeccable": "2026-11-06",
@@ -293,7 +296,7 @@
   "jamesondh/chimera-vocal-synth": "2026-11-10",
   "jhaizhou-ops/S2Arm": "2026-11-19",
   "IainKay/ram-altman": "2026-11-10",
-  "storytold/craft-anything": "2026-11-18",
+  "storytold/craft-anything": "2026-11-28",
   "vercel-labs/agent-desktop": "2026-11-10",
   "janestreet/agent_skills": "2026-11-11",
   "NVIDIA/auto-ontology": "2026-11-11",
@@ -361,7 +364,11 @@
   "jingyaogong/minimind": "2026-11-27",
   "gary23w/f-ck_data_brokers": "2026-11-27",
   "qianyiai/KuroCat": "2026-11-27",
-  "n8n-io/nod": "2026-11-27"
+  "n8n-io/nod": "2026-11-27",
+  "hollow-445/windows-keyboard-manager": "2026-11-28",
+  "Loris-593/notebook-fan-control-windows": "2026-11-28",
+  "Red2076-arch/waifu2x-image-upscaler-windows": "2026-11-28",
+  "pithings/unkernel": "2026-11-28"
  },
  "scores": {
   "heydamir/unslop": {
@@ -1180,339 +1187,65 @@
     "reason": "话题性和隐私价值不错，但用户群几乎全在中国，与英文市场脱节；变现弱、演示难，适合做内容不适合做产品"
    }
   },
-  "wangzan101/Mika": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "手机上能替你操作各种App的AI助手",
-    "one_liner_en": "An AI agent on your Android phone that uses your apps for you",
-    "target_user": "全球Android重度用户、效率极客、想自动处理App内重复任务的上班族与自由职业者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 9,
-     "wow": 9,
-     "pain": 7,
-     "packaging_room": 8,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 7
-    },
-    "product_idea": "做成开箱即用的手机AI代理App，预置模型订阅，按次或按月收费，主打后台自动操作App",
-    "demo_idea": "网页播放前后对半分屏录屏：左边聊天，右边手机自己点外卖、刷聊天记录并总结",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖无障碍服务与无线调试，Google Play上架政策风险高",
-     "模拟点击可能违反部分App服务条款，存在封号与法律灰区",
-     "用户需自备模型API Key，上手门槛高",
-     "处理聊天、支付等敏感数据有隐私合规风险",
-     "类似竞品已有(如Rabbit、AutoGLM等)，差异化压力大"
-    ],
-    "reason": "话题性与演示效果极强，痛点真实，Apache协议友好；但变现路径与上架合规是主要障碍，适合先做内容再谨慎产品化"
-   }
-  },
-  "zhouxiaoka/autoclip": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "贴个链接，AI 把长视频自动剪成竖屏短视频",
-    "one_liner_en": "Paste a link, get ready-to-post short clips from any long video",
-    "target_user": "英语市场的播客主、内容创作者、社媒代运营、课程讲师和 SaaS 营销团队",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 9,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 7,
-     "monetization": 7,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "网页版：粘 YouTube 链接选平台，几分钟输出带字幕封面的成片，按分钟订阅",
-    "demo_idea": "上传一段播客，左右对比原片和自动生成的竖屏成片，并显示字幕和文案",
-    "attack_tool": false,
-    "red_flags": [
-     "README 主打抖音、小红书、B 站等中国市场，英文市场适配需重做渠道与文案",
-     "云端模型按量计费依赖第三方 API，成本与稳定性不可控",
-     "自动剪辑结果需人工复核，和 Opus Clip、Klap 等成熟竞品正面竞争",
-     "抓取 YouTube 等平台视频涉及版权与平台 ToS 风险"
-    ],
-    "reason": "痛点真实、演示效果强、MIT 许可友好；但剪片赛道已有 Opus Clip 等强敌，且原生偏中国平台，需重做英文包装。"
-   }
-  },
   "toeverything/AFFiNE": {
-   "date": "2026-11-20",
+   "date": "2026-11-28",
    "v": 3,
    "eval": {
     "category": "效率工具",
-    "one_liner": "开源版 Notion+Miro，文档、白板和数据库合在一个画布上",
-    "one_liner_en": "An open-source Notion + Miro hybrid: docs, whiteboards and databases on one canvas",
-    "target_user": "注重隐私的欧美创作者与知识工作者、以及对数据自主有要求的小团队",
+    "one_liner": "把笔记、白板和数据库合在一起的 Notion+Miro 开源替代品",
+    "one_liner_en": "An open-source Notion + Miro alternative that merges docs, whiteboards and databases.",
+    "target_user": "美国/全球的创意团队、独立开发者、注重隐私的知识工作者以及希望自托管的公司",
     "scores": {
-     "topicality": 6,
-     "accessibility": 7,
-     "wow": 6,
-     "pain": 4,
-     "packaging_room": 2,
+     "topicality": 7,
+     "accessibility": 8,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 3,
      "monetization": 3,
-     "license_safety": 2,
-     "demoability": 7
+     "license_safety": 4,
+     "demoability": 8
     },
-    "product_idea": "不建议做成品，建议做本地优先的加密同步或插件生态的补充层",
-    "demo_idea": "网页里拖拽生成文档+白板+表格，并展示离线编辑与实时同步",
+    "product_idea": "不建议重新包装：它本身已是成熟商业产品，更适合做对比测评或自托管教程。",
+    "demo_idea": "在网页里并排打开文档、白板和表格，用模拟数据展示三者在同一画布上的实时同步。",
     "attack_tool": false,
     "red_flags": [
-     "已是成熟商业产品（affine.pro 有付费版和官方云），个人很难在其上做差异化",
-     "License 显示 NOASSERTION，实为自定义/混合许可，商用有法律不确定性",
-     "与 Notion、Miro、Coda 等巨头正面竞争，获客成本极高",
-     "代码库庞大复杂，二次开发门槛高"
+     "已是成熟商业公司产品（affine.pro 有付费云版），个人很难在上面做差异化",
+     "许可证为 NOASSERTION，部分代码可能带自定义限制，商用前必须逐项核查",
+     "赛道拥挤：Notion、Miro、Coda、Obsidian 都是强势竞品",
+     "自托管部署复杂，用 Docker 上手门槛高"
     ],
-    "reason": "话题性和演示性不错，但项目本身已商业化、许可不明、巨头环伺；作为内容素材可以，作为产品化标的包装空间小、风险高。"
+    "reason": "AFFiNE 本身是成熟商业开源产品，项目方已有完整的商业模式，留给第三方做包装和商业化的空间很小；它适合作为内容选题（对比 Notion/Miro、自托管实测），不适合拿来二次创业。"
    }
   },
   "anefzaoui/misterdownloadmanager": {
-   "date": "2026-11-20",
+   "date": "2026-11-28",
    "v": 3,
    "eval": {
     "category": "效率工具",
-    "one_liner": "免费开源的多线程下载管理器，还能下 BT 和视频",
-    "one_liner_en": "A free, open-source download manager that's faster than IDM",
-    "target_user": "全球英文市场里被 IDM 付费和广告困扰的普通用户、经常下大文件视频和 BT 资源的重度下载者",
+    "one_liner": "免费开源的高速下载管理器，IDM 的替代品，支持种子和视频下载",
+    "one_liner_en": "A free, open-source download manager that beats IDM with torrent, magnet and video support",
+    "target_user": "美国及全球个人用户：需要下载大文件、种子、视频的普通用户，以及反感 IDM 订阅制的 Windows 用户",
     "scores": {
      "topicality": 7,
-     "accessibility": 8,
+     "accessibility": 9,
      "wow": 6,
-     "pain": 7,
+     "pain": 6,
      "packaging_room": 4,
      "monetization": 3,
-     "license_safety": 3,
+     "license_safety": 4,
      "demoability": 5
     },
-    "product_idea": "做托管版下载服务或浏览器扩展订阅，帮用户云端下载并转存大文件",
-    "demo_idea": "网页里并排跑同一文件的两个下载进度条，实时显示 MDM 快 5 倍",
+    "product_idea": "做成带云加速和视频直下的一体化下载客户端，Pro 订阅去广告加速",
+    "demo_idea": "网页模拟同时下载一个大文件，MDM 进度条瞬间跑完，IDM 缓慢爬行对比",
     "attack_tool": false,
     "red_flags": [
-     "纯桌面客户端，网页 demo 很难直接复现核心加速效果",
-     "GPL-3.0 许可证限制商业闭源包装",
-     "已有成熟官网和浏览器扩展，本身接近成品",
-     "支持 BT、debrid、yt-dlp，可能涉及盗版内容和平台条款风险",
-     "免费永久定位让用户付费意愿极低"
+     "GPL-3.0 许可，商业分支和闭源打包受限",
+     "项目已是完整成熟桌面应用（安装包、浏览器扩展、官网俱全），包装空间小",
+     "下载管理器市场免费替代品极多（如 FDM、Motrix），付费意愿低",
+     "内置 torrent、magnet、yt-dlp 类视频下载功能，易牵涉版权和 DMCA 风险",
+     "对标 IDM 的加速数据来自本地回环测试，宣传方式可能被质疑"
     ],
-    "reason": "项目热度高、痛点真实，但已接近成熟成品、GPL 且主打免费，包装和商业化空间都很小，更适合做内容而非创业。"
-   }
-  },
-  "MSNightmare/FastUnlock": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "安全",
-    "one_liner": "利用Windows讲述人功能绕过锁屏和BitLocker的漏洞演示",
-    "one_liner_en": "A Windows Narrator lock-screen bypass that can breach BitLocker-protected PCs",
-    "target_user": "不适用：攻击类漏洞利用代码，没有可付费的产品人群",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 6,
-     "wow": 7,
-     "pain": 1,
-     "packaging_room": 1,
-     "monetization": 1,
-     "license_safety": 9,
-     "demoability": 4
-    },
-    "product_idea": "不建议产品化；最多做面向IT管理员的锁屏安全自查清单",
-    "demo_idea": "用演示视频展示物理接触下通过讲述人绕过锁屏，无法网页化",
-    "attack_tool": true,
-    "red_flags": [
-     "这是0day漏洞利用步骤，公开传播可能帮助攻击他人设备",
-     "属于攻击工具，违反账号定位与平台规则",
-     "仅在获得物理接触时成立，商业价值几乎为零",
-     "README为英文且涉及未修复漏洞，发布内容有法律与道德风险"
-    ],
-    "reason": "典型0day锁屏绕过攻击演示，选题有热度但属攻击工具，无产品化与收费空间，不建议做内容或产品。"
-   }
-  },
-  "toyxyz/toyxyz_RGBMocap": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "多媒体创作",
-    "one_liner": "把手机视频变成可编辑的3D人体动画，本地运行",
-    "one_liner_en": "Turn any video into editable 3D human animation, running locally on your GPU",
-    "target_user": "美国/全球的独立游戏开发者、3D动画师、VTuber、Unreal/Blender小团队与动捕外包工作室",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 7,
-     "monetization": 7,
-     "license_safety": 2,
-     "demoability": 7
-    },
-    "product_idea": "一键安装的桌面版：拖入视频→自动动捕→重定向到MetaHuman/Blender→导出FBX，模型托管托管省去折腾",
-    "demo_idea": "网页并排播放原视频与实时骨骼动画，滑块切换重定向角色，展示FBX一键导出",
-    "attack_tool": false,
-    "red_flags": [
-     "License 为 NOASSERTION，且捆绑 ExMR/FlowHMR/GVHMR 等多个模型权重，商用授权不明，是商业化最大障碍",
-     "依赖 CUDA 12.8、VS2022 C++ 构建工具、需手动注册下载商业/学术模型，安装门槛极高",
-     "生态上绑定 Unreal MetaHuman、Blender、PEAR，重依赖第三方，维护成本高",
-     "上游模型多为学术研究许可，二次分发与付费使用可能违规"
-    ],
-    "reason": "痛点真实、演示震撼、增长快；但许可混乱和大模型依赖限制商业化，包装空间在于免装即用的模型托管桌面版。"
-   }
-  },
-  "bookwjitchieni1986/blender-ai-mcp-addon": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "用聊天让AI在Blender里建模型、改材质、布场景",
-    "one_liner_en": "Chat with AI inside Blender to build objects, edit materials and set up scenes",
-    "target_user": "美国/全球的3D艺术家、独立游戏开发者、产品可视化与建筑预演工作室的技术美术（TA）",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 7,
-     "packaging_room": 7,
-     "monetization": 6,
-     "license_safety": 9,
-     "demoability": 8
-    },
-    "product_idea": "打包成带引导安装的桌面应用：本地MCP网关、预置模型额度、模板化场景工作流，按月订阅",
-    "demo_idea": "网页里放一段真实操作录像：一句话生成产品展台场景，左聊天右视口实时联动，30秒出结果",
-    "attack_tool": false,
-    "red_flags": [
-     "仅提供Windows x64发行包，Mac用户（美国创作者主力）无法直接使用",
-     "新仓库1天涨1014星、命名与官方mcp-for-blender高度相似，可能存在刷星或蹭名风险",
-     "功能依赖付费第三方API与资产站密钥，成本转嫁用户",
-     "execute_code工具无真正沙箱，存在提示注入执行任意Python的安全隐患"
-    ],
-    "reason": "MCP+Blender组合话题性强、演示效果直观，痛点真实；但商业化需自建网关与模板库，且需防蹭名与跨平台补齐。"
-   }
-  },
-  "iamajmeena/neonclipping": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "AI应用",
-    "one_liner": "粘贴视频链接，自动剪出带字幕的竖屏短视频",
-    "one_liner_en": "Paste a video link, get captioned vertical clips in minutes, fully local.",
-    "target_user": "美国/全球的 YouTube、Twitch、Kick 主播的剪辑外包人员，以及做 Shorts、TikTok、Reels 二次分发的自媒体运营和小型 MCN",
-    "scores": {
-     "topicality": 8,
-     "accessibility": 9,
-     "wow": 7,
-     "pain": 8,
-     "packaging_room": 8,
-     "monetization": 7,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "把它做成桌面端一键应用：粘贴链接就出片，内置模板、云渲染和订阅制导出",
-    "demo_idea": "网页里输入一段长视频链接，30 秒后并排播放自动挑出的高光竖屏片段和自动字幕",
-    "attack_tool": false,
-    "red_flags": [
-     "依赖 yt-dlp 抓取 YouTube 和 Twitch 的平台内容，可能违反平台服务条款与版权，面向美国市场发行需评估 DMCA 风险",
-     "视频下载和转写计算密集，纯前端无法完整演示，demo 需用预制结果",
-     "项目仅创建 1 天且 Star 增长异常，社区与代码质量尚未验证",
-     "README 包含大量作者个人 Instagram 导流和印地语相关功能，做英文产品需剥离",
-     "依赖本地 Ollama 和 Whisper 模型，普通用户装不上，产品化需要云服务或打包大模型"
-    ],
-    "reason": "痛点真实，剪片外包和短视频二创人群明确，纯本地免上传有卖点，MIT 许可证友好，门槛高恰好留出桌面端和订阅制的包装空间；版权与平台条款是主要风险"
-   }
-  },
-  "Lemxy/WinRust": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "效率工具",
-    "one_liner": "用 Rust 重写 Windows 任务栏、资源管理器和搜索等系统组件",
-    "one_liner_en": "Blazing-fast Rust replacements for the Windows taskbar, file manager and search",
-    "target_user": "Windows 高级用户、开发者、追求性能和轻量的效率爱好者（美国 / 全球）",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 8,
-     "wow": 8,
-     "pain": 6,
-     "packaging_room": 6,
-     "monetization": 3,
-     "license_safety": 9,
-     "demoability": 5
-    },
-    "product_idea": "把 WinRust 做成可签名的 Windows 性能增强套件，提供的沙箱安全安装与一键回滚",
-    "demo_idea": "在网页里用模拟数据对比任务栏和搜索的响应速度，并配上一段 30 秒的装机演示",
-    "attack_tool": false,
-    "red_flags": [
-     "需管理员权限并替换系统 shell，改动很大、依赖很深，容易让用户产生反感",
-     "安装包没有代码签名，会触发 SmartScreen 警告，可信度较低",
-     "项目创建仅 2 天、Star 短期暴涨近 600，有刷 Star 或炒作的嫌疑",
-     "Windows 系统本身免费，用户为此付费的意愿很低",
-     "demoability 弱：核心功能是桌面程序，需要真实系统环境，很难在网页 demo 里演示"
-    ],
-    "reason": "技术含量高，传播上很有话题性，Windows 系统工具类项目容易引发讨论和 Star；但需要管理员权限替换 shell 风险大，缺乏签名和信任背书，商业化路径模糊，更适合用来做内容而不是做产品。"
-   }
-  },
-  "JenkinWoo/sheeridVerify": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "其他",
-    "one_liner": "自动化批量通过学生身份优惠验证的灰色工具",
-    "one_liner_en": "An automation workbench that mass-submits student discount verifications",
-    "target_user": "想薅学生优惠的普通消费者（灰色需求，不可商业化）",
-    "scores": {
-     "topicality": 7,
-     "accessibility": 8,
-     "wow": 7,
-     "pain": 5,
-     "packaging_room": 2,
-     "monetization": 1,
-     "license_safety": 8,
-     "demoability": 3
-    },
-    "product_idea": "无法做成正规产品；只能作为合规科普内容，讲验证机制如何被自动化滥用",
-    "demo_idea": "网页演示只能展示表单队列界面，核心提交涉欺诈，不宜演示",
-    "attack_tool": true,
-    "red_flags": [
-     "实质是绕过 SheerID 学生身份审核、批量骗取教育优惠，属于平台欺诈/滥用，涉嫌违反 CFAA 与平台条款",
-     "README 虽有免责声明，但功能就是自动填表+伪造学籍邮箱+上传材料，免责声明不成立",
-     "无法商业化：无正当付费人群，做产品即协助欺诈，Stripe/PH/HN 均不可用",
-     "依赖伪造 .edu 邮箱与代理轮换，合规风险极高",
-     "3853 stars 短期暴涨，投机热度，非真实产品价值"
-    ],
-    "reason": "本质是骗取教育优惠的自动化滥用工具，传播性有但不可产品化，只能作为反面合规案例做内容。"
-   }
-  },
-  "Tracer-Cloud/opensre": {
-   "date": "2026-11-20",
-   "v": 3,
-   "eval": {
-    "category": "运维部署",
-    "one_liner": "AI 助手自动查清 CI 构建为什么失败并给出修复方案",
-    "one_liner_en": "An AI agent that finds why your CI build broke and proposes a fix",
-    "target_user": "美国和全球的中型工程团队（20-200 人开发者）、DevOps/SRE 负责人、CI 维护者",
-    "scores": {
-     "topicality": 9,
-     "accessibility": 7,
-     "wow": 8,
-     "pain": 8,
-     "packaging_room": 6,
-     "monetization": 7,
-     "license_safety": 9,
-     "demoability": 6
-    },
-    "product_idea": "托管版 CI 可靠性助手：接入 GitHub Actions，失败后自动诊断原因、给出修复 PR，并展示 CI 失败率与耗时统计",
-    "demo_idea": "网页模拟一条红色 CI 流水线，点击后实时展开日志分析、定位根因、生成修复 diff 和度量报表",
-    "attack_tool": false,
-    "red_flags": [
-     "项目自述为 Public Alpha，核心工作流尚不稳定，API 与集成可能变动",
-     "依赖用户自有模型和托管模型账号，首次启动需登录激活，存在服务依赖",
-     "需访问 CI 日志和代码仓库，企业客户会关注权限与数据合规（SOC2 等）",
-     "已有 Datadog、Grafana、Greptile 等英文竞品，差异化要靠体验和价格"
-    ],
-    "reason": "痛点真实、话题度高，Apache 许可证友好；但仍是早期 alpha，且赛道有成熟竞品，包装空间和商业化需靠托管体验取胜"
+    "reason": "成熟且高人气，但已是完整产品、GPL 限制商业化、免费替代多，适合做内容而非做产品。"
    }
   },
   "danielwh2/sprite-stacking": {
@@ -3923,6 +3656,557 @@
      "桌面宠物付费意愿低，免费替代品（Bongo Cat）已占据心智"
     ],
     "reason": "演示性和话题度强，易懂好玩，但痛点弱、变现难，已近成品且与Bongo Cat高度同质，做内容优于做产品。"
+   }
+  },
+  "leaf7684/windows-modern-media-player": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "一个界面现代的 Windows 播放器，基于 VLC 内核，支持字幕和画中画",
+    "one_liner_en": "A modern Windows media player built on VLC, with subtitles and picture-in-picture.",
+    "target_user": "美国/全球需要本地播放各种格式视频的 Windows 普通用户（学生、影迷、家庭影院用户）",
+    "scores": {
+     "topicality": 3,
+     "accessibility": 9,
+     "wow": 3,
+     "pain": 4,
+     "packaging_room": 3,
+     "monetization": 2,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "做 Microsoft Store 上架的现代播放器，靠内购去广告或高级播放功能变现",
+    "demo_idea": "网页模拟一个播放器界面，演示拖入 MKV 文件后立即播放和字幕切换",
+    "attack_tool": false,
+    "red_flags": [
+     "播放器是极端红海，VLC/PotPlayer/MPV 免费且成熟",
+     "基于 LibVLC 本质是套壳，差异化弱",
+     "桌面端 EXE 难以做纯网页 demo",
+     "项目仅创建一天却声称 1075 星，数据可疑",
+     "免费开源播放器用户几乎无付费意愿"
+    ],
+    "reason": "易懂但毫无新意。VLC 套壳播放器市场饱和、付费意愿极低，包装和变现空间都很小，适合围观不适合创业。"
+   }
+  },
+  "flint63-code/gitdesk-windows": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "Windows 上的免费开源图形化 Git 客户端",
+    "one_liner_en": "A free open-source graphical Git client for Windows",
+    "target_user": "使用 Windows 的独立开发者、小型工程团队和 Git 初学者",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 5,
+     "packaging_room": 3,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 5
+    },
+    "product_idea": "把它做成带账号同步、AI 提交建议和团队协作增强的付费桌面版",
+    "demo_idea": "网页面板模拟仓库，点击展示提交图谱、分支合并和 diff 对比",
+    "attack_tool": false,
+    "red_flags": [
+     "GUI Git 客户端赛道已被 GitHub Desktop、Sourcetree、GitKraken、Fork 等成熟产品占据",
+     "需用户自行安装 Git for Windows，安装配置门槛较高",
+     "项目仅 1 天且星标异常暴涨，可信度存疑",
+     "仓库内混入 libvlc.dll，与 Git 功能无关，来源可疑",
+     "桌面 .exe 分发的开源项目信任成本高，易被怀疑捆绑恶意软件"
+    ],
+    "reason": "MIT 许可友好，但 Git GUI 是竞争激烈的红海，且开源版已较完整、包装空间小；项目过于年轻、星标异常，内容与产品价值均有限。"
+   }
+  },
+  "Quill400/windows-image-viewer": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "免费开源的 Windows 快速看图软件，还能简单修图和整理照片",
+    "one_liner_en": "A fast, free Windows photo viewer with light editing and folder organization",
+    "target_user": "需要轻量看图工具的 Windows 普通用户与摄影爱好者；付费意愿弱，难找到愿付费人群",
+    "scores": {
+     "topicality": 3,
+     "accessibility": 9,
+     "wow": 2,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 2,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "把它做成带云同步和批量管理的订阅制照片整理工具，但这些功能已很拥挤",
+    "demo_idea": "网页里模拟文件夹缩略图流转，演示快捷键切图、裁剪和快速移动",
+    "attack_tool": false,
+    "red_flags": [
+     "看图软件市场极其拥挤，Windows 自带、IrfanView、XnView、FastStone 全免费",
+     "开源版已是带 GUI 的完整桌面应用，包装空间有限",
+     "创建仅 1 天即 1063 stars，增长异常，疑似刷星，可信度存疑",
+     "描述与 README 不一致（libvlc vs libmpv），文档质量粗糙",
+     "几乎没有清晰付费点，商业化极难"
+    ],
+    "reason": "成熟的免费看图工具红海，缺乏付费理由和差异化，传播与商业价值都弱，不建议做产品或主打内容。"
+   }
+  },
+  "hollow-445/windows-keyboard-manager": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "免费开源的 Windows 键盘改键工具，可自定义按键与分层布局",
+    "one_liner_en": "Free open-source Windows tool to remap keys, add layers and tap-hold actions",
+    "target_user": "全球 Windows 开发者、程序员、重度键盘用户与人体工学键盘爱好者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 8,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做一个可视化键盘编辑器，用拖拽方式设置分层与 tap-hold，并一键同步配置到云端",
+    "demo_idea": "在网页上画一个键盘，拖拽把 Caps 改成 Esc，并实时高亮分层切换效果",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库只有 1 天历史却已有 1000 多星，数据异常，难辨真伪",
+     "README 提到 exe 和 libvlc.dll，发行包的可信度存疑",
+     "Windows 键盘钩子类工具容易被杀毒软件判定为可疑",
+     "仅支持 Windows，跨平台承诺尚未兑现",
+     "同类免费工具（AutoHotkey、PowerToys、Kanata）竞争激烈"
+    ],
+    "reason": "痛点真实、易演示、MIT 许可也友好，但已有大量免费替代品，付费空间有限，仓库本身也存在可信度疑问，适合做内容而非做产品"
+   }
+  },
+  "nocta1554/windows-video-downloader-gui": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "生活娱乐",
+    "one_liner": "带图形界面的 Windows 视频下载器，粘贴链接就能下载 YouTube 等网站视频",
+    "one_liner_en": "A Windows GUI video downloader for YouTube and 1,000+ sites, powered by yt-dlp.",
+    "target_user": "美国 / 全球不想用命令行的普通 Windows 用户，以及偶尔需要离线保存视频的内容创作者、教师和学生",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 9,
+     "wow": 3,
+     "pain": 5,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做成开箱即用的 Mac/Win 桌面下载器，自动更新 yt-dlp、内置格式转换与批量队列",
+    "demo_idea": "网页演示粘贴 YouTube 链接，30 秒内展示格式列表并模拟下载进度条",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库创建仅 1 天，却已有 1000+ 星，增长数据异常，疑似刷星或营销操作",
+     "本质是 yt-dlp 的 GUI 外壳，核心能力依赖上游，难以形成技术壁垒",
+     "YouTube 下载违反其服务条款，存在法律与平台合规风险",
+     "同类免费产品极多（如 4K Video Downloader 免费版、yt-dlp 本身），付费意愿低",
+     "仅支持 Windows，README 与发布包结构简单，产品成熟度存疑"
+    ],
+    "reason": "易懂度和演示性强，但只是 yt-dlp 套壳，竞品免费且法律风险高，商业化空间有限，星标数据也可疑。"
+   }
+  },
+  "riveran0226/windows-explorer-blur-mica": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "给 Windows 文件资源管理器加上毛玻璃和透明模糊效果的小工具",
+    "one_liner_en": "A free tool that adds acrylic, Mica and blur effects to Windows File Explorer",
+    "target_user": "喜欢美化桌面的 Windows 重度用户、开发者、设计师，愿意为个性化主题付费",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 5,
+     "packaging_room": 6,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做一款 Windows 桌面美化套件，把模糊效果、主题、配色打包成订阅制 GUI 应用",
+    "demo_idea": "网页并排对比改造前后的资源管理器截图，用滑块实时切换透明度和配色",
+    "attack_tool": false,
+    "red_flags": [
+     "需要往系统里注入 DLL 或 hook Explorer，杀毒软件容易误报，用户信任门槛高",
+     "依赖 Windows 内部 API，系统更新后容易失效，维护成本高",
+     "直接修改 Explorer 可能引发系统不稳定，需要额外的风险提示",
+     "免费工具同类很多（StartAllBack、WindowBlinds 等已经占据市场），用户付费意愿低",
+     "仓库创建仅 1 天就涨 1086 星，增长曲线可疑，需要核实是不是刷星或搬运"
+    ],
+    "reason": "视觉效果直观、容易讲故事，但依赖系统注入、维护成本高，商业化空间有限，更适合做内容而非产品"
+   }
+  },
+  "Red2076-arch/waifu2x-image-upscaler-windows": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "多媒体创作",
+    "one_liner": "免费开源的AI图片放大与去噪工具，支持任意显卡加速",
+    "one_liner_en": "Free open-source AI image upscaler and denoiser with Vulkan GPU acceleration",
+    "target_user": "美国/全球的动漫爱好者、独立插画师、电商卖家、老照片修复用户",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 3,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 8
+    },
+    "product_idea": "网页版一键AI图片放大去噪，按张数或订阅收费，免装Vulkan驱动",
+    "demo_idea": "上传低清动漫图，30秒内左右对比放大4倍并去噪的效果",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库创建仅1天、star增长异常，疑似刷量或镜像搬运，原项目waifu2x-ncnn-vulkan已成熟多年",
+     "README中exe文件名与libvlc.dll混搭，疑似捆绑或包装可疑，存在安全风险",
+     "waifu2x属经典开源模型，市面免费竞品(waifu2x.udp.jp、Upscayl、Real-ESRGAN在线版)极多",
+     "本身已是完整GUI桌面应用，包装空间有限"
+    ],
+    "reason": "经典模型换皮包装，易懂易演示但无差异化，竞品多且商业化空间小，适合做内容不适合做产品"
+   }
+  },
+  "mist-8659/windows-mouse-keyboard-sharing-kvm": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "一套键鼠无缝控制多台电脑的免费软件",
+    "one_liner_en": "Free software KVM to share one keyboard and mouse across multiple computers",
+    "target_user": "拥有多台电脑的开发者、IT运维人员、居家办公与远程办公人群",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做成开箱即用的桌面KVM，自动发现设备、一键配对，并提供托管订阅",
+    "demo_idea": "网页模拟器：鼠标滑到屏幕边缘就跳进相邻电脑窗口，剪贴板同步粘贴",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库创建仅1天、star增长异常（约1079/天），疑似刷量，真实性存疑",
+     "功能描述几乎与Synergy/Barrier/Deskflow一模一样，可能为换皮或套壳",
+     "发行包里带libvlc.dll，与键鼠共享功能不相关，有供应链风险",
+     "市场被Synergy（付费）、Deskflow/Input Leap（免费开源）占据，差异化空间小",
+     "纯本地网络工具，订阅式变现很困难，个人用户付费意愿低"
+    ],
+    "reason": "需求真实且易懂，但同类开源方案已成熟，且该仓库数据异常、疑似换皮，更适合做选题而非创业。"
+   }
+  },
+  "Ash793318/windows-hardware-monitor": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "运维部署",
+    "one_liner": "开源的 Windows 电脑温度监控桌面软件",
+    "one_liner_en": "Free open-source Windows app to monitor CPU/GPU temps and fan speeds",
+    "target_user": "PC 游戏玩家、装机爱好者、IT 运维和小型工作室的 Windows 用户",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 8,
+     "wow": 3,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 4
+    },
+    "product_idea": "做成一键安装、硬件兼容性更好的无广告监控小工具，可加订阅云记录",
+    "demo_idea": "网页模拟仪表盘实时跳动显示 CPU/GPU 温度和风扇转速，可切换硬件分类",
+    "attack_tool": false,
+    "red_flags": [
+     "同类产品竞争激烈且多为免费（HWiNFO、HWMonitor、Core Temp、Open Hardware Monitor），付费空间小",
+     "1 天获得 1000+ Star，增长异常，疑似刷星或仓库真实性存疑",
+     "Windows 原生 .NET 桌面应用，难以在纯网页里真实演示传感器读取",
+     "硬件传感器读取依赖驱动和权限，兼容性差、支持成本高",
+     "README 提到 libvlc.dll，功能描述与实际实现可能不一致"
+    ],
+    "reason": "开源桌面监控工具，易懂但同质化严重、免费竞品多、商业化弱，刷星嫌疑大，适合做内容不适合做产品。"
+   }
+  },
+  "Riven-639/windows-dwm-blur-glass-customizer": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "给 Windows 窗口加上毛玻璃和透明效果的免费小工具",
+    "one_liner_en": "Free tool to add Aero glass, acrylic and blur effects to Windows title bars",
+    "target_user": "喜欢美化桌面的 Windows 极客、改装玩家和 Windows 主题爱好者",
+    "scores": {
+     "topicality": 6,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 7
+    },
+    "product_idea": "做成一键美化包：预设主题市场加自动备份还原",
+    "demo_idea": "网页左右分屏对比普通窗口和毛玻璃窗口，用滑块实时调节模糊强度和颜色",
+    "attack_tool": false,
+    "red_flags": [
+     "新建仅 1 天就 1000+ stars，增长异常，疑似刷榜或营销推广",
+     "依赖 libvlc.dll 却与多媒体无关，打包可疑，可能夹带第三方组件",
+     "要修改 DWM 系统渲染组件，遭杀软误报并且有蓝屏、崩溃风险",
+     "Windows 桌面美化市场竞争激烈，同类免费工具多，付费意愿低",
+     "README 反复强调下载安全，反而像仿冒或钓鱼分发的高发区"
+    ],
+    "reason": "传播直观、演示容易，但痛点弱、变现难，加上刷星和打包可疑，只适合做内容，不宜当产品。"
+   }
+  },
+  "Codelab781/windows-clipboard-sync-manager": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "Windows 剪贴板管理器，支持历史记录和多设备同步",
+    "one_liner_en": "A free Windows clipboard manager with history and cross-device sync",
+    "target_user": "多设备办公的开发者、远程工作者和重度电脑用户",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 8,
+     "wow": 4,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 4,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成开箱即用的跨设备剪贴板同步 SaaS，端到端加密加团队共享剪贴板",
+    "demo_idea": "网页模拟两台电脑画面，一边复制文字或图片，另一边实时粘贴出来",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库创建仅1天就声称1051星，增长异常，疑似刷星或营销号",
+     "README 提到 libvlc.dll 依赖与剪贴板功能无关，存在打包或来源疑点",
+     "同步需要用户配置服务器，安全与隐私风险高",
+     "剪贴板同步赛道已有成熟商业产品，差异化空间小",
+     "仓库信息与描述可能不实，内容可信度存疑"
+    ],
+    "reason": "创意易懂、许可宽松，但赛道拥挤、商业化困难，且仓库数据异常需警惕"
+   }
+  },
+  "quartzdev666/windows-pdf-editor": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "免费的 Windows 桌面 PDF 合并拆分整理工具，有可视化界面",
+    "one_liner_en": "Free desktop PDF editor to merge, split, and reorganize pages visually.",
+    "target_user": "需要处理合同、发票、扫描件的美国小企业主、行政人员和学生",
+    "scores": {
+     "topicality": 4,
+     "accessibility": 8,
+     "wow": 3,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 4,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做成免安装的浏览器本地版 PDF 整理器，拖拽排序、合并拆分，文件不上传",
+    "demo_idea": "网页里拖入两个 PDF，实时显示缩略图网格，拖动重排后一键导出",
+    "attack_tool": false,
+    "red_flags": [
+     "仓库 1 天就涨 1060 星，增长数据可疑，可能是刷星或营销仓库",
+     "需下载 exe 和 libvlc.dll，存在软件分发信任风险",
+     "PDF 整理是红海市场，Smallpdf、iLovePDF、Adobe 已占满",
+     "用 GTK3 做 Windows 应用，和描述里的 Linux topics 不一致，工程可疑"
+    ],
+    "reason": "需求真实但赛道饱和，免费替代品极多，付费空间薄；星数异常需警惕，适合做内容测流量，不适合重仓做产品"
+   }
+  },
+  "Loris-593/notebook-fan-control-windows": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "开源免费的 Windows 笔记本风扇调速和温度监控工具",
+    "one_liner_en": "Free open-source Windows laptop fan control and temperature monitoring tool",
+    "target_user": "美国 / 全球游戏玩家、内容创作者和 IT 管理员，以及需要控制噪音的性能发烧友和办公用户",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 9,
+     "wow": 7,
+     "pain": 6,
+     "packaging_room": 7,
+     "monetization": 5,
+     "license_safety": 10,
+     "demoability": 6
+    },
+    "product_idea": "做成带云端硬件配置库的一键调风扇桌面应用，自动匹配机型，提供预设静音、性能模式，并可订阅高级配置更新",
+    "demo_idea": "网页模拟笔记本界面，拖动风扇曲线滑块，实时看到风扇转速和温度变化，对比静音与性能模式",
+    "attack_tool": false,
+    "red_flags": [
+     "硬件兼容性高度碎片化，实际可用性取决于具体笔记本型号",
+     "核心功能依赖底层硬件控制，网页 demo 只能模拟，难以展示真实效果",
+     "免费开源竞品多，用户付费意愿有限",
+     "错误配置可能导致硬件过热或损坏，存在责任风险"
+    ],
+    "reason": "需求真实但小众，MIT 许可证友好，包装空间中等，商业化依赖配置库和订阅，传播性强但变现天花板较低"
+   }
+  },
+  "pithings/unkernel": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "一个能在浏览器里秒开的真 Linux 终端",
+    "one_liner_en": "A real Linux kernel compiled to WebAssembly that boots to a shell in under a second",
+    "target_user": "全球英文市场的开发者、教育平台和做浏览器端 IDE、沙箱、在线课程的技术公司",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 7,
+     "wow": 9,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 6,
+     "license_safety": 4,
+     "demoability": 9
+    },
+    "product_idea": "面向编程教学和在线 IDE 的嵌入式轻量 Linux 沙箱，以 SDK 或企业授权方式付费",
+    "demo_idea": "网页打开即出现终端，输入 apk add htop 秒装并运行，同时展示启动用时不到一秒",
+    "attack_tool": false,
+    "red_flags": [
+     "内核部分采用 GPL-2.0 许可证，商用分发须遵守 GPL 的传染性条款，需做法律隔离",
+     "JS SDK 为 MIT，内核为 GPL，两者混合分发存在合规风险",
+     "性能上 CPU 密集任务远慢于原生，宣传需谨慎",
+     "同类有 WebVM、v86 等成熟竞品，差异化空间有限"
+    ],
+    "reason": "话题性和惊喜感极强，演示效果出色；但内核是 GPL，商业化受许可证限制，竞品已占位，更适合做内容而非独立产品。"
+   }
+  },
+  "ProjectLeonida/mandy": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "用你自己的正版游戏，在电脑上原生运行《GTA VI》的开源兼容层",
+    "one_liner_en": "Run GTA VI natively on your PC from your own copy, via open-source recompilation",
+    "target_user": "全球硬核 PC 游戏玩家、模拟器与逆向工程爱好者（不直接付费，靠捐赠和赞助）",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 8,
+     "wow": 10,
+     "pain": 6,
+     "packaging_room": 6,
+     "monetization": 2,
+     "license_safety": 4,
+     "demoability": 7
+    },
+    "product_idea": "做成性能分析加一键构建的桌面工具，让玩家用自己的一份拷贝编译出可玩的版本",
+    "demo_idea": "网页对比视频：主机版和 PC 原生渲染同场景，再叠加上帧率和构建耗时数据",
+    "attack_tool": false,
+    "red_flags": [
+     "绕开 Xbox 平台的 DRM 保护，涉嫌违反 DMCA 第 1201 条，面临 Take-Two 起诉风险",
+     "README 明确承认项目尚未真正可玩（12-13 fps，世界画面也还没验证通过）",
+     "GPL-3.0 要求衍生作品也开源，商业包装几乎不可能",
+     "代码并不能直接交付——需要玩家自备合法的游戏拷贝",
+     "依赖第三方版权资产（游戏 shader、模型），随时可能被下架或发出律师函"
+    ],
+    "reason": "传播价值极高，话题和惊喜感都拉满；但法律风险高、变现路径几乎为零，只适合做内容，不适合做成产品。"
+   }
+  },
+  "Leaf82770/windows-mica-backdrop-customizer": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "效率工具",
+    "one_liner": "给老式 Windows 程序一键加上 Win11 毛玻璃效果的工具",
+    "one_liner_en": "Add Windows 11 Mica and Acrylic blur effects to old Win32 apps",
+    "target_user": "喜欢美化桌面的 Windows 11 极客用户 / 桌面定制爱好者（全球，主要是美国与欧洲的 Windows 用户）",
+    "scores": {
+     "topicality": 5,
+     "accessibility": 8,
+     "wow": 6,
+     "pain": 4,
+     "packaging_room": 4,
+     "monetization": 3,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做成 Windows 桌面美化工具包，含预设主题，按外观包一次性买断收费",
+    "demo_idea": "网页上左右对比同一窗口加毛玻璃前后的截图，滑块实时切换效果",
+    "attack_tool": false,
+    "red_flags": [
+     "仅限 Windows 11 桌面端，与账号在美国、面向全球的网页化生产流程不符",
+     "依赖 DWM，效果不稳定，因此难承诺可预期的结果",
+     "同类免费工具（Mica For Everyone、TranslucentTB）已占据市场，付费意愿低",
+     "仓库仅创建 1 天，star 增速异常，真实性存疑"
+    ],
+    "reason": "易懂、好看、MIT 许可证安全，但只覆盖 Windows 桌面、免费竞品成熟、付费空间很小，更适合做内容而非产品。"
+   }
+  },
+  "DeadInternetStudios/100x-engineer-skill": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "开发者工具",
+    "one_liner": "给 AI 编程助手加一道形式化验证，让生成的代码真的能上线",
+    "one_liner_en": "A skill that makes AI coding agents formally verify code before it ships",
+    "target_user": "美国/全球的独立开发者、初创团队工程师、用 Cursor/Claude Code 做生产的 AI 重度用户",
+    "scores": {
+     "topicality": 9,
+     "accessibility": 6,
+     "wow": 7,
+     "pain": 7,
+     "packaging_room": 7,
+     "monetization": 6,
+     "license_safety": 9,
+     "demoability": 6
+    },
+    "product_idea": "做一个 AI 编程验证插件：每次改动自动生成验证报告、截图和回滚风险，订阅制收费",
+    "demo_idea": "网页里输入一个小需求，展示 agent 写代码并用形式化检查抓到 planted bug 的对比",
+    "attack_tool": false,
+    "red_flags": [
+     "项目只有 4 天，1291 star 增长异常，可能为营销炒作，真实性待验证",
+     "README 中 1000 PR、136B tokens、$250k 节省等数据无法独立核实",
+     "本质是提示词/skill 包装，技术护城河薄，易被复制",
+     "形式化验证在真实大型项目中的效果存疑，宣称可能夸大"
+    ],
+    "reason": "话题性强、MIT 许可友好、痛点真实，但数据夸大且门槛低，包装成验证报告订阅产品有机会，需谨慎核实"
+   }
+  },
+  "dazacode/vilauncher": {
+   "date": "2026-11-28",
+   "v": 3,
+   "eval": {
+    "category": "其他",
+    "one_liner": "一个帮你下载、编译并启动社区自制游戏项目的启动器",
+    "one_liner_en": "A launcher that installs, builds and runs community-made game projects using your own game files.",
+    "target_user": "玩 GTA 等开放世界游戏、想装社区自制版本的重度 PC 玩家（美国与全球英语市场）",
+    "scores": {
+     "topicality": 7,
+     "accessibility": 6,
+     "wow": 5,
+     "pain": 6,
+     "packaging_room": 5,
+     "monetization": 3,
+     "license_safety": 3,
+     "demoability": 4
+    },
+    "product_idea": "做成一键安装的模组管理器：自动配好 Git/Rust 环境、自动更新和回滚，订阅制收费",
+    "demo_idea": "网页模拟：选一个社区项目，点安装，进度条自动装好环境和游戏，再点启动",
+    "attack_tool": false,
+    "red_flags": [
+     "GPL-3.0 传染性许可，闭源商业化受限",
+     "项目托管第三方 GTA 相关社区移植版本，Rockstar/Take-Two 法律风险高",
+     "仓库刚创建 1 天就 470 星，疑似刷量或被推流，可信度待验证",
+     "核心价值依赖用户自备的游戏文件和第三方社区库，产品难以自持"
+    ],
+    "reason": "话题性强但法律与许可风险重，商业闭环弱，更适合做内容而非产品。"
    }
   }
  }

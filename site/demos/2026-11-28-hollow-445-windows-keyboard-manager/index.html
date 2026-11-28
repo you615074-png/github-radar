@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keyloom — Visual keyboard remapping for Windows</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#020617}
+  kbd{display:inline-block;padding:0 .3rem;border-radius:.25rem;background:#1e293b;border:1px solid #334155;font-size:.7rem;line-height:1.45;color:#e2e8f0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  .krow{display:flex;gap:4px;margin-bottom:4px}
+  .key{
+    position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1px solid #334155;border-radius:.375rem;background:#1e293b;color:#cbd5e1;
+    height:2.25rem;font-size:10px;font-weight:500;line-height:1;
+    cursor:pointer;user-select:none;-webkit-user-select:none;
+    transition:background-color .12s,color .12s,border-color .12s,opacity .12s;
+    box-shadow:0 2px 0 0 rgba(2,6,23,.85), inset 0 1px 0 rgba(255,255,255,.05);
+    padding:0 2px;overflow:hidden;touch-action:manipulation;
+  }
+  @media (min-width:640px){ .key{height:2.75rem;font-size:11px} }
+  .key:hover{background:#334155;color:#fff}
+  .key:active{transform:translateY(1px);box-shadow:none}
+  .key .klabel{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 1px}
+  .key .kbadge{position:absolute;right:2px;bottom:1px;font-size:8px;font-weight:700;letter-spacing:.02em;color:#fbbf24}
+  .key .kbadge.layer{color:#6ee7b7}
+  .key.mapped{background:rgba(99,102,241,.22);border-color:rgba(129,140,248,.7);color:#e0e7ff}
+  .key.mapped:hover{background:rgba(99,102,241,.34)}
+  .key.inherited{opacity:.45}
+  .key.inherited:hover{opacity:.85}
+  .key.sel{outline:2px solid #818cf8;outline-offset:1px;z-index:5}
+  .key.dragover{outline:2px dashed #6ee7b7;outline-offset:1px;background:rgba(16,185,129,.18)}
+  .noscroll::-webkit-scrollbar{height:6px}
+  .noscroll::-webkit-scrollbar-thumb{background:#334155;border-radius:9999px}
+  .noscroll::-webkit-scrollbar-track{background:transparent}
+</style>
+</head>
+<body class="text-slate-100 antialiased">
+
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-40 border-b border-white/5 bg-slate-950/80 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded-xl border border-indigo-400/40 bg-indigo-500/20 text-base">⌨️</span>
+      <span class="text-lg font-semibold tracking-tight">Keyloom</span>
+      <span class="hidden rounded-full border border-white/10 px-2 py-0.5 text-[11px] text-slate-400 sm:inline">for Windows</span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm text-slate-300 md:flex">
+      <a href="#studio" class="transition-colors hover:text-white">Editor</a>
+      <a href="#scenarios" class="transition-colors hover:text-white">Use cases</a>
+      <a href="#pricing" class="transition-colors hover:text-white">Pricing</a>
+    </nav>
+    <a href="#pricing" class="rounded-lg bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-400">Join waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_55%_at_50%_0%,rgba(99,102,241,0.28),transparent_70%)]"></div>
+    <div class="mx-auto max-w-6xl px-4 pb-10 pt-14 text-center sm:pt-20">
+      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        Free &amp; open source · MIT · Windows 10 / 11
+      </span>
+      <h1 class="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl">
+        Remap your keyboard.<br class="hidden sm:block"> Visually.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+        Drag an action onto any key, stack layers, and give keys a different job on tap and on hold.
+        No config files, no command line — just a keyboard you can edit with your mouse.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="#studio" class="rounded-xl bg-indigo-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-colors hover:bg-indigo-400">Try the editor ↓</a>
+        <a href="#pricing" class="rounded-xl border border-white/15 px-6 py-3 text-sm font-semibold text-slate-200 transition-colors hover:bg-white/5">See plans</a>
+      </div>
+
+      <div class="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+        <div class="rounded-xl border border-white/10 bg-slate-900/50 px-3 py-3">
+          <div class="text-sm font-semibold text-white">Remap</div>
+          <div class="mt-0.5 text-[11px] text-slate-400">Any key → any action</div>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-slate-900/50 px-3 py-3">
+          <div class="text-sm font-semibold text-white">Layers</div>
+          <div class="mt-0.5 text-[11px] text-slate-400">Independent keymaps</div>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-slate-900/50 px-3 py-3">
+          <div class="text-sm font-semibold text-white">Tap-hold</div>
+          <div class="mt-0.5 text-[11px] text-slate-400">Two jobs, one key</div>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-slate-900/50 px-3 py-3">
+          <div class="text-sm font-semibold text-white">Multi-tap</div>
+          <div class="mt-0.5 text-[11px] text-slate-400">Time-based actions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STUDIO ================= -->
+  <section id="studio" class="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+    <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">The visual editor</h2>
+        <p class="mt-1 text-sm text-slate-400">Pick a layer, drag an action onto a key, then click keys to test them.</p>
+      </div>
+      <span class="rounded-full border border-amber-400/30 bg-amber-400/10 px-2.5 py-1 text-[11px] font-medium text-amber-300">Sample data</span>
+    </div>
+
+    <div class="grid gap-4 lg:grid-cols-[1fr_330px]">
+
+      <!-- keyboard card -->
+      <div class="min-w-0 rounded-2xl border border-white/10 bg-slate-900/60 p-3 sm:p-5">
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <div id="layerTabs" class="flex gap-1 rounded-lg border border-white/10 bg-slate-950/60 p-1"></div>
+          <div id="hint" class="text-[11px] text-slate-400"></div>
+        </div>
+
+        <div id="palette" class="mb-2 flex flex-wrap gap-1.5"></div>
+        <div id="palHint" class="mb-3 h-4 truncate text-[11px] text-emerald-300"></div>
+
+        <div class="noscroll overflow-x-auto pb-1">
+          <div id="kb" class="min-w-[620px] select-none"></div>
+        </div>
+
+        <div class="mt-3 flex items-center gap-2">
+          <span class="shrink-0 text-xs text-slate-400">Output</span>
+          <div id="out" class="min-h-[36px] flex-1 overflow-hidden rounded-lg border border-white/10 bg-slate-950/70 px-3 py-2 font-mono text-sm leading-5 text-emerald-300"></div>
+          <button id="clearOut" type="button" class="shrink-0 rounded-lg border border-white/10 px-2.5 py-2 text-xs text-slate-400 transition-colors hover:bg-white/5 hover:text-white">Clear</button>
+        </div>
+      </div>
+
+      <!-- editor panel -->
+      <aside id="editor" class="rounded-2xl border border-white/10 bg-slate-900/60 p-4"></aside>
+    </div>
+
+    <!-- presets -->
+    <div class="mt-4 flex flex-wrap items-center gap-2">
+      <span class="text-[11px] uppercase tracking-widest text-slate-500">Presets</span>
+      <div id="presets" class="flex flex-wrap gap-2"></div>
+      <button id="resetAll" type="button" class="rounded-full border border-dashed border-slate-600 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-slate-400 hover:text-white">Reset all</button>
+    </div>
+  </section>
+
+  <!-- ================= SCENARIOS ================= -->
+  <section id="scenarios" class="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+    <div class="mb-8 max-w-2xl">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">How people actually use it</h2>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">Three setups that show up again and again in the keyboard community — all buildable in a couple of minutes with the editor above.</p>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6 transition-colors hover:border-indigo-400/40">
+        <div class="grid h-11 w-11 place-items-center rounded-xl border border-indigo-400/30 bg-indigo-500/15 text-xl">🧑‍💻</div>
+        <h3 class="mt-4 text-lg font-semibold">Developers</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-400">
+          Home-row mods plus a symbols layer. Hold <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</kbd> for modifiers, hold <kbd>Space</kbd> for brackets, braces and operators.
+        </p>
+        <p class="mt-3 text-[11px] text-emerald-300">Try it: click “Home-row mods”, then press <kbd>A</kbd>.</p>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6 transition-colors hover:border-emerald-400/40">
+        <div class="grid h-11 w-11 place-items-center rounded-xl border border-emerald-400/30 bg-emerald-500/15 text-xl">✍️</div>
+        <h3 class="mt-4 text-lg font-semibold">Writers &amp; editors</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-400">
+          <kbd>Caps</kbd> becomes <kbd>Esc</kbd> on tap and a navigation layer while held, so you can jump around a document without leaving the home row.
+        </p>
+        <p class="mt-3 text-[11px] text-emerald-300">Try it: hold <kbd>Caps</kbd> — then press <kbd>H</kbd> <kbd>J</kbd> <kbd>K</kbd> <kbd>L</kbd>.</p>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6 transition-colors hover:border-amber-400/40">
+        <div class="grid h-11 w-11 place-items-center rounded-xl border border-amber-400/30 bg-amber-500/15 text-xl">🎛️</div>
+        <h3 class="mt-4 text-lg font-semibold">Compact keyboards</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-400">
+          Map a 60% board to your muscle memory: arrows on <kbd>H</kbd><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd>, page keys on the right hand, media keys on the number row.
+        </p>
+        <p class="mt-3 text-[11px] text-emerald-300">Try it: switch to the Navigation tab.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRICING ================= -->
+  <section id="pricing" class="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+    <div class="mb-8 max-w-2xl">
+      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">The app is free. Forever.</h2>
+      <p class="mt-2 text-sm leading-relaxed text-slate-400">Keyloom wraps the open-source remapping engine. The desktop editor stays free and MIT-licensed — you only pay if you want your layouts synced and shared.</p>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6">
+        <div class="text-sm font-medium text-slate-300">Free</div>
+        <div class="mt-3 flex items-baseline gap-1"><span class="text-3xl font-semibold">$0</span><span class="text-sm text-slate-400">/ forever</span></div>
+        <ul class="mt-5 space-y-2 text-sm text-slate-400">
+          <li>✓ Full desktop app for Windows</li>
+          <li>✓ Unlimited layers &amp; tap-hold keys</li>
+          <li>✓ Local config files</li>
+        </ul>
+        <button data-plan="Free" type="button" class="mt-6 w-full rounded-lg border border-white/15 px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5">Download</button>
+      </div>
+
+      <div class="relative rounded-2xl border border-indigo-400/40 bg-indigo-500/5 p-6">
+        <span class="absolute -top-2.5 right-5 rounded-full bg-indigo-500 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">Popular</span>
+        <div class="text-sm font-medium text-indigo-200">Pro</div>
+        <div class="mt-3 flex items-baseline gap-1"><span class="text-3xl font-semibold">$5</span><span class="text-sm text-slate-400">/ month</span></div>
+        <ul class="mt-5 space-y-2 text-sm text-slate-300">
+          <li>✓ One-click cloud sync</li>
+          <li>✓ Sync layouts across machines</li>
+          <li>✓ Shareable layout links</li>
+          <li>✓ Version history</li>
+        </ul>
+        <button data-plan="Pro" type="button" class="mt-6 w-full rounded-lg bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-400">Join waitlist</button>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-6">
+        <div class="text-sm font-medium text-slate-300">Team</div>
+        <div class="mt-3 flex items-baseline gap-1"><span class="text-3xl font-semibold">$12</span><span class="text-sm text-slate-400">/ seat / month</span></div>
+        <ul class="mt-5 space-y-2 text-sm text-slate-400">
+          <li>✓ Shared team layout library</li>
+          <li>✓ Admin-managed defaults</li>
+          <li>✓ Priority support</li>
+        </ul>
+        <button data-plan="Team" type="button" class="mt-6 w-full rounded-lg border border-white/15 px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5">Talk to us</button>
+      </div>
+    </div>
+
+    <div class="mt-6 rounded-2xl border border-white/10 bg-slate-900/50 p-6 sm:p-8">
+      <div class="grid items-center gap-6 md:grid-cols-[1fr_auto]">
+        <div>
+          <h3 class="text-lg font-semibold">Get early access</h3>
+          <p class="mt-1 text-sm text-slate-400">Cloud sync and layout sharing are in private beta. Leave an email and we’ll ping you when it opens.</p>
+        </div>
+        <form id="waitlistForm" class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row" novalidate>
+          <input id="waitlistEmail" type="email" value="dev@example.com" aria-label="Email address"
+                 class="w-full rounded-lg border border-white/10 bg-slate-950 px-3 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:w-64">
+          <button type="submit" class="rounded-lg bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-400">Join waitlist</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-white/5 px-4 py-8 text-center">
+  <p class="mx-auto max-w-3xl text-xs leading-relaxed text-slate-500">
+    Concept demo, based on the open-source project <a href="https://github.com/hollow-445/windows-keyboard-manager" class="text-slate-300 underline decoration-slate-600 hover:text-white">hollow-445/windows-keyboard-manager</a> (MIT), unofficial, all data is sample data
+  </p>
+</footer>
+
+<!-- toast -->
+<div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 hidden max-w-[90vw] -translate-x-1/2 rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-3 text-center text-sm text-emerald-200 shadow-xl backdrop-blur"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------------------------------------------------------- */
+  /*  Keyboard geometry                                                */
+  /* ---------------------------------------------------------------- */
+  var ROWS = [
+    [
+      { id: 'esc', l: 'Esc', w: 1 },
+      { id: '`', l: '`', w: 1 },
+      { id: '1', l: '1', w: 1 }, { id: '2', l: '2', w: 1 }, { id: '3', l: '3', w: 1 },
+      { id: '4', l: '4', w: 1 }, { id: '5', l: '5', w: 1 }, { id: '6', l: '6', w: 1 },
+      { id: '7', l: '7', w: 1 }, { id: '8', l: '8', w: 1 }, { id: '9', l: '9', w: 1 },
+      { id: '0', l: '0', w: 1 },
+      { id: '-', l: '-', w: 1 }, { id: '=', l: '=', w: 1 },
+      { id: 'bksp', l: '⌫', w: 2 }
+    ],
+    [
+      { id: 'tab', l: 'Tab', w: 1.5 },
+      { id: 'q', l: 'Q', w: 1 }, { id: 'w', l: 'W', w: 1 }, { id: 'e', l: 'E', w: 1 },
+      { id: 'r', l: 'R', w: 1 }, { id: 't', l: 'T', w: 1 }, { id: 'y', l: 'Y', w: 1 },
+      { id: 'u', l: 'U', w: 1 }, { id: 'i', l: 'I', w: 1 }, { id: 'o', l: 'O', w: 1 },
+      { id: 'p', l: 'P', w: 1 },
+      { id: '[', l: '[', w: 1 }, { id: ']', l: ']', w: 1 },
+      { id: 'back', l: '\\', w: 1.5 }
+    ],
+    [
+      { id: 'caps', l: 'Caps', w: 1.75 },
+      { id: 'a', l: 'A', w: 1 }, { id: 's', l: 'S', w: 1 }, { id: 'd', l: 'D', w: 1 },
+      { id: 'f', l: 'F', w: 1 }, { id: 'g', l: 'G', w: 1 }, { id: 'h', l: 'H', w: 1 },
+      { id: 'j', l: 'J', w: 1 }, { id: 'k', l: 'K', w: 1 }, { id: 'l', l: 'L', w: 1 },
+      { id: ';', l: ';', w: 1 }, { id: "'", l: "'", w: 1 },
+      { id: 'enter', l: 'Enter', w: 2.25 }
+    ],
+    [
+      { id: 'lshift', l: 'Shift', w: 2.25 },
+      { id: 'z', l: 'Z', w: 1 }, { id: 'x', l: 'X', w: 1 }, { id: 'c', l: 'C', w: 1 },
+      { id: 'v', l: 'V', w: 1 }, { id: 'b', l: 'B', w: 1 }, { id: 'n', l: 'N', w: 1 },
+      { id: 'm', l: 'M', w: 1 },
+      { id: ',', l: ',', w: 1 }, { id: '.', l: '.', w: 1 }, { id: '/', l: '/', w: 1 },
+      { id: 'rshift', l: 'Shift', w: 2.75 }
+    ],
+    [
+      { id: 'lctrl', l: 'Ctrl', w: 1.25 },
+      { id: 'lwin', l: 'Win', w: 1.25 },
+      { id: 'lalt', l: 'Alt', w: 1.25 },
+      { id: 'space', l: 'Space', w: 7.5 },
+      { id: 'ralt', l: 'Alt', w: 1.25 },
+      { id: 'fn', l: 'Fn', w: 1.25 },
+      { id: 'rctrl', l: 'Ctrl', w: 1.25 }
+    ]
+  ];
+
+  var KEY_BY_ID = {};
+  for (var r = 0; r < ROWS.length; r++) {
+    for (var c = 0; c < ROWS[r].length; c++) {
+      KEY_BY_ID[ROWS[r][c].id] = ROWS[r][c];
+    }
+  }
+
+  var KEY_NAMES = {
+    esc: 'Escape', bksp: 'Backspace', back: 'Backslash', tab: 'Tab', caps: 'Caps Lock',
+    enter: 'Enter', lshift: 'Left Shift', rshift: 'Right Shift',
+    lctrl: 'Left Ctrl', rctrl: 'Right Ctrl', lalt: 'Left Alt', ralt: 'Right Alt',
+    lwin: 'Left Windows', space: 'Spacebar', fn: 'Fn', '`': 'Backtick',
+    ',': 'Comma', '.': 'Period', '/': 'Slash', ';': 'Semicolon', "'": 'Quote',
+    '-': 'Minus', '=': 'Equals', '[': 'Left Bracket', ']': 'Right Bracket'
+  };
+
+  /* ---------------------------------------------------------------- */
+  /*  Action vocabulary                                                */
+  /* ---------------------------------------------------------------- */
+  var TAP_LIST = ['', 'Esc', 'Enter', 'Tab', 'Space', 'Backspace', 'Del',
+    '←', '→', '↑', '↓', 'Home', 'End', 'PgUp', 'PgDn',
+    '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
+    '-', '_', '=', '+', '[', ']', '{', '}', '|', ';', ':',
+    "'", '"', ',', '.', '<', '>', '/', '?'];
+
+  var HOLD_LIST = ['', 'Ctrl', 'Shift', 'Alt', 'Win', 'Esc', 'L:nav', 'L:sym'];
+
+  var HOLD_SHORT = {
+    '': '', 'Ctrl': '⌃', 'Shift': '⇧', 'Alt': '⎇', 'Win': '⊞',
+    'Esc': 'ESC', 'L:nav': 'NAV', 'L:sym': 'SYM'
+  };
+
+  var HOLD_LONG = {
+    '': '— none —',
+    'Ctrl': 'Ctrl (hold)',
+    'Shift': 'Shift (hold)',
+    'Alt': 'Alt (hold)',
+    'Win': 'Win (hold)',
+    'Esc': 'Esc (hold)',
+    'L:nav': 'Switch to Navigation layer',
+    'L:sym': 'Switch to Symbols layer'
+  };
+
+  var LAYERS = [
+    { id: 'base', name: 'Base' },
+    { id: 'nav', name: 'Navigation' },
+    { id: 'sym', name: 'Symbols' }
+  ];
+
+  var LAYER_NAME = {
+    base: 'Base layer',
+    nav: 'Navigation layer',
+    sym: 'Symbols layer'
+  };
+
+  /* ---------------------------------------------------------------- */
+  /*  State                                                            */
+  /* ---------------------------------------------------------------- */
+  function defaultMaps() {
+    return {
+      base: {
+        caps: { tap: 'Esc', hold: 'L:nav' },
+        space: { hold: 'L:sym' }
+      },
+      nav: {
+        h: { tap: '←' }, j: { tap: '↓' }, k: { tap: '↑' }, l: { tap: '→' },
+        y: { tap: 'Home' }, u: { tap: 'PgUp' }, i: { tap: 'PgDn' }, o: { tap: 'End' },
+        bksp: { tap: 'Del' }
+      },
+      sym: {
+        q: { tap: '~' }, w: { tap: '*' }, e: { tap: '{' }, r: { tap: '}' },
+        t: { tap: '(' }, y: { tap: ')' },
+        a: { tap: '=' }, s: { tap: '_' }, d: { tap: '[' }, f: { tap: ']' },
+        g: { tap: '<' }, h: { tap: '>' },
+        z: { tap: '`' }, x: { tap: '-' }, c: { tap: '+' }, v: { tap: '/' },
+        b: { tap: '|' }, n: { tap: ':' }
+      }
+    };
+  }
+
+  var state = {
+    maps: defaultMaps(),
+    layer: 'base',
+    selected: 'caps',
+    output: [],
+    peekFrom: null
+  };
+
+  /* ---------------------------------------------------------------- */
+  /*  DOM refs                                                         */
+  /* ---------------------------------------------------------------- */
+  var kbEl = document.getElementById('kb');
+  var tabsEl = document.getElementById('layerTabs');
+  var paletteEl = document.getElementById('palette');
+  var editorEl = document.getElementById('editor');
+  var outEl = document.getElementById('out');
+  var hintEl = document.getElementById('hint');
+  var palHintEl = document.getElementById('palHint');
+  var presetsEl = document.getElementById('presets');
+  var toastEl = document.getElementById('toast');
+
+  /* ---------------------------------------------------------------- */
+  /*  Helpers                                                          */
+  /* ---------------------------------------------------------------- */
+  function esc(s) {
+    return String(s === null || s === undefined ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function keyName(k) {
+    if (!k) return 'Key';
+    return KEY_NAMES[k.id] || (k.l + ' key');
+  }
+
+  function holdShort(v) {
+    return (HOLD_SHORT[v] !== undefined) ? HOLD_SHORT[v] : v;
+  }
+
+  function holdLong(v) {
+    return (HOLD_LONG[v] !== undefined) ? HOLD_LONG[v] : v;
+  }
+
+  function holdText(v) {
+    if (!v) return '';
+    if (v === 'L:nav') return 'Nav layer';
+    if (v === 'L:sym') return 'Symbols layer';
+    return v;
+  }
+
+  function layerMap(id) {
+    if (!state.maps[id]) state.maps[id] = {};
+    return state.maps[id];
+  }
+
+  function directMap(keyId) {
+    var m = state.maps[state.layer];
+    return (m && m[keyId]) ? m[keyId] : null;
+  }
+
+  function effectiveMap(keyId) {
+    var d = directMap(keyId);
+    if (d) return d;
+    var b = state.maps.base;
+    return (b && b[keyId]) ? b[keyId] : null;
+  }
+
+  var toastTimer = null;
+  function showToast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.remove('hidden');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.add('hidden');
+    }, 3600);
+  }
+
+  var palHintTimer = null;
+  function flashPalHint(msg) {
+    if (!palHintEl) return;
+    palHintEl.textContent = msg;
+    if (palHintTimer) clearTimeout(palHintTimer);
+    palHintTimer = setTimeout(function () {
+      palHintEl.textContent = '';
+    }, 2400);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Mutations                                                        */
+  /* ---------------------------------------------------------------- */
+  function setMapping(keyId, kind, value) {
+    if (!keyId) return;
+    var layer = layerMap(state.layer);
+    var prev = layer[keyId] || {};
+    var entry = {};
+    if (prev.tap) entry.tap = prev.tap;
+    if (prev.hold) entry.hold = prev.hold;
+
+    if (value) {
+      entry[kind] = value;
+    } else {
+      delete entry[kind];
+    }
+
+    if (!entry.tap && !entry.hold) {
+      delete layer[keyId];
+    } else {
+      layer[keyId] = entry;
+    }
+    state.selected = keyId;
+    render();
+  }
+
+  function clearMapping(keyId) {
+    var layer = layerMap(state.layer);
+    delete layer[keyId];
+    state.selected = keyId;
+    render();
+  }
+
+  function applyPayload(keyId, payload) {
+    if (!keyId || !payload) return;
+    if (payload === 'clear') {
+      clearMapping(keyId);
+      return;
+    }
+    var i = payload.indexOf(':');
+    if (i === -1) return;
+    var kind = payload.slice(0, i);
+    var value = payload.slice(i + 1);
+    if (kind !== 'tap' && kind !== 'hold') return;
+
+    var layer = layerMap(state.layer);
+    var prev = layer[keyId] || {};
+    var entry = {};
+    if (prev.tap) entry.tap = prev.tap;
+    if (prev.hold) entry.hold = prev.hold;
+    if (value) {
+      entry[kind] = value;
+    } else {
+      delete entry[kind];
+    }
+
+    if (!entry.tap && !entry.hold) {
+      delete layer[keyId];
+    } else {
+      layer[keyId] = entry;
+    }
+    state.selected = keyId;
+    render();
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Renderers                                                        */
+  /* ---------------------------------------------------------------- */
+  function renderTabs() {
+    var html = '';
+    for (var i = 0; i < LAYERS.length; i++) {
+      var L = LAYERS[i];
+      var on = (L.id === state.layer);
+      html += '<button type="button" data-tab="' + L.id + '" class="rounded-md px-3 py-1.5 text-xs font-medium transition-colors ' +
+        (on ? 'bg-indigo-500 text-white' : 'text-slate-400 hover:text-white') + '">' + L.name + '</button>';
+    }
+    tabsEl.innerHTML = html;
+  }
+
+  function renderHint() {
+    if (!hintEl) return;
+    if (state.peekFrom) {
+      hintEl.className = 'text-[11px] font-medium text-emerald-300';
+      hintEl.textContent = 'Peeking at the ' + (LAYER_NAME[state.layer] || 'layer') + ' · release to exit';
+      return;
+    }
+    hintEl.className = 'text-[11px] text-slate-400';
+    var capsMap = (state.maps.base && state.maps.base.caps) || {};
+    var spaceMap = (state.maps.base && state.maps.base.space) || {};
+    if (capsMap.hold === 'L:nav') {
+      hintEl.textContent = 'Hold Caps to peek at Navigation';
+    } else if (capsMap.hold === 'L:sym') {
+      hintEl.textContent = 'Hold Caps to peek at Symbols';
+    } else if (spaceMap.hold === 'L:sym') {
+      hintEl.textContent = 'Hold Space to peek at Symbols';
+    } else {
+      hintEl.textContent = 'Assign a layer hold to any key to peek at it';
+    }
+  }
+
+  function keyHTML(k) {
+    var direct = directMap(k.id);
+    var resolved = direct || (state.maps.base ? state.maps.base[k.id] : null) || {};
+    var tap = resolved.tap || '';
+    var hold = resolved.hold || '';
+    var isMapped = !!(tap || hold);
+    var label = tap || k.l;
+    var isInherited = !direct && state.layer !== 'base';
+    var isSel = (state.selected === k.id);
+
+    var cls = 'key';
+    if (isMapped) cls += ' mapped';
+    if (isInherited) cls += ' inherited';
+    if (isSel) cls += ' sel';
+
+    var badge = '';
+    if (hold) {
+      var isLayerHold = (hold.indexOf('L:') === 0);
+      badge = '<span class="kbadge' + (isLayerHold ? ' layer' : '') + '">' + esc(holdShort(hold)) + '</span>';
+    }
+
+    return '<button type="button" class="' + cls + '" data-id="' + esc(k.id) + '" ' +
+      'style="flex:' + k.w + ' 1 0%;min-width:0" aria-label="' + esc(keyName(k)) + '">' +
+      '<span class="klabel">' + esc(label) + '</span>' + badge + '</button>';
+  }
+
+  function renderKeyboard() {
+    var html = '';
+    for (var r = 0; r < ROWS.length; r++) {
+      html += '<div class="krow">';
+      for (var c = 0; c < ROWS[r].length; c++) {
+        html += keyHTML(ROWS[r][c]);
+      }
+      html += '</div>';
+    }
+    kbEl.innerHTML = html;
+  }
+
+  function renderOutput() {
+    if (!state.output.length) {
+      outEl.innerHTML = '<span class="text-slate-600">— press a key —</span>';
+      return;
+    }
+    outEl.textContent = state.output.slice(-32).join(' ');
+  }
+
+  function renderEditor() {
+    var k = KEY_BY_ID[state.selected] || { id: '', l: '?' };
+    var m = directMap(state.selected) || {};
+    var baseEntry = (state.maps.base && state.maps.base[state.selected]) || null;
+
+    var tapList = TAP_LIST.slice();
+    if (m.tap && tapList.indexOf(m.tap) === -1) tapList.unshift(m.tap);
+
+    var holdList = HOLD_LIST.slice();
+    if (m.hold && holdList.indexOf(m.hold) === -1) holdList.unshift(m.hold);
+
+    var tapOpts = '';
+    for (var i = 0; i < tapList.length; i++) {
+      var v = tapList[i];
+      tapOpts += '<option value="' + esc(v) + '"' + ((m.tap || '') === v ? ' selected' : '') + '>' +
+        (v ? esc(v) : '— none (physical key) —') + '</option>';
+    }
+
+    var holdOpts = '';
+    for (var j = 0; j < holdList.length; j++) {
+      var hv = holdList[j];
+      holdOpts += '<option value="' + esc(hv) + '"' + ((m.hold || '') === hv ? ' selected' : '') + '>' +
+        esc(holdLong(hv)) + '</option>';
+    }
+
+    var bits = [];
+    if (m.tap) bits.push('tap → ' + m.tap);
+    if (m.hold) bits.push('hold → ' + holdText(m.hold));
+    var summary = bits.length ? bits.join(' · ') : 'No mapping — passes through';
+
+    var inheritNote = '';
+    if (!m.tap && !m.hold && baseEntry && state.layer !== 'base') {
+      var ib = [];
+      if (baseEntry.tap) ib.push('tap → ' + baseEntry.tap);
+      if (baseEntry.hold) ib.push('hold → ' + holdText(baseEntry.hold));
+      inheritNote = '<div class="mt-3 rounded-lg border border-amber-400/20 bg-amber-400/5 p-2.5 text-[11px] leading-relaxed text-amber-200/90">' +
+        'Inherited from Base: ' + esc(ib.join(' · ')) + '</div>';
+    }
+
+    editorEl.innerHTML =
+      '<div class="flex items-center justify-between gap-2">' +
+        '<span class="text-[11px] uppercase tracking-widest text-slate-400">Selected key</span>' +
+        '<span class="rounded-full bg-slate-800 px-2 py-0.5 text-[10px] text-slate-400">' + esc(LAYER_NAME[state.layer] || '') + '</span>' +
+      '</div>' +
+      '<div class="mt-3 flex items-center gap-3">' +
+        '<div class="grid h-12 w-12 shrink-0 place-items-center rounded-lg border border-slate-700 bg-slate-800 text-sm font-semibold text-white">' + esc(k.l) + '</div>' +
+        '<div class="min-w-0">' +
+          '<div class="truncate font-semibold">' + esc(keyName(k)) + '</div>' +
+          '<div class="truncate text-xs text-slate-400">' + esc(summary) + '</div>' +
+        '</div>' +
+      '</div>' +
+      inheritNote +
+      '<div class="mt-4 space-y-3">' +
+        '<label class="block">' +
+          '<span class="text-xs text-slate-400">Tap action</span>' +
+          '<select id="tapSel" class="mt-1 w-full rounded-lg border border-white/10 bg-slate-950 px-2 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">' + tapOpts + '</select>' +
+        '</label>' +
+        '<label class="block">' +
+          '<span class="text-xs text-slate-400">Hold action</span>' +
+          '<select id="holdSel" class="mt-1 w-full rounded-lg border border-white/10 bg-slate-950 px-2 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">' + holdOpts + '</select>' +
+        '</label>' +
+      '</div>' +
+      '<button id="clearKey" type="button" class="mt-3 w-full rounded-lg border border-white/10 px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-800">Clear this key</button>' +
+      '<p class="mt-3 text-[11px] leading-relaxed text-slate-500">Drag a chip from the palette onto any key — or pick a key here, then click a chip to apply it to that key.</p>';
+
+    var tapSel = editorEl.querySelector('#tapSel');
+    if (tapSel) {
+      tapSel.addEventListener('change', function (e) {
+        setMapping(state.selected, 'tap', e.target.value);
+      });
+    }
+
+    var holdSel = editorEl.querySelector('#holdSel');
+    if (holdSel) {
+      holdSel.addEventListener('change', function (e) {
+        setMapping(state.selected, 'hold', e.target.value);
+      });
+    }
+
+    var clearBtn = editorEl.querySelector('#clearKey');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        clearMapping(state.selected);
+      });
+    }
+  }
+
+  function render() {
+    renderTabs();
+    renderHint();
+    renderKeyboard();
+    renderEditor();
+    renderOutput();
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Palette                                                          */
+  /* ---------------------------------------------------------------- */
+  var PALETTE = [
+    { p: 'tap:Esc', label: 'Esc', kind: 'tap' },
+    { p: 'tap:Enter', label: 'Enter', kind: 'tap' },
+    { p: 'tap:Backspace', label: '⌫ Back', kind: 'tap' },
+    { p: 'tap:←', label: '←', kind: 'tap' },
+    { p: 'tap:↑', label: '↑', kind: 'tap' },
+    { p: 'tap:↓', label: '↓', kind: 'tap' },
+    { p: 'tap:→', label: '→', kind: 'tap' },
+    { p: 'hold:Ctrl', label: 'Hold ⌃', kind: 'hold' },
+    { p: 'hold:Shift', label: 'Hold ⇧', kind: 'hold' },
+    { p: 'hold:L:nav', label: 'Layer: Nav', kind: 'layer' },
+    { p: 'hold:L:sym', label: 'Layer: Symbols', kind: 'layer' },
+    { p: 'clear', label: 'Clear', kind: 'clear' }
+  ];
+
+  var CHIP_CLASS = {
+    tap: 'rounded-full border border-slate-700 bg-slate-800 px-3 py-1 text-xs text-slate-200 transition-colors hover:bg-slate-700',
+    hold: 'rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1 text-xs text-amber-200 transition-colors hover:bg-amber-500/20',
+    layer: 'rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-200 transition-colors hover:bg-emerald-500/20',
+    clear: 'rounded-full border border-dashed border-slate-600 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-slate-400 hover:text-white'
+  };
+
+  function renderPalette() {
+    var html = '';
+    for (var i = 0; i < PALETTE.length; i++) {
+      var chip = PALETTE[i];
+      html += '<button type="button" draggable="true" data-payload="' + esc(chip.p) + '" class="' +
+        CHIP_CLASS[chip.kind] + '">' + esc(chip.label) + '</button>';
+    }
+    paletteEl.innerHTML = html;
+  }
+
+  paletteEl.addEventListener('dragstart', function (e) {
+    var chip = e.target.closest ? e.target.closest('[data-payload]') : null;
+    if (!chip) return;
+    try {
+      e.dataTransfer.setData('text/plain', chip.getAttribute('data-payload'));
+      e.dataTransfer.effectAllowed = 'copy';
+    } catch (err) { /* ignore */ }
+  });
+
+  paletteEl.addEventListener('click', function (e) {
+    var chip = e.target.closest ? e.target.closest('[data-payload]') : null;
+    if (!chip) return;
+    var payload = chip.getAttribute('data-payload');
+    var k = KEY_BY_ID[state.selected];
+    applyPayload(state.selected, payload);
+    flashPalHint('Applied to ' + (k ? keyName(k) : 'key') + ' · ' + (LAYER_NAME[state.layer] || 'layer'));
+  });
+
+  /* ---------------------------------------------------------------- */
+  /*  Keyboard interaction                                             */
+  /* ---------------------------------------------------------------- */
+  function pressKey(id) {
+    var def = KEY_BY_ID[id];
+    if (!def) return;
+    state.selected = id;
+
+    var m = effectiveMap(id) || {};
+    var out = m.tap || def.l;
+    state.output.push(out);
+    if (state.output.length > 80) state.output.shift();
+
+    if (m.hold && m.hold.indexOf('L:') === 0) {
+      var target = m.hold.slice(2);
+      if (state.maps[target] && target !== state.layer) {
+        state.peekFrom = state.layer;
+        state.layer = target;
+      }
+    }
+    render();
+  }
+
+  function endPeek() {
+    if (state.peekFrom) {
+      state.layer = state.peekFrom;
+      state.peekFrom = null;
+      render();
+    }
+  }
+
+  kbEl.addEventListener('pointerdown', function (e) {
+    var el = e.target.closest ? e.target.closest('.key') : null;
+    if (!el) return;
+    pressKey(el.getAttribute('data-id'));
+  });
+
+  kbEl.addEventListener('dragstart', function (e) {
+    if (e.target.closest && e.target.closest('.key')) e.preventDefault();
+  });
+
+  kbEl.addEventListener('dragover', function (e) {
+    var el = e.target.closest ? e.target.closest('.key') : null;
+    if (!el) return;
+    e.preventDefault();
+    try { e.dataTransfer.dropEffect = 'copy'; } catch (err) { /* ignore */ }
+    var marked = kbEl.querySelectorAll('.key.dragover');
+    for (var i = 0; i < marked.length; i++) {
+      if (marked[i] !== el) marked[i].classList.remove('dragover');
+    }
+    el.classList.add('dragover');
+  });
+
+  kbEl.addEventListener('dragleave', function (e) {
+    var el = e.target.closest ? e.target.closest('.key') : null;
+    if (el) el.classList.remove('dragover');
+  });
+
+  kbEl.addEventListener('drop', function (e) {
+    var el = e.target.closest ? e.target.closest('.key') : null;
+    if (!el) return;
+    e.preventDefault();
+    el.classList.remove('dragover');
+    var payload = '';
+    try {
+      payload = e.dataTransfer.getData('text/plain');
+    } catch (err) {
+      payload = '';
+    }
+    if (!payload) return;
+    var keyId = el.getAttribute('data-id');
+    applyPayload(keyId, payload);
+    var k = KEY_BY_ID[keyId];
+    flashPalHint('Applied to ' + (k ? keyName(k) : 'key') + ' · ' + (LAYER_NAME[state.layer] || 'layer'));
+  });
+
+  window.addEventListener('pointerup', endPeek);
+  window.addEventListener('pointercancel', endPeek);
+  window.addEventListener('blur', endPeek);
+
+  tabsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('[data-tab]') : null;
+    if (!btn) return;
+    state.peekFrom = null;
+    state.layer = btn.getAttribute('data-tab');
+    render();
+  });
+
+  var clearOutBtn = document.getElementById('clearOut');
+  if (clearOutBtn) {
+    clearOutBtn.addEventListener('click', function () {
+      state.output = [];
+      renderOutput();
+    });
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Presets                                                          */
+  /* ---------------------------------------------------------------- */
+  function withHold(base, id, hold) {
+    var prev = base[id] || {};
+    var entry = {};
+    if (prev.tap) entry.tap = prev.tap;
+    entry.hold = hold;
+    base[id] = entry;
+  }
+
+  var PRESETS = [
+    {
+      name: 'Caps → Esc',
+      apply: function () {
+        state.maps.base.caps = { tap: 'Esc' };
+      }
+    },
+    {
+      name: 'Caps = Esc / Nav',
+      apply: function () {
+        state.maps.base.caps = { tap: 'Esc', hold: 'L:nav' };
+      }
+    },
+    {
+      name: 'Home-row mods',
+      apply: function () {
+        var base = state.maps.base;
+        withHold(base, 'a', 'Ctrl');
+        withHold(base, 's', 'Alt');
+        withHold(base, 'd', 'Shift');
+        withHold(base, 'f', 'Win');
+      }
+    },
+    {
+      name: 'Symbols on Space',
+      apply: function () {
+        state.maps.base.space = { hold: 'L:sym' };
+      }
+    }
+  ];
+
+  function renderPresets() {
+    var html = '';
+    for (var i = 0; i < PRESETS.length; i++) {
+      html += '<button type="button" data-preset="' + i + '" class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-slate-200 transition-colors hover:border-indigo-400/50 hover:bg-indigo-500/15">' +
+        esc(PRESETS[i].name) + '</button>';
+    }
+    presetsEl.innerHTML = html;
+  }
+
+  presetsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('[data-preset]') : null;
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-preset'), 10);
+    var p = PRESETS[idx];
+    if (!p) return;
+    state.peekFrom = null;
+    state.layer = 'base';
+    p.apply();
+    render();
+    flashPalHint('Preset applied: ' + p.name);
+  });
+
+  var resetAllBtn = document.getElementById('resetAll');
+  if (resetAllBtn) {
+    resetAllBtn.addEventListener('click', function () {
+      state.maps = defaultMaps();
+      state.layer = 'base';
+      state.selected = 'caps';
+      state.output = [];
+      state.peekFrom = null;
+      render();
+      flashPalHint('Layout reset to defaults');
+    });
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Pricing + waitlist                                               */
+  /* ---------------------------------------------------------------- */
+  var planButtons = document.querySelectorAll('[data-plan]');
+  for (var p = 0; p < planButtons.length; p++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        var plan = btn.getAttribute('data-plan');
+        if (plan === 'Free') {
+          showToast('Sample action — the real installer would download here.');
+        } else if (plan === 'Team') {
+          showToast('Sample action — a sales contact form would open here.');
+        } else {
+          showToast('You are on the ' + plan + ' waitlist. (Sample data — nothing was sent.)');
+        }
+      });
+    })(planButtons[p]);
+  }
+
+  var waitlistForm = document.getElementById('waitlistForm');
+  var waitlistEmail = document.getElementById('waitlistEmail');
+  if (waitlistForm) {
+    waitlistForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var val = waitlistEmail ? waitlistEmail.value.trim() : '';
+      if (!val || val.indexOf('@') === -1) {
+        showToast('Please enter a valid email address.');
+        return;
+      }
+      showToast('Thanks! ' + val + ' is on the list. (Sample data — nothing was sent.)');
+    });
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Boot                                                             */
+  /* ---------------------------------------------------------------- */
+  renderPalette();
+  renderPresets();
+  render();
+})();
+</script>
+</body>
+</html>
